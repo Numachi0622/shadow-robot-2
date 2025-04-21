@@ -27,7 +27,7 @@ public class KinectMotionTest : MonoBehaviour
 
     [SerializeField] private BodySourceManager _bodySourceManager;
     [SerializeField] private DebugParamsPresenter _debugParamsPresenter;
-
+    [SerializeField] private bool _isMovable = false;
     private Quaternion _spineBase;
     private Quaternion _spineMid;
     private Quaternion _spineShoulder;
@@ -111,8 +111,9 @@ public class KinectMotionTest : MonoBehaviour
 
         _ref.rotation = q;
 
-        // var pos = body.Joints[Kinect.JointType.SpineMid].Position;
-        // _ref.position = new Vector3(-pos.X, pos.Y, -pos.Z);
+        if(!_isMovable) return;
+        var pos = leftBody.Joints[Kinect.JointType.SpineMid].Position;
+        _ref.position = new Vector3(-pos.X, pos.Y, -pos.Z);
 
     }
 }

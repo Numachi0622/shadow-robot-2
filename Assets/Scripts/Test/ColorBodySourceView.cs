@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Kinect = Windows.Kinect;
+using UnityEngine.UI;
 
 public class ColorBodySourceView : MonoBehaviour 
 {
@@ -15,6 +16,9 @@ public class ColorBodySourceView : MonoBehaviour
     private Kinect.CoordinateMapper _CoordinateMapper;
     private const int WIDTH = 1920;
     private const int HEIGHT = 1080;
+    private uint currentDisplayId = 0;
+
+    public GameObject IdTextDebugCanvas;
     
     private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
     {
@@ -98,8 +102,9 @@ public class ColorBodySourceView : MonoBehaviour
             }
         }
 
-        foreach(var body in data)
+        for(var i = 0; i < data.Length; i++)
         {
+            var body = data[i];
             if (body == null)
             {
                 continue;
@@ -109,7 +114,9 @@ public class ColorBodySourceView : MonoBehaviour
             {
                 if(!_Bodies.ContainsKey(body.TrackingId))
                 {
-                    _Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
+                    var displayId = currentDisplayId;
+                    _Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
+                    currentDisplayId++;
                 }
                 
                 RefreshBodyObject(body, _Bodies[body.TrackingId]);
@@ -117,7 +124,7 @@ public class ColorBodySourceView : MonoBehaviour
         }
     }
     
-    private GameObject CreateBodyObject(ulong id)
+    private GameObject CreateBodyObject(ulong id, uint displayId)
     {
         GameObject body = new GameObject("Body:" + id);
         body.layer = LayerMask.NameToLayer("Debug");
@@ -136,6 +143,10 @@ public class ColorBodySourceView : MonoBehaviour
             jointObj.name = jt.ToString();
             jointObj.transform.parent = body.transform;
         }
+        
+        // view id text
+        var idText = Instantiate(IdTextDebugCanvas, body.transform.GetChild(3).transform);
+        idText.transform.GetChild(0).GetComponent<Text>().text = $"id: {displayId}";
         
         return body;
     }
