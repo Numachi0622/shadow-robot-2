@@ -1,26 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 using Kinect = Windows.Kinect;
 using UnityEngine.UI;
 
 public class ColorBodySourceView : MonoBehaviour 
 {
-    public Material BoneMaterial;
-    public GameObject BodySourceManager;
+    [SerializeField] private Material _boneMaterial;
+    [SerializeField] private Camera _convertCamera;
+    [SerializeField] private BodySourceManager _bodySourceManager;
+    [SerializeField] private GameObject _idTextDebugCanvas;
     
-    private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
-    private BodySourceManager _BodyManager;
-
-    public Camera ConvertCamera;
-    private Kinect.CoordinateMapper _CoordinateMapper;
+    private Dictionary<ulong, GameObject> _bodies = new Dictionary<ulong, GameObject>();
+    private Kinect.CoordinateMapper _coordinateMapper;
     private const int WIDTH = 1920;
     private const int HEIGHT = 1080;
     private uint currentDisplayId = 0;
 
-    public GameObject IdTextDebugCanvas;
     
-    private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
+    private Dictionary<Kinect.JointType, Kinect.JointType> _boneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
     {
         { Kinect.JointType.FootLeft, Kinect.JointType.AnkleLeft },
         { Kinect.JointType.AnkleLeft, Kinect.JointType.KneeLeft },
@@ -54,35 +53,23 @@ public class ColorBodySourceView : MonoBehaviour
     
     void Update () 
     {
-        if (BodySourceManager == null)
+        if (_bodySourceManager == null) return;
+        
+        if (_coordinateMapper == null)
         {
-            return;
+            _coordinateMapper = _bodySourceManager.Sensor.CoordinateMapper;
         }
         
-        _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
-        if (_BodyManager == null)
-        {
-            return;
-        }
-        
-        if (_CoordinateMapper == null)
-        {
-            _CoordinateMapper = _BodyManager.Sensor.CoordinateMapper;
-        }
-        
-        Kinect.Body[] data = _BodyManager.GetData();
-        if (data == null)
-        {
-            return;
-        }
+        Kinect.Body[] data = _bodySourceManager.GetData();
+        if (data == null) return;
         
         List<ulong> trackedIds = new List<ulong>();
         foreach(var body in data)
         {
             if (body == null)
             {
-                continue;
-              }
+                continue; 
+            }
                 
             if(body.IsTracked)
             {
@@ -90,15 +77,15 @@ public class ColorBodySourceView : MonoBehaviour
             }
         }
         
-        List<ulong> knownIds = new List<ulong>(_Bodies.Keys);
+        List<ulong> knownIds = new List<ulong>(_bodies.Keys);
         
         // First delete untracked bodies
         foreach(ulong trackingId in knownIds)
         {
             if(!trackedIds.Contains(trackingId))
             {
-                Destroy(_Bodies[trackingId]);
-                _Bodies.Remove(trackingId);
+                Destroy(_bodies[trackingId]);
+                _bodies.Remove(trackingId);
             }
         }
 
@@ -112,14 +99,14 @@ public class ColorBodySourceView : MonoBehaviour
             
             if(body.IsTracked)
             {
-                if(!_Bodies.ContainsKey(body.TrackingId))
+                if(!_bodies.ContainsKey(body.TrackingId))
                 {
                     var displayId = currentDisplayId;
-                    _Bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
+                    _bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
                     currentDisplayId++;
                 }
                 
-                RefreshBodyObject(body, _Bodies[body.TrackingId]);
+                RefreshBodyObject(body, _bodies[body.TrackingId]);
             }
         }
     }
@@ -136,7 +123,7 @@ public class ColorBodySourceView : MonoBehaviour
             
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
             lr.SetVertexCount(2);
-            lr.material = BoneMaterial;
+            lr.material = _boneMaterial;
             lr.SetWidth(0.05f, 0.05f);
             
             jointObj.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
@@ -145,7 +132,7 @@ public class ColorBodySourceView : MonoBehaviour
         }
         
         // view id text
-        var idText = Instantiate(IdTextDebugCanvas, body.transform.GetChild(3).transform);
+        var idText = Instantiate(_idTextDebugCanvas, body.transform.GetChild(3).transform);
         idText.transform.GetChild(0).GetComponent<Text>().text = $"id: {displayId}";
         
         return body;
@@ -158,9 +145,9 @@ public class ColorBodySourceView : MonoBehaviour
             Kinect.Joint sourceJoint = body.Joints[jt];
             Kinect.Joint? targetJoint = null;
             
-            if(_BoneMap.ContainsKey(jt))
+            if(_boneMap.ContainsKey(jt))
             {
-                targetJoint = body.Joints[_BoneMap[jt]];
+                targetJoint = body.Joints[_boneMap[jt]];
             }
             
             Transform jointObj = bodyObject.transform.Find(jt.ToString());
@@ -198,9 +185,9 @@ public class ColorBodySourceView : MonoBehaviour
     private Vector3 GetVector3FromJoint(Kinect.Joint joint)
     {
         var valid = joint.TrackingState != Kinect.TrackingState.NotTracked;
-        if ( ConvertCamera != null || valid ) {
+        if (_convertCamera != null || valid ) {
             // KinectのCamera座標系(3次元)をColor座標系(2次元)に変換する
-            var point =_CoordinateMapper.MapCameraPointToColorSpace( joint.Position );
+            var point =_coordinateMapper.MapCameraPointToColorSpace( joint.Position );
             var point2 = new Vector3( point.X, point.Y, 0 );
             if ( (0 <= point2.x) && (point2.x < WIDTH) && 
                  (0 <= point2.y) && (point2.y < HEIGHT) ) {
@@ -210,7 +197,7 @@ public class ColorBodySourceView : MonoBehaviour
                 point2.y = point2.y * Screen.height / HEIGHT;
 
                 // Unityのワールド座標系(3次元)に変換
-                var colorPoint3 = ConvertCamera.ScreenToWorldPoint( point2 );
+                var colorPoint3 = _convertCamera.ScreenToWorldPoint( point2 );
 
                 // 座標の調整
                 // Y座標は逆、Z座標は-1にする(Xもミラー状態によって逆にする必要あり)

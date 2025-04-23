@@ -183,10 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1108ac06583f1de4f93f97a85eaf9796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
-  BodySourceManager: {fileID: 71753415}
-  ConvertCamera: {fileID: 1440904009}
-  IdTextDebugCanvas: {fileID: 2289107028075177836, guid: 280d59d3818f5e345b1004485e30e971, type: 3}
+  _boneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
+  _convertCamera: {fileID: 1440904009}
+  _bodySourceManager: {fileID: 71753418}
+  _idTextDebugCanvas: {fileID: 2289107028075177836, guid: 280d59d3818f5e345b1004485e30e971, type: 3}
 --- !u!114 &71753418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7949,10 +7949,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1108ac06583f1de4f93f97a85eaf9796, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BoneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
-  BodySourceManager: {fileID: 345761935}
-  ConvertCamera: {fileID: 1440904009}
-  IdTextDebugCanvas: {fileID: 2289107028075177836, guid: 280d59d3818f5e345b1004485e30e971, type: 3}
+  _boneMaterial: {fileID: 0}
+  _convertCamera: {fileID: 0}
+  _bodySourceManager: {fileID: 0}
+  _idTextDebugCanvas: {fileID: 0}
 --- !u!1 &367611008
 GameObject:
   m_ObjectHideFlags: 0

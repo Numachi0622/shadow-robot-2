@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Windows.Kinect;
+using UniRx;
+using UniRx.Triggers;
 
 public class BodySourceManager : MonoBehaviour 
 {
-    private KinectSensor _Sensor;
-    public KinectSensor Sensor => _Sensor;
-    private BodyFrameReader _Reader;
-    private Body[] _Data = null;
+    private KinectSensor _sensor;
+    public KinectSensor Sensor => _sensor;
+    private BodyFrameReader _reader;
+    private Body[] _data = null;
     
     public Body[] GetData()
     {
-        return _Data;
+        return _data;
     }
     
     public Windows.Kinect.Vector4 FloorClipPlane { get; private set; }
@@ -19,56 +21,56 @@ public class BodySourceManager : MonoBehaviour
 
     void Start () 
     {
-        _Sensor = KinectSensor.GetDefault();
+        _sensor = KinectSensor.GetDefault();
 
-        if (_Sensor != null)
+        if (_sensor != null)
         {
-            _Reader = _Sensor.BodyFrameSource.OpenReader();
+            _reader = _sensor.BodyFrameSource.OpenReader();
             
-            if (!_Sensor.IsOpen)
+            if (!_sensor.IsOpen)
             {
-                _Sensor.Open();
+                _sensor.Open();
             }
-        }
-    }
-    
-    void Update () 
-    {
-        if (_Reader != null)
-        {
-            var frame = _Reader.AcquireLatestFrame();
-            if (frame != null)
-            {
-                if (_Data == null)
-                {
-                    _Data = new Body[_Sensor.BodyFrameSource.BodyCount];
-                }
-                
-                frame.GetAndRefreshBodyData(_Data);
-                FloorClipPlane = frame.FloorClipPlane;
-                
-                frame.Dispose();
-                frame = null;
-            }
-        }    
-    }
-    
-    void OnApplicationQuit()
-    {
-        if (_Reader != null)
-        {
-            _Reader.Dispose();
-            _Reader = null;
         }
         
-        if (_Sensor != null)
-        {
-            if (_Sensor.IsOpen)
+        this.UpdateAsObservable()
+            .Where(_ => _reader != null)
+            .Subscribe(_ =>
             {
-                _Sensor.Close();
+                var frame = _reader.AcquireLatestFrame();
+                if (frame != null)
+                {
+                    if (_data == null)
+                    {
+                        _data = new Body[_sensor.BodyFrameSource.BodyCount];
+                    }
+                
+                    frame.GetAndRefreshBodyData(_data);
+                    FloorClipPlane = frame.FloorClipPlane;
+                
+                    frame.Dispose();
+                    frame = null;
+                }
+            })
+            .AddTo(this);
+    }
+    
+    void OnDestroy()
+    {
+        if (_reader != null)
+        {
+            _reader.Dispose();
+            _reader = null;
+        }
+        
+        if (_sensor != null)
+        {
+            if (_sensor.IsOpen)
+            {
+                _sensor.Close();
             }
             
-            _Sensor = null;
+            _sensor = null;
         }
     }
 }
