@@ -4,7 +4,7 @@ using Kinect = Windows.Kinect;
 using UnityEngine;
 using Utility;
 
-public class KinectMotionTest : MonoBehaviour
+public class PlayerKinectMotion : MonoBehaviour
 {
     [SerializeField] private Transform _ref;
     [SerializeField] private Transform _hips;
