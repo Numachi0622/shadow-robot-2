@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine.Serialization;
 using Kinect = Windows.Kinect;
 using UnityEngine.UI;
@@ -9,7 +12,6 @@ public class ColorBodySourceView : MonoBehaviour
 {
     [SerializeField] private Material _boneMaterial;
     [SerializeField] private Camera _convertCamera;
-    [SerializeField] private BodySourceManager _bodySourceManager;
     [SerializeField] private GameObject _idTextDebugCanvas;
     
     private Dictionary<ulong, GameObject> _bodies = new Dictionary<ulong, GameObject>();
@@ -50,65 +52,68 @@ public class ColorBodySourceView : MonoBehaviour
         { Kinect.JointType.SpineShoulder, Kinect.JointType.Neck },
         { Kinect.JointType.Neck, Kinect.JointType.Head },
     };
-    
-    void Update () 
-    {
-        if (_bodySourceManager == null) return;
-        
-        if (_coordinateMapper == null)
-        {
-            _coordinateMapper = _bodySourceManager.Sensor.CoordinateMapper;
-        }
-        
-        Kinect.Body[] data = _bodySourceManager.GetData();
-        if (data == null) return;
-        
-        List<ulong> trackedIds = new List<ulong>();
-        foreach(var body in data)
-        {
-            if (body == null)
-            {
-                continue; 
-            }
-                
-            if(body.IsTracked)
-            {
-                trackedIds.Add (body.TrackingId);
-            }
-        }
-        
-        List<ulong> knownIds = new List<ulong>(_bodies.Keys);
-        
-        // First delete untracked bodies
-        foreach(ulong trackingId in knownIds)
-        {
-            if(!trackedIds.Contains(trackingId))
-            {
-                Destroy(_bodies[trackingId]);
-                _bodies.Remove(trackingId);
-            }
-        }
 
-        for(var i = 0; i < data.Length; i++)
-        {
-            var body = data[i];
-            if (body == null)
+    public void Initialize()
+    {
+        this.UpdateAsObservable()
+            .Subscribe(_ =>
             {
-                continue;
-            }
-            
-            if(body.IsTracked)
-            {
-                if(!_bodies.ContainsKey(body.TrackingId))
+                if (_coordinateMapper == null)
                 {
-                    var displayId = currentDisplayId;
-                    _bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
-                    currentDisplayId++;
+                    _coordinateMapper = BodySourceManager.Instance.Sensor.CoordinateMapper;
                 }
+        
+                Kinect.Body[] data = BodySourceManager.Instance.GetData();
+                if (data == null) return;
+        
+                List<ulong> trackedIds = new List<ulong>();
+                foreach(var body in data)
+                {
+                    if (body == null)
+                    {
+                        continue; 
+                    }
                 
-                RefreshBodyObject(body, _bodies[body.TrackingId]);
-            }
-        }
+                    if(body.IsTracked)
+                    {
+                        trackedIds.Add (body.TrackingId);
+                    }
+                }
+        
+                List<ulong> knownIds = new List<ulong>(_bodies.Keys);
+        
+                // First delete untracked bodies
+                foreach(ulong trackingId in knownIds)
+                {
+                    if(!trackedIds.Contains(trackingId))
+                    {
+                        Destroy(_bodies[trackingId]);
+                        _bodies.Remove(trackingId);
+                    }
+                }
+
+                for(var i = 0; i < data.Length; i++)
+                {
+                    var body = data[i];
+                    if (body == null)
+                    {
+                        continue;
+                    }
+            
+                    if(body.IsTracked)
+                    {
+                        if(!_bodies.ContainsKey(body.TrackingId))
+                        {
+                            var displayId = currentDisplayId;
+                            _bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
+                            currentDisplayId++;
+                        }
+                
+                        RefreshBodyObject(body, _bodies[body.TrackingId]);
+                    }
+                }
+            })
+            .AddTo(this);
     }
     
     private GameObject CreateBodyObject(ulong id, uint displayId)

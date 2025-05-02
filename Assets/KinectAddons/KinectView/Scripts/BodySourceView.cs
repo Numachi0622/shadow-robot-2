@@ -6,10 +6,8 @@ using Kinect = Windows.Kinect;
 public class BodySourceView : MonoBehaviour 
 {
     public Material BoneMaterial;
-    public GameObject BodySourceManager;
     
     private Dictionary<ulong, GameObject> _Bodies = new Dictionary<ulong, GameObject>();
-    private BodySourceManager _BodyManager;
     
     private Dictionary<Kinect.JointType, Kinect.JointType> _BoneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
     {
@@ -45,18 +43,7 @@ public class BodySourceView : MonoBehaviour
     
     void Update () 
     {
-        if (BodySourceManager == null)
-        {
-            return;
-        }
-        
-        _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
-        if (_BodyManager == null)
-        {
-            return;
-        }
-        
-        Kinect.Body[] data = _BodyManager.GetData();
+        Kinect.Body[] data = BodySourceManager.Instance.GetData();
         if (data == null)
         {
             return;

@@ -3,8 +3,9 @@ using System.Collections;
 using Windows.Kinect;
 using UniRx;
 using UniRx.Triggers;
+using Utility;
 
-public class BodySourceManager : MonoBehaviour 
+public class BodySourceManager : Singleton<BodySourceManager>
 {
     private KinectSensor _sensor;
     public KinectSensor Sensor => _sensor;
@@ -17,9 +18,8 @@ public class BodySourceManager : MonoBehaviour
     }
     
     public Windows.Kinect.Vector4 FloorClipPlane { get; private set; }
-    
 
-    void Start () 
+    public override void Initialize()
     {
         _sensor = KinectSensor.GetDefault();
 
@@ -53,6 +53,8 @@ public class BodySourceManager : MonoBehaviour
                 }
             })
             .AddTo(this);
+        
+        base.Initialize();
     }
     
     void OnDestroy()

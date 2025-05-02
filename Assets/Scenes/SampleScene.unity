@@ -168,7 +168,6 @@ MonoBehaviour:
   _rightHand: {fileID: 8587118907022087680}
   _neck: {fileID: 8587118907022087772}
   _head: {fileID: 8587118907022087682}
-  _bodySourceManager: {fileID: 71753418}
   _debugParamsPresenter: {fileID: 1854871543}
   _isMovable: 1
 --- !u!114 &71753417
@@ -185,7 +184,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
   _convertCamera: {fileID: 1440904009}
-  _bodySourceManager: {fileID: 71753418}
   _idTextDebugCanvas: {fileID: 2289107028075177836, guid: 280d59d3818f5e345b1004485e30e971, type: 3}
 --- !u!114 &71753418
 MonoBehaviour:
@@ -1158,6 +1156,67 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &837925592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 837925594}
+  - component: {fileID: 837925593}
+  m_Layer: 0
+  m_Name: InGame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &837925593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837925592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20374ac505189114ca4ee9cd5a66266a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerPresenter: {fileID: 8587118907022087775}
+  _debugParamsPresenter: {fileID: 1854871543}
+  _colorBodySourceView: {fileID: 71753417}
+  _singletons:
+  - mode: 0
+    unityReference: {fileID: 71753418}
+    rawReference:
+      rid: -2
+  - mode: 0
+    unityReference: {fileID: 318438676}
+    rawReference:
+      rid: -2
+  references:
+    version: 2
+    RefIds:
+    - rid: -2
+      type: {class: , ns: , asm: }
+--- !u!4 &837925594
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837925592}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.40867358, y: 1.390599, z: -1.4260249}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3915,6 +3974,7 @@ MonoBehaviour:
   _rightAttacker: {fileID: 8587118907022087683}
   _leftHand: {fileID: 8587118907022087686}
   _rightHand: {fileID: 8587118907022087680}
+  _kinectMotion: {fileID: 71753416}
 --- !u!4 &8587118907022087776
 Transform:
   m_ObjectHideFlags: 0
@@ -4735,6 +4795,7 @@ SkinnedMeshRenderer:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 837925594}
   - {fileID: 410087041}
   - {fileID: 832575519}
   - {fileID: 71753419}

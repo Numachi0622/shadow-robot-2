@@ -1,5 +1,7 @@
 using System;
 using System.Linq;
+using UniRx;
+using UniRx.Triggers;
 using Kinect = Windows.Kinect;
 using UnityEngine;
 using Utility;
@@ -25,7 +27,6 @@ public class PlayerKinectMotion : MonoBehaviour
     [SerializeField] private Transform _neck;
     [SerializeField] private Transform _head;
 
-    [SerializeField] private BodySourceManager _bodySourceManager;
     [SerializeField] private DebugParamsPresenter _debugParamsPresenter;
     [SerializeField] private bool _isMovable = false;
     private Quaternion _spineBase;
@@ -44,15 +45,16 @@ public class PlayerKinectMotion : MonoBehaviour
     private Quaternion _kneeRight;
     private Quaternion _ankleRight;
 
-    private void Start()
+    public void Initialize()
     {
-        _debugParamsPresenter.Initialize();
+        this.UpdateAsObservable()
+            .Subscribe(_ => UpdateMotion())
+            .AddTo(this);
     }
-    private void Update()
+    
+    private void UpdateMotion()
     {
-        if(_bodySourceManager == null) return;
-
-        var data = _bodySourceManager.GetData();
+        var data = BodySourceManager.Instance.GetData();
         if(data == null) return;
         
         var trackedData = data.Where(b => b.IsTracked)
@@ -69,7 +71,7 @@ public class PlayerKinectMotion : MonoBehaviour
         if(rightBody == null) return;
         var rightJoints = rightBody.JointOrientations;
         
-        var floorPlane = _bodySourceManager.FloorClipPlane;
+        var floorPlane = BodySourceManager.Instance.FloorClipPlane;
         var comp = Quaternion.FromToRotation(new Vector3(floorPlane.X, floorPlane.Y, floorPlane.Z), Vector3.up);
 
         _spineBase = rightJoints[Kinect.JointType.SpineBase].Orientation.ToQuaternion(comp);

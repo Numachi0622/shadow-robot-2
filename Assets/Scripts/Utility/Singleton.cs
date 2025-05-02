@@ -1,14 +1,16 @@
 ﻿using System;
+using Interface;
 using UnityEngine;
+using Utility;
 
 namespace Utility
 {
-    public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+    public class Singleton<T> : MonoBehaviour , ISingleton where T : MonoBehaviour
     {
         private static T _instance;
         public static T Instance => _instance;
 
-        private void Awake()
+        public virtual void Initialize()
         {
             if (_instance == null)
             {
@@ -17,7 +19,7 @@ namespace Utility
                 return;
             }
             
-            Destroy(this);
+            Destroy(this);        
         }
     }
 }

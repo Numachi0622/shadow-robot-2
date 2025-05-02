@@ -2,18 +2,21 @@ using System;
 using Cysharp.Threading.Tasks;
 using Player;
 using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerPresenter : MonoBehaviour
 {
     [SerializeField] private PlayerParams _params;
     [SerializeField] private Attacker _leftAttacker, _rightAttacker;
     [SerializeField] private Transform _leftHand, _rightHand;
-    private void Start()
+    [SerializeField] private PlayerKinectMotion _kinectMotion;
+    public void Initialize()
     {
         // Initialize
         var leftHandAttackDetector = new HandAttackDetector(_leftHand, _params.AttackableVelocity);
         var rightHandAttackDetector = new HandAttackDetector(_rightHand, _params.AttackableVelocity);
+        _kinectMotion.Initialize();
         
         // Bind
         leftHandAttackDetector.OnAttack
