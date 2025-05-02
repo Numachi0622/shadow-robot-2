@@ -17,13 +17,19 @@ public class PlayerController : MonoBehaviour
         
         // Bind
         leftHandAttackDetector.OnAttack
-            .Subscribe(_ => _leftAttacker.Attack(),
-                () => _leftAttacker.EndAttack())
+            .Subscribe(_ => _leftAttacker.Attack())
+            .AddTo(this);
+        
+        leftHandAttackDetector.OnAttackEnd
+            .Subscribe(_ => _leftAttacker.EndAttack())
             .AddTo(this);
 
         rightHandAttackDetector.OnAttack
-            .Subscribe(_ => _rightAttacker.Attack(),
-                () => _rightAttacker.EndAttack())
+            .Subscribe(_ => _rightAttacker.Attack())
+            .AddTo(this);
+        
+        rightHandAttackDetector.OnAttackEnd
+            .Subscribe(_ => _rightAttacker.EndAttack())
             .AddTo(this);
     }
 }

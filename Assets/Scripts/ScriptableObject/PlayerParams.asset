@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: PlayerParams
   m_EditorClassIdentifier: 
   MaxHp: 0
-  AttackableVelocity: 1
+  AttackableVelocity: 5

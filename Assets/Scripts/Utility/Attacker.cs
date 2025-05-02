@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Interface;
+using Utility;
 
 public class Attacker : MonoBehaviour, IAttackable
 {
@@ -12,14 +13,14 @@ public class Attacker : MonoBehaviour, IAttackable
         if (_attackCollider.enabled) return;
         _attackCollider.enabled = true;
         // debug
-        _attackCollider.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.red;
+        _attackCollider.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = DebugConst.Instance.AttackingHandColor;
     }
 
     public void EndAttack()
     {
         _attackCollider.enabled = false;
         // debug
-        _attackCollider.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = Color.white;
+        _attackCollider.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = DebugConst.Instance.DefaultHandColor;
     }
     
     public async UniTaskVoid AttackAsync(float waitTime)
