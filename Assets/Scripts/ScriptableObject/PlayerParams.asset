@@ -12,5 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58db4329571e3a1469f36ee56677ff8f, type: 3}
   m_Name: PlayerParams
   m_EditorClassIdentifier: 
-  MaxHp: 0
+  MaxHp: 100
+  AttackPoint:
+    _minAttackPoint: 0
+    _maxAttackPoint: 0
   AttackableVelocity: 5

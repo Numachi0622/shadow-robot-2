@@ -7,6 +7,13 @@ using Utility;
 public class Attacker : MonoBehaviour, IAttackable
 {
     [SerializeField] private Collider _attackCollider;
+    private AttackPoint _attackPoint;
+    public AttackPoint AttackPoint => _attackPoint;
+
+    public void Initialize(CharacterParams characterParams)
+    {
+        _attackPoint = characterParams.AttackPoint;
+    }
 
     public void Attack()
     {

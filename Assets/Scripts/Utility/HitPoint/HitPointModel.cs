@@ -1,0 +1,31 @@
+using System;
+using UnityEngine;
+using UniRx;
+
+public class HitPointModel
+{
+    private readonly ReactiveProperty<int> _hp;
+    public IReadOnlyReactiveProperty<int> Hp => _hp;
+
+    public Action OnHpDeleted;
+
+    public HitPointModel(int mapHp)
+    {
+        _hp = new ReactiveProperty<int>(mapHp);
+    }
+
+    public void SetHp(int currentHp)
+    {
+        _hp.Value = Mathf.Max(currentHp, 0);
+        if(_hp.Value <= 0)
+        {
+            OnHpDeleted?.Invoke();
+        }
+    }
+
+    public void Decrease(int value)
+    {
+        int decreasedHp = _hp.Value - value;
+        SetHp(decreasedHp);
+    }
+}
