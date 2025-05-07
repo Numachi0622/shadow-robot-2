@@ -7,6 +7,7 @@ public class InGamePresenter : MonoBehaviour
     [SerializeField] private PlayerPresenter _playerPresenter;
     [SerializeField] private DebugParamsPresenter _debugParamsPresenter;
     [SerializeField] private ColorBodySourceView _colorBodySourceView;
+    [SerializeField] private EnemyPresenter _enemyPresenter;
 
     [SerializeField] private SerializableInterface<ISingleton>[] _singletons;
 
@@ -23,5 +24,8 @@ public class InGamePresenter : MonoBehaviour
         _playerPresenter.Initialize();
         _debugParamsPresenter.Initialize();
         _colorBodySourceView.Initialize();
+        
+        // debug
+        _enemyPresenter.Initialize();
     }
 }
