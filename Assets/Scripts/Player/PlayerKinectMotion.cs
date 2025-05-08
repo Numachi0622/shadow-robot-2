@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UniRx;
 using UniRx.Triggers;
@@ -63,32 +62,32 @@ public class PlayerKinectMotion : MonoBehaviour
         
         _debugParamsPresenter.SetCount(data.Length);
         
-        var leftBody = data[_debugParamsPresenter.Model.LeftTrackedId.Value];
-        if (leftBody == null) return;
-        var leftJoints = leftBody.JointOrientations;
+        var handData = data[_debugParamsPresenter.Model.LeftTrackedId.Value];
+        if (handData == null) return;
+        var handJoints = handData.JointOrientations;
         
-        var rightBody = data[_debugParamsPresenter.Model.RightTrackedId.Value];
-        if(rightBody == null) return;
-        var rightJoints = rightBody.JointOrientations;
+        var footData = data[_debugParamsPresenter.Model.RightTrackedId.Value];
+        if(footData == null) return;
+        var footJoints = footData.JointOrientations;
         
         var floorPlane = BodySourceManager.Instance.FloorClipPlane;
         var comp = Quaternion.FromToRotation(new Vector3(floorPlane.X, floorPlane.Y, floorPlane.Z), Vector3.up);
 
-        _spineBase = rightJoints[Kinect.JointType.SpineBase].Orientation.ToQuaternion(comp);
-        _spineMid = rightJoints[Kinect.JointType.SpineMid].Orientation.ToQuaternion(comp);
-        _spineShoulder = rightJoints[Kinect.JointType.SpineShoulder].Orientation.ToQuaternion(comp);
-        _shoulderLeft = leftJoints[Kinect.JointType.ShoulderLeft].Orientation.ToQuaternion(comp);
-        _shoulderRight = rightJoints[Kinect.JointType.ShoulderRight].Orientation.ToQuaternion(comp);
-        _elbowLeft = leftJoints[Kinect.JointType.ElbowLeft].Orientation.ToQuaternion(comp);
-        _wristLeft = leftJoints[Kinect.JointType.WristLeft].Orientation.ToQuaternion(comp);
-        _handLeft = leftJoints[Kinect.JointType.HandLeft].Orientation.ToQuaternion(comp);
-        _elbowRight = rightJoints[Kinect.JointType.ElbowRight].Orientation.ToQuaternion(comp);
-        _wristRight = rightJoints[Kinect.JointType.WristRight].Orientation.ToQuaternion(comp);
-        _handRight = rightJoints[Kinect.JointType.HandRight].Orientation.ToQuaternion(comp);
-        _kneeLeft = leftJoints[Kinect.JointType.KneeLeft].Orientation.ToQuaternion(comp);
-        _ankleLeft = leftJoints[Kinect.JointType.AnkleLeft].Orientation.ToQuaternion(comp);
-        _kneeRight = rightJoints[Kinect.JointType.KneeRight].Orientation.ToQuaternion(comp);
-        _ankleRight = rightJoints[Kinect.JointType.AnkleRight].Orientation.ToQuaternion(comp);
+        _spineBase = footJoints[Kinect.JointType.SpineBase].Orientation.ToQuaternion(comp);
+        _spineMid = handJoints[Kinect.JointType.SpineMid].Orientation.ToQuaternion(comp);
+        _spineShoulder = handJoints[Kinect.JointType.SpineShoulder].Orientation.ToQuaternion(comp);
+        _shoulderLeft = handJoints[Kinect.JointType.ShoulderLeft].Orientation.ToQuaternion(comp);
+        _shoulderRight = handJoints[Kinect.JointType.ShoulderRight].Orientation.ToQuaternion(comp);
+        _elbowLeft = handJoints[Kinect.JointType.ElbowLeft].Orientation.ToQuaternion(comp);
+        _wristLeft = handJoints[Kinect.JointType.WristLeft].Orientation.ToQuaternion(comp);
+        _handLeft = handJoints[Kinect.JointType.HandLeft].Orientation.ToQuaternion(comp);
+        _elbowRight = handJoints[Kinect.JointType.ElbowRight].Orientation.ToQuaternion(comp);
+        _wristRight = handJoints[Kinect.JointType.WristRight].Orientation.ToQuaternion(comp);
+        _handRight = handJoints[Kinect.JointType.HandRight].Orientation.ToQuaternion(comp);
+        _kneeLeft = footJoints[Kinect.JointType.KneeLeft].Orientation.ToQuaternion(comp);
+        _ankleLeft = footJoints[Kinect.JointType.AnkleLeft].Orientation.ToQuaternion(comp);
+        _kneeRight = footJoints[Kinect.JointType.KneeRight].Orientation.ToQuaternion(comp);
+        _ankleRight = footJoints[Kinect.JointType.AnkleRight].Orientation.ToQuaternion(comp);
 
         var q = _ref.rotation;
         _ref.rotation = Quaternion.identity;
@@ -114,7 +113,7 @@ public class PlayerKinectMotion : MonoBehaviour
         _ref.rotation = q;
 
         if(!_isMovable) return;
-        var pos = leftBody.Joints[Kinect.JointType.SpineMid].Position;
+        var pos = footData.Joints[Kinect.JointType.SpineMid].Position;
         _ref.position = new Vector3(-pos.X, pos.Y, -pos.Z);
 
     }
