@@ -11,17 +11,19 @@ public class EnemyPresenter : MonoBehaviour
     [SerializeField] private EnemyMovement _enemyMovement;
     [SerializeField] private EnemyStatePresenter _enemyStatePresenter;
     [SerializeField] private HitPointPresenter _hpPresenter;
-    [SerializeField] private HitPointView _hPView;
+    [SerializeField] private HitPointView _hpView;
     [SerializeField] private Attacker _attacker;
     
     // TODO Generator側に後で移動
     [SerializeField] private Transform _enemyHpParent;
     
-    
     private readonly int IS_MOVE = Animator.StringToHash("IsMove");
     private readonly int ATTACK = Animator.StringToHash("Attack");
     private readonly int DAMAGE = Animator.StringToHash("Damage");
     private readonly int DEAD = Animator.StringToHash("Dead");
+    
+    public EnemyStatePresenter EnemyStatePresenter => _enemyStatePresenter;
+
 
     public void Initialize()
     {
@@ -30,11 +32,11 @@ public class EnemyPresenter : MonoBehaviour
         _enemyMovement.Initialize(_params, _enemyStatePresenter);
         _attacker.Initialize(_params);
 
-        var hPView = Instantiate(_hPView, _enemyHpParent).GetComponent<HitPointView>();
-        _hpPresenter.Initialize(_params, hPView);
+        var hpView = Instantiate(_hpView, _enemyHpParent).GetComponent<HitPointView>();
+        _hpPresenter.Initialize(_params, hpView);
         
         // Bind
-        Bind(hPView);
+        Bind(hpView);
         
         // Set Events
         SetEvents();
@@ -67,13 +69,12 @@ public class EnemyPresenter : MonoBehaviour
             .Where(_ => hpView != null)
             .Subscribe(_ =>
             {
-                hpView.transform.position =
-                    RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position + Vector3.up * 2f);
+                //hpView.transform.position =
+                    //RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position + Vector3.up * 2f);
             })
             .AddTo(this);
         
         // Debug
-        // debug
         this.UpdateAsObservable()
             .Where(_ => Input.GetKeyDown(KeyCode.A))
             .Subscribe(_ =>

@@ -16,6 +16,6 @@ MonoBehaviour:
   AttackPoint:
     _minAttackPoint: 5
     _maxAttackPoint: 10
-  MoveSpeed: 2
+  MoveSpeed: 0
   SearchRange: 100
   AttackRange: 2

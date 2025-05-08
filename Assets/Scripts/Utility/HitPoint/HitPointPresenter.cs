@@ -10,6 +10,7 @@ public class HitPointPresenter : MonoBehaviour
     public void Initialize(CharacterParams characterParams)
     {
         _model = new HitPointModel(characterParams.MaxHp);
+        _view.Initialize();
         
         Bind(characterParams);
     }
