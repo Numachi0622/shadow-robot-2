@@ -1,3 +1,4 @@
+using System;
 using Enemy;
 using Interface;
 using UniRx;
@@ -10,9 +11,11 @@ public class EnemyPresenter : MonoBehaviour
     [SerializeField] private EnemyParams _params;
     [SerializeField] private EnemyMovement _enemyMovement;
     [SerializeField] private EnemyStatePresenter _enemyStatePresenter;
+    [SerializeField] private EnemyEffect _enemyEffect;
     [SerializeField] private HitPointPresenter _hpPresenter;
     [SerializeField] private HitPointView _hpView;
     [SerializeField] private Attacker _attacker;
+    [SerializeField] private Collider _takeDamageCollider;
     
     // TODO Generator側に後で移動
     [SerializeField] private Transform _enemyHpParent;
@@ -24,6 +27,8 @@ public class EnemyPresenter : MonoBehaviour
     
     public EnemyStatePresenter EnemyStatePresenter => _enemyStatePresenter;
 
+    public Action OnDead;
+
 
     public void Initialize()
     {
@@ -31,9 +36,11 @@ public class EnemyPresenter : MonoBehaviour
         _enemyStatePresenter.Initialize();
         _enemyMovement.Initialize(_params, _enemyStatePresenter);
         _attacker.Initialize(_params);
+        _enemyEffect.Initialize();
 
         var hpView = Instantiate(_hpView, _enemyHpParent).GetComponent<HitPointView>();
         _hpPresenter.Initialize(_params, hpView);
+        OnDead = () => Destroy(hpView.gameObject, 1.5f);
         
         // Bind
         Bind(hpView);
@@ -45,22 +52,40 @@ public class EnemyPresenter : MonoBehaviour
     private void Bind(HitPointView hpView)
     {
         // Take Damage
-        this.UpdateAsObservable()
+        this.OnTriggerEnterAsObservable()
             .Select(hitCollider =>
             {
-                if (TryGetComponent<IAttackable>(out var attacker))
+                if (hitCollider.TryGetComponent<IAttackable>(out var attacker))
                 {
-                    return attacker;
+                    return (attacker, hitCollider);
                 }
                 
-                return null;
+                return (null, null);
             })
-            .Where(attacker => attacker != null)
-            .Select(attacker => attacker.AttackPoint)
-            .Subscribe(damage =>
+            .Where(attacker => attacker.attacker != null)
+            .Select(attacker =>
             {
-                _hpPresenter.DecreaseHp(damage.RandomValue);
-                _enemyStatePresenter.SetState(EnemyState.Damage);
+                var damageInfo = attacker.attacker.AttackInfo;
+                var targetTransform = attacker.hitCollider.transform;
+                var hitPos = _takeDamageCollider.ClosestPointOnBounds(targetTransform.position);
+                var direction = (transform.position - targetTransform.position).normalized;
+                damageInfo.AttackDirection = direction;
+
+                return (damageInfo, hitPos);
+            })
+            .Subscribe(info =>
+            {
+                var damageInfo = info.damageInfo;
+                var damage = Damage(damageInfo.AttackPoint, damageInfo.AttackVelocity);
+                _hpPresenter.DecreaseHp(damage);
+
+                var dir = damageInfo.AttackDirection;
+                _enemyMovement.KnockBack(dir);
+                
+                _enemyEffect.BlinkColor(_params.DamagedColor);
+                _enemyEffect.ShakeBody();
+                DamageTextView.Instance.Play(damageInfo.AttackType, damage, info.hitPos);
+                HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
             })
             .AddTo(this);
         
@@ -69,8 +94,8 @@ public class EnemyPresenter : MonoBehaviour
             .Where(_ => hpView != null)
             .Subscribe(_ =>
             {
-                //hpView.transform.position =
-                    //RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position + Vector3.up * 2f);
+                hpView.transform.position =
+                    RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position + Vector3.up * 2f);
             })
             .AddTo(this);
         
@@ -80,7 +105,6 @@ public class EnemyPresenter : MonoBehaviour
             .Subscribe(_ =>
             {
                 _hpPresenter.DecreaseHp(10);
-                _enemyStatePresenter.SetState(EnemyState.Damage);
             })
             .AddTo(this);
     }
@@ -88,14 +112,24 @@ public class EnemyPresenter : MonoBehaviour
     private void SetEvents()
     {
         // State
-        _enemyStatePresenter.OnMoveState = () => _animator.SetBool(IS_MOVE, true);
-        _enemyStatePresenter.OnAttackReadyState = () =>
+        _enemyStatePresenter.OnStateChanged[EnemyState.Idle] = () => _takeDamageCollider.enabled = true;
+        _enemyStatePresenter.OnStateChanged[EnemyState.Move] = () => _animator.SetBool(IS_MOVE, true);
+        _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = () =>
         {
             _animator.SetBool(IS_MOVE, false);
             _animator.SetTrigger(ATTACK);
         };
-        _enemyStatePresenter.OnHitDamage = () => _animator.SetTrigger(DAMAGE);
-        _enemyStatePresenter.OnDead = () => _animator.SetTrigger(DEAD);
+        _enemyStatePresenter.OnStateChanged[EnemyState.Damage] = () =>
+        {
+            _takeDamageCollider.enabled = false;
+            _animator.SetTrigger(DAMAGE);
+        };
+        _enemyStatePresenter.OnStateChanged[EnemyState.Dead] = () =>
+        {
+            _animator.SetTrigger(DEAD);
+            OnDead?.Invoke();
+            Destroy(gameObject, 2f);
+        };
         
         // Movement Stop
         _enemyMovement.OnStopNearTarget = () => _enemyStatePresenter.SetState(EnemyState.AttackReady);
@@ -105,5 +139,18 @@ public class EnemyPresenter : MonoBehaviour
         
         // Dead
         _hpPresenter.OnHpDeleted(() => _enemyStatePresenter.SetState(EnemyState.Dead));
+    }
+    
+    
+    // TODO: あとでDamageModelつくる
+    private int Damage(AttackPoint attackPoint, float velocity)
+    {
+        const float maxVel = 20f;
+
+        var velRate = velocity / maxVel;
+        var damage = Mathf.Lerp(attackPoint.MinAttackPoint, attackPoint.MaxAttackPoint,
+            velRate);
+
+        return Mathf.RoundToInt(damage);
     }
 }

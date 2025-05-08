@@ -35,19 +35,19 @@ public class PlayerPresenter : MonoBehaviour
     {
         // Attack
         _leftHandAttackDetector.OnAttack
-            .Subscribe(_ => _leftAttacker.Attack())
+            .Subscribe(info => _leftAttacker.Attack(info.dir, info.vel))
             .AddTo(this);
         
         _leftHandAttackDetector.OnAttackEnd
-            .Subscribe(_ => _leftAttacker.EndAttack())
+            .Subscribe(_ => _leftAttacker.AttackEnd())
             .AddTo(this);
 
         _rightHandAttackDetector.OnAttack
-            .Subscribe(_ => _rightAttacker.Attack())
+            .Subscribe(info => _rightAttacker.Attack(info.dir, info.vel))
             .AddTo(this);
         
         _rightHandAttackDetector.OnAttackEnd
-            .Subscribe(_ => _rightAttacker.EndAttack())
+            .Subscribe(_ => _rightAttacker.AttackEnd())
             .AddTo(this);
         
         // Take Damage
@@ -62,10 +62,10 @@ public class PlayerPresenter : MonoBehaviour
                 return null;
             })
             .Where(attacker => attacker != null)
-            .Select(attacker => attacker.AttackPoint)
-            .Subscribe(damage =>
+            .Select(attacker => attacker.AttackInfo)
+            .Subscribe(damageInfo =>
             {
-                _hpPresenter.DecreaseHp(damage.RandomValue);
+                _hpPresenter.DecreaseHp(damageInfo.AttackPoint.RandomValue);
             })
             .AddTo(this);
         

@@ -126,8 +126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b3e7d935014c9644b24c0acb4a19f41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gauge: {fileID: 0}
-  _diffGauge: {fileID: 0}
+  _gauge: {fileID: 5491977862629318946}
+  _diffGauge: {fileID: 3642676754687535885}
 --- !u!1 &5782112990007113202
 GameObject:
   m_ObjectHideFlags: 0

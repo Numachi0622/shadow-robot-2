@@ -44,6 +44,6 @@ public class HitPointPresenter : MonoBehaviour
     
     public void OnHpDecreased(Action onHpDecreased)
     {
-        _model.OnHpDeleted = onHpDecreased;
+        _model.OnHpDecreased = onHpDecreased;
     }
 }

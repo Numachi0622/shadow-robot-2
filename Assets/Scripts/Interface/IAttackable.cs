@@ -1,10 +1,14 @@
-﻿namespace Interface
+﻿using UnityEngine;
+
+namespace Interface
 {
     public interface IAttackable
     {
-        public AttackPoint AttackPoint { get; }
+        public AttackInfo AttackInfo { get; }
         public void Attack();
 
-        public void EndAttack();
+        public void Attack(Vector3 dir, float velocity);
+
+        public void AttackEnd();
     }
 }

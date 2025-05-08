@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UniRx;
 using Enemy;
 using UnityEngine;
@@ -9,40 +10,32 @@ public class EnemyStatePresenter : MonoBehaviour
     private StateModel<EnemyState> _model;
     
     public EnemyState CurrentState => _model.State.Value;
-    
-    public Action OnMoveState;
-    public Action OnAttackReadyState;
-    public Action OnHitDamage;
-    public Action OnDead;
+
+    public Dictionary<EnemyState, Action> OnStateChanged;
 
     public void Initialize()
     {
         _model = new StateModel<EnemyState>(EnemyState.Idle);
 
+        OnStateChanged = new Dictionary<EnemyState, Action>()
+        {
+            { EnemyState.Idle , null},
+            { EnemyState.Move, null },
+            { EnemyState.AttackReady, null },
+            { EnemyState.Attack, null },
+            { EnemyState.AttackCoolTime, null },
+            { EnemyState.Damage, null },
+            { EnemyState.Dead, null }
+        };
+
         _model.State
-            .Subscribe(state =>
-            {
-                switch (state)
-                {
-                    case EnemyState.Move : 
-                        OnMoveState?.Invoke();
-                        break;
-                    case EnemyState.AttackReady : 
-                        OnAttackReadyState?.Invoke();
-                        break;
-                    case EnemyState.Damage : 
-                        OnHitDamage?.Invoke();
-                        break;
-                    case EnemyState.Dead : 
-                        OnDead?.Invoke();
-                        break;
-                }
-            })
+            .Subscribe(state => OnStateChanged[state]?.Invoke())
             .AddTo(this);
     }
     
     public void SetState(EnemyState newState)
     {
+        if (CurrentState == EnemyState.Dead) return;
         _model.SetState(newState);
     }
 }

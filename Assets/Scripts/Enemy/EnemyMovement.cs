@@ -1,4 +1,5 @@
 using System;
+using DG.Tweening;
 using Enemy;
 using UnityEngine;
 using UniRx;
@@ -8,8 +9,13 @@ public class EnemyMovement : MonoBehaviour
 {
     public Action OnStartMovement;
     public Action OnStopNearTarget;
+
+    private Transform _enemyTransform;
+    private Sequence _knockBackSequence;
+    
     public void Initialize(EnemyParams enemyParams, EnemyStatePresenter statePresenter)
     {
+        _enemyTransform = transform;
         var target = GameObject.FindGameObjectWithTag("Player").transform;
         OnStartMovement?.Invoke();
         
@@ -30,9 +36,9 @@ public class EnemyMovement : MonoBehaviour
 
     private void Move(Vector3 targetPos, EnemyParams enemyParams)
     {
-        transform.LookAt(targetPos);
+        _enemyTransform.LookAt(targetPos);
         
-        var currentPos = transform.position;
+        var currentPos = _enemyTransform.position;
         var dist = Vector3.Distance(targetPos, currentPos);
         if (dist <= enemyParams.AttackRange)
         {
@@ -40,6 +46,18 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
         
-        transform.position = Vector3.MoveTowards(currentPos, targetPos, enemyParams.MoveSpeed * Time.deltaTime); 
+        _enemyTransform.position = Vector3.MoveTowards(currentPos, targetPos, enemyParams.MoveSpeed * Time.deltaTime); 
+    }
+
+    public void KnockBack(Vector3 dir)
+    {
+        _knockBackSequence?.Kill();
+
+        var destination = transform.position + dir * 5f;
+        destination.y = 0f;
+        
+        _knockBackSequence = DOTween.Sequence()
+            .SetLink(gameObject)
+            .Append(_enemyTransform.DOMove(destination, 0.5f).SetEase(Ease.OutCubic));
     }
 }

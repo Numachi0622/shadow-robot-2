@@ -2,28 +2,42 @@ using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Interface;
+using UnityEditor.IMGUI.Controls;
 using Utility;
 
 public class Attacker : MonoBehaviour, IAttackable
 {
     [SerializeField] private Collider _attackCollider;
+
     private AttackPoint _attackPoint;
-    public AttackPoint AttackPoint => _attackPoint;
+    private AttackInfo _attackInfo;
+    public AttackInfo AttackInfo => _attackInfo;
 
     public void Initialize(CharacterParams characterParams)
     {
         _attackPoint = characterParams.AttackPoint;
+        _attackInfo.AttackPoint = _attackPoint;
     }
 
-    public void Attack()
+    private void SetAttackInfo(float velocity, AttackType attackType)
     {
-        if (_attackCollider.enabled) return;
+        _attackInfo.AttackVelocity = velocity;
+        _attackInfo.AttackType = attackType;
+    }
+    
+    public void Attack(Vector3 dir, float velocity)
+    {
+        SetAttackInfo(velocity, AttackType.PlayerToEnemyNormal);
+        if (_attackCollider.enabled)
+        {
+            return;
+        }
         _attackCollider.enabled = true;
         // debug
         _attackCollider.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = DebugConst.Instance.AttackingHandColor;
     }
 
-    public void EndAttack()
+    public void AttackEnd()
     {
         _attackCollider.enabled = false;
         // debug
@@ -37,4 +51,20 @@ public class Attacker : MonoBehaviour, IAttackable
         await UniTask.Delay(TimeSpan.FromSeconds(GameConst.COLLIDER_ACTIVE_TIME));
         _attackCollider.enabled = false;
     }
+
+    public void Attack() { }
+}
+
+public struct AttackInfo
+{
+    public AttackPoint AttackPoint;
+    public Vector3 AttackDirection;
+    public float AttackVelocity;
+    public AttackType AttackType;
+}
+
+public enum AttackType
+{
+    PlayerToEnemyNormal,
+    EnemyToPlayerNormal,
 }

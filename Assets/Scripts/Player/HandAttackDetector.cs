@@ -12,8 +12,8 @@ namespace Player
         private Vector3 _previousPosition;
         private bool _isAttacking = false;
         
-        private readonly Subject<Unit> _onAttack;
-        public IObservable<Unit> OnAttack => _onAttack;
+        private readonly Subject<(Vector3 dir, float vel)> _onAttack;
+        public IObservable<(Vector3 dir, float vel)> OnAttack => _onAttack;
 
         private readonly Subject<Unit> _onAttackEnd;
         public IObservable<Unit> OnAttackEnd => _onAttackEnd;
@@ -23,19 +23,21 @@ namespace Player
             _handTransform = handTransform;
             _velocityThreshold = velocityThreshold;
             _previousPosition = _handTransform.position;
-            _onAttack = new Subject<Unit>();
+            _onAttack = new Subject<(Vector3 dir, float vel)>();
             _onAttackEnd = new Subject<Unit>();
 
             _handTransform.UpdateAsObservable()
                 .Subscribe(_ =>
                 {
                     var currentPos = _handTransform.position;
-                    var speed = (currentPos - _previousPosition).magnitude / Time.deltaTime;
+                    var diff = currentPos - _previousPosition;
+                    var direction = diff.normalized;
+                    var speed = diff.magnitude / Time.deltaTime;
                     _previousPosition = currentPos;
 
                     if(speed > _velocityThreshold)
                     {
-                        _onAttack.OnNext(Unit.Default);
+                        _onAttack.OnNext((direction, speed));
                         if (!_isAttacking) _isAttacking = true;
                         return;
                     }

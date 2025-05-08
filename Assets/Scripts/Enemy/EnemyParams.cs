@@ -6,4 +6,7 @@ public class EnemyParams : CharacterParams
     public float MoveSpeed;
     public float SearchRange;
     public float AttackRange;
+
+    public Color DamagedColor;
+    public Color AttackReadyColor;
 }

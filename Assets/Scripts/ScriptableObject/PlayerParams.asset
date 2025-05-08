@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 100
   AttackPoint:
-    _minAttackPoint: 0
-    _maxAttackPoint: 0
+    _minAttackPoint: 1
+    _maxAttackPoint: 30
   AttackableVelocity: 5

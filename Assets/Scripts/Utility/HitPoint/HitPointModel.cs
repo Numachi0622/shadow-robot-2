@@ -20,12 +20,14 @@ public class HitPointModel
         if(_hp.Value == 0f) return;
         
         _hp.Value = Mathf.Max(currentHp, 0);
-        OnHpDecreased?.Invoke();
         
         if(_hp.Value <= 0)
         {
             OnHpDeleted?.Invoke();
+            return;
         }
+        
+        OnHpDecreased?.Invoke();
     }
 
     public void Decrease(int value)
