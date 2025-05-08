@@ -13,6 +13,16 @@ public class HitPointPresenter : MonoBehaviour
         
         Bind(characterParams);
     }
+    
+    public void Initialize(CharacterParams characterParams, HitPointView view)
+    {
+        if (_view == null)
+        {
+            _view = view;
+        }
+        
+        Initialize(characterParams);
+    }
 
     private void Bind(CharacterParams characterParams)
     {
@@ -29,5 +39,10 @@ public class HitPointPresenter : MonoBehaviour
     public void OnHpDeleted(Action onHpDeleted)
     {
         _model.OnHpDeleted = onHpDeleted;
+    }
+    
+    public void OnHpDecreased(Action onHpDecreased)
+    {
+        _model.OnHpDeleted = onHpDecreased;
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using Enemy;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
@@ -7,18 +8,23 @@ public class EnemyMovement : MonoBehaviour
 {
     public Action OnStartMovement;
     public Action OnStopNearTarget;
-    public void Initialize(EnemyParams enemyParams)
+    public void Initialize(EnemyParams enemyParams, EnemyStatePresenter statePresenter)
     {
         var target = GameObject.FindGameObjectWithTag("Player").transform;
         OnStartMovement?.Invoke();
         
         this.UpdateAsObservable()
+            .Where(_ => statePresenter.CurrentState == EnemyState.Idle || statePresenter.CurrentState == EnemyState.Move)
             .Where(_ =>
             {
                 var dist = Vector3.Distance(target.position, transform.position);
                 return dist < enemyParams.SearchRange;
             })
-            .Subscribe(dir => Move(target.position, enemyParams))
+            .Subscribe(dir =>
+            {
+                statePresenter.SetState(EnemyState.Move);
+                Move(target.position, enemyParams);
+            })
             .AddTo(this);
     }
 
