@@ -16,7 +16,7 @@ MonoBehaviour:
   AttackPoint:
     _minAttackPoint: 5
     _maxAttackPoint: 10
-  MoveSpeed: 3
+  MoveSpeed: 2
   SearchRange: 100
   AttackRange: 2
   DamagedColor: {r: 1, g: 0.19607843, b: 0.19607843, a: 1}

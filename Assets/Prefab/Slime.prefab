@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 4444848673315925924}
   - component: {fileID: 5281372477907767983}
   - component: {fileID: 3417612227885430768}
+  - component: {fileID: 7706356407386304044}
   m_Layer: 7
   m_Name: Slime
   m_TagString: Untagged
@@ -117,7 +118,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -158,9 +159,11 @@ MonoBehaviour:
   _params: {fileID: 11400000, guid: 1422bedbe8a35f64cb5c16804f8930dd, type: 2}
   _enemyMovement: {fileID: 4444848673315925924}
   _enemyStatePresenter: {fileID: 5281372477907767983}
+  _enemyEffect: {fileID: 7706356407386304044}
   _hpPresenter: {fileID: 3417612227885430768}
   _hpView: {fileID: 7972302661534279649, guid: 68cf0c007aac24b4094bbd659b9d6c98, type: 3}
   _attacker: {fileID: 6295462875975366799}
+  _takeDamageCollider: {fileID: 4825688278238152908}
   _enemyHpParent: {fileID: 0}
 --- !u!114 &4444848673315925924
 MonoBehaviour:
@@ -199,6 +202,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _view: {fileID: 0}
+--- !u!114 &7706356407386304044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 539147295612310118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78d8705fe7b91284c963135cc1655306, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bodyTransform: {fileID: 2045860396179612622}
+  _skinnedMeshRenderer: {fileID: 565192159338015485}
 --- !u!1 &598260179324754699
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +367,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d9c0226bd4324f01bc178cf4a515ef84, type: 2}
+  - {fileID: 2100000, guid: ddde15e6105212e468447e097e859f2c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

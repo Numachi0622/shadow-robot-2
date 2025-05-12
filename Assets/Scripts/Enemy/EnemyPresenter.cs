@@ -17,9 +17,6 @@ public class EnemyPresenter : MonoBehaviour
     [SerializeField] private Attacker _attacker;
     [SerializeField] private Collider _takeDamageCollider;
     
-    // TODO Generator側に後で移動
-    [SerializeField] private Transform _enemyHpParent;
-    
     private readonly int IS_MOVE = Animator.StringToHash("IsMove");
     private readonly int ATTACK = Animator.StringToHash("Attack");
     private readonly int DAMAGE = Animator.StringToHash("Damage");
@@ -30,7 +27,7 @@ public class EnemyPresenter : MonoBehaviour
     public Action OnDead;
 
 
-    public void Initialize()
+    public void Initialize(Transform viewParent)
     {
         // Initialize
         _enemyStatePresenter.Initialize();
@@ -38,7 +35,7 @@ public class EnemyPresenter : MonoBehaviour
         _attacker.Initialize(_params);
         _enemyEffect.Initialize();
 
-        var hpView = Instantiate(_hpView, _enemyHpParent).GetComponent<HitPointView>();
+        var hpView = Instantiate(_hpView, viewParent).GetComponent<HitPointView>();
         _hpPresenter.Initialize(_params, hpView);
         OnDead = () => Destroy(hpView.gameObject, 1.5f);
         
