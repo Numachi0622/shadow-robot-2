@@ -19,7 +19,7 @@ namespace DEMAFilter
         public Quaternion Filter(Quaternion input)
         {
             _ema1 = _isInitialized ? Quaternion.Slerp(_ema1, input, _alpha) : input;
-            _ema2 = _isInitialized ? Quaternion.Slerp(_ema2, input, _alpha) : input;
+            _ema2 = _isInitialized ? Quaternion.Slerp(_ema2, _ema1, _alpha) : input;
 
             if (!_isInitialized)
             {
