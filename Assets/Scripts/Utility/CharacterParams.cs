@@ -6,6 +6,7 @@ public class CharacterParams : ScriptableObject
 {
     public int MaxHp;
     public AttackPoint AttackPoint;
+    public Color DamagedColor;
 }
 
 [Serializable]

@@ -52,7 +52,7 @@ public class PlayerAttacker : MonoBehaviour, IAttackable
         _attackCollider.enabled = false;
     }
 
-    public void Attack() { }
+    public void Attack(float waitTime = 0) { }
 }
 
 public struct AttackInfo

@@ -13,6 +13,7 @@ public class PlayerPresenter : MonoBehaviour
     [SerializeField] private Transform _leftHand, _rightHand;
     [SerializeField] private PlayerKinectMotion _kinectMotion;
     [SerializeField] private HitPointPresenter _hpPresenter;
+    [SerializeField] private PlayerEffect _playerEffect;
     private HandAttackDetector _leftHandAttackDetector, _rightHandAttackDetector;
     public void Initialize()
     {
@@ -23,6 +24,7 @@ public class PlayerPresenter : MonoBehaviour
         _hpPresenter.Initialize(_params);
         _leftAttacker.Initialize(_params);
         _rightAttacker.Initialize(_params);
+        _playerEffect.Initialize();
         
         // Bind
         Bind();
@@ -54,7 +56,7 @@ public class PlayerPresenter : MonoBehaviour
         this.OnTriggerEnterAsObservable()
             .Select(hitCollider =>
             {
-                if (TryGetComponent<IAttackable>(out var attacker))
+                if (hitCollider.TryGetComponent<IAttackable>(out var attacker))
                 {
                     return attacker;
                 }
@@ -66,6 +68,7 @@ public class PlayerPresenter : MonoBehaviour
             .Subscribe(damageInfo =>
             {
                 _hpPresenter.DecreaseHp(damageInfo.AttackPoint.RandomValue);
+                _playerEffect.BlinkColor(_params.DamagedColor);
             })
             .AddTo(this);
         

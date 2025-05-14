@@ -28,6 +28,17 @@ public class EnemyEffect : MonoBehaviour
             .Append(DOTween.To(() => Color.black, SetColor, color, 0.1f))
             .Append(DOTween.To(() => color, SetColor, Color.black, 0.15f));
     }
+    
+    public void BlinkColor(Color color, int loop)
+    {
+        _blinkSequence?.Kill();
+
+        _blinkSequence = DOTween.Sequence()
+            .SetLink(gameObject)
+            .Append(DOTween.To(() => Color.black, SetColor, color, 0.1f))
+            .Append(DOTween.To(() => color, SetColor, Color.black, 0.15f))
+            .SetLoops(loop);
+    }
 
     public void ShakeBody(float strength = 0.25f, int vibrato = 30)
     {
@@ -46,7 +57,7 @@ public class EnemyEffect : MonoBehaviour
         
         _shakeSequence = DOTween.Sequence()
             .SetLink(gameObject)
-            .Append(DOTween.Shake(() => Vector3.zero, offset => _shakeOffset = offset, 0.5f, 0.15f, 20, fadeOut: false))
+            .Append(DOTween.Shake(() => Vector3.zero, offset => _shakeOffset = offset, 0.5f, 0.1f, 20, fadeOut: false))
             .OnUpdate(() => _bodyTransform.localPosition += _shakeOffset)
             .SetUpdate(UpdateType.Late)
             .SetLoops(loop);

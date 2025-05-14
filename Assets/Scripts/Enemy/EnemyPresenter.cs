@@ -17,9 +17,6 @@ public class EnemyPresenter : MonoBehaviour
     [SerializeField] private EnemyAttacker _attacker;
     [SerializeField] private Collider _takeDamageCollider;
     
-    // TODO Generator側に後で移動
-    [SerializeField] private Transform _enemyHpParent;
-    
     private readonly int IS_MOVE = Animator.StringToHash("IsMove");
     private readonly int ATTACK_READY = Animator.StringToHash("AttackReady");
     private readonly int ATTACK = Animator.StringToHash("Attack");
@@ -27,11 +24,13 @@ public class EnemyPresenter : MonoBehaviour
     private readonly int DEAD = Animator.StringToHash("Dead");
     
     public EnemyStatePresenter EnemyStatePresenter => _enemyStatePresenter;
+    public EnemyAttacker Attacker => _attacker;
+    public EnemyParams Params => _params;
 
     public Action OnDead;
 
 
-    public void Initialize()
+    public void Initialize(Transform viewParent)
     {
         // Initialize
         _enemyStatePresenter.Initialize();
@@ -39,7 +38,7 @@ public class EnemyPresenter : MonoBehaviour
         _attacker.Initialize(_params);
         _enemyEffect.Initialize();
 
-        var hpView = Instantiate(_hpView, _enemyHpParent).GetComponent<HitPointView>();
+        var hpView = Instantiate(_hpView, viewParent).GetComponent<HitPointView>();
         _hpPresenter.Initialize(_params, hpView);
         OnDead = () => Destroy(hpView.gameObject, 1.5f);
         
@@ -119,11 +118,14 @@ public class EnemyPresenter : MonoBehaviour
         {
             _animator.SetBool(IS_MOVE, false);
             _animator.SetTrigger(ATTACK_READY);
+            _attacker.AttackReady().Forget();
+            _enemyEffect.ShakeBody(3);
+            _enemyEffect.BlinkColor(_params.AttackReadyColor, 4);
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Attack] = () =>
         {
             _animator.ResetTrigger(ATTACK_READY);
-            _animator.ResetTrigger(ATTACK);
+            _animator.SetTrigger(ATTACK);
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Damage] = () =>
         {
@@ -142,6 +144,12 @@ public class EnemyPresenter : MonoBehaviour
         
         // Attack Readied
         _attacker.OnAttackReadied = () => _enemyStatePresenter.SetState(EnemyState.Attack);
+        
+        // Start CoolTime
+        _attacker.OnAttackCoolTimeStarted = () => _enemyStatePresenter.SetState(EnemyState.AttackCoolTime);
+        
+        // End CoolTime
+        _attacker.OnAttackCoolTimeEnded = () => _enemyStatePresenter.SetState(EnemyState.Idle);
         
         // Damage
         _hpPresenter.OnHpDecreased(() => _enemyStatePresenter.SetState(EnemyState.Damage));

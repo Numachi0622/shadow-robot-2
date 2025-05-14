@@ -1,14 +1,20 @@
-using Enemy;
+using Interface;
 using UnityEngine;
 
-public class IdleStateBehaviour : StateMachineBehaviour
+public class AttackStateBehaviour : StateMachineBehaviour
 {
-    private EnemyStatePresenter _enemyStatePresenter;
+    [SerializeField] private int _attackFrame;
+    private IAttackable _attacker;
     
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _enemyStatePresenter ??= animator.GetComponent<EnemyPresenter>().EnemyStatePresenter;
-        _enemyStatePresenter.SetState(EnemyState.Idle);
+        if (_attacker == null)
+        {
+            if(animator.transform.GetChild(0).TryGetComponent<IAttackable>(out var attacker)) _attacker = attacker;
+        }
+
+        var sec = (float)_attackFrame / GameConst.ANIMATION_TARGET_FPS; 
+        _attacker?.Attack(sec);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

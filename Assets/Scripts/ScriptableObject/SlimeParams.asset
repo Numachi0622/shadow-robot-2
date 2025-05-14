@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956b414f4ca71164f82429888fd306a9, type: 3}
   m_Name: SlimeParams
   m_EditorClassIdentifier: 
-  MaxHp: 200
+  MaxHp: 30
   AttackPoint:
     _minAttackPoint: 5
     _maxAttackPoint: 10
-  MoveSpeed: 3
+  DamagedColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 1}
+  MoveSpeed: 6
   SearchRange: 100
-  AttackRange: 2
-  DamagedColor: {r: 1, g: 0.19607843, b: 0.19607843, a: 1}
+  AttackRange: 3
+  AttackReadyTime: 0.8
+  AttackCoolTime: 3
   AttackReadyColor: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
