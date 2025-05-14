@@ -14,13 +14,14 @@ public class EnemyPresenter : MonoBehaviour
     [SerializeField] private EnemyEffect _enemyEffect;
     [SerializeField] private HitPointPresenter _hpPresenter;
     [SerializeField] private HitPointView _hpView;
-    [SerializeField] private Attacker _attacker;
+    [SerializeField] private EnemyAttacker _attacker;
     [SerializeField] private Collider _takeDamageCollider;
     
     // TODO Generator側に後で移動
     [SerializeField] private Transform _enemyHpParent;
     
     private readonly int IS_MOVE = Animator.StringToHash("IsMove");
+    private readonly int ATTACK_READY = Animator.StringToHash("AttackReady");
     private readonly int ATTACK = Animator.StringToHash("Attack");
     private readonly int DAMAGE = Animator.StringToHash("Damage");
     private readonly int DEAD = Animator.StringToHash("Dead");
@@ -117,7 +118,12 @@ public class EnemyPresenter : MonoBehaviour
         _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = () =>
         {
             _animator.SetBool(IS_MOVE, false);
-            _animator.SetTrigger(ATTACK);
+            _animator.SetTrigger(ATTACK_READY);
+        };
+        _enemyStatePresenter.OnStateChanged[EnemyState.Attack] = () =>
+        {
+            _animator.ResetTrigger(ATTACK_READY);
+            _animator.ResetTrigger(ATTACK);
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Damage] = () =>
         {
@@ -133,6 +139,9 @@ public class EnemyPresenter : MonoBehaviour
         
         // Movement Stop
         _enemyMovement.OnStopNearTarget = () => _enemyStatePresenter.SetState(EnemyState.AttackReady);
+        
+        // Attack Readied
+        _attacker.OnAttackReadied = () => _enemyStatePresenter.SetState(EnemyState.Attack);
         
         // Damage
         _hpPresenter.OnHpDecreased(() => _enemyStatePresenter.SetState(EnemyState.Damage));

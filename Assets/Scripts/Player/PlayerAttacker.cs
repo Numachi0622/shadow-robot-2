@@ -5,7 +5,7 @@ using Interface;
 using UnityEditor.IMGUI.Controls;
 using Utility;
 
-public class Attacker : MonoBehaviour, IAttackable
+public class PlayerAttacker : MonoBehaviour, IAttackable
 {
     [SerializeField] private Collider _attackCollider;
 

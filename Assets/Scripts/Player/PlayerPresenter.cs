@@ -9,7 +9,7 @@ using UnityEngine;
 public class PlayerPresenter : MonoBehaviour
 {
     [SerializeField] private PlayerParams _params;
-    [SerializeField] private Attacker _leftAttacker, _rightAttacker;
+    [SerializeField] private PlayerAttacker _leftAttacker, _rightAttacker;
     [SerializeField] private Transform _leftHand, _rightHand;
     [SerializeField] private PlayerKinectMotion _kinectMotion;
     [SerializeField] private HitPointPresenter _hpPresenter;
