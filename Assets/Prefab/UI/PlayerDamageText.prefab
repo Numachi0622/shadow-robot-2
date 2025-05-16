@@ -67,15 +67,15 @@ MonoBehaviour:
       m_Calls: []
   m_text: 30
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fa5e0b71468261c4aa5036fc09de3ff2, type: 2}
+  m_sharedMaterial: {fileID: 8171703107333197462, guid: fa5e0b71468261c4aa5036fc09de3ff2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4279546623
-  m_fontColor: {r: 1, g: 0.69881815, b: 0.08018869, a: 1}
+    rgba: 4281283071
+  m_fontColor: {r: 1, g: 0.19212267, b: 0.18396229, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -146,7 +146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2115658145609214957}
   m_Layer: 5
-  m_Name: EnemyDamageText
+  m_Name: PlayerDamageText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
