@@ -30,6 +30,8 @@ public class PlayerKinectMotion : MonoBehaviour
 
     [SerializeField] private DebugParamsPresenter _debugParamsPresenter;
     [SerializeField] private float _moveMagnification = 5f;
+    [SerializeField] private float _jumpThreshold = 0.25f;
+    [SerializeField] private float _jumpMagnification = 2f;
     [SerializeField] private bool _isMovable = false;
     
     private Quaternion _spineBase;
@@ -48,6 +50,9 @@ public class PlayerKinectMotion : MonoBehaviour
     private Quaternion _kneeRight;
     private Quaternion _ankleRight;
 
+    private bool _isJumping = false;
+    public bool IsJumping => _isJumping;
+    
     public void Initialize()
     {
         this.UpdateAsObservable()
@@ -117,10 +122,20 @@ public class PlayerKinectMotion : MonoBehaviour
         _ref.rotation = q;
 
         if(!_isMovable) return;
-        var kinectPos = handData.Joints[Kinect.JointType.SpineMid].Position;
-        var movedPos = new Vector3(kinectPos.X, 0f, -kinectPos.Z) * _moveMagnification;
+        var kinectPos = footData.Joints[Kinect.JointType.SpineMid].Position;
+        _isJumping = kinectPos.Y > _jumpThreshold;
+        
+        var x = kinectPos.X * _moveMagnification;
+        var z = -kinectPos.Z * _moveMagnification;
+        var y =  !_isJumping ? 0f : (kinectPos.Y - _jumpThreshold) * _jumpMagnification;
 
+        var movedPos = new Vector3(x, y, z);
         _ref.position = movedPos;
+
+        if (movedPos.y > 0)
+        {
+            //Debug.Log(movedPos.y);
+        }
     }
 }
 

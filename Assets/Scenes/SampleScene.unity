@@ -205,6 +205,8 @@ MonoBehaviour:
   _head: {fileID: 8587118907022087682}
   _debugParamsPresenter: {fileID: 1854871543}
   _moveMagnification: 7
+  _jumpThreshold: 0.25
+  _jumpMagnification: 12
   _isMovable: 1
 --- !u!114 &71753417
 MonoBehaviour:

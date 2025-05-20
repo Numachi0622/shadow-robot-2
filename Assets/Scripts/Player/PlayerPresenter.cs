@@ -39,6 +39,7 @@ public class PlayerPresenter : MonoBehaviour
     {
         // Attack
         _leftHandAttackDetector.OnAttack
+            .Where(_ => !_kinectMotion.IsJumping)
             .Subscribe(info => _leftAttacker.Attack(info.dir, info.vel))
             .AddTo(this);
         
@@ -47,6 +48,7 @@ public class PlayerPresenter : MonoBehaviour
             .AddTo(this);
 
         _rightHandAttackDetector.OnAttack
+            .Where(_ => !_kinectMotion.IsJumping)
             .Subscribe(info => _rightAttacker.Attack(info.dir, info.vel))
             .AddTo(this);
         
