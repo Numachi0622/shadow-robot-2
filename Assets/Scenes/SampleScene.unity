@@ -204,6 +204,7 @@ MonoBehaviour:
   _neck: {fileID: 8587118907022087772}
   _head: {fileID: 8587118907022087682}
   _debugParamsPresenter: {fileID: 1854871543}
+  _moveMagnification: 7
   _isMovable: 1
 --- !u!114 &71753417
 MonoBehaviour:

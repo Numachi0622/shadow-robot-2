@@ -29,7 +29,9 @@ public class PlayerKinectMotion : MonoBehaviour
     [SerializeField] private Transform _head;
 
     [SerializeField] private DebugParamsPresenter _debugParamsPresenter;
+    [SerializeField] private float _moveMagnification = 5f;
     [SerializeField] private bool _isMovable = false;
+    
     private Quaternion _spineBase;
     private Quaternion _spineMid;
     private Quaternion _spineShoulder;
@@ -115,9 +117,10 @@ public class PlayerKinectMotion : MonoBehaviour
         _ref.rotation = q;
 
         if(!_isMovable) return;
-        var pos = footData.Joints[Kinect.JointType.SpineMid].Position;
-        _ref.position = new Vector3(-pos.X, pos.Y, -pos.Z);
+        var kinectPos = handData.Joints[Kinect.JointType.SpineMid].Position;
+        var movedPos = new Vector3(kinectPos.X, 0f, -kinectPos.Z) * _moveMagnification;
 
+        _ref.position = movedPos;
     }
 }
 
