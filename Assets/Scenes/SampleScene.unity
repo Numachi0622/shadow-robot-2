@@ -2175,6 +2175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 6132101}
   _enemyDamageTextPrefab: {fileID: 3796471222649151819, guid: 026a74790c5d7d74c927c5440b1749bb, type: 3}
+  _playerDamageTextPrefab: {fileID: 3796471222649151819, guid: f52fe61a2715f2146b46c6496b9c1577, type: 3}
 --- !u!4 &2019961773
 Transform:
   m_ObjectHideFlags: 0
@@ -2298,7 +2299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f419460bddf563f418efc783591bf858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _toEnemyHitEffect: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
+  _parent: {fileID: 2102006418}
+  _enemyHitEffectPrefab: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
+  _playerHitEffectPrefab: {fileID: 3891973445508218817, guid: 801655465fc2a9940b357b9ef912dd60, type: 3}
 --- !u!4 &2102006418
 Transform:
   m_ObjectHideFlags: 0
@@ -4313,6 +4316,7 @@ MonoBehaviour:
   _kinectMotion: {fileID: 71753416}
   _hpPresenter: {fileID: 6052784243642520635}
   _playerEffect: {fileID: 8587118907022087781}
+  _takeDamageCollider: {fileID: 8587118907022087779}
 --- !u!4 &8587118907022087776
 Transform:
   m_ObjectHideFlags: 0

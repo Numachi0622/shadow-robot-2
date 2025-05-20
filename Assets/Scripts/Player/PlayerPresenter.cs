@@ -14,6 +14,8 @@ public class PlayerPresenter : MonoBehaviour
     [SerializeField] private PlayerKinectMotion _kinectMotion;
     [SerializeField] private HitPointPresenter _hpPresenter;
     [SerializeField] private PlayerEffect _playerEffect;
+    [SerializeField] private Collider _takeDamageCollider;
+    
     private HandAttackDetector _leftHandAttackDetector, _rightHandAttackDetector;
     public void Initialize()
     {
@@ -58,17 +60,28 @@ public class PlayerPresenter : MonoBehaviour
             {
                 if (hitCollider.TryGetComponent<IAttackable>(out var attacker))
                 {
-                    return attacker;
+                    return (attacker, hitCollider);
                 }
                 
-                return null;
+                return (null, null);
             })
-            .Where(attacker => attacker != null)
-            .Select(attacker => attacker.AttackInfo)
-            .Subscribe(damageInfo =>
+            .Where(attacker => attacker.attacker != null)
+            .Select(attacker =>
             {
-                _hpPresenter.DecreaseHp(damageInfo.AttackPoint.RandomValue);
+                var damageInfo = attacker.attacker.AttackInfo;
+                var targetTransform = attacker.hitCollider.transform;
+                var hitPos = _takeDamageCollider.ClosestPoint(targetTransform.position);
+                return (damageInfo, hitPos);
+            })
+            .Subscribe(info =>
+            {
+                var damageInfo = info.damageInfo;
+                var damage = damageInfo.AttackPoint.RandomValue;
+                
+                _hpPresenter.DecreaseHp(damage);
                 _playerEffect.BlinkColor(_params.DamagedColor);
+                DamageTextView.Instance.Play(damageInfo.AttackType, damage, info.hitPos);
+                HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
             })
             .AddTo(this);
         
