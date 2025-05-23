@@ -128,10 +128,11 @@ public class PlayerKinectMotion : MonoBehaviour
         var x = kinectPos.X * _moveMagnification;
         var z = -kinectPos.Z * _moveMagnification;
         var y =  !_isJumping ? 0f : (kinectPos.Y - _jumpThreshold) * _jumpMagnification;
-
+        //Debug.Log(kinectPos.Y);
+        
         var movedPos = new Vector3(x, y, z);
         _ref.position = movedPos;
-
+        
         if (movedPos.y > 0)
         {
             //Debug.Log(movedPos.y);

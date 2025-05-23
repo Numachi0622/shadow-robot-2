@@ -14,6 +14,7 @@ public class PlayerPresenter : MonoBehaviour
     [SerializeField] private PlayerKinectMotion _kinectMotion;
     [SerializeField] private HitPointPresenter _hpPresenter;
     [SerializeField] private PlayerEffect _playerEffect;
+    [SerializeField] private PunchGaugePresenter _punchGaugePresenter;
     [SerializeField] private Collider _takeDamageCollider;
     
     private HandAttackDetector _leftHandAttackDetector, _rightHandAttackDetector;
@@ -27,6 +28,7 @@ public class PlayerPresenter : MonoBehaviour
         _leftAttacker.Initialize(_params);
         _rightAttacker.Initialize(_params);
         _playerEffect.Initialize();
+        _punchGaugePresenter.Initialize();
         
         // Bind
         Bind();
