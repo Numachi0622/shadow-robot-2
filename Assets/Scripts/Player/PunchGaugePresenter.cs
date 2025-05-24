@@ -29,7 +29,7 @@ namespace Player
                 
                     _resetDisposable?.Dispose();
 
-                    _resetDisposable = Observable.Timer(TimeSpan.FromSeconds(3f))
+                    _resetDisposable = Observable.Timer(TimeSpan.FromSeconds(GameConst.PUNCH_POINT_RESET_TIME))
                         .Where(_ => punchPoint > 0)
                         .Subscribe(_ => _model.Reset())
                         .AddTo(this);
@@ -41,6 +41,11 @@ namespace Player
                 .Where(_ => Input.GetKeyDown(KeyCode.P))
                 .Subscribe(_ => _model.Add(10))
                 .AddTo(this);
+        }
+        
+        public void AddPunchPoint(int value)
+        {
+            _model.Add(value);
         }
     }
 }

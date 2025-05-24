@@ -58,7 +58,8 @@ Shader "URP/Player-Arm"
                 {
                     Varyings OUT;
 
-                    float3 positionOS = IN.positionOS.xyz + IN.normalOS * _ArmScale;
+                    float3 dir = normalize(IN.positionOS.xyz);
+                    float3 positionOS = IN.positionOS.xyz + dir * _ArmScale;
                     
                     OUT.positionHCS = TransformObjectToHClip(positionOS);
                     OUT.uv = IN.uv;

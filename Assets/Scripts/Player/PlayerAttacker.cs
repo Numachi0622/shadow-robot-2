@@ -2,12 +2,16 @@ using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Interface;
+using Player;
+using UniRx;
+using UniRx.Triggers;
 using UnityEditor.IMGUI.Controls;
 using Utility;
 
 public class PlayerAttacker : MonoBehaviour, IAttackable
 {
     [SerializeField] private Collider _attackCollider;
+    [SerializeField] private PunchGaugePresenter _punchGaugePresenter;
 
     private AttackPoint _attackPoint;
     private AttackInfo _attackInfo;
@@ -17,6 +21,12 @@ public class PlayerAttacker : MonoBehaviour, IAttackable
     {
         _attackPoint = characterParams.AttackPoint;
         _attackInfo.AttackPoint = _attackPoint;
+        _punchGaugePresenter.Initialize();
+
+        _attackCollider.OnTriggerEnterAsObservable()
+            .Select(_ => Mathf.RoundToInt(Mathf.Min(_attackInfo.AttackVelocity, GameConst.MAX_PUNCH_VELOCITY)))
+            .Subscribe(value => _punchGaugePresenter.AddPunchPoint(value))
+            .AddTo(this);
     }
 
     private void SetAttackInfo(float velocity, AttackType attackType)

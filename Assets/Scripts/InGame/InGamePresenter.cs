@@ -24,5 +24,7 @@ public class InGamePresenter : MonoBehaviour
         _debugParamsPresenter.Initialize();
         _colorBodySourceView.Initialize();
         _enemyGenerator.Initialilze();
+
+        Application.targetFrameRate = 60;
     }
 }

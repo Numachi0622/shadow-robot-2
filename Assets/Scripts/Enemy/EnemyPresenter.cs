@@ -162,9 +162,7 @@ public class EnemyPresenter : MonoBehaviour
     // TODO: あとでDamageModelつくる
     private int Damage(AttackPoint attackPoint, float velocity)
     {
-        const float maxVel = 20f;
-
-        var velRate = velocity / maxVel;
+        var velRate = velocity / GameConst.MAX_PUNCH_VELOCITY;
         var damage = Mathf.Lerp(attackPoint.MinAttackPoint, attackPoint.MaxAttackPoint,
             velRate);
 
