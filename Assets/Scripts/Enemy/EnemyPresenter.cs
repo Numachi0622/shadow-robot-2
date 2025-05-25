@@ -98,15 +98,6 @@ public class EnemyPresenter : MonoBehaviour
                     RectTransformUtility.WorldToScreenPoint(Camera.main, transform.position + Vector3.up * 2f);
             })
             .AddTo(this);
-        
-        // Debug
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKeyDown(KeyCode.A))
-            .Subscribe(_ =>
-            {
-                _hpPresenter.DecreaseHp(10);
-            })
-            .AddTo(this);
     }
 
     private void SetEvents()

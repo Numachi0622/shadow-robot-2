@@ -86,12 +86,6 @@ public class PlayerPresenter : MonoBehaviour
                 HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
             })
             .AddTo(this);
-        
-        // debug
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKeyDown(KeyCode.D))
-            .Subscribe(_ => _hpPresenter.DecreaseHp(10))
-            .AddTo(this);
     }
 
     public void SetEvents()

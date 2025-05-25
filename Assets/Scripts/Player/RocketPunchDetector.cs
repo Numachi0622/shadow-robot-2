@@ -16,7 +16,6 @@ public class RocketPunchDetector : MonoBehaviour
             .Subscribe(count =>
             {
                 _detectCount = count;
-                Debug.Log(_detectCount);
             })
             .AddTo(this);
     }

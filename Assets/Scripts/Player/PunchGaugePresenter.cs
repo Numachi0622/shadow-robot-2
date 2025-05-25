@@ -35,12 +35,6 @@ namespace Player
                         .AddTo(this);
                 })
                 .AddTo(this);
-        
-            // debug
-            this.UpdateAsObservable()
-                .Where(_ => Input.GetKeyDown(KeyCode.P))
-                .Subscribe(_ => _model.Add(10))
-                .AddTo(this);
         }
         
         public void AddPunchPoint(int value)
