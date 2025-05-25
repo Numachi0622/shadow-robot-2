@@ -85,7 +85,7 @@ public class BodySourceManager : Singleton<BodySourceManager>
                 continue;
             }
             
-            if(_trackedData.Contains(body)) continue;
+            if(!_trackedData.Contains(body)) continue;
             _trackedData.Remove(body);
         }
         
