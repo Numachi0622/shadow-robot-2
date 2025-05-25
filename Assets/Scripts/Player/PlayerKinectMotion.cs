@@ -72,6 +72,11 @@ public class PlayerKinectMotion : MonoBehaviour
             .ObserveRemove()
             .Subscribe(_ => SetTrackingData(BodySourceManager.Instance.TrackedData))
             .AddTo(this);
+
+        this.UpdateAsObservable()
+            .Where(_ => Input.GetKeyDown(KeyCode.C))
+            .Subscribe(_ => ReverseTrackingData())
+            .AddTo(this);
     }
 
     private void SetTrackingData(IReadOnlyReactiveCollection<Kinect.Body> bodies)
@@ -93,6 +98,15 @@ public class PlayerKinectMotion : MonoBehaviour
                 _footData = bodies[1];
                 break;
         }
+    }
+
+    private void ReverseTrackingData()
+    {
+        var trackedData = BodySourceManager.Instance.TrackedData;
+        if(trackedData == null) return;
+        if(trackedData.Count < 2) return;
+
+        (_handData, _footData) = (_footData, _handData);
     }
     
     private void UpdateMotion()
