@@ -58,6 +58,16 @@ public class PlayerKinectMotion : MonoBehaviour
         this.UpdateAsObservable()
             .Subscribe(_ => UpdateMotion())
             .AddTo(this);
+
+        BodySourceManager.Instance.TrackedData
+            .ObserveAdd()
+            .Subscribe(_ => Debug.Log("Add"))
+            .AddTo(this);
+
+        BodySourceManager.Instance.TrackedData
+            .ObserveRemove()
+            .Subscribe(_ => Debug.Log("Remove"))
+            .AddTo(this);
     }
     
     private void UpdateMotion()
@@ -120,7 +130,7 @@ public class PlayerKinectMotion : MonoBehaviour
         _leftLeg.rotation = _ankleLeft * Quaternion.AngleAxis(-90f, new Vector3(0, 0, 1));
 
         _ref.rotation = q;
-
+        
         if(!_isMovable) return;
         var kinectPos = footData.Joints[Kinect.JointType.SpineMid].Position;
         _isJumping = kinectPos.Y > _jumpThreshold;
