@@ -10,7 +10,6 @@ using Utility;
 public class BodySourceManager : Singleton<BodySourceManager>
 {
     [SerializeField] private TrackingDebugView _debugView;
-    
     private KinectSensor _sensor;
     public KinectSensor Sensor => _sensor;
     private BodyFrameReader _reader;
@@ -35,6 +34,13 @@ public class BodySourceManager : Singleton<BodySourceManager>
             }
         }
         
+        Bind();
+        
+        base.Initialize();
+    }
+
+    private void Bind()
+    {
         this.UpdateAsObservable()
             .Where(_ => _reader != null)
             .Subscribe(_ =>
@@ -57,16 +63,9 @@ public class BodySourceManager : Singleton<BodySourceManager>
             })
             .AddTo(this);
 
-        this.UpdateAsObservable()
-            .Where(_ => Input.GetKeyDown(KeyCode.D))
-            .Subscribe(_ =>
-            {
-                var isActive = _debugView.gameObject.activeSelf;
-                _debugView.gameObject.SetActive(!isActive);
-            })
+        _trackedData.ObserveCountChanged()
+            .Subscribe(_debugView.UpdateTrackedCountView)
             .AddTo(this);
-        
-        base.Initialize();
     }
 
     private void ObserveBodies()

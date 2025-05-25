@@ -30,7 +30,6 @@ public class PlayerKinectMotion : MonoBehaviour
     [SerializeField] private Transform _neck;
     [SerializeField] private Transform _head;
 
-    [SerializeField] private DebugParamsPresenter _debugParamsPresenter;
     [SerializeField] private float _moveMagnification = 5f;
     [SerializeField] private float _jumpThreshold = 0.25f;
     [SerializeField] private float _jumpMagnification = 2f;
@@ -101,8 +100,6 @@ public class PlayerKinectMotion : MonoBehaviour
         var trackedData = BodySourceManager.Instance.TrackedData;
         if(trackedData == null) return;
         if (trackedData.Count == 0) return;
-        
-        _debugParamsPresenter.SetCount(trackedData.Count);
         
         if(_handData == null || _footData == null) return;
         
