@@ -1598,8 +1598,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gauge: {fileID: 265375690}
-  _leftArmTransform: {fileID: 8587118907022087756}
-  _rightArmTransform: {fileID: 8587118907022087758}
+  _leftArmTransform: {fileID: 0}
+  _rightArmTransform: {fileID: 0}
 --- !u!114 &838422233
 MonoBehaviour:
   m_ObjectHideFlags: 0
