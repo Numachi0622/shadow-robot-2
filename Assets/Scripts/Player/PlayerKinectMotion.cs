@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using DEMAFilter;
-using Enum;
 using UniRx;
 using UniRx.Triggers;
 using UnityEditor.Build.Reporting;
@@ -87,22 +86,16 @@ public class PlayerKinectMotion : MonoBehaviour
         switch (bodies.Count)
         {
             case 0:
-                _handData.Status = TrackingPart.Empty;
                 _handData = null;
-                _footData.Status = TrackingPart.Empty;
                 _footData = null;
                 break;
             case 1: 
                 _handData = bodies[0];
-                _handData.Status = TrackingPart.UpperBody; 
                 _footData = bodies[0];
-                _footData.Status = TrackingPart.LowerBody;
                 break;
             default:
                 _handData = bodies[0];
-                _handData.Status = TrackingPart.UpperBody;
                 _footData = bodies[1];
-                _footData.Status = TrackingPart.LowerBody;
                 break;
         }
     }
@@ -114,8 +107,6 @@ public class PlayerKinectMotion : MonoBehaviour
         if(trackedData.Count < 2) return;
 
         (_handData, _footData) = (_footData, _handData);
-        _handData.Status = TrackingPart.UpperBody;
-        _footData.Status = TrackingPart.LowerBody;
     }
     
     private void UpdateMotion()

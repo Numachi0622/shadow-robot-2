@@ -1,4 +1,6 @@
 
+using Windows.Kinect;
+
 public static class GameConst
 {
     public const int MAX_TRACKING_COUNT = 2;

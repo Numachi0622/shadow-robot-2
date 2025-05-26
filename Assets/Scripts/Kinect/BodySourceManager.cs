@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Windows.Kinect;
-using Enum;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine.UI;

@@ -14,7 +14,7 @@ public class ColorBodySourceView : MonoBehaviour
     [SerializeField] private Camera _convertCamera;
     [SerializeField] private GameObject _idTextDebugCanvas;
     
-    private Dictionary<ulong, GameObject> _bodies = new Dictionary<ulong, GameObject>();
+    private Dictionary<Kinect.Body, GameObject> _bodies = new Dictionary<Kinect.Body, GameObject>();
     private Kinect.CoordinateMapper _coordinateMapper;
     private const int WIDTH = 1920;
     private const int HEIGHT = 1080;
@@ -55,63 +55,33 @@ public class ColorBodySourceView : MonoBehaviour
 
     public void Initialize()
     {
+        BodySourceManager.Instance.TrackedData
+            .ObserveAdd()
+            .Where(body => !_bodies.ContainsKey(body.Value))
+            .Subscribe(body =>
+            {
+                _currentDisplayId++;
+                _bodies.Add(body.Value, CreateBodyObject(body.Value.TrackingId, _currentDisplayId));
+
+            }) 
+            .AddTo(this);
+
+        BodySourceManager.Instance.TrackedData
+            .ObserveRemove()
+            .Where(body => _bodies.ContainsKey(body.Value))
+            .Subscribe(body =>
+            {
+                _currentDisplayId--;
+                Destroy(_bodies[body.Value]);
+                _bodies.Remove(body.Value);
+            })
+            .AddTo(this);
+        
         this.UpdateAsObservable()
             .Subscribe(_ =>
             {
-                if (_coordinateMapper == null)
-                {
-                    _coordinateMapper = BodySourceManager.Instance.Sensor.CoordinateMapper;
-                }
-        
-                Kinect.Body[] data = BodySourceManager.Instance.GetData();
-                if (data == null) return;
-        
-                List<ulong> trackedIds = new List<ulong>();
-                foreach(var body in data)
-                {
-                    if (body == null)
-                    {
-                        continue; 
-                    }
-                
-                    if(body.IsTracked)
-                    {
-                        trackedIds.Add (body.TrackingId);
-                    }
-                }
-        
-                List<ulong> knownIds = new List<ulong>(_bodies.Keys);
-        
-                // First delete untracked bodies
-                foreach(ulong trackingId in knownIds)
-                {
-                    if(!trackedIds.Contains(trackingId))
-                    {
-                        Destroy(_bodies[trackingId]);
-                        _bodies.Remove(trackingId);
-                    }
-                }
-
-                for(var i = 0; i < data.Length; i++)
-                {
-                    var body = data[i];
-                    if (body == null)
-                    {
-                        continue;
-                    }
-            
-                    if(body.IsTracked)
-                    {
-                        if(!_bodies.ContainsKey(body.TrackingId))
-                        {
-                            var displayId = _currentDisplayId;
-                            _bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
-                            _currentDisplayId++;
-                        }
-                
-                        RefreshBodyObject(body, _bodies[body.TrackingId]);
-                    }
-                }
+                _coordinateMapper ??= BodySourceManager.Instance.Sensor.CoordinateMapper;
+                RefreshTrackedBodyObject();
             })
             .AddTo(this);
     }
@@ -141,6 +111,14 @@ public class ColorBodySourceView : MonoBehaviour
         idText.transform.GetChild(0).GetComponent<Text>().text = $"id: {displayId}";
         
         return body;
+    }
+
+    private void RefreshTrackedBodyObject()
+    {
+        foreach (var body in _bodies)
+        {
+            RefreshBodyObject(body.Key, body.Value);
+        }
     }
     
     private void RefreshBodyObject(Kinect.Body body, GameObject bodyObject)

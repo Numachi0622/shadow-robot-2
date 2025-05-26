@@ -1,7 +1,6 @@
 using RootSystem = System;
 using System.Linq;
 using System.Collections.Generic;
-using Enum;
 namespace Windows.Kinect
 {
     //
@@ -9,8 +8,6 @@ namespace Windows.Kinect
     //
     public sealed partial class Body : Helper.INativeWrapper
     {
-        public TrackingPart Status { get; set; } = TrackingPart.Empty;
-
         internal RootSystem.IntPtr _pNative;
         RootSystem.IntPtr Helper.INativeWrapper.nativePtr { get { return _pNative; } }
 
