@@ -1,13 +1,20 @@
 using System;
+using kinect = Windows.Kinect;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
+using UniRx;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameView : MonoBehaviour
 {
-    [SerializeField] private GameObject _selectView;
     [SerializeField] private Material _transitionMat;
+
+    // Select View
+    [SerializeField] private GameObject _selectView;
+    [SerializeField] private Color _disConnectColor;
+    [SerializeField] private Image[] _trackingState;
     
     [SerializeField] private GameObject _inGameView;
     [SerializeField] private TextMeshProUGUI _countDownText;
@@ -18,9 +25,35 @@ public class InGameView : MonoBehaviour
     public void Initialize()
     {
         _selectView.SetActive(true);
+        ResetTrackingState();
+        
         _inGameView.SetActive(false);
     }
 
+    private void ResetTrackingState()
+    {
+        foreach (var state in _trackingState)
+        {
+            state.color = _disConnectColor;
+            state.transform.GetChild(0).gameObject.SetActive(false);
+        }
+    }
+    public void UpdateTrackingStateView(IReadOnlyReactiveCollection<kinect.Body> bodies)
+    {
+        if(bodies == null) return;
+        if (bodies.Count == 0)
+        {
+            ResetTrackingState();
+            return;
+        }
+
+        foreach (var state in _trackingState)
+        {
+            state.color = Color.white;
+            state.transform.GetChild(0).gameObject.SetActive(true);
+        }
+    }
+    
     public void SetInGameView()
     {
         _selectView.SetActive(false);

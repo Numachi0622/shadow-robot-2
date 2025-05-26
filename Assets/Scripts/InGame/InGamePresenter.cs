@@ -54,6 +54,12 @@ public class InGamePresenter : MonoBehaviour
             .Select(fps => Mathf.RoundToInt(1.0f / Time.deltaTime))
             .Subscribe(_debugView.UpdateFpsView)
             .AddTo(this);
+        
+        // Tracking State
+        BodySourceManager.Instance.TrackedData
+            .ObserveCountChanged()
+            .Subscribe(_ => _inGameView.UpdateTrackingStateView(BodySourceManager.Instance.TrackedData))
+            .AddTo(this);
 
         // Debug
         this.UpdateAsObservable()
