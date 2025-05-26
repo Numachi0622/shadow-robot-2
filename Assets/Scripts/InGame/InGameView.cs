@@ -45,7 +45,7 @@ public class InGameView : MonoBehaviour
         _transitionMat.SetFloat("_Radius", value);
     }
 
-    public async UniTaskVoid UpdateCountDown(float delay)
+    public async UniTaskVoid UpdateCountDown(float delay, Action callback = null)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(delay));
         var count = 3;
@@ -65,5 +65,7 @@ public class InGameView : MonoBehaviour
         
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         _countDownText.gameObject.SetActive(false);
+        
+        callback?.Invoke();
     }
 }

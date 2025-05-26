@@ -77,7 +77,7 @@ public class InGamePresenter : MonoBehaviour
                 _inGameView.SetInGameView();
             }, () =>
             {
-                _inGameView.UpdateCountDown(0.3f).Forget();
+                _inGameView.UpdateCountDown(0.3f, () => _enemyGenerator.Generate()).Forget();
             });
         };
 

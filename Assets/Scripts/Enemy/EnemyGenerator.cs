@@ -16,7 +16,7 @@ public class EnemyGenerator : MonoBehaviour
             .AddTo(this);
     }
 
-    private void Generate()
+    public void Generate()
     {
         for (var i = 0; i < _count; i++)
         {
