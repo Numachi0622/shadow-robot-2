@@ -8,5 +8,5 @@ public static class GameConst
     public const float MAX_PUNCH_POINT = 100f;
     public const float MAX_ARM_SCALE = 4f;
     public const float MAX_PUNCH_VELOCITY = 20f;
-    public const float PUNCH_POINT_RESET_TIME = 1.5f;
+    public const float PUNCH_POINT_RESET_TIME = 2f;
 }

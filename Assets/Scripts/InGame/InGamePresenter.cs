@@ -10,6 +10,10 @@ public class InGamePresenter : MonoBehaviour
     [SerializeField] private ColorBodySourceView _colorBodySourceView;
     [SerializeField] private EnemyGenerator _enemyGenerator;
     [SerializeField] private TrackingDebugView _debugView;
+    [SerializeField] private FollowingCamera _followingCamera;
+    [SerializeField] private InGameView _inGameView;
+    [SerializeField] private GameStatePresenter _gameStatePresenter;
+    
     [SerializeField] private SerializableInterface<ISingleton>[] _singletons;
 
     private void Awake()
@@ -25,10 +29,14 @@ public class InGamePresenter : MonoBehaviour
         _playerPresenter.Initialize();
         _colorBodySourceView.Initialize();
         _enemyGenerator.Initialilze();
+        _followingCamera.Initialize();
+        _gameStatePresenter.Initialize();
+        _inGameView.Initialize();
 
         Application.targetFrameRate = 60;
         
         Bind();
+        SetEvents();
     }
 
     private void Bind()
@@ -46,5 +54,36 @@ public class InGamePresenter : MonoBehaviour
             .Select(fps => Mathf.RoundToInt(1.0f / Time.deltaTime))
             .Subscribe(_debugView.UpdateFpsView)
             .AddTo(this);
+
+        // Debug
+        this.UpdateAsObservable()
+            .Where(_ => Input.GetKeyDown(KeyCode.Space))
+            .Subscribe(_ =>
+            {
+                var current = (int)_gameStatePresenter.CurrentGameState;
+                current = Mathf.Min(current + 1, 2);
+                _gameStatePresenter.SetState((GameState)current);
+            })
+            .AddTo(this);
+    }
+
+    private void SetEvents()
+    {
+        _gameStatePresenter.OnStateChanged[GameState.InGame] = () =>
+        {
+            _inGameView.PlayTransition(() =>
+            {
+                _followingCamera.SetInGameCamera();
+                _inGameView.SetInGameView();
+            }, () =>
+            {
+                _inGameView.UpdateCountDown(0.3f).Forget();
+            });
+        };
+
+        _gameStatePresenter.OnStateChanged[GameState.Result] = () =>
+        {
+
+        };
     }
 }
