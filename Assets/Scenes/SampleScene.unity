@@ -1676,7 +1676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyPrefab: {fileID: 4422290329668422317, guid: 53ed4bceabef3914495e779cfea3ed1c, type: 3}
-  _count: 1
+  _count: 3
   _enemyViewParent: {fileID: 1719879985}
 --- !u!4 &697899223
 Transform:
@@ -2038,8 +2038,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gauge: {fileID: 265375690}
-  _leftArmTransform: {fileID: 0}
-  _rightArmTransform: {fileID: 0}
+  _leftArmTransform: {fileID: 8587118907022087756}
+  _rightArmTransform: {fileID: 8587118907022087758}
 --- !u!114 &838422233
 MonoBehaviour:
   m_ObjectHideFlags: 0

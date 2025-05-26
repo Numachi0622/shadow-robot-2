@@ -24,7 +24,6 @@ public class PlayerAttacker : MonoBehaviour, IAttackable
         _punchGaugePresenter.Initialize();
 
         _attackCollider.OnTriggerEnterAsObservable()
-            .Where(target => target.GetComponent<IAttackable>() != null)
             .Select(_ => Mathf.RoundToInt(Mathf.Min(_attackInfo.AttackVelocity, GameConst.MAX_PUNCH_VELOCITY)))
             .Subscribe(value => _punchGaugePresenter.AddPunchPoint(value))
             .AddTo(this);

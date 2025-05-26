@@ -81,6 +81,7 @@ public class InGamePresenter : MonoBehaviour
             {
                 _followingCamera.SetInGameCamera();
                 _inGameView.SetInGameView();
+                _playerPresenter.SetMovable(true);
             }, () =>
             {
                 _inGameView.UpdateCountDown(0.3f, () => _enemyGenerator.Generate()).Forget();

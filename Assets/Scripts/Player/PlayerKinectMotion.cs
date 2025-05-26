@@ -33,7 +33,6 @@ public class PlayerKinectMotion : MonoBehaviour
     [SerializeField] private float _moveMagnification = 5f;
     [SerializeField] private float _jumpThreshold = 0.25f;
     [SerializeField] private float _jumpMagnification = 2f;
-    [SerializeField] private bool _isMovable = false;
     
     private Quaternion _spineBase;
     private Quaternion _spineMid;
@@ -56,6 +55,8 @@ public class PlayerKinectMotion : MonoBehaviour
 
     private bool _isJumping = false;
     public bool IsJumping => _isJumping;
+    
+    public bool IsMovable { get; set; } = false;
     
     public void Initialize()
     {
@@ -165,7 +166,7 @@ public class PlayerKinectMotion : MonoBehaviour
         _ref.rotation = q;
         
         // 移動
-        if(!_isMovable) return;
+        if(!IsMovable) return;
         var kinectPos = _footData.Joints[Kinect.JointType.SpineMid].Position;
         _isJumping = kinectPos.Y > _jumpThreshold;
         
