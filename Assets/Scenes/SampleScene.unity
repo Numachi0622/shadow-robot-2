@@ -1001,8 +1001,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe9e8de68d230c46b50497633db12f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 10
-  _maxSpeedDistance: 2
+  _maxSpeed: 0
+  _maxSpeedDistance: 0
   _target: {fileID: 0}
   _selectViewCamera: {fileID: 1998683413}
   _inGameViewCamera: {fileID: 330585545}

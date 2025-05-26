@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Windows.Kinect;
+using Enum;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class BodySourceManager : Singleton<BodySourceManager>
     public KinectSensor Sensor => _sensor;
     private BodyFrameReader _reader;
     private Body[] _data = null;
-    private ReactiveCollection<Body> _trackedData = new ReactiveCollection<Body>();
+    private readonly ReactiveCollection<Body> _trackedData = new ReactiveCollection<Body>();
     public Body[] GetData() => _data;
     public IReadOnlyReactiveCollection<Body> TrackedData => _trackedData;
     
@@ -109,4 +110,8 @@ public class BodySourceManager : Singleton<BodySourceManager>
             _sensor = null;
         }
     }
+}
+
+internal class BodyStatus
+{
 }

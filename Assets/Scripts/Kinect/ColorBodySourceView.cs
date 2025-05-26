@@ -18,7 +18,7 @@ public class ColorBodySourceView : MonoBehaviour
     private Kinect.CoordinateMapper _coordinateMapper;
     private const int WIDTH = 1920;
     private const int HEIGHT = 1080;
-    private uint currentDisplayId = 0;
+    private uint _currentDisplayId = 0;
 
     
     private Dictionary<Kinect.JointType, Kinect.JointType> _boneMap = new Dictionary<Kinect.JointType, Kinect.JointType>()
@@ -104,9 +104,9 @@ public class ColorBodySourceView : MonoBehaviour
                     {
                         if(!_bodies.ContainsKey(body.TrackingId))
                         {
-                            var displayId = currentDisplayId;
+                            var displayId = _currentDisplayId;
                             _bodies[body.TrackingId] = CreateBodyObject(body.TrackingId, displayId);
-                            currentDisplayId++;
+                            _currentDisplayId++;
                         }
                 
                         RefreshBodyObject(body, _bodies[body.TrackingId]);
