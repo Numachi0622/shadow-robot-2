@@ -7,7 +7,7 @@ public class IdleStateBehaviour : StateMachineBehaviour
     
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _enemyStatePresenter ??= animator.GetComponent<EnemyPresenter>().EnemyStatePresenter;
+        _enemyStatePresenter ??= animator.GetComponent<EnemyPresenterBase>().EnemyStatePresenter;
 
         if (_enemyStatePresenter.CurrentState != EnemyState.AttackCoolTime)
         {

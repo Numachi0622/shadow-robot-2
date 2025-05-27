@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 5938961349815847712}
   - component: {fileID: 5983682981909999294}
   - component: {fileID: 1208877933125910624}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,7 +81,7 @@ SphereCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 1.5}
@@ -337,12 +337,12 @@ GameObject:
   - component: {fileID: 1941663682894319646}
   - component: {fileID: 7276360359489008756}
   - component: {fileID: 7982541089005219081}
-  - component: {fileID: 994313105671645081}
+  - component: {fileID: 8068897974995010262}
   - component: {fileID: 3526437385994238700}
   - component: {fileID: 821533875426339950}
   - component: {fileID: 5521341793301572862}
   - component: {fileID: 3422508593389905715}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mutant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -439,7 +439,7 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
---- !u!114 &994313105671645081
+--- !u!114 &8068897974995010262
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -448,7 +448,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2241480328315159215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4e05601d9b53c64da67b22f9ddf1ac1, type: 3}
+  m_Script: {fileID: 11500000, guid: a1554f6a0fa043444a40b80c9035b334, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 1941663682894319646}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyGenerator : MonoBehaviour
 {
-    [SerializeField] private EnemyPresenter _enemyPrefab;
+    [SerializeField] private EnemyPresenterBase _enemyPrefab;
     [SerializeField] private int _count;
     [SerializeField] private Transform _enemyViewParent;
 
