@@ -243,7 +243,6 @@ MonoBehaviour:
   _moveMagnification: 7
   _jumpThreshold: 0.25
   _jumpMagnification: 12
-  _isMovable: 0
 --- !u!114 &71753417
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1675,8 +1674,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f213befd98efe7a4caf773834051c783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 4422290329668422317, guid: 53ed4bceabef3914495e779cfea3ed1c, type: 3}
-  _count: 3
+  _enemyPrefab: {fileID: 994313105671645081, guid: ff03cf26539198f4dae502aeef3fbcdf, type: 3}
+  _count: 1
   _enemyViewParent: {fileID: 1719879985}
 --- !u!4 &697899223
 Transform:
