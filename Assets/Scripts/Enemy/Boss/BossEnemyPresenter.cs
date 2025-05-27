@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using Cysharp.Threading.Tasks;
 using Enemy;
 using UnityEngine;
 using UniRx;
@@ -91,9 +92,10 @@ public class BossEnemyPresenter : EnemyPresenterBase
         _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = () =>
         {
             _animator.SetBool(IS_MOVE, false);
-            _lastAttackIndex = GetRandomAttackIndex();
+            //_lastAttackIndex = GetRandomAttackIndex();
+            _lastAttackIndex = 1;
             _animator.SetTrigger(ATTACK_READY[_lastAttackIndex]);
-            _attacker.AttackReady().Forget();
+            _attacker.AttackReady(_lastAttackIndex).Forget();
             _enemyEffect.ShakeBody(3);
             _enemyEffect.BlinkColor(_params.AttackReadyColor, 4);
         };

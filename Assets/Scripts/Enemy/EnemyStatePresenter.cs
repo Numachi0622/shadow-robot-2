@@ -35,7 +35,7 @@ public class EnemyStatePresenter : MonoBehaviour
     
     public void SetState(EnemyState newState)
     {
-        if (CurrentState == EnemyState.Dead) return;
+        if(CurrentState == EnemyState.Dead) return;
         _model.SetState(newState);
     }
 }

@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5938961349815847712}
   - component: {fileID: 5983682981909999294}
-  - component: {fileID: 1208877933125910624}
+  - component: {fileID: 7614370231893017829}
   m_Layer: 8
   m_Name: AttackCollider
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1
   m_Center: {x: 0, y: 1, z: 1.5}
---- !u!114 &1208877933125910624
+--- !u!114 &7614370231893017829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,10 +94,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 318684617085929559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9c37a060135ae547950cc0f27ed1dd9, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a5963f7a2e57b940ac1f68120dcd339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackColllider: {fileID: 5983682981909999294}
+  _attackCollider: {fileID: 5983682981909999294}
+  _energyBallAttacker: {fileID: 1725639558443685965, guid: 5d69b065aaf78ca469e6888d2c9fab92, type: 3}
 --- !u!1 &546764795992133619
 GameObject:
   m_ObjectHideFlags: 0
@@ -458,7 +459,7 @@ MonoBehaviour:
   _enemyEffect: {fileID: 3422508593389905715}
   _hpPresenter: {fileID: 5521341793301572862}
   _hpView: {fileID: 7972302661534279649, guid: 68cf0c007aac24b4094bbd659b9d6c98, type: 3}
-  _attacker: {fileID: 1208877933125910624}
+  _attacker: {fileID: 7614370231893017829}
   _takeDamageCollider: {fileID: 7982541089005219081}
 --- !u!114 &3526437385994238700
 MonoBehaviour:
@@ -511,6 +512,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _bodyTransform: {fileID: 1038938031638132719}
   _skinnedMeshRenderer: {fileID: 8226563634104425983}
+  _attackReadyShakeStrength: 0.1
+  _attackReadyShakeVibrato: 15
+  _attackReadyShakeDuration: 0.4
 --- !u!1 &2730693129793632635
 GameObject:
   m_ObjectHideFlags: 0

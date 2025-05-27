@@ -1,55 +1,20 @@
 using System;
+using Cysharp.Threading.Tasks;
 using Enemy;
 using Interface;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 
-public class EnemyPresenter : MonoBehaviour
+public class EnemyPresenter : EnemyPresenterBase
 {
-    [SerializeField] private Animator _animator;
-    [SerializeField] private EnemyParams _params;
-    [SerializeField] private EnemyMovement _enemyMovement;
-    [SerializeField] private EnemyStatePresenter _enemyStatePresenter;
-    [SerializeField] private EnemyEffect _enemyEffect;
-    [SerializeField] private HitPointPresenter _hpPresenter;
-    [SerializeField] private HitPointView _hpView;
-    [SerializeField] private EnemyAttacker _attacker;
-    [SerializeField] private Collider _takeDamageCollider;
-    
     private readonly int IS_MOVE = Animator.StringToHash("IsMove");
     private readonly int ATTACK_READY = Animator.StringToHash("AttackReady");
     private readonly int ATTACK = Animator.StringToHash("Attack");
     private readonly int DAMAGE = Animator.StringToHash("Damage");
     private readonly int DEAD = Animator.StringToHash("Dead");
-    
-    public EnemyStatePresenter EnemyStatePresenter => _enemyStatePresenter;
-    public EnemyAttacker Attacker => _attacker;
-    public EnemyParams Params => _params;
 
-    public Action OnDead;
-
-
-    public void Initialize(Transform viewParent)
-    {
-        // Initialize
-        _enemyStatePresenter.Initialize();
-        _enemyMovement.Initialize(_params, _enemyStatePresenter);
-        _attacker.Initialize(_params);
-        _enemyEffect.Initialize();
-
-        var hpView = Instantiate(_hpView, viewParent).GetComponent<HitPointView>();
-        _hpPresenter.Initialize(_params, hpView);
-        OnDead = () => Destroy(hpView.gameObject, 1.5f);
-        
-        // Bind
-        Bind(hpView);
-        
-        // Set Events
-        SetEvents();
-    }
-
-    private void Bind(HitPointView hpView)
+    protected override void Bind(HitPointView hpView)
     {
         // Take Damage
         this.OnTriggerEnterAsObservable()
@@ -100,7 +65,7 @@ public class EnemyPresenter : MonoBehaviour
             .AddTo(this);
     }
 
-    private void SetEvents()
+    protected override void SetEvents()
     {
         // State
         _enemyStatePresenter.OnStateChanged[EnemyState.Idle] = () => _takeDamageCollider.enabled = true;
@@ -147,16 +112,5 @@ public class EnemyPresenter : MonoBehaviour
         
         // Dead
         _hpPresenter.OnHpDeleted(() => _enemyStatePresenter.SetState(EnemyState.Dead));
-    }
-    
-    
-    // TODO: あとでDamageModelつくる
-    private int Damage(AttackPoint attackPoint, float velocity)
-    {
-        var velRate = velocity / GameConst.MAX_PUNCH_VELOCITY;
-        var damage = Mathf.Lerp(attackPoint.MinAttackPoint, attackPoint.MaxAttackPoint,
-            velRate);
-
-        return Mathf.RoundToInt(damage);
     }
 }

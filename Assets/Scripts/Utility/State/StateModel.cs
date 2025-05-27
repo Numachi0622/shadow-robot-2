@@ -15,7 +15,7 @@ public class StateModel<T>
     public void SetState(T newState)
     {
         if(_state.Value.Equals(newState)) return;
+        //SDebug.Log($"{_state.Value} -> {newState}");
         _state.Value = newState;
-        //Debug.Log("State changed to: " + newState);
     }
 }

@@ -5,6 +5,9 @@ public class EnemyEffect : MonoBehaviour
 {
     [SerializeField] private Transform _bodyTransform;
     [SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
+    [SerializeField] private float _attackReadyShakeStrength = 0.1f;
+    [SerializeField] private int _attackReadyShakeVibrato = 20;
+    [SerializeField] private float _attackReadyShakeDuration = 0.5f;
 
     private Material _bodyMaterial;
     private Vector3 _shakeOffset;
@@ -57,7 +60,7 @@ public class EnemyEffect : MonoBehaviour
         
         _shakeSequence = DOTween.Sequence()
             .SetLink(gameObject)
-            .Append(DOTween.Shake(() => Vector3.zero, offset => _shakeOffset = offset, 0.5f, 0.1f, 20, fadeOut: false))
+            .Append(DOTween.Shake(() => Vector3.zero, offset => _shakeOffset = offset, _attackReadyShakeDuration, _attackReadyShakeStrength, _attackReadyShakeVibrato, fadeOut: false))
             .OnUpdate(() => _bodyTransform.localPosition += _shakeOffset)
             .SetUpdate(UpdateType.Late)
             .SetLoops(loop);

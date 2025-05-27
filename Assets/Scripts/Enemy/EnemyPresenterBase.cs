@@ -10,11 +10,11 @@ public abstract class EnemyPresenterBase : MonoBehaviour
     [SerializeField] protected EnemyEffect _enemyEffect;
     [SerializeField] protected HitPointPresenter _hpPresenter;
     [SerializeField] protected HitPointView _hpView;
-    [SerializeField] protected EnemyAttacker _attacker;
+    [SerializeField] protected EnemyAttackerBase _attacker;
     [SerializeField] protected Collider _takeDamageCollider;
 
     public EnemyStatePresenter EnemyStatePresenter => _enemyStatePresenter;
-    public EnemyAttacker Attacker => _attacker;
+    public EnemyAttackerBase Attacker => _attacker;
     public EnemyParams Params => _params;
 
     public Action OnDead;
@@ -24,7 +24,7 @@ public abstract class EnemyPresenterBase : MonoBehaviour
         // Initialize
         _enemyStatePresenter.Initialize();
         _enemyMovement.Initialize(_params, _enemyStatePresenter);
-        _attacker.Initialize(_params);
+        _attacker?.Initialize(_params);
         _enemyEffect.Initialize();
 
         var hpView = Instantiate(_hpView, viewParent).GetComponent<HitPointView>();
