@@ -92,8 +92,7 @@ public class BossEnemyPresenter : EnemyPresenterBase
         _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = () =>
         {
             _animator.SetBool(IS_MOVE, false);
-            //_lastAttackIndex = GetRandomAttackIndex();
-            _lastAttackIndex = 1;
+            _lastAttackIndex = GetRandomAttackIndex();
             _animator.SetTrigger(ATTACK_READY[_lastAttackIndex]);
             _attacker.AttackReady(_lastAttackIndex).Forget();
             _enemyEffect.ShakeBody(3);

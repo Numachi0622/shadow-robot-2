@@ -4,10 +4,12 @@ using DG.Tweening;
 using Enemy.Boss;
 using Interface;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class BossEnemyAttacker : EnemyAttackerBase
 {
     [SerializeField] private EnergyBallAttacker _energyBallAttacker;
+    [SerializeField] private FirePillarAttacker _firePillarAttacker;
     private int _attackIndex;
     private Sequence _backSequence;
 
@@ -22,7 +24,7 @@ public class BossEnemyAttacker : EnemyAttackerBase
                 EnergyBallAttack(waitTime).Forget();
                 break;
             case 2:
-                ThunderboltAttack();
+                FirePillarAttack(waitTime).Forget();
                 break;
         }
     }
@@ -65,7 +67,7 @@ public class BossEnemyAttacker : EnemyAttackerBase
         {
             var rotation = Quaternion.Euler(0, angle, 0);
             var dir = rotation * Vector3.forward;
-            var energyBall = Instantiate(_energyBallAttacker, transform.position + Vector3.up, Quaternion.identity, transform);
+            var energyBall = Instantiate(_energyBallAttacker, transform.position + Vector3.up, Quaternion.identity);
             energyBall.Initialize(_params);
             energyBall.Execute(dir);
         }
@@ -73,9 +75,20 @@ public class BossEnemyAttacker : EnemyAttackerBase
         AttackCoolTime(_params.AttackCoolTime).Forget();
     }
     
-    private void ThunderboltAttack()
+    private async UniTask FirePillarAttack(float waitTime)
     {
-        Debug.Log("Thunderbolt Attack");
+        await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+        
+        for(var i = 0; i < 20; i++)
+        {
+            var pos = transform.position + Random.insideUnitSphere * 15f;
+            pos.y = 0;
+            var firePillar = Instantiate(_firePillarAttacker, pos, Quaternion.identity);
+            firePillar.Initialize(_params);
+            firePillar.Execute();
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+        }
+        
         AttackCoolTime(_params.AttackCoolTime).Forget();
     }
 }
