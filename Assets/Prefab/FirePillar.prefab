@@ -71,9 +71,9 @@ MonoBehaviour:
   _attackCollider: {fileID: 2149742453668324584}
   _firePillarParticle: {fileID: 4290780860125745934}
   _firePillarAttackPoint:
-    _minAttackPoint: 15
-    _maxAttackPoint: 20
-  _delay: 3
+    _minAttackPoint: 20
+    _maxAttackPoint: 30
+  _delay: 2
 --- !u!1001 &1606825720317961420
 PrefabInstance:
   m_ObjectHideFlags: 0

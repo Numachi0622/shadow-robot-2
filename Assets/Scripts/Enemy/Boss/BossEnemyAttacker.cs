@@ -66,7 +66,7 @@ public class BossEnemyAttacker : EnemyAttackerBase
         for(var angle = -90f; angle <= 90f; angle += 10f)
         {
             var rotation = Quaternion.Euler(0, angle, 0);
-            var dir = rotation * Vector3.forward;
+            var dir = rotation * transform.parent.forward;
             var energyBall = Instantiate(_energyBallAttacker, transform.position + Vector3.up, Quaternion.identity);
             energyBall.Initialize(_params);
             energyBall.Execute(dir);
