@@ -29,7 +29,7 @@ public abstract class EnemyPresenterBase : MonoBehaviour
 
         var hpView = Instantiate(_hpView, viewParent).GetComponent<HitPointView>();
         _hpPresenter.Initialize(_params, hpView);
-        OnDead = () => Destroy(hpView.gameObject, 1.5f);
+        OnDead += () => Destroy(hpView.gameObject, 1.5f);
         
         // Bind
         Bind(hpView);

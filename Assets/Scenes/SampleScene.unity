@@ -1655,6 +1655,7 @@ GameObject:
   m_Component:
   - component: {fileID: 697899223}
   - component: {fileID: 697899222}
+  - component: {fileID: 697899224}
   m_Layer: 0
   m_Name: EnemyGenerator
   m_TagString: Untagged
@@ -1674,9 +1675,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f213befd98efe7a4caf773834051c783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 8068897974995010262, guid: ff03cf26539198f4dae502aeef3fbcdf, type: 3}
-  _count: 1
+  _enemyPrefab: {fileID: 4422290329668422317, guid: 53ed4bceabef3914495e779cfea3ed1c, type: 3}
+  _bossPrefab: {fileID: 8068897974995010262, guid: ff03cf26539198f4dae502aeef3fbcdf, type: 3}
+  _knockDownCountPresenter: {fileID: 697899224}
   _enemyViewParent: {fileID: 1719879985}
+  _generateInterval: 3
 --- !u!4 &697899223
 Transform:
   m_ObjectHideFlags: 0
@@ -1692,6 +1695,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &697899224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697899221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9881f3fc501f84b94a7616f17c3909, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &803480782
 GameObject:
   m_ObjectHideFlags: 0

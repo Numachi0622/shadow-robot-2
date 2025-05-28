@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Interface;
 using UnityEngine;
 using TNRD;
@@ -84,13 +85,13 @@ public class InGamePresenter : MonoBehaviour
                 _playerPresenter.SetMovable(true);
             }, () =>
             {
-                _inGameView.UpdateCountDown(0.3f, () => _enemyGenerator.Generate()).Forget();
+                _inGameView.UpdateCountDown(0.3f, () => _enemyGenerator.GenerateLoopBeforeBoss().Forget()).Forget();
             });
         };
 
         _gameStatePresenter.OnStateChanged[GameState.Result] = () =>
         {
-
+            
         };
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956b414f4ca71164f82429888fd306a9, type: 3}
   m_Name: SlimeParams
   m_EditorClassIdentifier: 
-  MaxHp: 100
+  MaxHp: 50
   AttackPoint:
     _minAttackPoint: 5
     _maxAttackPoint: 10

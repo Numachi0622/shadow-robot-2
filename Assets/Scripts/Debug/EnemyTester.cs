@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class EnemyTester : MonoBehaviour
@@ -8,6 +9,6 @@ public class EnemyTester : MonoBehaviour
     private void Start()
     {
         _enemyGenerator.Initialilze();
-        _enemyGenerator.Generate();
+        _enemyGenerator.GenerateLoopBeforeBoss().Forget();
     }
 }
