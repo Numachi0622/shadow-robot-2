@@ -9,6 +9,7 @@ using Interface;
 public class BossEnemyPresenter : EnemyPresenterBase
 {
     private int _lastAttackIndex;
+    private bool _isCounterAttackMode = false;
     
     private readonly int IS_MOVE = Animator.StringToHash("IsMove");
     private readonly int DAMAGE = Animator.StringToHash("Damage");
@@ -87,16 +88,18 @@ public class BossEnemyPresenter : EnemyPresenterBase
     protected override void SetEvents()
     {
         // State
-        _enemyStatePresenter.OnStateChanged[EnemyState.Idle] = () => _takeDamageCollider.enabled = true;
+        _enemyStatePresenter.OnStateChanged[EnemyState.Idle] = () =>
+        {
+            _takeDamageCollider.enabled = true;
+            if (_isCounterAttackMode)
+            {
+                StartAttackReady();
+            }
+        };
         _enemyStatePresenter.OnStateChanged[EnemyState.Move] = () => _animator.SetBool(IS_MOVE, true);
         _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = () =>
         {
-            _animator.SetBool(IS_MOVE, false);
-            _lastAttackIndex = GetRandomAttackIndex();
-            _animator.SetTrigger(ATTACK_READY[_lastAttackIndex]);
-            _attacker.AttackReady(_lastAttackIndex).Forget();
-            _enemyEffect.ShakeBody(3);
-            _enemyEffect.BlinkColor(_params.AttackReadyColor, 4);
+            StartAttackReady();
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Attack] = () =>
         {
@@ -107,6 +110,12 @@ public class BossEnemyPresenter : EnemyPresenterBase
         {
             _takeDamageCollider.enabled = false;
             _animator.SetTrigger(DAMAGE);
+            
+            if (Random.value > 0.6f)
+            {
+                Debug.Log("Counter");
+                _isCounterAttackMode = true;
+            }
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Dead] = () =>
         {
@@ -125,7 +134,10 @@ public class BossEnemyPresenter : EnemyPresenterBase
         _attacker.OnAttackCoolTimeStarted = () => _enemyStatePresenter.SetState(EnemyState.AttackCoolTime);
         
         // End CoolTime
-        _attacker.OnAttackCoolTimeEnded = () => _enemyStatePresenter.SetState(EnemyState.Idle);
+        _attacker.OnAttackCoolTimeEnded = () =>
+        {
+            _enemyStatePresenter.SetState(EnemyState.Idle);   
+        };
         
         // Damage
         _hpPresenter.OnHpDecreased(() => _enemyStatePresenter.SetState(EnemyState.Damage));
@@ -138,11 +150,31 @@ public class BossEnemyPresenter : EnemyPresenterBase
     {
         var rand = Random.value;
 
-        if (rand < 0.6f)
+        if (rand < 0.55f)
             return 0;
         else if (rand < 0.8f)
             return 1;
         else
             return 2;
+    }
+
+    private int GetRandomCounterAttackIndex()
+    {
+        var rand = Random.value;
+        return rand < 0.6f ? 1 : 2;
+    }
+
+    private void StartAttackReady()
+    {
+        _animator.SetBool(IS_MOVE, false);
+        _lastAttackIndex = _isCounterAttackMode ? GetRandomCounterAttackIndex() : GetRandomAttackIndex();
+        if (_isCounterAttackMode)
+        {
+            _isCounterAttackMode = false;
+        }
+        _animator.SetTrigger(ATTACK_READY[_lastAttackIndex]);
+        _attacker.AttackReady(_lastAttackIndex).Forget();
+        _enemyEffect.ShakeBody(3);
+        _enemyEffect.BlinkColor(_params.AttackReadyColor, 4);
     }
 }

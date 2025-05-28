@@ -72,7 +72,7 @@ MonoBehaviour:
     _minAttackPoint: 10
     _maxAttackPoint: 20
   _lifeTime: 3
-  _spped: 8
+  _spped: 10
 --- !u!1001 &2554465438130746567
 PrefabInstance:
   m_ObjectHideFlags: 0

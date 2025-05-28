@@ -79,16 +79,16 @@ public class BossEnemyAttacker : EnemyAttackerBase
     {
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
         
-        for(var i = 0; i < 20; i++)
+        AttackCoolTime(_params.AttackCoolTime).Forget();
+        
+        for(var i = 0; i < 15; i++)
         {
-            var pos = transform.position + Random.insideUnitSphere * 15f;
+            var pos = transform.position + Random.insideUnitSphere * 10f;
             pos.y = 0;
             var firePillar = Instantiate(_firePillarAttacker, pos, Quaternion.identity);
             firePillar.Initialize(_params);
             firePillar.Execute();
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
         }
-        
-        AttackCoolTime(_params.AttackCoolTime).Forget();
     }
 }
