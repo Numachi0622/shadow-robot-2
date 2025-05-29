@@ -1,14 +1,15 @@
 using System;
 using Cysharp.Threading.Tasks;
+using UniRx.Triggers;
 using UnityEngine;
 
 public class EnemyTester : MonoBehaviour
 {
-    [SerializeField] private EnemyGenerator _enemyGenerator;
+    [SerializeField] private EnemyGenerator _generator;
 
     private void Start()
     {
-        _enemyGenerator.Initialilze();
-        _enemyGenerator.GenerateLoopBeforeBoss().Forget();
+        _generator.Initialilze();
+        _generator.GenerateBoss();
     }
 }

@@ -10,6 +10,10 @@ public class BossEnemyAttacker : EnemyAttackerBase
 {
     [SerializeField] private EnergyBallAttacker _energyBallAttacker;
     [SerializeField] private FirePillarAttacker _firePillarAttacker;
+    [SerializeField] private float _backDistance = 7f;
+    [SerializeField] private float _backDuration = 0.5f;
+    [SerializeField] private int _firePillarCount = 15;
+    [SerializeField] private float _firePillarRange = 10f;
     private int _attackIndex;
     private Sequence _backSequence;
 
@@ -54,7 +58,7 @@ public class BossEnemyAttacker : EnemyAttackerBase
         _backSequence?.Kill();
         _backSequence = DOTween.Sequence()
             .SetLink(gameObject)
-            .Join(transform.parent.DOMove(-transform.parent.forward * 5f, 0.5f).SetEase(Ease.Linear).SetRelative(true))
+            .Join(transform.parent.DOMove(-transform.parent.forward * _backDistance, _backDuration).SetEase(Ease.Linear).SetRelative(true))
             .AppendInterval(_params.AttackReadyTime)
             .AppendCallback(() => OnAttackReadied?.Invoke());
     }
@@ -81,9 +85,9 @@ public class BossEnemyAttacker : EnemyAttackerBase
         
         AttackCoolTime(_params.AttackCoolTime).Forget();
         
-        for(var i = 0; i < 15; i++)
+        for(var i = 0; i < _firePillarCount; i++)
         {
-            var pos = transform.position + Random.insideUnitSphere * 10f;
+            var pos = transform.position + Random.insideUnitSphere * _firePillarRange;
             pos.y = 0;
             var firePillar = Instantiate(_firePillarAttacker, pos, Quaternion.identity);
             firePillar.Initialize(_params);

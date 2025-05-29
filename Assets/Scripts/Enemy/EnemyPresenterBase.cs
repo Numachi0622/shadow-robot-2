@@ -1,4 +1,7 @@
 using System;
+using Enemy;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 public abstract class EnemyPresenterBase : MonoBehaviour
@@ -36,6 +39,12 @@ public abstract class EnemyPresenterBase : MonoBehaviour
         
         // Set Events
         SetEvents();
+        
+        // Debug
+        this.UpdateAsObservable()
+            .Where(_ => Input.GetKeyDown(KeyCode.D))
+            .Subscribe(_ => _enemyStatePresenter.SetState(EnemyState.Damage))
+            .AddTo(this);
     }
 
     protected virtual void Bind(HitPointView hpView)

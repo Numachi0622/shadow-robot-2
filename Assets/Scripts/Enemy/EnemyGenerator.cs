@@ -27,7 +27,7 @@ public class EnemyGenerator : MonoBehaviour
         };
     }
 
-    private void GenerateBoss()
+    public void GenerateBoss()
     {
         var enemy = Instantiate(_bossPrefab, GetRandomPosition(), Quaternion.identity, transform);
         enemy.Initialize(_enemyViewParent);
