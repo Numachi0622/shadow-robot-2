@@ -33,7 +33,8 @@ public class EnemyPresenter : EnemyPresenterBase
                 var damageInfo = attacker.attacker.AttackInfo;
                 var targetTransform = attacker.hitCollider.transform;
                 var hitPos = _takeDamageCollider.ClosestPointOnBounds(targetTransform.position);
-                var direction = (transform.position - targetTransform.position).normalized;
+                var targetDir = (transform.position - targetTransform.position).normalized;
+                var direction = ((targetDir + Vector3.forward) * 0.5f).normalized;
                 damageInfo.AttackDirection = direction;
 
                 return (damageInfo, hitPos);

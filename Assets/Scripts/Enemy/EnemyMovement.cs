@@ -29,7 +29,9 @@ public class EnemyMovement : MonoBehaviour
             .Subscribe(dir =>
             {
                 statePresenter.SetState(EnemyState.Move);
-                Move(target.position, enemyParams);
+                var targetPos = target.position;
+                targetPos.y = 0;
+                Move(targetPos, enemyParams);
             })
             .AddTo(this);
     }

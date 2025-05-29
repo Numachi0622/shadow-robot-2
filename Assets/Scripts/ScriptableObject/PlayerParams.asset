@@ -15,6 +15,6 @@ MonoBehaviour:
   MaxHp: 100
   AttackPoint:
     _minAttackPoint: 1
-    _maxAttackPoint: 30
+    _maxAttackPoint: 50
   DamagedColor: {r: 1, g: 0.42352942, b: 0.42352942, a: 1}
-  AttackableVelocity: 7
+  AttackableVelocity: 6
