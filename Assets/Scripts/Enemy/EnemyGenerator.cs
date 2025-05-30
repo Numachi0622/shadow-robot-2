@@ -20,11 +20,7 @@ public class EnemyGenerator : MonoBehaviour
     public void Initialilze()
     {
         _knockDownCountPresenter.Initialize();
-        _knockDownCountPresenter.OnKnockDownBossGenerationCount = () =>
-        {
-            GenerateBoss();
-            //GenerateLoop().Forget();
-        };
+        _knockDownCountPresenter.OnKnockDownBossGenerationCount = GenerateBoss;
     }
 
     public void GenerateBoss()

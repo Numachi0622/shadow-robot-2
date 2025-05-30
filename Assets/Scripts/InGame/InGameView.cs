@@ -6,8 +6,9 @@ using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
-public class InGameView : MonoBehaviour
+public class InGameView : Singleton<InGameView>
 {
     [SerializeField] private Material _transitionMat;
 
@@ -16,18 +17,26 @@ public class InGameView : MonoBehaviour
     [SerializeField] private Color _disConnectColor;
     [SerializeField] private Image[] _trackingState;
     
+    // in game view
     [SerializeField] private GameObject _inGameView;
     [SerializeField] private TextMeshProUGUI _countDownText;
+    [SerializeField] private TextMeshProUGUI _warningText;
 
     private float _transitionRadius;
+    private string[] _warningMessage = new []
+    {
+        "ジャンプして回避！", "移動して回避！"
+    };
     private Sequence _transitionSequence;
+    private Sequence _WarningTextSequence;
 
-    public void Initialize()
+    public override void Initialize()
     {
         _selectView.SetActive(true);
         ResetTrackingState();
-        
         _inGameView.SetActive(false);
+        
+        base.Initialize();
     }
 
     private void ResetTrackingState()
@@ -100,5 +109,27 @@ public class InGameView : MonoBehaviour
         _countDownText.gameObject.SetActive(false);
         
         callback?.Invoke();
+    }
+    
+    public void ShowWarningText(int msgIndex)
+    {
+        var idx = Mathf.Clamp(msgIndex - 1, 0, _warningMessage.Length - 1);
+        var defaultScale = Vector3.one;
+        
+        _WarningTextSequence?.Kill();
+        _WarningTextSequence = DOTween.Sequence()
+            .SetLink(gameObject)
+            .Append(_warningText.transform.DOScale(defaultScale * 1.2f, 0.5f)
+                .SetLoops(3, LoopType.Yoyo)
+                .OnStart(() =>
+                {
+                    _warningText.text = _warningMessage[idx];
+                    _warningText.gameObject.SetActive(true);
+                })
+                .OnComplete(() =>
+                {
+                    _warningText.transform.localScale = defaultScale;
+                    _warningText.gameObject.SetActive(false);
+                }));
     }
 }

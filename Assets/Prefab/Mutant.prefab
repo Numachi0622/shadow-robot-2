@@ -100,6 +100,10 @@ MonoBehaviour:
   _attackCollider: {fileID: 5983682981909999294}
   _energyBallAttacker: {fileID: 1725639558443685965, guid: 5d69b065aaf78ca469e6888d2c9fab92, type: 3}
   _firePillarAttacker: {fileID: 79441565876872559, guid: 89bb79df3f456c24d946615b7282c216, type: 3}
+  _backDistance: 5
+  _backDuration: 0.5
+  _firePillarCount: 15
+  _firePillarRange: 10
 --- !u!1 &546764795992133619
 GameObject:
   m_ObjectHideFlags: 0

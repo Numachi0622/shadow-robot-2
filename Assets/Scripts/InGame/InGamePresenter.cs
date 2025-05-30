@@ -11,11 +11,12 @@ public class InGamePresenter : MonoBehaviour
     [SerializeField] private ColorBodySourceView _colorBodySourceView;
     [SerializeField] private EnemyGenerator _enemyGenerator;
     [SerializeField] private TrackingDebugView _debugView;
-    [SerializeField] private FollowingCamera _followingCamera;
-    [SerializeField] private InGameView _inGameView;
+    [SerializeField] private FollowingCamera _followingCamera; 
     [SerializeField] private GameStatePresenter _gameStatePresenter;
     
     [SerializeField] private SerializableInterface<ISingleton>[] _singletons;
+
+    [SerializeField] private bool _isSkip = false; 
 
     private void Awake()
     {
@@ -32,7 +33,6 @@ public class InGamePresenter : MonoBehaviour
         _enemyGenerator.Initialilze();
         _followingCamera.Initialize();
         _gameStatePresenter.Initialize();
-        _inGameView.Initialize();
 
         Application.targetFrameRate = 60;
         
@@ -59,7 +59,7 @@ public class InGamePresenter : MonoBehaviour
         // Tracking State
         BodySourceManager.Instance.TrackedData
             .ObserveCountChanged()
-            .Subscribe(_ => _inGameView.UpdateTrackingStateView(BodySourceManager.Instance.TrackedData))
+            .Subscribe(_ => InGameView.Instance.UpdateTrackingStateView(BodySourceManager.Instance.TrackedData))
             .AddTo(this);
 
         // Debug
@@ -78,14 +78,18 @@ public class InGamePresenter : MonoBehaviour
     {
         _gameStatePresenter.OnStateChanged[GameState.InGame] = () =>
         {
-            _inGameView.PlayTransition(() =>
+            InGameView.Instance.PlayTransition(() =>
             {
                 _followingCamera.SetInGameCamera();
-                _inGameView.SetInGameView();
+                InGameView.Instance.SetInGameView();
                 _playerPresenter.SetMovable(true);
             }, () =>
             {
-                _inGameView.UpdateCountDown(0.3f, () => _enemyGenerator.GenerateLoopBeforeBoss().Forget()).Forget();
+                InGameView.Instance.UpdateCountDown(0.3f, () =>
+                {
+                    if(_isSkip) _enemyGenerator.GenerateBoss();
+                    else _enemyGenerator.GenerateLoopBeforeBoss().Forget();
+                }).Forget();
             });
         };
 

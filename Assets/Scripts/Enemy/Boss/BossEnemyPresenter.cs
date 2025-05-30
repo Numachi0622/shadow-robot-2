@@ -98,10 +98,7 @@ public class BossEnemyPresenter : EnemyPresenterBase
             }
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Move] = () => _animator.SetBool(IS_MOVE, true);
-        _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = () =>
-        {
-            StartAttackReady();
-        };
+        _enemyStatePresenter.OnStateChanged[EnemyState.AttackReady] = StartAttackReady;
         _enemyStatePresenter.OnStateChanged[EnemyState.Attack] = () =>
         {
             _animator.ResetTrigger(ATTACK_READY[_lastAttackIndex]);
@@ -172,6 +169,10 @@ public class BossEnemyPresenter : EnemyPresenterBase
         if (_isCounterAttackMode)
         {
             _isCounterAttackMode = false;
+        }
+        if (_lastAttackIndex != 0)
+        {
+            InGameView.Instance.ShowWarningText(_lastAttackIndex);
         }
         _animator.SetTrigger(ATTACK_READY[_lastAttackIndex]);
         _attacker.AttackReady(_lastAttackIndex).Forget();
