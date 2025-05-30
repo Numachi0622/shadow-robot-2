@@ -112,6 +112,8 @@ public class PlayerKinectMotion : MonoBehaviour
     
     private void UpdateMotion()
     {
+        if (GameStatePresenter.Instance.CurrentGameState == GameState.GameOver) return;
+        
         var trackedData = BodySourceManager.Instance.TrackedData;
         if(trackedData == null) return;
         if (trackedData.Count == 0) return;
@@ -171,8 +173,8 @@ public class PlayerKinectMotion : MonoBehaviour
         
         _isJumping = filteredPos.y > _jumpThreshold;
         
-        var x = !IsMovable ? 0f : filteredPos.x * _moveMagnification;
-        var z = !IsMovable ? 0f : filteredPos.z * _moveMagnification;
+        var x = !IsMovable ? _ref.position.x : filteredPos.x * _moveMagnification;
+        var z = !IsMovable ? _ref.position.z : filteredPos.z * _moveMagnification;
         var y =  !_isJumping ? 0f : (filteredPos.y - _jumpThreshold) * _jumpMagnification;
         
         var movedPos = new Vector3(x, y, z);

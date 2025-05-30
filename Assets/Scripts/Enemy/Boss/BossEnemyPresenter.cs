@@ -108,6 +108,7 @@ public class BossEnemyPresenter : EnemyPresenterBase
         {
             _takeDamageCollider.enabled = false;
             _animator.SetTrigger(DAMAGE);
+            InGameView.Instance.CancelWarningView();
             
             if (Random.value > 0.6f)
             {
@@ -116,8 +117,10 @@ public class BossEnemyPresenter : EnemyPresenterBase
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Dead] = () =>
         {
+            _takeDamageCollider.enabled = false;
             _animator.SetTrigger(DEAD);
             OnDead?.Invoke();
+            GameStatePresenter.Instance.SetState(GameState.Clear);
             Destroy(gameObject, 2f);
         };
         

@@ -91,9 +91,8 @@ public class InGamePresenter : MonoBehaviour
             InGameView.Instance.SetInGameView();
         };
 
-        GameStatePresenter.Instance.OnStateChanged[GameState.Result] = () =>
-        {
-            
-        };
+        GameStatePresenter.Instance.OnStateChanged[GameState.Clear] = () => InGameView.Instance.ShowResultView(true, 1.2f);
+        
+        GameStatePresenter.Instance.OnStateChanged[GameState.GameOver] = () => InGameView.Instance.ShowResultView(false);
     }
 }

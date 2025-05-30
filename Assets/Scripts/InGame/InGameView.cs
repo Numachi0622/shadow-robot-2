@@ -1,9 +1,11 @@
 using System;
 using kinect = Windows.Kinect;
 using Cysharp.Threading.Tasks;
+using Cysharp.Threading.Tasks.Triggers;
 using DG.Tweening;
 using TMPro;
 using UniRx;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 using UnityEngine.UI;
 using Utility;
@@ -21,6 +23,11 @@ public class InGameView : Singleton<InGameView>
     [SerializeField] private GameObject _inGameView;
     [SerializeField] private TextMeshProUGUI _countDownText;
     [SerializeField] private TextMeshProUGUI _warningText;
+    
+    // result view
+    [SerializeField] private CanvasGroup _resultBackground;
+    [SerializeField] private TextMeshProUGUI _gameOverText;
+    [SerializeField] private TextMeshProUGUI _gameClearText;
 
     private float _transitionRadius;
     private string[] _warningMessage = new []
@@ -28,7 +35,8 @@ public class InGameView : Singleton<InGameView>
         "ジャンプして回避！", "移動して回避！"
     };
     private Sequence _transitionSequence;
-    private Sequence _WarningTextSequence;
+    private Sequence _warningTextSequence;
+    private Sequence _resultViewSequence;
 
     public override void Initialize()
     {
@@ -116,8 +124,8 @@ public class InGameView : Singleton<InGameView>
         var idx = Mathf.Clamp(msgIndex - 1, 0, _warningMessage.Length - 1);
         var defaultScale = Vector3.one;
         
-        _WarningTextSequence?.Kill();
-        _WarningTextSequence = DOTween.Sequence()
+        _warningTextSequence?.Kill();
+        _warningTextSequence = DOTween.Sequence()
             .SetLink(gameObject)
             .Append(_warningText.transform.DOScale(defaultScale * 1.2f, 0.5f)
                 .SetLoops(3, LoopType.Yoyo)
@@ -130,6 +138,44 @@ public class InGameView : Singleton<InGameView>
                 {
                     _warningText.transform.localScale = defaultScale;
                     _warningText.gameObject.SetActive(false);
+                }));
+    }
+
+    public void CancelWarningView()
+    {
+        _warningTextSequence?.Kill();
+        _warningText.transform.localScale = Vector3.one;
+        _warningText.gameObject.SetActive(false);
+    }
+
+    public void ShowResultView(bool isClear, float delay = 0f)
+    {
+        _resultViewSequence?.Kill();
+        _resultViewSequence = DOTween.Sequence()
+            .SetLink(gameObject)
+            .AppendInterval(delay);
+        
+        if (!isClear)
+        {
+            _gameOverText.transform.localPosition = Vector2.up * 700f;
+            _resultViewSequence
+                .Append(_resultBackground.DOFade(1f, 1f))
+                .Join(_gameOverText.transform.DOLocalMoveY(0f, 1f)
+                    .SetEase(Ease.OutBack)
+                    .OnStart(() =>
+                    {
+                        _gameOverText.gameObject.SetActive(true);
+                    }));
+            return;
+        }
+
+        _resultViewSequence
+            .Append(_gameClearText.transform.DOScale(Vector3.one * 1.2f, 1f)
+                .SetEase(Ease.OutBack)
+                .OnStart(() =>
+                {
+                    _gameClearText.gameObject.SetActive(true);
+                    _gameClearText.transform.localScale = Vector3.zero;
                 }));
     }
 }

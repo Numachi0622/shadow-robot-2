@@ -1,5 +1,5 @@
 
 public enum GameState
 {
-    Select, InGame, Result
+    Select, InGame, Clear, GameOver
 }

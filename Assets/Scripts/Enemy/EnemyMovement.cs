@@ -28,6 +28,11 @@ public class EnemyMovement : MonoBehaviour
             })
             .Subscribe(dir =>
             {
+                if (GameStatePresenter.Instance.CurrentGameState == GameState.GameOver)
+                {
+                    statePresenter.SetState(EnemyState.Idle);
+                    return;
+                }
                 statePresenter.SetState(EnemyState.Move);
                 var targetPos = target.position;
                 targetPos.y = 0;

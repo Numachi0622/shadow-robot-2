@@ -6,6 +6,7 @@ public class PlayerEffect : MonoBehaviour
     [SerializeField] private Material _bodyMaterial;
     
     private Sequence _blinkSequence;
+    private Sequence _deadSequence;
     
     public void Initialize()
     {

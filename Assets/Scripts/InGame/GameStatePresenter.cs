@@ -19,7 +19,8 @@ public class GameStatePresenter : Utility.Singleton<GameStatePresenter>
         OnStateChanged = new Dictionary<GameState, Action>()
         {
             { GameState.InGame , null },
-            { GameState.Result , null },
+            { GameState.GameOver , null },
+            { GameState.Clear , null}
         };
 
         _model.State

@@ -90,6 +90,10 @@ public class PlayerPresenter : MonoBehaviour
 
     private void SetEvents()
     {
-        _hpPresenter.OnHpDeleted(() => Debug.Log("Dead"));
+        _hpPresenter.OnHpDeleted(() =>
+        {
+            _takeDamageCollider.enabled = false;
+            GameStatePresenter.Instance.SetState(GameState.GameOver);
+        });
     }
 }

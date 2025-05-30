@@ -91,6 +91,7 @@ public class EnemyPresenter : EnemyPresenterBase
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Dead] = () =>
         {
+            _takeDamageCollider.enabled = false;
             _animator.SetTrigger(DEAD);
             OnDead?.Invoke();
             Destroy(gameObject, 2f);
