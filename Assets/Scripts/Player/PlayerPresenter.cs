@@ -92,9 +92,4 @@ public class PlayerPresenter : MonoBehaviour
     {
         _hpPresenter.OnHpDeleted(() => Debug.Log("Dead"));
     }
-
-    public void SetMovable(bool isMovable)
-    {
-        _kinectMotion.IsMovable = isMovable;
-    }
 }

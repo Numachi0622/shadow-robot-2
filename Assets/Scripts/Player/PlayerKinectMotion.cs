@@ -56,7 +56,7 @@ public class PlayerKinectMotion : MonoBehaviour
     private bool _isJumping = false;
     public bool IsJumping => _isJumping;
     
-    public bool IsMovable { get; set; } = false;
+    public bool IsMovable => GameStatePresenter.Instance.CurrentGameState == GameState.InGame;
     
     public void Initialize()
     {
@@ -166,24 +166,17 @@ public class PlayerKinectMotion : MonoBehaviour
         _ref.rotation = q;
         
         // 移動
-        if(!IsMovable) return;
         var kinectPos = _footData.Joints[Kinect.JointType.SpineMid].Position;
         var filteredPos = new Vector3(kinectPos.X, kinectPos.Y, -kinectPos.Z).DEMAFilter();
         
         _isJumping = filteredPos.y > _jumpThreshold;
         
-        var x = filteredPos.x * _moveMagnification;
-        var z = filteredPos.z * _moveMagnification;
+        var x = !IsMovable ? 0f : filteredPos.x * _moveMagnification;
+        var z = !IsMovable ? 0f : filteredPos.z * _moveMagnification;
         var y =  !_isJumping ? 0f : (filteredPos.y - _jumpThreshold) * _jumpMagnification;
-        //Debug.Log(kinectPos.Y);
         
         var movedPos = new Vector3(x, y, z);
         _ref.position = movedPos;
-        
-        if (movedPos.y > 0)
-        {
-            //Debug.Log(movedPos.y);
-        }
     }
 }
 

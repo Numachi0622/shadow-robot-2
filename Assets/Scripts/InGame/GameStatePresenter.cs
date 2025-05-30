@@ -1,17 +1,20 @@
 using System;
 using System.Collections.Generic;
 using UniRx;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class GameStatePresenter : MonoBehaviour
+public class GameStatePresenter : Utility.Singleton<GameStatePresenter>
 {
     private StateModel<GameState> _model;
     public GameState CurrentGameState => _model.State.Value;
 
     public Dictionary<GameState, Action> OnStateChanged;
 
-    public void Initialize()
+    public override void Initialize()
     {
+        base.Initialize();
+        
         _model = new StateModel<GameState>(GameState.Select);
         OnStateChanged = new Dictionary<GameState, Action>()
         {
@@ -20,7 +23,8 @@ public class GameStatePresenter : MonoBehaviour
         };
 
         _model.State
-            .Subscribe(SetState)
+            .Where(state => state != GameState.Select)
+            .Subscribe(state => OnStateChanged[state]?.Invoke())
             .AddTo(this);
     }
 

@@ -1929,7 +1929,6 @@ MonoBehaviour:
   _enemyGenerator: {fileID: 697899222}
   _debugView: {fileID: 1854871544}
   _followingCamera: {fileID: 330585548}
-  _gameStatePresenter: {fileID: 837925595}
   _singletons:
   - mode: 0
     unityReference: {fileID: 71753418}
@@ -1949,6 +1948,10 @@ MonoBehaviour:
       rid: -2
   - mode: 0
     unityReference: {fileID: 837925596}
+    rawReference:
+      rid: -2
+  - mode: 0
+    unityReference: {fileID: 837925595}
     rawReference:
       rid: -2
   _isSkip: 1

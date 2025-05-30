@@ -12,7 +12,6 @@ public class InGamePresenter : MonoBehaviour
     [SerializeField] private EnemyGenerator _enemyGenerator;
     [SerializeField] private TrackingDebugView _debugView;
     [SerializeField] private FollowingCamera _followingCamera; 
-    [SerializeField] private GameStatePresenter _gameStatePresenter;
     
     [SerializeField] private SerializableInterface<ISingleton>[] _singletons;
 
@@ -32,7 +31,6 @@ public class InGamePresenter : MonoBehaviour
         _colorBodySourceView.Initialize();
         _enemyGenerator.Initialilze();
         _followingCamera.Initialize();
-        _gameStatePresenter.Initialize();
 
         Application.targetFrameRate = 60;
         
@@ -67,33 +65,33 @@ public class InGamePresenter : MonoBehaviour
             .Where(_ => Input.GetKeyDown(KeyCode.Space))
             .Subscribe(_ =>
             {
-                var current = (int)_gameStatePresenter.CurrentGameState;
-                current = Mathf.Min(current + 1, 2);
-                _gameStatePresenter.SetState((GameState)current);
+                InGameView.Instance.PlayTransition(() =>
+                {
+                    var current = (int)GameStatePresenter.Instance.CurrentGameState;
+                    current = Mathf.Min(current + 1, 2);
+                    GameStatePresenter.Instance.SetState((GameState)current);
+                }, () => 
+                {
+                    InGameView.Instance.UpdateCountDown(0.3f, () =>
+                    {
+                        if(_isSkip) _enemyGenerator.GenerateBoss();
+                        else _enemyGenerator.GenerateLoopBeforeBoss().Forget();
+                    }).Forget();
+                });
+
             })
             .AddTo(this);
     }
 
     private void SetEvents()
     {
-        _gameStatePresenter.OnStateChanged[GameState.InGame] = () =>
+        GameStatePresenter.Instance.OnStateChanged[GameState.InGame] = () =>
         {
-            InGameView.Instance.PlayTransition(() =>
-            {
-                _followingCamera.SetInGameCamera();
-                InGameView.Instance.SetInGameView();
-                _playerPresenter.SetMovable(true);
-            }, () =>
-            {
-                InGameView.Instance.UpdateCountDown(0.3f, () =>
-                {
-                    if(_isSkip) _enemyGenerator.GenerateBoss();
-                    else _enemyGenerator.GenerateLoopBeforeBoss().Forget();
-                }).Forget();
-            });
+            _followingCamera.SetInGameCamera();
+            InGameView.Instance.SetInGameView();
         };
 
-        _gameStatePresenter.OnStateChanged[GameState.Result] = () =>
+        GameStatePresenter.Instance.OnStateChanged[GameState.Result] = () =>
         {
             
         };

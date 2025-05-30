@@ -111,7 +111,6 @@ public class BossEnemyPresenter : EnemyPresenterBase
             
             if (Random.value > 0.6f)
             {
-                Debug.Log("Counter");
                 _isCounterAttackMode = true;
             }
         };
