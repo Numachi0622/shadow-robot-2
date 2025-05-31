@@ -23,6 +23,8 @@ public class InGameView : Singleton<InGameView>
     [SerializeField] private GameObject _inGameView;
     [SerializeField] private TextMeshProUGUI _countDownText;
     [SerializeField] private TextMeshProUGUI _warningText;
+    [SerializeField] private RectTransform _bossGenerateViewTransform;
+    [SerializeField] private TextMeshProUGUI _bossGenerateText;
     
     // result view
     [SerializeField] private CanvasGroup _resultBackground;
@@ -37,6 +39,7 @@ public class InGameView : Singleton<InGameView>
     private Sequence _transitionSequence;
     private Sequence _warningTextSequence;
     private Sequence _resultViewSequence;
+    private Sequence _bossGenerateSequence;
 
     public override void Initialize()
     {
@@ -146,6 +149,24 @@ public class InGameView : Singleton<InGameView>
         _warningTextSequence?.Kill();
         _warningText.transform.localScale = Vector3.one;
         _warningText.gameObject.SetActive(false);
+    }
+
+    public void ShowBossGenerateView(Action onComplete = null)
+    {
+        _bossGenerateSequence?.Kill();
+
+        _bossGenerateViewTransform.gameObject.SetActive(true);
+        _bossGenerateSequence = DOTween.Sequence()
+            .SetLink(gameObject)
+            .Append(_bossGenerateViewTransform.DOScaleX(1f, 0.5f))
+            .Join(_bossGenerateText.DOFade(1f, 0.75f)
+                .SetLoops(4, LoopType.Yoyo))
+            .Append(_bossGenerateViewTransform.DOScaleX(0f, 0.5f))
+            .AppendCallback(() =>
+            {
+                _bossGenerateViewTransform.gameObject.SetActive(false);
+                onComplete?.Invoke();
+            });
     }
 
     public void ShowResultView(bool isClear, float delay = 0f)

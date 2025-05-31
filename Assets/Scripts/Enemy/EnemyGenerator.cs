@@ -25,13 +25,16 @@ public class EnemyGenerator : MonoBehaviour
 
     public void GenerateBoss()
     {
-        var enemy = Instantiate(_bossPrefab, GetRandomPosition(), Quaternion.identity, transform);
-        enemy.Initialize(_enemyViewParent);
-        enemy.OnDead += () =>
+        InGameView.Instance.ShowBossGenerateView(() =>
         {
-            _knockDownCountPresenter.IsBossKnocedDown = true;
-            AllEnemyRemove();
-        };
+            var enemy = Instantiate(_bossPrefab, GetRandomPosition(), Quaternion.identity, transform);
+            enemy.Initialize(_enemyViewParent);
+            enemy.OnDead += () =>
+            {
+                _knockDownCountPresenter.IsBossKnocedDown = true;
+                AllEnemyRemove();
+            }; 
+        });
     }
 
     private async UniTask GenerateLoop()
