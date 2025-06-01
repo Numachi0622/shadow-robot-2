@@ -14,7 +14,9 @@ public class PlayerPresenter : MonoBehaviour
     [SerializeField] private PlayerKinectMotion _kinectMotion;
     [SerializeField] private HitPointPresenter _hpPresenter;
     [SerializeField] private PlayerEffect _playerEffect;
+    [SerializeField] private RocketPunchDetector _rocketPunchDetector;
     [SerializeField] private Collider _takeDamageCollider;
+    [SerializeField] private FollowingCamera _followingCamera;
     
     private HandAttackDetector _leftHandAttackDetector, _rightHandAttackDetector;
     public void Initialize()
@@ -22,6 +24,7 @@ public class PlayerPresenter : MonoBehaviour
         // Initialize
         _leftHandAttackDetector = new HandAttackDetector(_leftHand, _params.AttackableVelocity);
         _rightHandAttackDetector = new HandAttackDetector(_rightHand, _params.AttackableVelocity);
+        _rocketPunchDetector.Initialize();
         _kinectMotion.Initialize();
         _hpPresenter.Initialize(_params);
         _leftAttacker.Initialize(_params);
@@ -54,6 +57,14 @@ public class PlayerPresenter : MonoBehaviour
         
         _rightHandAttackDetector.OnAttackEnd
             .Subscribe(_ => _rightAttacker.AttackEnd())
+            .AddTo(this);
+
+        _rocketPunchDetector.OnReadyRocketPunch
+            .Subscribe(_ => _followingCamera.SetRocketPunchCamera())
+            .AddTo(this);
+        
+        _rocketPunchDetector.OnResetRocketPunch
+            .Subscribe(_ => _followingCamera.CancelRocketPunchCamera())
             .AddTo(this);
         
         // Take Damage

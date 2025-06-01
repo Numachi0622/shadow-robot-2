@@ -11,7 +11,7 @@ public class InGamePresenter : MonoBehaviour
     [SerializeField] private ColorBodySourceView _colorBodySourceView;
     [SerializeField] private EnemyGenerator _enemyGenerator;
     [SerializeField] private TrackingDebugView _debugView;
-    [SerializeField] private FollowingCamera _followingCamera; 
+    [SerializeField] private FollowingCamera _followingCamera;
     
     [SerializeField] private SerializableInterface<ISingleton>[] _singletons;
 

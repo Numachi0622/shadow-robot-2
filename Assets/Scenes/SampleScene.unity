@@ -1905,6 +1905,7 @@ GameObject:
   - component: {fileID: 837925593}
   - component: {fileID: 837925595}
   - component: {fileID: 837925596}
+  - component: {fileID: 837925597}
   m_Layer: 0
   m_Name: InGame
   m_TagString: Untagged
@@ -2013,6 +2014,24 @@ MonoBehaviour:
   _resultBackground: {fileID: 1865719527}
   _gameOverText: {fileID: 1295795298}
   _gameClearText: {fileID: 867156861}
+--- !u!114 &837925597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 837925592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eea91c3dfd0c07469cefedf2de35666, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _handLeft: {fileID: 8587118907022087686}
+  _handRight: {fileID: 8587118907022087680}
+  _lowerArmLeft: {fileID: 8587118907022087722}
+  _lowerArmRight: {fileID: 8587118907022087716}
+  _body: {fileID: 8587118907022087774}
+  _threshold: 0.7
 --- !u!1 &838422230
 GameObject:
   m_ObjectHideFlags: 0
@@ -5817,6 +5836,7 @@ GameObject:
   - component: {fileID: 8587118907022087779}
   - component: {fileID: 8587118907022087775}
   - component: {fileID: 8587118907022087781}
+  - component: {fileID: 8587118907022087783}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -6929,7 +6949,9 @@ MonoBehaviour:
   _kinectMotion: {fileID: 71753416}
   _hpPresenter: {fileID: 6052784243642520635}
   _playerEffect: {fileID: 8587118907022087781}
+  _rocketPunchDetector: {fileID: 8587118907022087783}
   _takeDamageCollider: {fileID: 8587118907022087779}
+  _followingCamera: {fileID: 330585548}
 --- !u!4 &8587118907022087776
 Transform:
   m_ObjectHideFlags: 0
@@ -7057,6 +7079,25 @@ Transform:
   - {fileID: 8587118907022087716}
   m_Father: {fileID: 8587118907022087758}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8587118907022087783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587118907021593214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ca571525ce0f814aa4fc6ff0078fac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _leftArm: {fileID: 8587118907022087722}
+  _leftHand: {fileID: 8587118907022087686}
+  _rightArm: {fileID: 8587118907022087716}
+  _rightHand: {fileID: 8587118907022087680}
+  _bodyTransform: {fileID: 8587118907022087774}
+  _threshold: 0.6
+  _maxReadyTime: 1
 --- !u!4 &8587118907022087784
 Transform:
   m_ObjectHideFlags: 0
