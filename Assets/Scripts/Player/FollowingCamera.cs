@@ -11,23 +11,19 @@ public class FollowingCamera : MonoBehaviour
     [SerializeField] private Transform _target;
     [SerializeField] private Camera _selectViewCamera;
     [SerializeField] private Camera _inGameViewCamera;
+    [SerializeField] private Camera _rocketPunchReadyCamera;
     private Vector3 _offset;
-    private Vector3 _initialPos;
-    private Vector3 _initialRot;
-    private Vector3 _rocketPunchReadyPos = new Vector3(0, 1.75f, 0);
-    private Sequence _rocketPunchrReadySequence;
+
     
     public void Initialize()
-    {
-        //_offset = transform.position - _target.position;
-        _initialPos = transform.localPosition;
-        _initialRot = transform.localEulerAngles;
+    { 
+        _offset = transform.position - _target.position;
         _selectViewCamera.gameObject.SetActive(true);
         _inGameViewCamera.gameObject.SetActive(false);
 
-        // this.UpdateAsObservable()
-        //     .Subscribe(_ => Follow())
-        //     .AddTo(this);
+        this.UpdateAsObservable()
+            .Subscribe(_ => Follow())
+            .AddTo(this);
     }
 
     private void Follow()
@@ -49,19 +45,13 @@ public class FollowingCamera : MonoBehaviour
 
     public void SetRocketPunchCamera()
     {
-        _rocketPunchrReadySequence? .Kill();
-        _rocketPunchrReadySequence = DOTween.Sequence()
-            .SetLink(gameObject)
-            .Append(transform.DOLocalMove(_rocketPunchReadyPos, 0.3f))
-            .Join(transform.DOLocalRotate(_initialRot, 0.3f));
+        _inGameViewCamera.gameObject.SetActive(false);
+        _rocketPunchReadyCamera.gameObject.SetActive(true);
     }
     
     public void CancelRocketPunchCamera()
     {
-        _rocketPunchrReadySequence?.Kill();
-        _rocketPunchrReadySequence = DOTween.Sequence()
-            .SetLink(gameObject)
-            .Append(transform.DOLocalMove(_initialPos, 0.3f))
-            .Join(transform.DOLocalRotate(_initialRot, 0.3f));
+        _rocketPunchReadyCamera.gameObject.SetActive(false);
+        _inGameViewCamera.gameObject.SetActive(true);
     }
 }

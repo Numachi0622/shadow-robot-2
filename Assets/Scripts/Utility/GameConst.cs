@@ -11,5 +11,6 @@ public static class GameConst
     public const float MAX_ARM_SCALE = 3f;
     public const float MAX_PUNCH_VELOCITY = 20f;
     public const float PUNCH_POINT_RESET_TIME = 2f;
+    public const int MAX_ROCKET_PUNCH_CHARGE = 100;
     public const int BOSS_GENERATION_KNOCK_DOWN_COUNT = 3;
 }
