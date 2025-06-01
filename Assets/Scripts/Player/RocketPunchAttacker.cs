@@ -12,6 +12,7 @@ public class RocketPunchAttacker : MonoBehaviour, IAttackable
     [SerializeField] private float _returnSpedd = 50f;
     [SerializeField] private float _returnableRange = 2f;
     [SerializeField] private float _maxLaunchDistance = 100f;
+    [SerializeField] private ParticleSystem _hitEffect;
     private Transform _root;
     private bool _isHit = false;
     private bool _isSepareted = false;
@@ -32,7 +33,11 @@ public class RocketPunchAttacker : MonoBehaviour, IAttackable
         };
 
         this.OnTriggerEnterAsObservable()
-            .Subscribe(_ => _isHit = true)
+            .Subscribe(_ =>
+            {
+                _isHit = true;
+                var hitEffect = Instantiate(_hitEffect, transform.position, Quaternion.identity);
+            })
             .AddTo(this);
     }
 

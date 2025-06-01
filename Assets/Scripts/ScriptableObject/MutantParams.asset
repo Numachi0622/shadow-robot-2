@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956b414f4ca71164f82429888fd306a9, type: 3}
   m_Name: MutantParams
   m_EditorClassIdentifier: 
-  MaxHp: 100
+  MaxHp: 500
   AttackPoint:
     _minAttackPoint: 15
     _maxAttackPoint: 20
   DamagedColor: {r: 1, g: 0.21226418, b: 0.21226418, a: 1}
-  MoveSpeed: 0
+  MoveSpeed: 10
   SearchRange: 100
   AttackRange: 2.5
   AttackReadyTime: 0.3

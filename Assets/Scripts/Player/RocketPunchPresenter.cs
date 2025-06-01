@@ -14,6 +14,7 @@ public class RocketPunchPresenter : MonoBehaviour
     [SerializeField] private FollowingCamera _followingCamera;
     [SerializeField] private RocketPunchLauncher _launcher;
     [SerializeField] private SkinnedMeshRenderer _armMesh;
+    [SerializeField] private ParticleSystem[] _launchEffects;
     private RocketPunchDetectModel _detectModel;
     private RocketPunchChargeModel _chargeModel;
     private RocketPunchChargeDetectModel _chargeDetectModel;
@@ -89,8 +90,18 @@ public class RocketPunchPresenter : MonoBehaviour
         
         CancelRocketPunch();
         _launcher.Launch(dir, 
-            () => _armMesh.enabled = false,
-            () => _armMesh.enabled = true);
+            () =>
+            {
+                _armMesh.enabled = false;
+                _launchEffects[0].Play();
+                _launchEffects[1].Play();
+            },
+            () =>
+            {
+                _armMesh.enabled = true;
+                _launchEffects[0].Play();
+                _launchEffects[1].Play();
+            });
         }
     
     public void CancelRocketPunch()
