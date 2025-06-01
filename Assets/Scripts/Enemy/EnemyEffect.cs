@@ -1,4 +1,8 @@
+using System;
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using UniRx;
+using UniRx.Triggers;
 using UnityEngine;
 
 public class EnemyEffect : MonoBehaviour
@@ -14,6 +18,7 @@ public class EnemyEffect : MonoBehaviour
     
     private Sequence _blinkSequence;
     private Sequence _shakeSequence;
+    private Sequence _disovleSequence;
     
     public void Initialize()
     {
@@ -21,6 +26,7 @@ public class EnemyEffect : MonoBehaviour
     }
 
     private void SetColor(Color color) => _bodyMaterial.SetColor("_Color", color);
+    private void SetFloat(float value) => _bodyMaterial.SetFloat("_Threshold", value);
 
     public void BlinkColor(Color color)
     {
@@ -65,4 +71,24 @@ public class EnemyEffect : MonoBehaviour
             .SetUpdate(UpdateType.Late)
             .SetLoops(loop);
     }
+
+    public void Disovle(float delay = 0, Action onComplete = null)
+    {
+        _skinnedMeshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        _disovleSequence?.Kill();
+
+        _disovleSequence = DOTween.Sequence()
+            .SetLink(gameObject)
+            .AppendInterval(delay)
+            .Append(DOTween.To(() => 0f, SetFloat, 1f, 2f))
+            .AppendCallback(() => onComplete?.Invoke());
+    }
+
+    public async UniTask HitStop(Animator animator, float duration, Action onComplete = null)
+    {
+        animator.speed = 0f;
+        await UniTask.Delay(TimeSpan.FromSeconds(duration));
+        animator.speed = 1f;
+        onComplete?.Invoke();
+    } 
 }

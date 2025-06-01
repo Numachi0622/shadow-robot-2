@@ -6,6 +6,7 @@ public class HitPointPresenter : MonoBehaviour
 {
     [SerializeField] private HitPointView _view;
     private HitPointModel _model;
+    public int CurrentHp => _model.Hp.Value;
     
     public void Initialize(CharacterParams characterParams)
     {

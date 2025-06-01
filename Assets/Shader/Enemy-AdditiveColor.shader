@@ -99,6 +99,10 @@ Shader "URP/SurfaceShader-AdditiveColor_Shadow"
 
                     float3 finalColor = SimplePBR(albedo, _Metallic, _Glossiness, normalize(IN.normalWS), IN.viewDirWS, shadow);
 
+                    float edge = smoothstep(_Threshold, _Threshold + 0.1, dissolveValue);
+                    float3 glow = lerp(0, float3(1, 0.2, 0), (1 - edge));
+                    finalColor += glow;
+                    
                     return half4(finalColor, 1.0);
                 }
                 ENDHLSL

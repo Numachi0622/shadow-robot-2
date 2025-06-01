@@ -56,11 +56,12 @@ public class EnemyMovement : MonoBehaviour
         _enemyTransform.position = Vector3.MoveTowards(currentPos, targetPos, enemyParams.MoveSpeed * Time.deltaTime); 
     }
 
-    public void KnockBack(Vector3 dir)
+    public void KnockBack(Vector3 dir, bool isDead = false)
     {
         _knockBackSequence?.Kill();
 
-        var destination = transform.position + dir * 5f;
+        var mag = isDead ? 8f : 5f;
+        var destination = transform.position + dir * mag;
         destination.y = 0f;
         
         _knockBackSequence = DOTween.Sequence()

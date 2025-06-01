@@ -44,14 +44,25 @@ public class EnemyPresenter : EnemyPresenterBase
                 var damageInfo = info.damageInfo;
                 var damage = Damage(damageInfo.AttackPoint, damageInfo.AttackVelocity);
                 _hpPresenter.DecreaseHp(damage);
-
                 var dir = damageInfo.AttackDirection;
-                _enemyMovement.KnockBack(dir);
                 
-                _enemyEffect.BlinkColor(_params.DamagedColor);
-                _enemyEffect.ShakeBody();
                 DamageTextView.Instance.Play(damageInfo.AttackType, damage, info.hitPos);
                 HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
+                
+                if (_hpPresenter.CurrentHp <= 0)
+                {
+                    _enemyEffect.HitStop(_animator, GameConst.HIT_STOP_TIME, () =>
+                    {
+                        _enemyEffect.ShakeBody();
+                        _enemyMovement.KnockBack(dir, true);
+                        _enemyEffect.BlinkColor(_params.DamagedColor);
+                    }).Forget();
+                    return;
+                }
+                
+                _enemyMovement.KnockBack(dir);
+                _enemyEffect.BlinkColor(_params.DamagedColor);
+                _enemyEffect.ShakeBody();
             })
             .AddTo(this);
         
@@ -94,7 +105,7 @@ public class EnemyPresenter : EnemyPresenterBase
             _takeDamageCollider.enabled = false;
             _animator.SetTrigger(DEAD);
             OnDead?.Invoke();
-            Destroy(gameObject, 2f);
+            _enemyEffect.Disovle(1f, () => Destroy(gameObject));
         };
         
         // Movement Stop

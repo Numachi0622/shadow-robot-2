@@ -8,6 +8,8 @@ Shader "URP/SurfaceShader-Player-AdditiveColor_Shadow"
         _NormalMap ("NormalMap", 2D) = "white" {}
         _OcclusionMap ("OcclusionMap", 2D) = "white" {}
         _Glossiness ("Smoothness", Range(0, 1)) = 0.5
+        _DisolveTex ("Dissolve Tex", 2D) = "white" {}
+        _Threshold ("Threshold", Range(0, 1)) = 0.0
     }
     SubShader
     {
@@ -48,6 +50,7 @@ Shader "URP/SurfaceShader-Player-AdditiveColor_Shadow"
                 TEXTURE2D(_MetallicMap);    SAMPLER(sampler_MetallicMap);
                 TEXTURE2D(_NormalMap);      SAMPLER(sampler_NormalMap);
                 TEXTURE2D(_OcclusionMap);   SAMPLER(sampler_OcclusionMap);
+                TEXTURE2D(_DisolveTex); SAMPLER(sampler_DisolveTex);
 
                 float4 _Color;
                 float _Glossiness;
@@ -92,6 +95,9 @@ Shader "URP/SurfaceShader-Player-AdditiveColor_Shadow"
 
                 half4 frag(Varyings IN) : SV_Target
                 {
+                    float dissolveValue = SAMPLE_TEXTURE2D(_DisolveTex, sampler_DisolveTex, IN.uv).r;
+                    clip(dissolveValue - _Threshold);
+                    
                     float3 albedo = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, IN.uv).rgb + _Color.rgb;
 
                     float3 normalTS = UnpackNormal(SAMPLE_TEXTURE2D(_NormalMap, sampler_NormalMap, IN.uv));
@@ -104,6 +110,10 @@ Shader "URP/SurfaceShader-Player-AdditiveColor_Shadow"
                     float shadow = MainLightRealtimeShadow(IN.shadowCoord);
 
                     float3 finalColor = SimplePBR(albedo, metallic, smoothness, normalWS, IN.viewDirWS, shadow * occulusion);
+
+                    float edge = smoothstep(_Threshold, _Threshold + 0.1, dissolveValue);
+                    float3 glow = lerp(0, float3(1, 0.2, 0), (1 - edge));
+                    finalColor += glow;
                     
                     return half4(finalColor, 1.0);
                 }
