@@ -1660,6 +1660,7 @@ GameObject:
   - component: {fileID: 528249989}
   - component: {fileID: 528249988}
   - component: {fileID: 528249987}
+  - component: {fileID: 528249990}
   m_Layer: 0
   m_Name: RocletPunchPresenter
   m_TagString: Untagged
@@ -1684,7 +1685,7 @@ MonoBehaviour:
   _rocketPunchView: {fileID: 808557364}
   _targetTransform: {fileID: 4542517}
   _chargeGauge: {fileID: 759569495}
-  _chargeMsgTransform: {fileID: 1051707913}
+  _chargeMsgText: {fileID: 1051707914}
   _chargeValueText: {fileID: 808786694}
 --- !u!114 &528249988
 MonoBehaviour:
@@ -1707,6 +1708,8 @@ MonoBehaviour:
   _rightFoot: {fileID: 8587118907022087684}
   _rocketPunchView: {fileID: 528249987}
   _followingCamera: {fileID: 330585548}
+  _launcher: {fileID: 528249990}
+  _armMesh: {fileID: 8587118907033159484}
 --- !u!4 &528249989
 Transform:
   m_ObjectHideFlags: 0
@@ -1722,6 +1725,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &528249990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 528249986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5662fceac9727f458ec05fa8c237a4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rocketPunchPrefab: {fileID: 8845254280040673102, guid: d46079b9fede8b64588b1136a1b157b4, type: 3}
+  _playerTransform: {fileID: 8587118907022087774}
 --- !u!1 &562826613
 GameObject:
   m_ObjectHideFlags: 0

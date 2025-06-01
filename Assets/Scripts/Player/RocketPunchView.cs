@@ -13,10 +13,16 @@ public class RocketPunchView : MonoBehaviour
     [SerializeField] private GameObject _rocketPunchView;
     [SerializeField] private RectTransform _targetTransform;
     [SerializeField] private Image _chargeGauge;
-    [SerializeField] private RectTransform _chargeMsgTransform;
+    [SerializeField] private TextMeshProUGUI _chargeMsgText;
     [SerializeField] private TextMeshProUGUI _chargeValueText;
     private float _predictionDistance = 10f;
     private float _prevChargeRate;
+
+    private string[] _chargeMsg = new[]
+    {
+        "足を交互に上げてチャージ！",
+        "発射！！"
+    };
     private Sequence _chargeGaugeSequence;
     private Sequence _chargeMsgSequence;
     private bool _isCharging = false;
@@ -32,11 +38,12 @@ public class RocketPunchView : MonoBehaviour
         _rocketPunchView.SetActive(true);
         _inGameView.SetActive(false);
 
-        _chargeMsgTransform.localScale = Vector3.one;
+        _chargeMsgText.text = _chargeMsg[0];
+        _chargeMsgText.transform.localScale = Vector3.one;
         _chargeMsgSequence?.Kill();
         _chargeMsgSequence = DOTween.Sequence()
             .SetLink(gameObject)
-            .Append(_chargeMsgTransform.DOScale(Vector3.one * 1.1f, 0.4f))
+            .Append(_chargeMsgText.transform.DOScale(Vector3.one * 1.1f, 0.4f))
             .SetLoops(-1, LoopType.Yoyo);
     }
     
@@ -74,5 +81,10 @@ public class RocketPunchView : MonoBehaviour
             .Append(_chargeGauge.DOFillAmount(rate, 0.3f)
                 .OnStart(() => _isCharging = true)
                 .OnComplete(() => _isCharging = false));
+    }
+
+    public void ShowLaunchMsg()
+    {
+        _chargeMsgText.text = _chargeMsg[1];
     }
 }

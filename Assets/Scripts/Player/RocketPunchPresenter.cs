@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
@@ -11,6 +12,8 @@ public class RocketPunchPresenter : MonoBehaviour
     [SerializeField] private Transform _leftFoot, _rightFoot;
     [SerializeField] private RocketPunchView _rocketPunchView;
     [SerializeField] private FollowingCamera _followingCamera;
+    [SerializeField] private RocketPunchLauncher _launcher;
+    [SerializeField] private SkinnedMeshRenderer _armMesh;
     private RocketPunchDetectModel _detectModel;
     private RocketPunchChargeModel _chargeModel;
     private RocketPunchChargeDetectModel _chargeDetectModel;
@@ -68,9 +71,27 @@ public class RocketPunchPresenter : MonoBehaviour
 
         _chargeModel.ChargeValue
             .Where(_ => GameStatePresenter.Instance.CurrentGameState == GameState.InGame)
-            .Subscribe(value => _rocketPunchView.UpdateChargeGauge(value))
+            .Subscribe(value =>
+            {
+                _rocketPunchView.UpdateChargeGauge(value);
+                if (value >= GameConst.MAX_ROCKET_PUNCH_CHARGE)
+                {
+                    Launch(_detectModel.HandDirection).Forget();
+                }
+            })
             .AddTo(this);
     }
+
+    private async UniTask Launch(Vector3 dir)
+    {
+        _rocketPunchView.ShowLaunchMsg();
+        await UniTask.Delay(TimeSpan.FromSeconds(0.7f));
+        
+        CancelRocketPunch();
+        _launcher.Launch(dir, 
+            () => _armMesh.enabled = false,
+            () => _armMesh.enabled = true);
+        }
     
     public void CancelRocketPunch()
     {

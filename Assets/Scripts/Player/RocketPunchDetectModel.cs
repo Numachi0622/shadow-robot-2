@@ -12,6 +12,8 @@ public class RocketPunchDetectModel
     private float _maxReadyTime = 1f; 
     private float _readyTime = 0f;
     private bool _isReady = false;
+    private Vector3 _handDirection;
+    public Vector3 HandDirection => _handDirection;
     
     private readonly Subject<Unit> _onStartReadyRocketPunch = new Subject<Unit>();
     public IObservable<Unit> OnStartReadyRocketPunch => _onStartReadyRocketPunch;
@@ -42,6 +44,7 @@ public class RocketPunchDetectModel
                 var dotRight = Vector3.Dot(rightHandDir, _bodyTransform.forward);
                 
                 var dirAverage = (leftHandDir + rightHandDir).normalized;
+                _handDirection = new Vector3(dirAverage.x, 0f, dirAverage.z).normalized;
                 
                 (bool IsDetect, Vector3 Dir) info  = (dotLeft > _threshold || dotRight > _threshold, dirAverage);
                 return info;
