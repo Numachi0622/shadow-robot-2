@@ -170,12 +170,14 @@ public class PlayerKinectMotion : MonoBehaviour
         // 移動
         var kinectPos = _footData.Joints[Kinect.JointType.SpineMid].Position;
         var filteredPos = new Vector3(kinectPos.X, kinectPos.Y, -kinectPos.Z).DEMAFilter();
+        JumpCalibrationPresenter.Instance.Calibrate(filteredPos.y);
         
-        _isJumping = filteredPos.y > _jumpThreshold;
+        var threshold = JumpCalibrationPresenter.Instance.CalibratePosition + _jumpThreshold;
+        _isJumping = filteredPos.y > threshold;
         
         var x = !IsMovable ? _ref.position.x : filteredPos.x * _moveMagnification;
         var z = !IsMovable ? _ref.position.z : filteredPos.z * _moveMagnification;
-        var y =  !_isJumping ? 0f : (filteredPos.y - _jumpThreshold) * _jumpMagnification;
+        var y =  !_isJumping ? 0f : (filteredPos.y - threshold) * _jumpMagnification;
         
         var movedPos = new Vector3(x, y, z);
         _ref.position = movedPos;
