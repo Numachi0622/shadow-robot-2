@@ -301,8 +301,10 @@ MonoBehaviour:
   _hips: {fileID: 8587118907022087738}
   _leftUpLeg: {fileID: 8587118907022087776}
   _leftLeg: {fileID: 8587118907022087718}
-  _rightUpLeg: {fileID: 8587118907022087712}
-  _rightLeg: {fileID: 8587118907022087684}
+  _leftFoot: {fileID: 8587118907022087690}
+  _rightUpLeg: {fileID: 8587118907022087778}
+  _rightLeg: {fileID: 8587118907022087712}
+  _rightFoot: {fileID: 8587118907022087684}
   _firstSpine: {fileID: 8587118907022087804}
   _secondSpine: {fileID: 8587118907022087688}
   _leftShoulder: {fileID: 8587118907022087756}

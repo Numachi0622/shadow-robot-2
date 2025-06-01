@@ -15,8 +15,10 @@ public class PlayerKinectMotion : MonoBehaviour
     [SerializeField] private Transform _hips;
     [SerializeField] private Transform _leftUpLeg;
     [SerializeField] private Transform _leftLeg;
+    [SerializeField] private Transform _leftFoot;
     [SerializeField] private Transform _rightUpLeg;
     [SerializeField] private Transform _rightLeg;
+    [SerializeField] private Transform _rightFoot;
     [SerializeField] private Transform _firstSpine;
     [SerializeField] private Transform _secondSpine;
     [SerializeField] private Transform _leftShoulder;
@@ -49,7 +51,6 @@ public class PlayerKinectMotion : MonoBehaviour
     private Quaternion _ankleLeft;
     private Quaternion _kneeRight;
     private Quaternion _ankleRight;
-
     private Kinect.Body _handData;
     private Kinect.Body _footData;
 
@@ -125,7 +126,7 @@ public class PlayerKinectMotion : MonoBehaviour
         
         var floorPlane = BodySourceManager.Instance.FloorClipPlane;
         var comp = Quaternion.FromToRotation(new Vector3(floorPlane.X, floorPlane.Y, floorPlane.Z), Vector3.up);
-        var comp2 = Quaternion.AngleAxis(90f, new Vector3(0, 1, 0)) * Quaternion.AngleAxis(-90f, new Vector3(0, 0, 1));
+        var comp2 = Quaternion.AngleAxis(90f, Vector3.up) * Quaternion.AngleAxis(-90f, Vector3.forward);
 
         // 上半身
         _spineMid = handJoints[Kinect.JointType.SpineMid].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineMid);
@@ -158,13 +159,10 @@ public class PlayerKinectMotion : MonoBehaviour
 
         var q = _ref.rotation;
         _ref.rotation = Quaternion.identity;
-
-        _rightUpLeg.rotation = _kneeRight * Quaternion.AngleAxis(-90f, new Vector3(0, 0, 1));
-        _rightLeg.rotation = _ankleRight * Quaternion.AngleAxis(-90f, new Vector3(0, 0, 1));
-
-        _leftUpLeg.rotation = _kneeLeft * Quaternion.AngleAxis(-90f, new Vector3(0, 0, 1));
-        _leftLeg.rotation = _ankleLeft * Quaternion.AngleAxis(-90f, new Vector3(0, 0, 1));
-
+        _rightUpLeg.rotation = _kneeRight * Quaternion.AngleAxis(-90f, Vector3.forward);
+        _rightLeg.rotation = _ankleRight * Quaternion.AngleAxis(-90f, Vector3.forward);
+        _leftUpLeg.rotation = _kneeLeft * Quaternion.AngleAxis(90f, Vector3.up) * Quaternion.AngleAxis(-90f, Vector3.forward);
+        _leftLeg.rotation = _ankleLeft * Quaternion.AngleAxis(-180f, Vector3.up) * Quaternion.AngleAxis(-90f, Vector3.forward);
         _ref.rotation = q;
         
         // 移動
