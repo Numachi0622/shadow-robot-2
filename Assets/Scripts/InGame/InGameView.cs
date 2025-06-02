@@ -179,30 +179,27 @@ public class InGameView : Singleton<InGameView>
         _resultViewSequence = DOTween.Sequence()
             .SetLink(gameObject)
             .AppendInterval(delay);
-        
+
         if (!isClear)
         {
             SoundManager.Instance.PlaySe(15);
-            
+
             _gameOverText.transform.localPosition = Vector2.up * 700f;
             _resultViewSequence
                 .Append(_resultBackground.DOFade(1f, 1f))
                 .Join(_gameOverText.transform.DOLocalMoveY(0f, 1f)
                     .SetEase(Ease.OutBack)
-                    .OnStart(() =>
-                    {
-                        _gameOverText.gameObject.SetActive(true);
-                    }));
+                    .OnStart(() => { _gameOverText.gameObject.SetActive(true); }));
             return;
         }
 
-        SoundManager.Instance.PlaySe(16);
-        
         _resultViewSequence
+            .AppendInterval(1f)
             .Append(_gameClearText.transform.DOScale(Vector3.one * 1.2f, 1f)
                 .SetEase(Ease.OutBack)
                 .OnStart(() =>
                 {
+                    SoundManager.Instance.PlaySe(16);
                     _gameClearText.gameObject.SetActive(true);
                     _gameClearText.transform.localScale = Vector3.zero;
                 }));

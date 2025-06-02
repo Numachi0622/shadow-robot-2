@@ -17,6 +17,7 @@ public class JumpCalibrationModel
     public JumpCalibrationModel()
     {
         _positionData = new float[Data_Num];
+        _calibratePos = PlayerPrefs.GetFloat("CalibratePosition", 0f);
     }
 
     public void SetCalibration()
@@ -34,6 +35,7 @@ public class JumpCalibrationModel
 
         if (_currentIndex >= Data_Num)
         {
+            _currentIndex = 0;
             _isCalibrating = false;
             
             var sum = 0f;
@@ -42,6 +44,7 @@ public class JumpCalibrationModel
                 sum += _positionData[i];
             }
             _calibratePos = sum / Data_Num;
+            PlayerPrefs.SetFloat("CalibratePosition", _calibratePos);
             
             OnCalibrated?.Invoke();
         }

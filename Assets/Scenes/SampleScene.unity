@@ -318,7 +318,7 @@ MonoBehaviour:
   _neck: {fileID: 8587118907022087772}
   _head: {fileID: 8587118907022087682}
   _moveMagnification: 5
-  _jumpThreshold: 0.4
+  _jumpThreshold: 0.12
   _jumpMagnification: 15
 --- !u!114 &71753417
 MonoBehaviour:
