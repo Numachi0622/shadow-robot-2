@@ -68,11 +68,11 @@ public class BossEnemyPresenter : EnemyPresenterBase
                 var dir = damageInfo.AttackDirection;
                 
                 DamageTextView.Instance.Play(damageInfo.AttackType, damage, info.hitPos);
-                HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
 
                 if (_hpPresenter.CurrentHp <= 0)
                 {
                     SoundManager.Instance.PlaySe(2);
+                    HitEffectManager.Instance.Play(AttackType.PlayerToEnemyDead, info.hitPos);
                     _enemyEffect.HitStop(_animator, GameConst.HIT_STOP_TIME, () =>
                     {
                         _enemyMovement.KnockBack(dir, true);
@@ -82,6 +82,7 @@ public class BossEnemyPresenter : EnemyPresenterBase
                     return;
                 }
                 
+                HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
                 SoundManager.Instance.PlaySe(1);
                 _enemyMovement.KnockBack(dir);
                 _enemyEffect.BlinkColor(_params.DamagedColor);

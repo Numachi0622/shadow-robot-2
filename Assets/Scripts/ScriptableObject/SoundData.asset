@@ -17,10 +17,10 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 26731f07e4d3c964098da13ca58f908a, type: 3}
     - {fileID: 8300000, guid: e5098f94d636b0542aa728a4498d011a, type: 3}
   - _clips:
-    - {fileID: 8300000, guid: b464445720e1b0249bc5766b35ce64b3, type: 3}
+    - {fileID: 8300000, guid: e5098f94d636b0542aa728a4498d011a, type: 3}
     - {fileID: 8300000, guid: fe168370ae367564cbf96a41a10b48f3, type: 3}
   - _clips:
-    - {fileID: 8300000, guid: fbdf1bd75c8f7824bb201464155c44b9, type: 3}
+    - {fileID: 8300000, guid: 5f780b4e8a76c574ebe2c24d4e004930, type: 3}
   - _clips:
     - {fileID: 8300000, guid: e5686bb233957204e847692d5a6195d5, type: 3}
   - _clips:
@@ -53,3 +53,5 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fde5172ffc56d98488fc31ccf0b1b1d7, type: 3}
   - _clips:
     - {fileID: 8300000, guid: 5c664aaf86afa234f9bfac5f38a38b0a, type: 3}
+  - _clips:
+    - {fileID: 8300000, guid: 5f780b4e8a76c574ebe2c24d4e004930, type: 3}

@@ -48,11 +48,11 @@ public class EnemyPresenter : EnemyPresenterBase
                 var dir = damageInfo.AttackDirection;
                 
                 DamageTextView.Instance.Play(damageInfo.AttackType, damage, info.hitPos);
-                HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
                 
                 if (_hpPresenter.CurrentHp <= 0)
                 {
                     SoundManager.Instance.PlaySe(2);
+                    HitEffectManager.Instance.Play(AttackType.PlayerToEnemyDead, info.hitPos);
                     _enemyEffect.HitStop(_animator, GameConst.HIT_STOP_TIME, () =>
                     {
                         _enemyEffect.ShakeBody();
@@ -63,6 +63,7 @@ public class EnemyPresenter : EnemyPresenterBase
                 }
                 
                 SoundManager.Instance.PlaySe(1);
+                HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
                 _enemyMovement.KnockBack(dir);
                 _enemyEffect.BlinkColor(_params.DamagedColor);
                 _enemyEffect.ShakeBody();

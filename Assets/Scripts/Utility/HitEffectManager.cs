@@ -7,6 +7,7 @@ public class HitEffectManager : Singleton<HitEffectManager>
 {
     [SerializeField] private Transform _parent;
     [SerializeField] private ParticleSystem _enemyHitEffectPrefab;
+    [SerializeField] private ParticleSystem _enemyDeadHitEffectPrefab;
     [SerializeField] private ParticleSystem _playerHitEffectPrefab;
 
     private Dictionary<AttackType, ParticleSystem> _hitEffectPrefabs;
@@ -18,12 +19,14 @@ public class HitEffectManager : Singleton<HitEffectManager>
         {
             { AttackType.EnemyToPlayerNormal , _playerHitEffectPrefab },
             { AttackType.PlayerToEnemyNormal , _enemyHitEffectPrefab },
+            { AttackType.PlayerToEnemyDead , _enemyDeadHitEffectPrefab }
         };
         
         _hitEffectPool = new Dictionary<AttackType, List<ParticleSystem>>()
         {
             { AttackType.EnemyToPlayerNormal , new List<ParticleSystem>() },
             { AttackType.PlayerToEnemyNormal , new List<ParticleSystem>() },
+            { AttackType.PlayerToEnemyDead , new List<ParticleSystem>() }
         };
         
         base.Initialize();

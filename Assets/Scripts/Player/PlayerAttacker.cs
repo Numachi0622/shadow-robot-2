@@ -75,5 +75,6 @@ public struct AttackInfo
 public enum AttackType
 {
     PlayerToEnemyNormal,
+    PlayerToEnemyDead,
     EnemyToPlayerNormal,
 }

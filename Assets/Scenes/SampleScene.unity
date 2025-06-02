@@ -2498,7 +2498,7 @@ MonoBehaviour:
     unityReference: {fileID: 1466215811}
     rawReference:
       rid: -2
-  _isSkip: 1
+  _isSkip: 0
   references:
     version: 2
     RefIds:
@@ -5807,6 +5807,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _parent: {fileID: 2102006418}
   _enemyHitEffectPrefab: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
+  _enemyDeadHitEffectPrefab: {fileID: 4033287822461114141, guid: 17346f02e7ce6bd469993bd8c93671f3, type: 3}
   _playerHitEffectPrefab: {fileID: 3891973445508218817, guid: 801655465fc2a9940b357b9ef912dd60, type: 3}
 --- !u!4 &2102006418
 Transform:
