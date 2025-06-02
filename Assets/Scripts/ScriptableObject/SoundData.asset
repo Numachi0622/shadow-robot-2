@@ -54,4 +54,6 @@ MonoBehaviour:
   - _clips:
     - {fileID: 8300000, guid: 5c664aaf86afa234f9bfac5f38a38b0a, type: 3}
   - _clips:
-    - {fileID: 8300000, guid: 5f780b4e8a76c574ebe2c24d4e004930, type: 3}
+    - {fileID: 8300000, guid: b524c2bcc33c0ef4ea8254e114faa6df, type: 3}
+  - _clips:
+    - {fileID: 8300000, guid: 2c004102d1b018d4ca16da434f114a21, type: 3}

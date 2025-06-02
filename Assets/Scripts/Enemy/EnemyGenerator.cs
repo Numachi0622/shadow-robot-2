@@ -76,5 +76,5 @@ public class EnemyGenerator : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomPosition() => new Vector3(Random.Range(-20f, 20f), 0f, Random.Range(10, 20));
+    private Vector3 GetRandomPosition() => new Vector3(Random.Range(-10f, 10f), 0f, Random.Range(0f, 10f));
 }
