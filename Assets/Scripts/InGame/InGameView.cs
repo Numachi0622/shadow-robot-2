@@ -101,6 +101,9 @@ public class InGameView : Singleton<InGameView>
     public async UniTaskVoid UpdateCountDown(float delay, Action callback = null)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(delay));
+        
+        SoundManager.Instance.PlaySe(14);
+        
         var count = 3;
         _countDownText.gameObject.SetActive(true);
         _countDownText.text = count.ToString();
@@ -155,6 +158,7 @@ public class InGameView : Singleton<InGameView>
     {
         _bossGenerateSequence?.Kill();
 
+        SoundManager.Instance.PlaySe(18);
         _bossGenerateViewTransform.gameObject.SetActive(true);
         _bossGenerateSequence = DOTween.Sequence()
             .SetLink(gameObject)
@@ -178,6 +182,8 @@ public class InGameView : Singleton<InGameView>
         
         if (!isClear)
         {
+            SoundManager.Instance.PlaySe(15);
+            
             _gameOverText.transform.localPosition = Vector2.up * 700f;
             _resultViewSequence
                 .Append(_resultBackground.DOFade(1f, 1f))
@@ -190,6 +196,8 @@ public class InGameView : Singleton<InGameView>
             return;
         }
 
+        SoundManager.Instance.PlaySe(16);
+        
         _resultViewSequence
             .Append(_gameClearText.transform.DOScale(Vector3.one * 1.2f, 1f)
                 .SetEase(Ease.OutBack)

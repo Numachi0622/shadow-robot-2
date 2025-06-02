@@ -5,6 +5,7 @@ using Interface;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Utility;
 
 public class EnemyPresenter : EnemyPresenterBase
 {
@@ -51,6 +52,7 @@ public class EnemyPresenter : EnemyPresenterBase
                 
                 if (_hpPresenter.CurrentHp <= 0)
                 {
+                    SoundManager.Instance.PlaySe(2);
                     _enemyEffect.HitStop(_animator, GameConst.HIT_STOP_TIME, () =>
                     {
                         _enemyEffect.ShakeBody();
@@ -60,6 +62,7 @@ public class EnemyPresenter : EnemyPresenterBase
                     return;
                 }
                 
+                SoundManager.Instance.PlaySe(1);
                 _enemyMovement.KnockBack(dir);
                 _enemyEffect.BlinkColor(_params.DamagedColor);
                 _enemyEffect.ShakeBody();
@@ -89,6 +92,7 @@ public class EnemyPresenter : EnemyPresenterBase
             _attacker.AttackReady().Forget();
             _enemyEffect.ShakeBody(3);
             _enemyEffect.BlinkColor(_params.AttackReadyColor, 4);
+            SoundManager.Instance.PlaySe(5);
         };
         _enemyStatePresenter.OnStateChanged[EnemyState.Attack] = () =>
         {

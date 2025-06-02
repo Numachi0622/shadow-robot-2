@@ -5,6 +5,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
 using UnityEngine.UI;
+using Utility;
 
 public class RocketPunchView : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class RocketPunchView : MonoBehaviour
             .SetLink(gameObject)
             .Append(_chargeMsgText.transform.DOScale(Vector3.one * 1.1f, 0.4f))
             .SetLoops(-1, LoopType.Yoyo);
+        
+        SoundManager.Instance.PlaySe(17);
     }
     
     public void UpdateTarget(Vector3 dir)

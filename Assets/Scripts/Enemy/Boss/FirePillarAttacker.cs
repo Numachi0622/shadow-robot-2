@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Utility;
 
 namespace Enemy.Boss
 {
@@ -29,8 +30,10 @@ namespace Enemy.Boss
 
         protected override async UniTask AttackImpact(float waitTime)
         {
+            SoundManager.Instance.PlaySe(8);
             await UniTask.Delay(TimeSpan.FromSeconds(_delay));
             
+            SoundManager.Instance.PlaySe(7);
             _attackCollider.enabled = true;
             _firePillarParticle.Play();
             Destroy(gameObject, 1.2f);

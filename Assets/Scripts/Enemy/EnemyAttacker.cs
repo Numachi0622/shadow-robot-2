@@ -2,6 +2,7 @@ using System;
 using Cysharp.Threading.Tasks;
 using Interface;
 using UnityEngine;
+using Utility;
 
 public class EnemyAttacker : EnemyAttackerBase
 {
@@ -24,6 +25,7 @@ public class EnemyAttacker : EnemyAttackerBase
     public override async UniTask AttackReady()
     {
         await UniTask.Delay(TimeSpan.FromSeconds(_params.AttackReadyTime));
+        SoundManager.Instance.PlaySe(3);
         OnAttackReadied?.Invoke();
     }
 }

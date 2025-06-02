@@ -4,6 +4,7 @@ using UniRx;
 using UniRx.Triggers;
 using UnityEditor.Recorder;
 using UnityEngine;
+using Utility;
 
 public class RocketPunchAttacker : MonoBehaviour, IAttackable
 {
@@ -37,6 +38,7 @@ public class RocketPunchAttacker : MonoBehaviour, IAttackable
             {
                 _isHit = true;
                 var hitEffect = Instantiate(_hitEffect, transform.position, Quaternion.identity);
+                SoundManager.Instance.PlaySe(11);
             })
             .AddTo(this);
     }

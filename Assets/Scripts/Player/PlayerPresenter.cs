@@ -5,6 +5,7 @@ using Player;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
+using Utility;
 
 public class PlayerPresenter : MonoBehaviour
 {
@@ -88,6 +89,7 @@ public class PlayerPresenter : MonoBehaviour
                 _playerEffect.BlinkColor(_params.DamagedColor);
                 DamageTextView.Instance.Play(damageInfo.AttackType, damage, info.hitPos);
                 HitEffectManager.Instance.Play(damageInfo.AttackType, info.hitPos);
+                SoundManager.Instance.PlaySe(0);
                 _rocketPunchPresenter.CancelRocketPunch();
             })
             .AddTo(this);

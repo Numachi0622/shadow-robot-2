@@ -4,6 +4,7 @@ using DG.Tweening;
 using Enemy.Boss;
 using Interface;
 using UnityEngine;
+using Utility;
 using Random = UnityEngine.Random;
 
 public class BossEnemyAttacker : EnemyAttackerBase
@@ -35,6 +36,7 @@ public class BossEnemyAttacker : EnemyAttackerBase
 
     protected override async UniTask AttackImpact(float waitTime)
     {
+        SoundManager.Instance.PlaySe(4);
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
 
         _attackCollider.enabled = true;
@@ -66,6 +68,7 @@ public class BossEnemyAttacker : EnemyAttackerBase
     private async UniTask EnergyBallAttack(float waitTime)
     {
         await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+        SoundManager.Instance.PlaySe(9);
         
         for(var angle = -90f; angle <= 90f; angle += 10f)
         {

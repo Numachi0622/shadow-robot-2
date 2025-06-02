@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;
+using Utility;
 
 public class RocketPunchPresenter : MonoBehaviour
 {
@@ -75,6 +76,7 @@ public class RocketPunchPresenter : MonoBehaviour
             .Subscribe(value =>
             {
                 _rocketPunchView.UpdateChargeGauge(value);
+                SoundManager.Instance.PlaySe(13);
                 if (value >= GameConst.MAX_ROCKET_PUNCH_CHARGE)
                 {
                     Launch(_detectModel.HandDirection).Forget();
@@ -95,12 +97,14 @@ public class RocketPunchPresenter : MonoBehaviour
                 _armMesh.enabled = false;
                 _launchEffects[0].Play();
                 _launchEffects[1].Play();
+                SoundManager.Instance.PlaySe(10);
             },
             () =>
             {
                 _armMesh.enabled = true;
                 _launchEffects[0].Play();
                 _launchEffects[1].Play();
+                SoundManager.Instance.PlaySe(12);
             });
         }
     
