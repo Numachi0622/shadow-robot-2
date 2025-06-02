@@ -15,11 +15,11 @@ namespace Utility
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
-                return;
+                //DontDestroyOnLoad(gameObject);
+                //return;
             }
             
-            Destroy(this);        
+            //Destroy(this);        
         }
     }
 }
