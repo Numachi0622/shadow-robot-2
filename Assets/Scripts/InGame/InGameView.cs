@@ -121,6 +121,7 @@ public class InGameView : Singleton<InGameView>
         
         await UniTask.Delay(TimeSpan.FromSeconds(1.5f));
         _countDownText.gameObject.SetActive(false);
+        SoundManager.Instance.PlayBgm(19);
         
         callback?.Invoke();
     }
@@ -157,7 +158,8 @@ public class InGameView : Singleton<InGameView>
     public void ShowBossGenerateView(Action onComplete = null)
     {
         _bossGenerateSequence?.Kill();
-
+        
+        SoundManager.Instance.StopBgm();
         SoundManager.Instance.PlaySe(18);
         _bossGenerateViewTransform.gameObject.SetActive(true);
         _bossGenerateSequence = DOTween.Sequence()
@@ -169,6 +171,7 @@ public class InGameView : Singleton<InGameView>
             .AppendCallback(() =>
             {
                 _bossGenerateViewTransform.gameObject.SetActive(false);
+                SoundManager.Instance.PlayBgm(20);
                 onComplete?.Invoke();
             });
     }
