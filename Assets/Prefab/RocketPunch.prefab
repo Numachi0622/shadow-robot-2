@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rocketPunchAttackPoint:
-    _minAttackPoint: 50
-    _maxAttackPoint: 50
+    _minAttackPoint: 90
+    _maxAttackPoint: 100
   _launchSpeed: 25
   _returnSpedd: 15
   _returnableRange: 2

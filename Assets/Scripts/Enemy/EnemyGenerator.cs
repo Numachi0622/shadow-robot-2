@@ -1,11 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
-using NUnit.Framework;
-using UniRx;
-using UniRx.Triggers;
 using UnityEngine;
-using UnityEngine.InputSystem.iOS;
 using Random = UnityEngine.Random;
 
 public class EnemyGenerator : MonoBehaviour

@@ -5,7 +5,7 @@ namespace Utility
 {
     public static class VectorExtensions
     {
-        private static readonly Vector3DEMAFilter _filter = new Vector3DEMAFilter(0.5f);
+        private static readonly Vector3DEMAFilter _filter = new Vector3DEMAFilter(GameConst.VECTOR3_DEMA_ALPHA);
         public static Quaternion ToQuaternion(this Windows.Kinect.Vector4 vector, Quaternion comp)
         {
             return Quaternion.Inverse(comp) * new Quaternion(-vector.X, -vector.Y, vector.Z, vector.W);

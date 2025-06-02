@@ -15,13 +15,18 @@ public class RocketPunchPresenter : MonoBehaviour
     [SerializeField] private FollowingCamera _followingCamera;
     [SerializeField] private RocketPunchLauncher _launcher;
     [SerializeField] private SkinnedMeshRenderer _armMesh;
+    [SerializeField] private MeshRenderer _leftBallMesh, _rightBallMesh;
     [SerializeField] private ParticleSystem[] _launchEffects;
+    [SerializeField] private float _increaseChargeValue = 30f;
     private RocketPunchDetectModel _detectModel;
     private RocketPunchChargeModel _chargeModel;
     private RocketPunchChargeDetectModel _chargeDetectModel;
     
     private bool _isCharging = false;
     public bool IsCharging => _isCharging;
+
+    private bool _isLaunching = false;
+    public bool IsLaunching => _isLaunching;
     
     public void Initialize(PlayerParams param)
     {
@@ -37,6 +42,7 @@ public class RocketPunchPresenter : MonoBehaviour
     {
         // Detect Rocket Punch
         _detectModel.OnStartReadyRocketPunch
+            .Where(_ => !_isLaunching)
             .Subscribe(_ =>
             {
                 _followingCamera.SetRocketPunchCamera();
@@ -46,6 +52,7 @@ public class RocketPunchPresenter : MonoBehaviour
             .AddTo(this);
         
         _detectModel.OnReadyRocketPunch
+            .Where(_ => !_isLaunching)
             .Subscribe(dir => _rocketPunchView.UpdateTarget(dir))
             .AddTo(this);
         
@@ -68,11 +75,12 @@ public class RocketPunchPresenter : MonoBehaviour
 
         _chargeDetectModel.OnUppedFoot
             .Where(_ => GameStatePresenter.Instance.CurrentGameState == GameState.InGame)
-            .Subscribe(_ => _chargeModel.Increase(20))
+            .Subscribe(_ => _chargeModel.Increase(_increaseChargeValue))
             .AddTo(this);
 
         _chargeModel.ChargeValue
             .Where(_ => GameStatePresenter.Instance.CurrentGameState == GameState.InGame)
+            .Where(_ => _isCharging)
             .Subscribe(value =>
             {
                 _rocketPunchView.UpdateChargeGauge(value);
@@ -95,15 +103,19 @@ public class RocketPunchPresenter : MonoBehaviour
             () =>
             {
                 _armMesh.enabled = false;
-                _launchEffects[0].Play();
-                _launchEffects[1].Play();
+                _leftBallMesh.enabled = false;
+                _rightBallMesh.enabled = false;
+                _isLaunching = true;
+                foreach (var eff in _launchEffects) eff.Play();
                 SoundManager.Instance.PlaySe(10);
             },
             () =>
             {
                 _armMesh.enabled = true;
-                _launchEffects[0].Play();
-                _launchEffects[1].Play();
+                _leftBallMesh.enabled = true;
+                _rightBallMesh.enabled = true;
+                _isLaunching = false;
+                foreach (var eff in _launchEffects) eff.Play();
                 SoundManager.Instance.PlaySe(12);
             });
         }

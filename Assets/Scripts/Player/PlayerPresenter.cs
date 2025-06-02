@@ -43,7 +43,7 @@ public class PlayerPresenter : MonoBehaviour
         // Attack
         _leftHandAttackDetector.OnAttack
             //.Where(_ => !_kinectMotion.IsJumping)
-            .Where(_ => !_rocketPunchPresenter.IsCharging)
+            .Where(_ => !_rocketPunchPresenter.IsCharging && !_rocketPunchPresenter.IsLaunching)
             .Subscribe(info => _leftAttacker.Attack(info.dir, info.vel))
             .AddTo(this);
         
@@ -53,7 +53,7 @@ public class PlayerPresenter : MonoBehaviour
 
         _rightHandAttackDetector.OnAttack
             //.Where(_ => !_kinectMotion.IsJumping)
-            .Where(_ => !_rocketPunchPresenter.IsCharging)
+            .Where(_ => !_rocketPunchPresenter.IsCharging && !_rocketPunchPresenter.IsLaunching)
             .Subscribe(info => _rightAttacker.Attack(info.dir, info.vel))
             .AddTo(this);
         

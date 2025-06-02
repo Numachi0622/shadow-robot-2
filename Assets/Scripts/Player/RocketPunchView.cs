@@ -38,6 +38,7 @@ public class RocketPunchView : MonoBehaviour
     {
         _rocketPunchView.SetActive(true);
         _inGameView.SetActive(false);
+        _chargeGauge.fillAmount = 0f;
 
         _chargeMsgText.text = _chargeMsg[0];
         _chargeMsgText.transform.localScale = Vector3.one;

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using DEMAFilter;
 using UniRx;
 using UniRx.Triggers;
-using UnityEditor.Build.Reporting;
 using Kinect = Windows.Kinect;
 using UnityEngine;
 using Utility;

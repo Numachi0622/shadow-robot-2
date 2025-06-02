@@ -4,6 +4,7 @@ using UnityEngine;
 using TNRD;
 using UniRx.Triggers;
 using UniRx;
+using UnityEngine.SceneManagement;
 
 public class InGamePresenter : MonoBehaviour
 {
@@ -80,6 +81,12 @@ public class InGamePresenter : MonoBehaviour
                 });
 
             })
+            .AddTo(this);
+        
+        // Restart
+        this.UpdateAsObservable()
+            .Where(_ => Input.GetKeyDown(KeyCode.R))
+            .Subscribe(_ => SceneManager.LoadScene(0))
             .AddTo(this);
     }
 

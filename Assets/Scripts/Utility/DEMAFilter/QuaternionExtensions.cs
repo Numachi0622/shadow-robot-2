@@ -40,7 +40,7 @@ namespace DEMAFilter
         {
             if (!_filters.ContainsKey(jointType))
             {
-                _filters[jointType] = new QuaternionDEMAFilter(GameConst.DEMA_FILTER_ALPHA);
+                _filters[jointType] = new QuaternionDEMAFilter(GameConst.QUATERNION_DEMA_ALPHA);
             }
 
             return _filters[jointType].Filter(quaternion);

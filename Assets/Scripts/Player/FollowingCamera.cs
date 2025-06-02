@@ -1,8 +1,6 @@
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;
-using DG.Tweening;
-using UnityEditor.ShaderGraph.Internal;
 
 public class FollowingCamera : MonoBehaviour
 {
