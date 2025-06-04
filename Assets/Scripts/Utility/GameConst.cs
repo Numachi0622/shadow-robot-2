@@ -7,8 +7,8 @@ public static class GameConst
     public const float COLLIDER_ACTIVE_TIME = 0.02f;
     public const float HIT_STOP_TIME = 0.3f;
     public const int ANIMATION_TARGET_FPS = 30;
-    public const float QUATERNION_DEMA_ALPHA = 0.4f;
-    public const float VECTOR3_DEMA_ALPHA = 0.5f;
+    public const float QUATERNION_DEMA_ALPHA = 0.2f;
+    public const float VECTOR3_DEMA_ALPHA = 0.2f;
     public const float MAX_PUNCH_POINT = 100f;
     public const float MAX_ARM_SCALE = 3f;
     public const float MAX_PUNCH_VELOCITY = 20f;
