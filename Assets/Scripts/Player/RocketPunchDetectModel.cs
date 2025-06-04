@@ -46,7 +46,11 @@ public class RocketPunchDetectModel
                 var dirAverage = (leftHandDir + rightHandDir).normalized;
                 _handDirection = new Vector3(dirAverage.x, 0f, dirAverage.z).normalized;
                 
-                (bool IsDetect, Vector3 Dir) info  = (dotLeft > _threshold || dotRight > _threshold, dirAverage);
+                var dist = Vector3.Distance(_leftHand.position, _rightHand.position);
+
+                var isDetect = (dotLeft > _threshold || dotRight > _threshold) && dist < param.RocketPunchDistThreshold;
+                
+                (bool IsDetect, Vector3 Dir) info  = (isDetect, dirAverage);
                 return info;
             })
             .Subscribe(info =>
