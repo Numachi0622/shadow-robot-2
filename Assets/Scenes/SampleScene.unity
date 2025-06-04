@@ -333,6 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _boneMaterial: {fileID: 2100000, guid: f2ea145c63353784985576f08398a815, type: 2}
+  _meshMaterial: {fileID: 2100000, guid: 6a7fca542064cdc4f8734ebcb43bcb75, type: 2}
   _convertCamera: {fileID: 1440904009}
   _idTextDebugCanvas: {fileID: 2289107028075177836, guid: 280d59d3818f5e345b1004485e30e971, type: 3}
 --- !u!114 &71753418

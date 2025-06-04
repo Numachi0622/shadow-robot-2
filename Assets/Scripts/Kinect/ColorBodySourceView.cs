@@ -8,9 +8,10 @@ using UnityEngine.Serialization;
 using Kinect = Windows.Kinect;
 using UnityEngine.UI;
 
-public class ColorBodySourceView : MonoBehaviour 
+public class ColorBodySourceView : MonoBehaviour
 {
     [SerializeField] private Material _boneMaterial;
+    [SerializeField] private Material _meshMaterial;
     [SerializeField] private Camera _convertCamera;
     [SerializeField] private GameObject _idTextDebugCanvas;
     
@@ -94,6 +95,7 @@ public class ColorBodySourceView : MonoBehaviour
         for (Kinect.JointType jt = Kinect.JointType.SpineBase; jt <= Kinect.JointType.ThumbRight; jt++)
         {
             GameObject jointObj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            jointObj.GetComponent<MeshRenderer>().material = _meshMaterial;
             jointObj.layer = LayerMask.NameToLayer("Debug");
             
             LineRenderer lr = jointObj.AddComponent<LineRenderer>();
