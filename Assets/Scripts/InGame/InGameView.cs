@@ -25,6 +25,7 @@ public class InGameView : Singleton<InGameView>
     [SerializeField] private TextMeshProUGUI _warningText;
     [SerializeField] private RectTransform _bossGenerateViewTransform;
     [SerializeField] private TextMeshProUGUI _bossGenerateText;
+    [SerializeField] private SkinnedMeshRenderer[] _bodyMeshRenderers;
     
     // result view
     [SerializeField] private CanvasGroup _resultBackground;
@@ -78,6 +79,10 @@ public class InGameView : Singleton<InGameView>
     {
         _selectView.SetActive(false);
         _inGameView.SetActive(true);
+        foreach (var meshRenderer in _bodyMeshRenderers)
+        {
+            meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+        }
     }
 
     public void PlayTransition(Action onTransition = null, Action onComplete = null)
