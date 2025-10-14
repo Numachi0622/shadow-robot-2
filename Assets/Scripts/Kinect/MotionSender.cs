@@ -16,4 +16,9 @@ public class MotionSender : IMotionSender
     {
         _sender.Send(address, rot);
     }
+
+    public void SendPosition(string address, Vector3 position)
+    {
+        _sender.Send(address, position);
+    }
 }
