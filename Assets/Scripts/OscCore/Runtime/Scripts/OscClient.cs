@@ -197,5 +197,18 @@ namespace OscCore
 
             return bytes;
         }
+
+        public void Send(string address, Quaternion element)
+        {
+            m_Writer.Reset();
+            m_Writer.Write(address);
+            const string typeTags = ",ffff";
+            m_Writer.Write(typeTags);
+            m_Writer.Write(element.x);
+            m_Writer.Write(element.y);
+            m_Writer.Write(element.z);
+            m_Writer.Write(element.w);
+            m_Socket.Send(m_Writer.Buffer, m_Writer.Length, SocketFlags.None);
+        }
     }
 }
