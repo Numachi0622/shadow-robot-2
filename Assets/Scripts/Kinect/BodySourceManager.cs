@@ -53,7 +53,6 @@ public class BodySourceManager : Singleton<BodySourceManager>
 
     private void Update()
     {
-        _motionSender.SendMotion("/test", new Quaternion(1, 2, 3, 4));
         if(_reader == null) return;
 
         var frame = _reader.AcquireLatestFrame();
@@ -103,66 +102,72 @@ public class BodySourceManager : Singleton<BodySourceManager>
         {
             // 上半身
             _motionSender.SendMotion(
-                OscAddress.SpineMidRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineMid),
                 GetJointRotation(i, JointType.SpineMid, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.SpineShoulderRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineShoulder),
                 GetJointRotation(i, JointType.SpineShoulder, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.ShoulderLeftRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.ShoulderLeft),
                 GetJointRotation(i, JointType.ShoulderLeft, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.ElbowLeftRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.ElbowLeft),
                 GetJointRotation(i, JointType.ElbowLeft, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.WristLeftRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.WristLeft),
                 GetJointRotation(i, JointType.WristLeft, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.HandLeftRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.HandLeft),
                 GetJointRotation(i, JointType.HandLeft, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.ShoulderRightRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.ShoulderRight),
                 GetJointRotation(i, JointType.ShoulderRight, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.ElbowRightRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.ElbowRight),
                 GetJointRotation(i, JointType.ElbowRight, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.WristRightRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.WristRight),
                 GetJointRotation(i, JointType.WristRight, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.HandRightRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.HandRight),
                 GetJointRotation(i, JointType.HandRight, comp)
             ); 
             
             // 下半身
             _motionSender.SendMotion(
-                OscAddress.SpineBaseRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineBase),
                 GetJointRotation(i, JointType.SpineBase, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.KneeLeftRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.KneeLeft),
                 GetJointRotation(i, JointType.KneeLeft, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.AnkleLeftRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.AnkleLeft),
                 GetJointRotation(i, JointType.AnkleLeft, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.KneeRightRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.KneeRight),
                 GetJointRotation(i, JointType.KneeRight, comp)
             );
             _motionSender.SendMotion(
-                OscAddress.AnkleRightRotation[_kinectId][i],
+                OscAddress.GetRotationAddress(_kinectId, i, JointType.AnkleRight),
                 GetJointRotation(i, JointType.AnkleRight, comp)
+            );
+            
+            // 移動座標
+            _motionSender.SendPosition(
+                OscAddress.GetPositionAddress(_kinectId, i, JointType.SpineMid),
+                GetJointPosition(i, JointType.SpineMid)
             );
         }
     }
@@ -172,6 +177,13 @@ public class BodySourceManager : Singleton<BodySourceManager>
         return _trackedData[index].JointOrientations[jointType].Orientation
             .ToQuaternion(comp)
             .DEMAFilter(jointType);
+    }
+
+    private Vector3 GetJointPosition(int index, JointType jointType)
+    {
+        var pos = _trackedData[index].Joints[jointType].Position;
+        var filteredPos = new Vector3(pos.X, pos.Y, pos.Z).DEMAFilter();
+        return filteredPos;
     }
     
     void OnDestroy()
