@@ -28,6 +28,11 @@ public class BodySourceManager : Singleton<BodySourceManager>
     public IReadOnlyReactiveCollection<Body> TrackedData => _trackedData;
     public Windows.Kinect.Vector4 FloorClipPlane { get; private set; }
 
+    private void Awake()
+    {
+        Initialize();
+    }
+
     public override void Initialize()
     {
         _motionSender = new MotionSender(_oscSettings.IpAddress, _oscSettings.Port);
@@ -43,10 +48,10 @@ public class BodySourceManager : Singleton<BodySourceManager>
             }
         }
         
-        _trackedData.ObserveCountChanged()
-            .Where(_ => _debugView != null)
-            .Subscribe(_debugView.UpdateTrackedCountView)
-            .AddTo(this);
+        // _trackedData.ObserveCountChanged()
+        //     .Where(_ => _debugView != null)
+        //     .Subscribe(_debugView.UpdateTrackedCountView)
+        //     .AddTo(this);
         
         base.Initialize();
     }
@@ -56,6 +61,8 @@ public class BodySourceManager : Singleton<BodySourceManager>
         if(_reader == null) return;
 
         var frame = _reader.AcquireLatestFrame();
+        if (frame == null) return;
+        
         if (_data == null)
         {
             _data = new Body[_sensor.BodyFrameSource.BodyCount];
@@ -96,6 +103,14 @@ public class BodySourceManager : Singleton<BodySourceManager>
 
     private void SendMotion()
     {
+        for (var i = 0; i < GameConst.MAX_TRACKING_COUNT; i++)
+        {
+            _motionSender.SendFlag(
+                OscAddress.GetFlagAddress(_kinectId, i),
+                i < _trackedData.Count ? 1 : 0
+            );
+        }
+        
         var comp = Quaternion.FromToRotation(new Vector3(FloorClipPlane.X, FloorClipPlane.Y, FloorClipPlane.Z), Vector3.up);
         
         for (var i = 0; i < _trackedData.Count; i++)
@@ -105,6 +120,7 @@ public class BodySourceManager : Singleton<BodySourceManager>
                 OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineMid),
                 GetJointRotation(i, JointType.SpineMid, comp)
             );
+            
             _motionSender.SendMotion(
                 OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineShoulder),
                 GetJointRotation(i, JointType.SpineShoulder, comp)

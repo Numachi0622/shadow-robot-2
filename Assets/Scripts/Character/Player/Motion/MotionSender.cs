@@ -11,7 +11,12 @@ public class MotionSender : IMotionSender
     {
         _sender = new OscClient(ipAddress, port);
     }
-    
+
+    public void SendFlag(string address, int flag)
+    {
+        _sender.Send(address, flag);
+    }
+
     public void SendMotion(string address, Quaternion rot)
     {
         _sender.Send(address, rot);

@@ -12,7 +12,8 @@ public static class OscAddress
     
     private const int MaxDevicesCount = 2;
     private const int MaxTrackedCount = 2;
-    private static readonly Dictionary<(int, int, JointType, DataType), string> _address = new();
+    private static readonly Dictionary<(int, int, JointType, DataType), string> _jointAddress = new();
+    private static readonly Dictionary<(int, int), string> _flagAddress = new();
     
     static OscAddress()
     {
@@ -20,14 +21,16 @@ public static class OscAddress
         {
             for (int trackedId = 0; trackedId < MaxTrackedCount; trackedId++)
             {
+                _flagAddress[(deviceId, trackedId)] = $"/{deviceId}/{trackedId}/isTracked";
+                
                 foreach (JointType joint in Enum.GetValues(typeof(JointType)))
                 {
                     var rotationKey = (deviceId, personId: trackedId, joint, DataType.Rotation);
                     var jointName = ToCamelCase(joint.ToString());
-                    _address[rotationKey] = $"/{deviceId}/{trackedId}/joint/rotation/{jointName}";
+                    _jointAddress[rotationKey] = $"/{deviceId}/{trackedId}/joint/rotation/{jointName}";
                     
                     var positionKey = (deviceId, personId: trackedId, joint, DataType.Position);
-                    _address[positionKey] = $"/{deviceId}/{trackedId}/joint/position/{jointName}";
+                    _jointAddress[positionKey] = $"/{deviceId}/{trackedId}/joint/position/{jointName}";
                 }
             }
         }
@@ -35,12 +38,17 @@ public static class OscAddress
     
     public static string GetRotationAddress(int deviceId, int personId, JointType joint)
     {
-        return _address[(deviceId, personId, joint, DataType.Rotation)];
+        return _jointAddress[(deviceId, personId, joint, DataType.Rotation)];
     }
     
     public static string GetPositionAddress(int deviceId, int personId, JointType joint)
     {
-        return _address[(deviceId, personId, joint, DataType.Position)];
+        return _jointAddress[(deviceId, personId, joint, DataType.Position)];
+    }
+    
+    public static string GetFlagAddress(int deviceId, int personId)
+    {
+        return _flagAddress[(deviceId, personId)];
     }
     
     private static string ToCamelCase(string str)

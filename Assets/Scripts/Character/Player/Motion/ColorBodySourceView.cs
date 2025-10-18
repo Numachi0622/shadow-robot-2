@@ -63,7 +63,7 @@ public class ColorBodySourceView : MonoBehaviour
             {
                 _currentDisplayId++;
                 _bodies.Add(body.Value, CreateBodyObject(body.Value.TrackingId, _currentDisplayId));
-
+                Debug.Log("ok");
             }) 
             .AddTo(this);
 
