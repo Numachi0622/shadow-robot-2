@@ -4,13 +4,13 @@ namespace InGame.Character
 {
     public abstract class Attacker : IAttackable
     {
-        protected Collider _attackCollider;
+        protected AttackCollider _attackCollider;
         protected AttackPoint _attackPoint;
         protected AttackParam _attackParam;
         
         public AttackParam AttackParam => _attackParam;
         
-        public Attacker(CharacterParams characterParams, Collider attackCollider)
+        public Attacker(CharacterParams characterParams, AttackCollider attackCollider)
         {
             _attackPoint = characterParams.AttackPoint;
             _attackParam.AttackPoint = _attackPoint;

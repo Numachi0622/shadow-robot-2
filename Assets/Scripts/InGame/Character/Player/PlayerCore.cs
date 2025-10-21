@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.System;
 using SynMotion;
@@ -30,12 +31,13 @@ namespace InGame.Character
 
         [SerializeField] private MovementTransforms _movementTransforms;
 
-        [SerializeField] private Collider _leftHandCollider;
-        [SerializeField] private Collider _rightHandCollider;
+        [SerializeField] private AttackCollider _leftHandCollider;
+        [SerializeField] private AttackCollider _rightHandCollider;
 
         private StateMachine<PlayerCore> _stateMachine;
         private IAttackable _leftHandAttacker, _rightHandAttacker;
         private HandAttackObserver _leftHandObserver, _rightHandObserver;
+        private DamageObserver _damageObserver;
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
         private int _playerId = 0;
@@ -67,6 +69,10 @@ namespace InGame.Character
                 .Merge(_rightHandObserver.OnAttackEnd)
                 .Subscribe(_ => OnIdleStart())
                 .AddTo(this);
+
+            _damageObserver.OnTakeDamage
+                .Subscribe(OnDamageStart)
+                .AddTo(this);
         }
 
         public override void OnUpdate()
@@ -86,7 +92,12 @@ namespace InGame.Character
         
         private void OnAttackStart(HandAttackParam param)
         {
-            _stateMachine.SetState<PlayerAttackState>();
+            _stateMachine.SetState<PlayerAttackState>(param);
+        }
+
+        private void OnDamageStart(AttackParam param)
+        {
+            _stateMachine.SetState<PlayerDamageState>(param);
         }
     }
 }

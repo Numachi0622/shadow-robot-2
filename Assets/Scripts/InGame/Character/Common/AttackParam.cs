@@ -1,8 +1,9 @@
+using InGame.System;
 using UnityEngine;
 
 namespace InGame.Character
 {
-    public struct AttackParam
+    public struct AttackParam : IStateParameter
     {
         public AttackPoint AttackPoint;
         public Vector3 AttackDirection;

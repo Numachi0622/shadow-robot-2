@@ -1,4 +1,4 @@
-﻿namespace Interface
+﻿namespace Utility
 {
     public interface ISingleton
     {

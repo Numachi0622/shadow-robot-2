@@ -1,14 +1,22 @@
+using System;
+using System.Linq;
 using Windows.Kinect;
+using Cysharp.Threading.Tasks.Linq;
 using OscCore;
 using SynMotion;
+using UniRx;
 using Unity.VisualScripting;
 using UnityEngine;
+using ZLinq;
 
 public class MotionReceiver
 {
     private readonly OscServer _receiver;
     private MotionParam[] _motionParam;
-    private SynMotionSystem _synMotion; 
+    private SynMotionSystem _synMotion;
+    private ReactiveProperty<bool>[] _connectedFlags;
+    
+    public IReadOnlyReactiveProperty<bool>[] ConnectedFlags => _connectedFlags;
 
     public MotionReceiver(int port, SynMotionSystem synMotion)
     {
@@ -20,6 +28,12 @@ public class MotionReceiver
             new MotionParam() { IsTracked = false },
             new MotionParam() { IsTracked = false },
             new MotionParam() { IsTracked = false }
+        };
+        _connectedFlags = new ReactiveProperty<bool>[]
+        {
+            new ReactiveProperty<bool>(false),
+            new ReactiveProperty<bool>(false),
+            new ReactiveProperty<bool>(false)
         };
 
         Bind();
@@ -125,6 +139,17 @@ public class MotionReceiver
     public void UpdateMotion()
     {
         _synMotion.SetMotionParam(_motionParam);
+
+        var filtered = _motionParam
+            .Where(param => param.IsTracked)
+            .Concat(Enumerable.Repeat(new MotionParam(){ IsTracked = false }, 3))
+            .Take(3)
+            .ToArray();
+
+        for (int i = 0; i < _connectedFlags.Length; i++)
+        {
+            _connectedFlags[i].Value = filtered[i].IsTracked;
+        }
     }
 
     private void ReadValue(OscMessageValues values, out Quaternion rot)
@@ -134,6 +159,14 @@ public class MotionReceiver
         var z = values.ReadFloatElement(2);
         var w = values.ReadFloatElement(3);
         rot = new Quaternion(x, y, z, w);
+    }
+
+    private void ReadValue(OscMessageValues values, out Vector3 pos)
+    {
+        var x = values.ReadFloatElement(0);
+        var y = values.ReadFloatElement(1);
+        var z = values.ReadFloatElement(2);
+        pos = new Vector3(x, y, z);
     }
 
     private void Log(int playerId, JointType jointType, Quaternion rot)

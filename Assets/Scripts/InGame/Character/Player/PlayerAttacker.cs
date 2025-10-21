@@ -5,7 +5,7 @@ namespace InGame.Character
 {
     public class PlayerAttacker : Attacker
     {
-        public PlayerAttacker(CharacterParams characterParams, Collider attackCollider) : base(characterParams, attackCollider)
+        public PlayerAttacker(CharacterParams characterParams, AttackCollider attackCollider) : base(characterParams, attackCollider)
         {
         }
 
@@ -14,23 +14,17 @@ namespace InGame.Character
             _attackParam.AttackVelocity = velocity;
             _attackParam.AttackType = attackType;
         }
-        
-        public override void AttackReady()
-        {
-        }
 
         public override void Attack(Vector3 dir, float velocity = 0f, float waitTime = 0f)
         {
             SetAttackParam(velocity, AttackType.PlayerToEnemyNormal);
             
-            if (_attackCollider.enabled) return;
-            _attackCollider.enabled = true;
+            _attackCollider.AttackImpact(_attackParam);
         }
 
         public override void AttackEnd()
         {
-            if (!_attackCollider.enabled) return;
-            _attackCollider.enabled = false;
+            _attackCollider.AttackImpactEnd();
         }
     }
 }
