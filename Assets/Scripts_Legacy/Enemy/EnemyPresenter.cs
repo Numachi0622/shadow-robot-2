@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using Enemy;
+using InGame.Character;
 using Interface;
 using UniRx;
 using UniRx.Triggers;

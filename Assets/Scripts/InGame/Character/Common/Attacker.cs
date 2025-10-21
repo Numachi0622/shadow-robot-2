@@ -1,0 +1,32 @@
+using UnityEngine;
+
+namespace InGame.Character
+{
+    public abstract class Attacker : IAttackable
+    {
+        protected Collider _attackCollider;
+        protected AttackPoint _attackPoint;
+        protected AttackParam _attackParam;
+        
+        public AttackParam AttackParam => _attackParam;
+        
+        public Attacker(CharacterParams characterParams, Collider attackCollider)
+        {
+            _attackPoint = characterParams.AttackPoint;
+            _attackParam.AttackPoint = _attackPoint;
+            _attackCollider = attackCollider;
+        }
+
+        public virtual void AttackReady()
+        {
+        }
+
+        public virtual void Attack(Vector3 dir, float velocity = 0, float waitTime = 0)
+        {
+        }
+
+        public virtual void AttackEnd()
+        {
+        }
+    }
+}

@@ -25,6 +25,6 @@ namespace SynMotion
         public Quaternion KneeRightRotation;
         public Quaternion AnkleRightRotation;
 
-        public Quaternion SpineMidPosition;
+        public Vector3 SpineMidPosition;
     }   
 }
