@@ -1,7 +1,7 @@
-using InGame.Character;
+using InGame.System;
 using UnityEngine;
 
-namespace InGame.System
+namespace InGame.Character
 {
     public class PlayerIdleState : StateMachine<PlayerCore>.State
     {

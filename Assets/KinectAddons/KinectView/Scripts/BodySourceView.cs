@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using InGame.Character;
 using Kinect = Windows.Kinect;
 
 public class BodySourceView : MonoBehaviour 

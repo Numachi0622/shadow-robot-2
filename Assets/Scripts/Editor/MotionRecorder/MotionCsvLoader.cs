@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -7,7 +6,7 @@ using Windows.Kinect;
 using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering;
+using InGame.Character;
 
 namespace ShadowRobotEditor
 {

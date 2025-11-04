@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using Utility.Extensions;
+using InGame.Character;
 
 namespace ShadowRobotEditor
 {
