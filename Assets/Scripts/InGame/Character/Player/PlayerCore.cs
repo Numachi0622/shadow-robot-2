@@ -34,6 +34,8 @@ namespace InGame.Character
         [SerializeField] private AttackCollider _leftHandCollider;
         [SerializeField] private AttackCollider _rightHandCollider;
 
+        [SerializeField] private DamageCollider _damageCollider;
+
         private StateMachine<PlayerCore> _stateMachine;
         private IAttackable _leftHandAttacker, _rightHandAttacker;
         private HandAttackObserver _leftHandObserver, _rightHandObserver;
@@ -51,6 +53,7 @@ namespace InGame.Character
         {
             _leftHandCollider.Initialize();
             _rightHandCollider.Initialize();
+            _damageCollider.Initialize(_damageObserver);
             
             _playerId = id;
             _synMotion = synMotion;
@@ -84,9 +87,9 @@ namespace InGame.Character
                 .Subscribe(OnRightHAndAttackEnd)
                 .AddTo(this);
 
-            // _damageObserver.OnTakeDamage
-            //     .Subscribe(OnDamageStart)
-            //     .AddTo(this);
+            _damageObserver.OnTakeDamage
+                .Subscribe(OnDamageStart)
+                .AddTo(this);
         }
 
         public override void OnUpdate()
@@ -98,7 +101,8 @@ namespace InGame.Character
             //_mover.Move(motionParam.SpineMidPosition);
             _motionMover.UpdateMotion(motionParam);
         }
-        
+
+        #region Non State Event
         private void OnLeftHandAttackStart(HandAttackParam param)
         {
             _leftHandAttacker.Attack(param.Direction, param.Velocity);
@@ -118,7 +122,9 @@ namespace InGame.Character
         {
             _rightHandAttacker.AttackEnd();
         }
+        #endregion
 
+        #region State Event
         private void OnIdleStart()
         {
             _stateMachine.SetState<PlayerIdleState>();
@@ -128,5 +134,6 @@ namespace InGame.Character
         {
             _stateMachine.SetState<PlayerDamageState>(param);
         }
+        #endregion
     }
 }
