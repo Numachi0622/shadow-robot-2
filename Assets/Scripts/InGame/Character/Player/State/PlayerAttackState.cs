@@ -9,16 +9,16 @@ namespace InGame.Character
         {
             Debug.Log("PlayerAttackState Enter");
 
-            if (parameter is HandAttackParam param)
-            {
-                Owner.Attacker.Attack(param.Direction, param.Velocity);
-            }
+            // if (parameter is HandAttackParam param)
+            // {
+            //     Owner.Attacker.Attack(param.Direction, param.Velocity);
+            // }
         }
 
         public override void OnExit()
         {
-            Debug.Log("PlayerAttackState Exit");
-            Owner.Attacker.AttackEnd();
+            // Debug.Log("PlayerAttackState Exit");
+            // Owner.Attacker.AttackEnd();
         }
     }
 }

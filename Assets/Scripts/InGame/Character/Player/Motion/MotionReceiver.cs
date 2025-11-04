@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Windows.Kinect;
 using Cysharp.Threading.Tasks.Linq;
+using InGame.Character;
 using OscCore;
 using SynMotion;
 using UniRx;
@@ -15,12 +16,14 @@ public class MotionReceiver
     private MotionParam[] _motionParam;
     private SynMotionSystem _synMotion;
     private ReactiveProperty<bool>[] _connectedFlags;
+    private int _maxDeviceCount;
+    private int _maxTrackingCount;
     
     public IReadOnlyReactiveProperty<bool>[] ConnectedFlags => _connectedFlags;
 
-    public MotionReceiver(int port, SynMotionSystem synMotion)
+    public MotionReceiver(DeviceSettings settings, SynMotionSystem synMotion)
     {
-        _receiver = new OscServer(port);
+        _receiver = new OscServer(settings.Port);
         _synMotion = synMotion;
         _motionParam = new MotionParam[]
         {
@@ -33,23 +36,30 @@ public class MotionReceiver
         {
             new ReactiveProperty<bool>(false),
             new ReactiveProperty<bool>(false),
+            new ReactiveProperty<bool>(false),
             new ReactiveProperty<bool>(false)
         };
+        _maxDeviceCount = settings.MaxDeviceCount;
+        _maxTrackingCount = settings.MaxTrackingCountPerDevice;
 
         Bind();
     }
 
     private void Bind()
     {
-        for (var deviceId = 0; deviceId < 2; deviceId++)
-        for (var trackedId = 0; trackedId < 2; trackedId++)
+        for (var deviceId = 0; deviceId < _maxDeviceCount; deviceId++)
+        for (var trackedId = 0; trackedId < _maxTrackingCount; trackedId++)
         {
-            var index = trackedId + (2 * deviceId);
+            var index = trackedId + (_maxDeviceCount * deviceId);
+            Debug.Log(index);
             
             _receiver.TryAddMethod(
                 OscAddress.GetFlagAddress(deviceId, trackedId),
-                values => _motionParam[index].IsTracked = values.ReadIntElement(0) == 1
-            );
+                values =>
+                {
+                    _motionParam[index].IsTracked = values.ReadIntElement(0) == 1;
+                    //Log(index, _motionParam[index].IsTracked);
+                });
             
             _receiver.TryAddMethod(
                 OscAddress.GetRotationAddress(deviceId, trackedId, JointType.SpineMid),
@@ -66,13 +76,19 @@ public class MotionReceiver
             
             _receiver.TryAddMethod(
                 OscAddress.GetRotationAddress(deviceId, trackedId, JointType.ShoulderLeft),
-                values => ReadValue(values, out _motionParam[index].ShoulderLeftRotation)
-            );
+                values =>
+                {
+                    ReadValue(values, out _motionParam[index].ShoulderLeftRotation);
+                    //Log(index, JointType.ShoulderLeft, _motionParam[index].ShoulderLeftRotation);
+                });
             
             _receiver.TryAddMethod(
                 OscAddress.GetRotationAddress(deviceId, trackedId, JointType.ElbowLeft),
-                values => ReadValue(values, out _motionParam[index].ElbowLeftRotation)
-            );
+                values =>
+                {
+                    ReadValue(values, out _motionParam[index].ElbowLeftRotation);
+                    //Log(index, JointType.ElbowLeft, _motionParam[index].ElbowLeftRotation);
+                });
             
             _receiver.TryAddMethod(
                 OscAddress.GetRotationAddress(deviceId, trackedId, JointType.WristLeft),
@@ -140,15 +156,9 @@ public class MotionReceiver
     {
         _synMotion.SetMotionParam(_motionParam);
 
-        var filtered = _motionParam
-            .Where(param => param.IsTracked)
-            .Concat(Enumerable.Repeat(new MotionParam(){ IsTracked = false }, 3))
-            .Take(3)
-            .ToArray();
-
-        for (int i = 0; i < _connectedFlags.Length; i++)
+        for (var i = 0; i < _motionParam.Length; i++)
         {
-            _connectedFlags[i].Value = filtered[i].IsTracked;
+            _connectedFlags[i].Value = _motionParam[i].IsTracked;
         }
     }
 

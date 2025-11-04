@@ -4,18 +4,23 @@ using System.Collections;
 using System.Collections.Generic;
 using Windows.Kinect;
 using DEMAFilter;
+using InGame.Character;
 using SynMotion;
 using UniRx;
 using UniRx.Triggers;
+using Unity.VisualScripting;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Utility;
+using ZLinq;
 using JointType = Windows.Kinect.JointType;
 
-public class BodySourceManager : Singleton<BodySourceManager>
+public class BodySourceManager : Utility.Singleton<BodySourceManager>
 {
     [SerializeField] private int _kinectId;
-    [SerializeField] private OscSettings _oscSettings;
+    [FormerlySerializedAs("_oscSettings")] [SerializeField] private DeviceSettings _deviceSettings;
     [SerializeField] private TrackingDebugView _debugView;
+    [SerializeField] private ColorBodySourceView _bodySourceView;
     
     private KinectSensor _sensor;
     private BodyFrameReader _reader;
@@ -27,6 +32,8 @@ public class BodySourceManager : Singleton<BodySourceManager>
     public Body[] GetData() => _data;
     public IReadOnlyReactiveCollection<Body> TrackedData => _trackedData;
     public Windows.Kinect.Vector4 FloorClipPlane { get; private set; }
+    
+    public Quaternion Comp => Quaternion.FromToRotation(new Vector3(FloorClipPlane.X, FloorClipPlane.Y, FloorClipPlane.Z), Vector3.up);
 
     private void Awake()
     {
@@ -35,8 +42,10 @@ public class BodySourceManager : Singleton<BodySourceManager>
 
     public override void Initialize()
     {
-        _motionSender = new MotionSender(_oscSettings.IpAddress, _oscSettings.Port);
+        base.Initialize();
+        _motionSender = new MotionSender(_deviceSettings.IpAddress, _deviceSettings.Port);
         _sensor = KinectSensor.GetDefault();
+        _bodySourceView.Initialize();
 
         if (_sensor != null)
         {
@@ -52,8 +61,6 @@ public class BodySourceManager : Singleton<BodySourceManager>
         //     .Where(_ => _debugView != null)
         //     .Subscribe(_debugView.UpdateTrackedCountView)
         //     .AddTo(this);
-        
-        base.Initialize();
     }
 
     private void Update()
@@ -97,6 +104,20 @@ public class BodySourceManager : Singleton<BodySourceManager>
             if(!_trackedData.Contains(body)) continue;
             _trackedData.Remove(body);
         }
+
+        // if (_trackedData.Count >= 2)
+        // {
+        //     var firstBody = _trackedData
+        //         .AsValueEnumerable()
+        //         .MinBy(body => body.Joints[JointType.SpineMid].Position.X);
+        //     
+        //     if (_trackedData[0] != firstBody)
+        //     {
+        //         var tmp = _trackedData[0];
+        //         _trackedData[0] = firstBody;
+        //         _trackedData[1] = tmp;
+        //     }
+        // }
         
         _debugView?.UpdateTrackingView(_data);
     }
@@ -107,7 +128,7 @@ public class BodySourceManager : Singleton<BodySourceManager>
         {
             _motionSender.SendFlag(
                 OscAddress.GetFlagAddress(_kinectId, i),
-                i < _trackedData.Count ? 1 : 0
+                i == 0 ? (i < _trackedData.Count ? 1 : 0) : 1
             );
         }
         
@@ -120,6 +141,7 @@ public class BodySourceManager : Singleton<BodySourceManager>
                 OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineMid),
                 GetJointRotation(i, JointType.SpineMid, comp)
             );
+            //Debug.Log($"{OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineMid)}, {GetJointRotation(i, JointType.SpineMid, comp)}");
             
             _motionSender.SendMotion(
                 OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineShoulder),

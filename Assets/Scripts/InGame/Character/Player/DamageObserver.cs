@@ -5,7 +5,7 @@ namespace InGame.Character
 {
     public class DamageObserver
     {
-        private readonly Subject<AttackParam> _onDamageSubject;
+        private readonly Subject<AttackParam> _onDamageSubject = new Subject<AttackParam>();
 
         public IObservable<AttackParam> OnTakeDamage => _onDamageSubject;
 

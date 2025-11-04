@@ -40,16 +40,24 @@ namespace InGame.Character
         private DamageObserver _damageObserver;
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
-        private int _playerId = 0;
+        [SerializeField] private int _playerId = 0;
+        
+        public int PlayerId => _playerId;
         
         public IAttackable LeftHandAttacker => _leftHandAttacker;
         public IAttackable RightHandAttacker => _rightHandAttacker;
 
         public override void Initialize(int id, SynMotionSystem synMotion)
         {
+            _leftHandCollider.Initialize();
+            _rightHandCollider.Initialize();
+            
             _playerId = id;
             _synMotion = synMotion;
-
+            _stateMachine = new StateMachine<PlayerCore>(this);
+            _leftHandObserver = new HandAttackObserver(_movementTransforms.LeftHand, _params.AttackableVelocity);
+            _rightHandObserver = new HandAttackObserver(_movementTransforms.RightHand, _params.AttackableVelocity);
+            _damageObserver = new DamageObserver();
             _leftHandAttacker = new PlayerAttacker(_params, _leftHandCollider);
             _rightHandAttacker = new PlayerAttacker(_params, _rightHandCollider);
             _mover = new PlayerMover(_movementTransforms.Reference);
@@ -70,7 +78,7 @@ namespace InGame.Character
                 .Subscribe(_ => OnIdleStart())
                 .AddTo(this);
 
-            _damageObserver.OnTakeDamage
+            _damageObserver?.OnTakeDamage
                 .Subscribe(OnDamageStart)
                 .AddTo(this);
         }
@@ -81,7 +89,7 @@ namespace InGame.Character
             _rightHandObserver.Observe();
 
             var motionParam = _synMotion.GetMotionParam(_playerId);
-            _mover.Move(motionParam.SpineMidPosition);
+            //_mover.Move(motionParam.SpineMidPosition);
             _motionMover.UpdateMotion(motionParam);
         }
 

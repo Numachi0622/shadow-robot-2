@@ -17,10 +17,13 @@ namespace InGame.System
             {
                 singleton.Value.Initialize();
             }
+            
+            _playerManager.Initialize();
         }
         
         private void Update()
         {
+            _playerManager.OnUpdate();
         }
     }
 }
