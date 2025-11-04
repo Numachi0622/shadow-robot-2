@@ -82,7 +82,7 @@ namespace InGame.Character
                     values =>
                     {
                         ReadValue(values, out _motionParam[index].ElbowLeftRotation);
-                        Log(index, JointType.ElbowLeft, _motionParam[index].ElbowLeftRotation);
+                        //Log(index, JointType.ElbowLeft, _motionParam[index].ElbowLeftRotation);
                     });
 
                 _receiver.TryAddMethod(
