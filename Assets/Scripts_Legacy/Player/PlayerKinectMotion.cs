@@ -1,5 +1,5 @@
 using System;
-using DEMAFilter;
+using Utility.DEMAFilter;
 using UniRx;
 using UniRx.Triggers;
 using Kinect = Windows.Kinect;
@@ -131,16 +131,16 @@ public class PlayerKinectMotion : MonoBehaviour
         var comp2 = Quaternion.AngleAxis(90f, Vector3.up) * Quaternion.AngleAxis(-90f, Vector3.forward);
 
         // 上半身
-        _spineMid = handJoints[Kinect.JointType.SpineMid].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineMid);
-        _spineShoulder = handJoints[Kinect.JointType.SpineShoulder].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineShoulder);
-        _shoulderLeft = handJoints[Kinect.JointType.ShoulderLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ShoulderLeft);
-        _shoulderRight = handJoints[Kinect.JointType.ShoulderRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ShoulderRight);
-        _elbowLeft = handJoints[Kinect.JointType.ElbowLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ElbowLeft);
-        _wristLeft = handJoints[Kinect.JointType.WristLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.WristLeft);
-        _handLeft = handJoints[Kinect.JointType.HandLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.HandLeft);
-        _elbowRight = handJoints[Kinect.JointType.ElbowRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ElbowRight);
-        _wristRight = handJoints[Kinect.JointType.WristRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.WristRight);
-        _handRight = handJoints[Kinect.JointType.HandRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.HandRight);
+        // _spineMid = handJoints[Kinect.JointType.SpineMid].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineMid);
+        // _spineShoulder = handJoints[Kinect.JointType.SpineShoulder].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineShoulder);
+        // _shoulderLeft = handJoints[Kinect.JointType.ShoulderLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ShoulderLeft);
+        // _shoulderRight = handJoints[Kinect.JointType.ShoulderRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ShoulderRight);
+        // _elbowLeft = handJoints[Kinect.JointType.ElbowLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ElbowLeft);
+        // _wristLeft = handJoints[Kinect.JointType.WristLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.WristLeft);
+        // _handLeft = handJoints[Kinect.JointType.HandLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.HandLeft);
+        // _elbowRight = handJoints[Kinect.JointType.ElbowRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.ElbowRight);
+        // _wristRight = handJoints[Kinect.JointType.WristRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.WristRight);
+        // _handRight = handJoints[Kinect.JointType.HandRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.HandRight);
         
         _firstSpine.rotation = _spineMid * comp2;
         
@@ -153,11 +153,11 @@ public class PlayerKinectMotion : MonoBehaviour
         _leftHand.rotation = _handLeft * comp2;
         
         // 下半身
-        _spineBase = footJoints[Kinect.JointType.SpineBase].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineBase);
-        _kneeLeft = footJoints[Kinect.JointType.KneeLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.KneeLeft);
-        _ankleLeft = footJoints[Kinect.JointType.AnkleLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.AnkleLeft);
-        _kneeRight = footJoints[Kinect.JointType.KneeRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.KneeRight);
-        _ankleRight = footJoints[Kinect.JointType.AnkleRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.AnkleRight);
+        // _spineBase = footJoints[Kinect.JointType.SpineBase].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.SpineBase);
+        // _kneeLeft = footJoints[Kinect.JointType.KneeLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.KneeLeft);
+        // _ankleLeft = footJoints[Kinect.JointType.AnkleLeft].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.AnkleLeft);
+        // _kneeRight = footJoints[Kinect.JointType.KneeRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.KneeRight);
+        // _ankleRight = footJoints[Kinect.JointType.AnkleRight].Orientation.ToQuaternion(comp).DEMAFilter(Kinect.JointType.AnkleRight);
 
         var q = _ref.rotation;
         _ref.rotation = Quaternion.identity;
