@@ -69,18 +69,24 @@ namespace InGame.Character
         private void Bind()
         {
             _leftHandObserver.OnAttackStart
-                .Merge(_rightHandObserver.OnAttackStart)
-                .Subscribe(OnAttackStart)
+                .Subscribe(OnLeftHandAttackStart)
                 .AddTo(this);
 
             _leftHandObserver.OnAttackEnd
-                .Merge(_rightHandObserver.OnAttackEnd)
-                .Subscribe(_ => OnIdleStart())
+                .Subscribe(OnLeftHandAttackEnd)
+                .AddTo(this);
+            
+            _rightHandObserver.OnAttackStart
+                .Subscribe(OnRightHAndAttackStart)
                 .AddTo(this);
 
-            _damageObserver?.OnTakeDamage
-                .Subscribe(OnDamageStart)
+            _rightHandObserver.OnAttackEnd
+                .Subscribe(OnRightHAndAttackEnd)
                 .AddTo(this);
+
+            // _damageObserver.OnTakeDamage
+            //     .Subscribe(OnDamageStart)
+            //     .AddTo(this);
         }
 
         public override void OnUpdate()
@@ -92,15 +98,30 @@ namespace InGame.Character
             //_mover.Move(motionParam.SpineMidPosition);
             _motionMover.UpdateMotion(motionParam);
         }
+        
+        private void OnLeftHandAttackStart(HandAttackParam param)
+        {
+            _leftHandAttacker.Attack(param.Direction, param.Velocity);
+        }
+        
+        private void OnLeftHandAttackEnd(Unit unit)
+        {
+            _leftHandAttacker.AttackEnd();
+        }
+        
+        private void OnRightHAndAttackStart(HandAttackParam param)
+        {
+            _rightHandAttacker.Attack(param.Direction, param.Velocity);
+        }
+        
+        private void OnRightHAndAttackEnd(Unit unit)
+        {
+            _rightHandAttacker.AttackEnd();
+        }
 
         private void OnIdleStart()
         {
             _stateMachine.SetState<PlayerIdleState>();
-        }
-        
-        private void OnAttackStart(HandAttackParam param)
-        {
-            _stateMachine.SetState<PlayerAttackState>(param);
         }
 
         private void OnDamageStart(AttackParam param)

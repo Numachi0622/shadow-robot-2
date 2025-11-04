@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UniRx;
@@ -36,7 +37,7 @@ namespace InGame.Character
         public UniTask AttackImpactAsync(float waitTime)
         {
             _attackCollider.enabled = true;
-            return UniTask.CompletedTask;
+            return UniTask.Delay(TimeSpan.FromSeconds(waitTime));
         }
 
         public void AttackImpactEnd()
