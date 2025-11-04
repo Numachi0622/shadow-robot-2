@@ -51,7 +51,6 @@ public class MotionReceiver
         for (var trackedId = 0; trackedId < _maxTrackingCount; trackedId++)
         {
             var index = trackedId + (_maxDeviceCount * deviceId);
-            Debug.Log(index);
             
             _receiver.TryAddMethod(
                 OscAddress.GetFlagAddress(deviceId, trackedId),

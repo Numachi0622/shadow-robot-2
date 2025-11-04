@@ -34,6 +34,8 @@ public class BodySourceManager : Utility.Singleton<BodySourceManager>
     public Windows.Kinect.Vector4 FloorClipPlane { get; private set; }
     
     public Quaternion Comp => Quaternion.FromToRotation(new Vector3(FloorClipPlane.X, FloorClipPlane.Y, FloorClipPlane.Z), Vector3.up);
+    
+    public IMotionSender MotionSender => _motionSender;
 
     private void Awake()
     {
