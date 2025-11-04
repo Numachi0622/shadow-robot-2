@@ -1,18 +1,11 @@
-﻿using System;
-using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using Windows.Kinect;
-using DEMAFilter;
+using Utility.DEMAFilter;
 using InGame.Character;
 using SynMotion;
 using UniRx;
-using UniRx.Triggers;
-using Unity.VisualScripting;
 using UnityEngine.Serialization;
-using UnityEngine.UI;
-using Utility;
-using ZLinq;
+using Utility.Extensions;
 using JointType = Windows.Kinect.JointType;
 
 public class BodySourceManager : Utility.Singleton<BodySourceManager>
@@ -27,6 +20,7 @@ public class BodySourceManager : Utility.Singleton<BodySourceManager>
     private Body[] _data = null;
     private readonly ReactiveCollection<Body> _trackedData = new ReactiveCollection<Body>();
     private IMotionSender _motionSender;
+    private DEMAFilterManager _demaFilterManager;
     
     public KinectSensor Sensor => _sensor;
     public Body[] GetData() => _data;
@@ -48,6 +42,7 @@ public class BodySourceManager : Utility.Singleton<BodySourceManager>
         _motionSender = new MotionSender(_deviceSettings.IpAddress, _deviceSettings.Port);
         _sensor = KinectSensor.GetDefault();
         _bodySourceView.Initialize();
+        _demaFilterManager = new DEMAFilterManager(GameConst.QUATERNION_DEMA_ALPHA, GameConst.VECTOR3_DEMA_ALPHA);
 
         if (_sensor != null)
         {
@@ -213,16 +208,15 @@ public class BodySourceManager : Utility.Singleton<BodySourceManager>
 
     private Quaternion GetJointRotation(int index, JointType jointType, Quaternion comp)
     {
-        return _trackedData[index].JointOrientations[jointType].Orientation
-            .ToQuaternion(comp)
-            .DEMAFilter(jointType);
+        var rot = _trackedData[index].JointOrientations[jointType].Orientation
+            .ToQuaternion(comp);
+        return _demaFilterManager.FilterQuaternion(index, jointType, rot);
     }
 
     private Vector3 GetJointPosition(int index, JointType jointType)
     {
-        var pos = _trackedData[index].Joints[jointType].Position;
-        var filteredPos = new Vector3(pos.X, pos.Y, pos.Z).DEMAFilter();
-        return filteredPos;
+        var pos = _trackedData[index].Joints[jointType].Position.ToVector3();
+        return _demaFilterManager.FilterVector3(index, pos);
     }
     
     void OnDestroy()

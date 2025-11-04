@@ -1,14 +1,9 @@
-using System;
-using System.Linq;
 using Windows.Kinect;
-using Cysharp.Threading.Tasks.Linq;
 using InGame.Character;
 using OscCore;
 using SynMotion;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
-using ZLinq;
 
 public class MotionReceiver
 {

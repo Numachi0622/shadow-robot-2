@@ -4,10 +4,9 @@ using System.Text;
 using System.Threading;
 using Windows.Kinect;
 using Cysharp.Threading.Tasks;
-using TMPro;
 using UnityEditor;
 using UnityEngine;
-using Utility;
+using Utility.Extensions;
 
 namespace ShadowRobotEditor
 {
