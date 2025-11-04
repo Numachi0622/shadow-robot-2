@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6167980404713248946}
   - component: {fileID: 1366617420518282285}
   - component: {fileID: 4095385045143560672}
-  - component: {fileID: 4178379145206613407}
   m_Layer: 0
   m_Name: Kinect
   m_TagString: Untagged
@@ -49,8 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _kinectId: 0
-  _oscSettings: {fileID: 11400000, guid: dd8e72cb520929847a63eef04fbe6b98, type: 2}
+  _deviceSettings: {fileID: 11400000, guid: 0f4c60d026cece94a9a7989a30010ae7, type: 2}
   _debugView: {fileID: 0}
+  _bodySourceView: {fileID: 4095385045143560672}
 --- !u!114 &4095385045143560672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,41 +67,6 @@ MonoBehaviour:
   _meshMaterial: {fileID: 2100000, guid: 6a7fca542064cdc4f8734ebcb43bcb75, type: 2}
   _convertCamera: {fileID: 1048521387755579549}
   _idTextDebugCanvas: {fileID: 2289107028075177836, guid: 280d59d3818f5e345b1004485e30e971, type: 3}
---- !u!114 &4178379145206613407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2410542185320871873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0775ba00cd262dd4e87fe9f8d87b5091, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _ref: {fileID: 0}
-  _hips: {fileID: 0}
-  _leftUpLeg: {fileID: 0}
-  _leftLeg: {fileID: 0}
-  _leftFoot: {fileID: 0}
-  _rightUpLeg: {fileID: 0}
-  _rightLeg: {fileID: 0}
-  _rightFoot: {fileID: 0}
-  _firstSpine: {fileID: 0}
-  _secondSpine: {fileID: 0}
-  _leftShoulder: {fileID: 0}
-  _leftArm: {fileID: 0}
-  _leftForeArm: {fileID: 0}
-  _leftHand: {fileID: 0}
-  _rightShoulder: {fileID: 0}
-  _rightArm: {fileID: 0}
-  _rightForeArm: {fileID: 0}
-  _rightHand: {fileID: 0}
-  _neck: {fileID: 0}
-  _head: {fileID: 0}
-  _moveMagnification: 5
-  _jumpThreshold: 0.12
-  _jumpMagnification: 15
 --- !u!1 &4193273025034183559
 GameObject:
   m_ObjectHideFlags: 0

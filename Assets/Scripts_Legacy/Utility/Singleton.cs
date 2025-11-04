@@ -1,7 +1,4 @@
-﻿using System;
-using Interface;
-using UnityEngine;
-using Utility;
+﻿using UnityEngine;
 
 namespace Utility
 {

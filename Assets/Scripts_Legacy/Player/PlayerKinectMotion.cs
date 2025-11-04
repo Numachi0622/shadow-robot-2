@@ -1,3 +1,4 @@
+using System;
 using DEMAFilter;
 using UniRx;
 using UniRx.Triggers;
@@ -54,7 +55,12 @@ public class PlayerKinectMotion : MonoBehaviour
     public bool IsJumping => _isJumping;
     
     public bool IsMovable => GameStatePresenter.Instance.CurrentGameState == GameState.InGame;
-    
+
+    private void Start()
+    {
+        Initialize();
+    }
+
     public void Initialize()
     {
         this.UpdateAsObservable()
@@ -109,7 +115,7 @@ public class PlayerKinectMotion : MonoBehaviour
     
     private void UpdateMotion()
     {
-        if (GameStatePresenter.Instance.CurrentGameState == GameState.GameOver) return;
+//        if (GameStatePresenter.Instance.CurrentGameState == GameState.GameOver) return;
         
         var trackedData = BodySourceManager.Instance.TrackedData;
         if(trackedData == null) return;
@@ -162,19 +168,19 @@ public class PlayerKinectMotion : MonoBehaviour
         _ref.rotation = q;
         
         // 移動
-        var kinectPos = _footData.Joints[Kinect.JointType.SpineMid].Position;
-        var filteredPos = new Vector3(kinectPos.X, kinectPos.Y, -kinectPos.Z).DEMAFilter();
-        JumpCalibrationPresenter.Instance.Calibrate(filteredPos.y);
-        
-        var threshold = JumpCalibrationPresenter.Instance.CalibratePosition + _jumpThreshold;
-        _isJumping = filteredPos.y > threshold;
-        
-        var x = !IsMovable ? _ref.position.x : filteredPos.x * _moveMagnification;
-        var z = !IsMovable ? _ref.position.z : filteredPos.z * _moveMagnification;
-        var y =  !_isJumping ? 0f : (filteredPos.y - threshold) * _jumpMagnification;
-        
-        var movedPos = new Vector3(x, y, z);
-        _ref.position = movedPos;
+       //  var kinectPos = _footData.Joints[Kinect.JointType.SpineMid].Position;
+       //  var filteredPos = new Vector3(kinectPos.X, kinectPos.Y, -kinectPos.Z).DEMAFilter();
+       //  JumpCalibrationPresenter.Instance.Calibrate(filteredPos.y);
+       //  
+       //  var threshold = JumpCalibrationPresenter.Instance.CalibratePosition + _jumpThreshold;
+       //  _isJumping = filteredPos.y > threshold;
+       //  
+       //  var x = !IsMovable ? _ref.position.x : filteredPos.x * _moveMagnification;
+       //  var z = !IsMovable ? _ref.position.z : filteredPos.z * _moveMagnification;
+       //  var y =  !_isJumping ? 0f : (filteredPos.y - threshold) * _jumpMagnification;
+       //  
+       //  var movedPos = new Vector3(x, y, z);
+       //  _ref.position = movedPos;
     }
 }
 
