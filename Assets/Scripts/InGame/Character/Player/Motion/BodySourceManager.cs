@@ -130,7 +130,7 @@ public class BodySourceManager : Utility.Singleton<BodySourceManager>
         {
             _motionSender.SendFlag(
                 OscAddress.GetFlagAddress(_kinectId, i),
-                i == 0 ? (i < _trackedData.Count ? 1 : 0) : 1
+                i < _trackedData.Count ? 1 : 0
             );
         }
         
@@ -143,7 +143,6 @@ public class BodySourceManager : Utility.Singleton<BodySourceManager>
                 OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineMid),
                 GetJointRotation(i, JointType.SpineMid, comp)
             );
-            //Debug.Log($"{OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineMid)}, {GetJointRotation(i, JointType.SpineMid, comp)}");
             
             _motionSender.SendMotion(
                 OscAddress.GetRotationAddress(_kinectId, i, JointType.SpineShoulder),

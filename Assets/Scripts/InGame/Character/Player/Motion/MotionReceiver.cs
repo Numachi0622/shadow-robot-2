@@ -65,7 +65,7 @@ public class MotionReceiver
                 values =>
                 {
                     ReadValue(values, out _motionParam[index].SpineMidRotation);
-                    Log(index, JointType.SpineMid, _motionParam[index].SpineMidRotation);
+                    //Log(index, JointType.SpineMid, _motionParam[index].SpineMidRotation);
                 });
             
             _receiver.TryAddMethod(
@@ -86,7 +86,7 @@ public class MotionReceiver
                 values =>
                 {
                     ReadValue(values, out _motionParam[index].ElbowLeftRotation);
-                    //Log(index, JointType.ElbowLeft, _motionParam[index].ElbowLeftRotation);
+                    Log(index, JointType.ElbowLeft, _motionParam[index].ElbowLeftRotation);
                 });
             
             _receiver.TryAddMethod(
