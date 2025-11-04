@@ -1,4 +1,5 @@
 using System;
+using InGame.Character;
 using UniRx;
 using UniRx.Triggers;
 using UnityEngine;

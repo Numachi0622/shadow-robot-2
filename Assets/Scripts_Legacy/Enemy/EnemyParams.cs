@@ -1,3 +1,4 @@
+using InGame.Character;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "EnemyParams", menuName = "ScriptableObjects/EnemyParams")]

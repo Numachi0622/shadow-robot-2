@@ -1,4 +1,5 @@
 using System;
+using InGame.Character;
 using Utility.DEMAFilter;
 using UniRx;
 using UniRx.Triggers;
