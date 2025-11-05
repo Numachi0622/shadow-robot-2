@@ -8,7 +8,7 @@ namespace ShadowRobotEditor
     {
         public enum CsvMotionType
         {
-            Sample1, Sample2
+            Sample1, Sample2, TPose
         }
         
         [SerializeField] private SerializableDictionary<CsvMotionType, TextAsset> _motionCsvData = new SerializableDictionary<CsvMotionType, TextAsset>();
