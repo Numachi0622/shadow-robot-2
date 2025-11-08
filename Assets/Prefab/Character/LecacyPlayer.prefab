@@ -16149,8 +16149,9 @@ GameObject:
   - component: {fileID: 8904391719988594363}
   - component: {fileID: 5989828661784989543}
   - component: {fileID: 6796559027765543746}
+  - component: {fileID: 6658610042458744962}
   m_Layer: 9
-  m_Name: Player
+  m_Name: LecacyPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16280,6 +16281,20 @@ MonoBehaviour:
     RightHand: {fileID: 745289574424419990}
   _leftHandCollider: {fileID: 6571219436181400985}
   _rightHandCollider: {fileID: 9221521247435043878}
+  _damageCollider: {fileID: 6658610042458744962}
+  _playerId: 0
+--- !u!114 &6658610042458744962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4678942371847182507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7657716ae34c0baf3db9329f256264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4798181514560967881
 GameObject:
   m_ObjectHideFlags: 0

@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _deviceSettings: {fileID: 11400000, guid: 0f4c60d026cece94a9a7989a30010ae7, type: 2}
-  _playerPrefab: {fileID: 6796559027765543746, guid: 831d3926847036c41843f75dffd3bd6d, type: 3}
+  _playerPrefab: {fileID: 2580647560496031150, guid: 057cad60f98161749a95444f7dcefde7, type: 3}
   _playerCount: 3
 --- !u!1001 &1966729676
 PrefabInstance:
