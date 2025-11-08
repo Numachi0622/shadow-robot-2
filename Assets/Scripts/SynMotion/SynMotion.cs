@@ -26,22 +26,20 @@ namespace SynMotion
         {
             var motionParam = new MotionParam
             {
-                SpineMidRotation = _motionParams[playerId].SpineMidRotation * _comp,
+                SpineMidRotation = _motionParams[playerId].SpineMidRotation * Quaternion.AngleAxis(-180f, Vector3.up),
                 
-                ElbowLeftRotation = _motionParams[playerId].ElbowLeftRotation * _comp,
-                WristLeftRotation = _motionParams[playerId].WristLeftRotation * _comp,
-                HandLeftRotation = _motionParams[playerId].HandLeftRotation * _comp,
+                ElbowLeftRotation = _motionParams[playerId].ElbowLeftRotation * Quaternion.AngleAxis(-180f, Vector3.up) * Quaternion.AngleAxis(-90f, Vector3.forward),
+                WristLeftRotation = _motionParams[playerId].WristLeftRotation * Quaternion.AngleAxis(-90f, Vector3.forward),
+                HandLeftRotation = _motionParams[playerId].HandLeftRotation,
                 
-                ElbowRightRotation = _motionParams[playerId].ElbowRightRotation * _comp,
-                WristRightRotation = _motionParams[playerId].WristRightRotation * _comp,
-                HandRightRotation = _motionParams[playerId].HandRightRotation * _comp,
+                ElbowRightRotation = _motionParams[playerId].ElbowRightRotation * Quaternion.AngleAxis(90f, Vector3.forward),
+                WristRightRotation = _motionParams[playerId].WristRightRotation * Quaternion.AngleAxis(90f, Vector3.forward),
+                HandRightRotation = _motionParams[playerId].HandRightRotation,
                 
-                KneeLeftRotation = _motionParams[playerId].KneeLeftRotation * _comp,
-                AnkleLeftRotation = _motionParams[playerId].AnkleLeftRotation * _comp,
-                KneeRightRotation = _motionParams[playerId].KneeRightRotation * 
-                                    Quaternion.AngleAxis(-90f, Vector3.forward),
-                AnkleRightRotation = _motionParams[playerId].AnkleRightRotation 
-                                     * Quaternion.AngleAxis(-90f, Vector3.forward),
+                KneeLeftRotation = _motionParams[playerId].KneeLeftRotation * Quaternion.AngleAxis(-180f, Vector3.right) * Quaternion.AngleAxis(90f, Vector3.up),
+                AnkleLeftRotation = _motionParams[playerId].AnkleLeftRotation * Quaternion.AngleAxis(180f, Vector3.right) * Quaternion.AngleAxis(90f, Vector3.up),
+                KneeRightRotation = _motionParams[playerId].KneeRightRotation * Quaternion.AngleAxis(-180f, Vector3.right) * Quaternion.AngleAxis(-90f, Vector3.up),
+                AnkleRightRotation = _motionParams[playerId].AnkleRightRotation * Quaternion.AngleAxis(180f, Vector3.right) * Quaternion.AngleAxis(-90f, Vector3.up),
                 
                 SpineMidPosition = _motionParams[playerId].SpineMidPosition
             };
