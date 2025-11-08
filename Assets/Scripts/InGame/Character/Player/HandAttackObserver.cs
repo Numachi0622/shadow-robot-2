@@ -33,7 +33,6 @@ namespace InGame.Character
 
             if (velocity > _velocityThreshold)
             {
-                Debug.Log("<color=red>Attack</color>");
                 _onAttackStart.OnNext(new HandAttackParam()
                 {
                     Velocity = velocity,
