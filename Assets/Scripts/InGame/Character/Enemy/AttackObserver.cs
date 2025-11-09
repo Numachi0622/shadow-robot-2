@@ -14,5 +14,9 @@ namespace InGame.Character
         public virtual void Observe()
         {
         }
+
+        public virtual void Observe(T input)
+        {
+        }
     }
 }

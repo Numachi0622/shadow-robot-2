@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace InGame.Character
@@ -13,7 +14,12 @@ namespace InGame.Character
             _attackParam.AttackType = attackType;
         }
         
-        public override void Attack(Vector3 dir, float velocity = 0, float waitTime = 0)
+        public override async UniTask AttackReady(Vector3 dir, float velocity = 0, float waitTime = 0)
+        {
+            
+        }
+        
+        public override void Attack(Vector3 dir, float velocity = 0)
         {
             SetAttackParam(AttackType.EnemyToPlayerNormal);
             _attackCollider.AttackImpact(_attackParam);

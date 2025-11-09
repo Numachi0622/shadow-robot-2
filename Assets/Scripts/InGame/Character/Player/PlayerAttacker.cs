@@ -15,7 +15,7 @@ namespace InGame.Character
             _attackParam.AttackType = attackType;
         }
 
-        public override void Attack(Vector3 dir, float velocity = 0f, float waitTime = 0f)
+        public override void Attack(Vector3 dir, float velocity = 0f)
         {
             SetAttackParam(velocity, AttackType.PlayerToEnemyNormal);
             

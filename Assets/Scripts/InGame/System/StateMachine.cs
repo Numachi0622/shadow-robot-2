@@ -28,7 +28,7 @@ namespace InGame.System
             {
             }
 
-            public virtual void OnUpdate()
+            public virtual void OnUpdate(IStateParameter parameter = null)
             {
             }
 
@@ -42,6 +42,7 @@ namespace InGame.System
         private State _currentState;
 
         public T Owner => _owner;
+        public State CurrentState => _currentState;
 
         public StateMachine(T owner)
         {
@@ -50,6 +51,11 @@ namespace InGame.System
 
         public void SetState<TTo>(IStateParameter parameter = null) where TTo : State, new()
         {
+            if (_currentState is TTo)
+            {
+                return;
+            }
+            
             if (_states.TryGetValue(typeof(TTo), out var state))
             {
                 _currentState?.OnExit();
@@ -66,9 +72,9 @@ namespace InGame.System
             _currentState.OnEnter(parameter);
         }
 
-        public void OnUpdate()
+        public void OnUpdate(IStateParameter parameter = null)
         {
-            _currentState.OnUpdate();
+            _currentState.OnUpdate(parameter);
         }
     }
 }

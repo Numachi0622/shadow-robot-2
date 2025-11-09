@@ -12,15 +12,5 @@ namespace InGame.Character
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
             }
         }
-        
-        public override void OnUpdate()
-        {
-            base.OnUpdate();
-        }
-        
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
     }
 }
