@@ -33,8 +33,8 @@ namespace InGame.Character
 
         [SerializeField] private AttackCollider _leftHandCollider;
         [SerializeField] private AttackCollider _rightHandCollider;
-
         [SerializeField] private DamageCollider _damageCollider;
+        [SerializeField] private HitPointPresenter _hpPresenter;
 
         private StateMachine<PlayerCore> _stateMachine;
         private IAttackable _leftHandAttacker, _rightHandAttacker;
@@ -43,17 +43,21 @@ namespace InGame.Character
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
         [SerializeField] private int _playerId = 0;
+
+        [SerializeField] private bool _debugMode = false;
         
         public int PlayerId => _playerId;
         
         public IAttackable LeftHandAttacker => _leftHandAttacker;
         public IAttackable RightHandAttacker => _rightHandAttacker;
+        public IDamageable Damager => _damager;
 
         public override void Initialize(int id, SynMotionSystem synMotion)
         {
+            _damager = new Damager(_hpPresenter);
+            
             _leftHandCollider.Initialize();
             _rightHandCollider.Initialize();
-            _damageCollider.Initialize(_damageObserver);
             
             _playerId = id;
             _synMotion = synMotion;
@@ -65,6 +69,9 @@ namespace InGame.Character
             _rightHandAttacker = new PlayerAttacker(_params, _rightHandCollider);
             _mover = new PlayerMover(_movementTransforms.Reference);
             _motionMover = new PlayerMotionMover(_movementTransforms);
+            
+            _damageCollider.Initialize(_damageObserver);
+            _hpPresenter.Initialize(_params);
 
             Bind();
         }
@@ -80,7 +87,7 @@ namespace InGame.Character
                 .AddTo(this);
             
             _rightHandObserver.OnAttackStart
-                .Subscribe(OnRightHAndAttackStart)
+                .Subscribe(OnRightHandAttackStart)
                 .AddTo(this);
 
             _rightHandObserver.OnAttackEnd
@@ -98,7 +105,10 @@ namespace InGame.Character
             _rightHandObserver.Observe();
 
             var motionParam = _synMotion.GetMotionParam(_playerId);
-            //_mover.Move(motionParam.SpineMidPosition);
+            var pos = !_debugMode
+                ? motionParam.SpineMidPosition
+                : transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.deltaTime * 5f);
+            _mover.Move(pos);
             _motionMover.UpdateMotion(motionParam);
         }
 
@@ -113,7 +123,7 @@ namespace InGame.Character
             _leftHandAttacker.AttackEnd();
         }
         
-        private void OnRightHAndAttackStart(HandAttackParam param)
+        private void OnRightHandAttackStart(HandAttackParam param)
         {
             _rightHandAttacker.Attack(param.Direction, param.Velocity);
         }

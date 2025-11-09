@@ -21,7 +21,7 @@ namespace InGame.Character
 
         private void DealDamage(Collider targetCollider)
         {
-            if(!targetCollider.TryGetComponent<DamageCollider>(out var damageCollider)) return;
+            if(!targetCollider.transform.parent.TryGetComponent<DamageCollider>(out var damageCollider)) return;
             
             damageCollider.TakeDamage(_attackParam);
         }
@@ -38,6 +38,7 @@ namespace InGame.Character
         {
             _attackCollider.enabled = true;
             return UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+            _attackCollider.enabled = false;
         }
 
         public void AttackImpactEnd()

@@ -7,10 +7,9 @@ namespace InGame.Character
     {
         public override void OnEnter(IStateParameter parameter = null)
         {
-            base.OnEnter(parameter);
             if (parameter is AttackParam param)
             {
-                Debug.Log($"{param.AttackPoint}のダメージを受けた");   
+                Owner.Damager.Damage(param.AttackPoint.RandomValue);
             }
         }
         

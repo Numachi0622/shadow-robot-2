@@ -15,7 +15,7 @@ namespace InGame.Character
             _model = new HitPointModel(characterParams.MaxHp);
 
             var currentHp = _model.Hp.Value;
-            _view.Initialize(currentHp, characterParams.MaxHp);
+            _view?.Initialize(currentHp, characterParams.MaxHp);
 
             Bind(characterParams);
         }
@@ -33,7 +33,7 @@ namespace InGame.Character
         private void Bind(CharacterParams characterParams)
         {
             _model.Hp
-                .Subscribe(hp => _view.UpdateHp(hp, characterParams.MaxHp))
+                .Subscribe(hp => _view?.UpdateHp(hp, characterParams.MaxHp))
                 .AddTo(this);
         }
 
