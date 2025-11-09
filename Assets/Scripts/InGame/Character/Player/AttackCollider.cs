@@ -21,7 +21,7 @@ namespace InGame.Character
 
         private void DealDamage(Collider targetCollider)
         {
-            if(!targetCollider.transform.parent.TryGetComponent<DamageCollider>(out var damageCollider)) return;
+            if(!targetCollider.TryGetComponent<DamageCollider>(out var damageCollider)) return;
             
             damageCollider.TakeDamage(_attackParam);
         }

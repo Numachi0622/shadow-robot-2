@@ -40,7 +40,7 @@ namespace InGame.Character
         }
         private void OnTakeDamage(AttackParam param)
         {
-            Debug.Log($"[TestEnemyCore] OnTakeDamage : {param.AttackPoint}");
+            Debug.Log($"[TestEnemyCore] OnTakeDamage : {param.AttackPoint.RandomValue}");
         }
         #endregion
     }
