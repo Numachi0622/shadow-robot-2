@@ -33,6 +33,7 @@ namespace InGame.Character
         public void DecreaseHp(int value)
         {
             _model.Decrease(value);
+            Debug.Log($"<color=green>[{gameObject.name}] CurrentHp: {_model.Hp.Value}</color>");
         }
     }
 }
