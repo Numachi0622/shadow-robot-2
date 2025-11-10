@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using InGame.System;
 using UniRx;
 using UnityEngine;
@@ -47,7 +48,7 @@ namespace InGame.Character
                 _params.AttackRange
             );
             
-            //_hpPresenter.Initialize(_params);
+            _hpPresenter.Initialize(_params);
             
             _stateMachine.SetState<NormalEnemyIdleState>();
             
@@ -69,6 +70,10 @@ namespace InGame.Character
             
             _attackObserver.OnAttackStart
                 .Subscribe(OnAttackReadyStart)
+                .AddTo(this);
+
+            _hpPresenter.OnHpDecreased
+                .Subscribe(OnDeadStart)
                 .AddTo(this);
         }
 
@@ -110,6 +115,11 @@ namespace InGame.Character
         public void OnCoolTimeStart()
         {
             _stateMachine.SetState<NormalEnemyCoolTimeState>();
+        }
+        
+        public void OnDeadStart(Unit unit)
+        {
+            _stateMachine.SetState<NormalEnemyDeadState>();
         }
         #endregion
     }
