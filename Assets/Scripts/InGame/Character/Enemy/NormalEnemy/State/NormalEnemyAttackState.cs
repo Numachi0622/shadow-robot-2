@@ -1,5 +1,6 @@
 using InGame.System;
 using UnityEngine;
+using Utility;
 
 namespace InGame.Character
 {
@@ -10,7 +11,7 @@ namespace InGame.Character
             if (parameter is EnemyAttackParam param)
             {
                 Debug.Log("[NormalEnemyAttackState] OnEnter");
-                Owner.Attacker.Attack(param.Direction);
+                Owner.Attacker.Attack(param.Direction, 0f, GameConst.COLLIDER_ACTIVE_TIME);
                 Owner.Effect.AttackEffect.Play();
                 Owner.OnCoolTimeStart();
             }   

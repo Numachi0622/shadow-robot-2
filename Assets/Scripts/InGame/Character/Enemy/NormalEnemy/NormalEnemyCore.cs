@@ -30,6 +30,7 @@ namespace InGame.Character
         
         public override void Initialize()
         {
+            base.Initialize();
             _attacker = new NormalEnemyAttacker(_params, _attackCollider);
             _damager = new Damager(_hpPresenter);
             _mover = new NormalEnemyMover(transform);

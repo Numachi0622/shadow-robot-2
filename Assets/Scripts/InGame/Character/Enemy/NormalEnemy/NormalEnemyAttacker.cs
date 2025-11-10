@@ -20,14 +20,10 @@ namespace InGame.Character
             await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
         }
         
-        public override void Attack(Vector3 dir, float velocity = 0)
+        public override void Attack(Vector3 dir, float velocity = 0, float waitTime = 0)
         {
             SetAttackParam(AttackType.EnemyToPlayerNormal);
-        }
-        
-        public override void AttackEnd()
-        {
-            _attackCollider.AttackImpactEnd();
+            _attackCollider.AttackImpactAsync(_attackParam, waitTime).Forget();
         }
     }
 }

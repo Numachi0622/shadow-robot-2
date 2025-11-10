@@ -34,10 +34,12 @@ namespace InGame.Character
             _attackCollider.enabled = true;
         }
         
-        public UniTask AttackImpactAsync(float waitTime)
+        public async UniTask AttackImpactAsync(AttackParam attackParam, float waitTime)
         {
+            _attackParam = attackParam;
+            
             _attackCollider.enabled = true;
-            return UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
             _attackCollider.enabled = false;
         }
 

@@ -11,6 +11,7 @@ namespace InGame.System
         [SerializeField] private CharacterCore _playerCore;
         [SerializeField] private CharacterCore _testEnemyCore;
         [SerializeField] private CharacterCore _normalEnemyCore;
+        [SerializeField] private CharacterCore _buildingCore;
         private MotionReceiver _motionReceiver;
         private SynMotionSystem _synMotion;
 
@@ -21,10 +22,12 @@ namespace InGame.System
             _playerCore.Initialize(0, _synMotion);
             _testEnemyCore.Initialize();
             _normalEnemyCore.Initialize();
+            _buildingCore.Initialize();
             
             CharacterRegistry.Register(_playerCore);
             CharacterRegistry.Register(_testEnemyCore);
             CharacterRegistry.Register(_normalEnemyCore);
+            CharacterRegistry.Register(_buildingCore);
         }
         
         private void Update()
@@ -33,6 +36,7 @@ namespace InGame.System
             _playerCore.OnUpdate();
             _testEnemyCore.OnUpdate();
             _normalEnemyCore.OnUpdate();
+            _buildingCore.OnUpdate();
         }
     }
 }

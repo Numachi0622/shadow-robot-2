@@ -22,7 +22,7 @@ namespace InGame.Character
         {
         }
 
-        public virtual void Attack(Vector3 dir, float velocity = 0)
+        public virtual void Attack(Vector3 dir, float velocity = 0, float waitTime = 0)
         {
         }
 

@@ -19,7 +19,7 @@ namespace InGame.Character
             
         }
         
-        public override void Attack(Vector3 dir, float velocity = 0)
+        public override void Attack(Vector3 dir, float velocity = 0, float waitTime = 0)
         {
             SetAttackParam(AttackType.EnemyToPlayerNormal);
             _attackCollider.AttackImpact(_attackParam);
