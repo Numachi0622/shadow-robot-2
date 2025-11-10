@@ -515,6 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4990732886785960744}
   - component: {fileID: 2547053678823717042}
+  - component: {fileID: 8697010906112714831}
   m_Layer: 0
   m_Name: mdl_ufo_01
   m_TagString: Untagged
@@ -558,7 +559,20 @@ MonoBehaviour:
   _damageCollider: {fileID: 8046385156239728229}
   _effect:
     AttackEffect: {fileID: 8578123950472937333}
-  _hpPresenter: {fileID: 0}
+  _hpPresenter: {fileID: 8697010906112714831}
+--- !u!114 &8697010906112714831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3548000215601574688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a418068fe733af64c9184bf694bedfea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _view: {fileID: 0}
 --- !u!1 &3802546821067473316
 GameObject:
   m_ObjectHideFlags: 0

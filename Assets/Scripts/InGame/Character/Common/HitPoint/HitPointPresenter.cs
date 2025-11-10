@@ -24,6 +24,8 @@ namespace InGame.Character
 
         private void Bind()
         {
+            if (_view == null) return;
+            
             _model.Hp
                 .Where(_ => _view != null)
                 .Subscribe(_view.UpdateHp)
