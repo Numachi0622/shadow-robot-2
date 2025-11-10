@@ -97,6 +97,10 @@ namespace InGame.Character
             _damageObserver.OnTakeDamage
                 .Subscribe(OnDamageStart)
                 .AddTo(this);
+
+            _hpPresenter.OnHpDecreased
+                .Subscribe(OnDeadStart)
+                .AddTo(this);
         }
 
         public override void OnUpdate()
@@ -143,6 +147,11 @@ namespace InGame.Character
         private void OnDamageStart(AttackParam param)
         {
             _stateMachine.SetState<PlayerDamageState>(param);
+        }
+
+        private void OnDeadStart(Unit unit)
+        {
+            _stateMachine.SetState<PlayerDeadState>();
         }
         #endregion
     }

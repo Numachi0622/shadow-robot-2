@@ -9,6 +9,7 @@ namespace InGame.Character
         {
             if (parameter is AttackParam param)
             {
+                Debug.Log($"[PlayerDamageState] OnEnter : {param.AttackPoint.RandomValue}");
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
             }
         }
