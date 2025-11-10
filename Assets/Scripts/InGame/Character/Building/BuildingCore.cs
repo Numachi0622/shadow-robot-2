@@ -27,12 +27,22 @@ namespace InGame.Character.Building
             _damageObserver.OnTakeDamage
                 .Subscribe(OnTakeDamage)
                 .AddTo(this);
+
+            _hpPresenter.OnHpDecreased
+                .Subscribe(OnDead)
+                .AddTo(this);
         }
         
         private void OnTakeDamage(AttackParam param)
         {
             Debug.Log($"[BuildingCore] OnTakeDamage : {param.AttackPoint.RandomValue}");
             _hpPresenter.DecreaseHp(param.AttackPoint.RandomValue);
+        }
+
+        private void OnDead(Unit unit)
+        {
+            Debug.Log("[BuildingCore] OnDead");
+            gameObject.SetActive(false);
         }
     }
 }
