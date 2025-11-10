@@ -1,3 +1,4 @@
+using System;
 using InGame.System;
 using UnityEngine;
 
@@ -16,7 +17,15 @@ namespace InGame.Character
 
         private async void AttackReady(EnemyAttackParam param)
         {
-            await Owner.Attacker.AttackReady(param.Direction, 0f, param.AttackReadyTime);
+            var token = Owner.CancellationTokenSource.Token;
+            try
+            {
+                await Owner.Attacker.AttackReady(token, param.Direction, 0f, param.AttackReadyTime);
+            }
+            catch (OperationCanceledException e)
+            {
+                return;
+            }
             Owner.OnAttackStart(param);
         }
     }

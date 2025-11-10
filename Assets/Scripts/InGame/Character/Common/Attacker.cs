@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace InGame.Character
             _attackCollider = attackCollider;
         }
 
-        public virtual async UniTask AttackReady(Vector3 dir, float velocity = 0, float waitTime = 0)
+        public virtual async UniTask AttackReady(CancellationToken token, Vector3 dir, float velocity = 0, float waitTime = 0)
         {
         }
 

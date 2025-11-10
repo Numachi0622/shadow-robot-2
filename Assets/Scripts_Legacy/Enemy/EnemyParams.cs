@@ -9,6 +9,7 @@ public class EnemyParams : CharacterParams
     public float AttackRange;
     public float AttackReadyTime;
     public float AttackCoolTime;
+    public float DamageCoolTime;
 
     public Color AttackReadyColor;
 }

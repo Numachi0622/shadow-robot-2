@@ -16,7 +16,15 @@ namespace InGame.Character
 
         private async void CoolTime()
         {
-            await UniTask.Delay(TimeSpan.FromSeconds(Owner.Params.AttackCoolTime));
+            var token = Owner.CancellationTokenSource.Token;
+            try
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(Owner.Params.AttackCoolTime), cancellationToken: token);
+            }
+            catch (OperationCanceledException e)
+            {
+                return;
+            }
             Owner.OnIdleStart(Unit.Default);
         }
     }

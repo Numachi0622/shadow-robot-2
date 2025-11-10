@@ -1,3 +1,4 @@
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -14,9 +15,8 @@ namespace InGame.Character
             _attackParam.AttackType = attackType;
         }
         
-        public override async UniTask AttackReady(Vector3 dir, float velocity = 0, float waitTime = 0)
+        public override async UniTask AttackReady(CancellationToken token, Vector3 dir, float velocity = 0, float waitTime = 0)
         {
-            
         }
         
         public override void Attack(Vector3 dir, float velocity = 0, float waitTime = 0)

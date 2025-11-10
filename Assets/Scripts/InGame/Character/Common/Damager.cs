@@ -14,7 +14,6 @@ namespace InGame.Character
         public void Damage(int damage)
         {
             _hpPresenter.DecreaseHp(damage);
-            Debug.Log($"[HitPointPresenter] {_hpPresenter.CurrentHp}");
         }
     }
 }

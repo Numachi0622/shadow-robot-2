@@ -2,7 +2,7 @@ using System;
 using UniRx;
 using UnityEngine;
 
-namespace InGame.Character.Building
+namespace InGame.Character
 {
     public class BuildingCore : CharacterCore
     {

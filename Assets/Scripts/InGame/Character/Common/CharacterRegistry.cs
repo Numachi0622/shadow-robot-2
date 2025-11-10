@@ -21,9 +21,9 @@ namespace InGame.Character
                 case EnemyCore:
                     _enemies.Add(character);
                     break;
-                // case BuildingCore:
-                //     _buildings.Add(character);
-                //     break;
+                case BuildingCore:
+                    _buildings.Add(character);
+                    break;
             }
         }
         
