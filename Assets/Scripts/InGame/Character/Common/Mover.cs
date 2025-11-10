@@ -15,5 +15,9 @@ namespace InGame.Character
         public virtual void Move(Vector3 direction)
         {
         }
+
+        public virtual void Rotate(Vector3 direction)
+        {
+        }
     }
 }

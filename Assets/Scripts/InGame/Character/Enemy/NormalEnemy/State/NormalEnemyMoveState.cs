@@ -18,6 +18,9 @@ namespace InGame.Character
             var delta = Owner.Params.MoveSpeed * Time.deltaTime;
             var movedPos = Vector3.MoveTowards(Owner.transform.position, dest, delta);
             Owner.Mover.Move(movedPos);
+            
+            var dir = (dest - Owner.transform.position).normalized;
+            Owner.Mover.Rotate(dir);
         }
     }
 }

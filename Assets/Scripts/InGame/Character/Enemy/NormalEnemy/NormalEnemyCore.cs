@@ -1,3 +1,4 @@
+using System;
 using InGame.System;
 using UniRx;
 using UnityEngine;
@@ -6,6 +7,13 @@ namespace InGame.Character
 {
     public class NormalEnemyCore : EnemyCore
     {
+        [Serializable]
+        public class NormalEnemyEffect
+        {
+            public ParticleSystem AttackEffect;
+        }
+
+        [SerializeField] private NormalEnemyEffect _effect;
         [SerializeField] private HitPointPresenter _hpPresenter;
 
         private StateMachine<NormalEnemyCore> _stateMachine; 
@@ -15,6 +23,7 @@ namespace InGame.Character
         
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
+        public NormalEnemyEffect Effect => _effect;
         
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;

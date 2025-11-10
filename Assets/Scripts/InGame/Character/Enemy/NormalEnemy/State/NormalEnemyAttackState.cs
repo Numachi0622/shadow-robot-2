@@ -11,6 +11,7 @@ namespace InGame.Character
             {
                 Debug.Log("[NormalEnemyAttackState] OnEnter");
                 Owner.Attacker.Attack(param.Direction);
+                Owner.Effect.AttackEffect.Play();
                 Owner.OnCoolTimeStart();
             }   
         }
