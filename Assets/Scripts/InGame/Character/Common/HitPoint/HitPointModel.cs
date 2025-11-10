@@ -7,10 +7,10 @@ namespace InGame.Character
     public class HitPointModel
     {
         private readonly ReactiveProperty<int> _hp;
+        private readonly Subject<Unit> _onHpDecreased = new();
         public IReadOnlyReactiveProperty<int> Hp => _hp;
-
-        public Action OnHpDeleted;
-        public Action OnHpDecreased;
+        public IObservable<Unit> OnHpDecreased => _onHpDecreased;
+        
 
         public HitPointModel(int mapHp)
         {
@@ -25,11 +25,8 @@ namespace InGame.Character
 
             if (_hp.Value <= 0)
             {
-                OnHpDeleted?.Invoke();
-                return;
+                _onHpDecreased.OnNext(Unit.Default);
             }
-
-            OnHpDecreased?.Invoke();
         }
 
         public void Decrease(int value)

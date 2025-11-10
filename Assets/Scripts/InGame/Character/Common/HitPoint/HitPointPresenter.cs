@@ -8,7 +8,9 @@ namespace InGame.Character
     {
         [SerializeField] private HitPointView _view;
         private HitPointModel _model;
+        
         public int CurrentHp => _model.Hp.Value;
+        public IObservable<Unit> OnHpDecreased => _model.OnHpDecreased;
 
         public void Initialize(CharacterParams characterParams)
         {
@@ -17,39 +19,20 @@ namespace InGame.Character
             var currentHp = _model.Hp.Value;
             _view?.Initialize(currentHp, characterParams.MaxHp);
 
-            Bind(characterParams);
+            Bind();
         }
 
-        public void Initialize(CharacterParams characterParams, HitPointView view)
-        {
-            if (_view == null)
-            {
-                _view = view;
-            }
-
-            Initialize(characterParams);
-        }
-
-        private void Bind(CharacterParams characterParams)
+        private void Bind()
         {
             _model.Hp
-                .Subscribe(hp => _view?.UpdateHp(hp, characterParams.MaxHp))
+                .Where(_ => _view != null)
+                .Subscribe(_view.UpdateHp)
                 .AddTo(this);
         }
 
         public void DecreaseHp(int value)
         {
             _model.Decrease(value);
-        }
-
-        public void OnHpDeleted(Action onHpDeleted)
-        {
-            _model.OnHpDeleted = onHpDeleted;
-        }
-
-        public void OnHpDecreased(Action onHpDecreased)
-        {
-            _model.OnHpDecreased = onHpDecreased;
         }
     }
 }

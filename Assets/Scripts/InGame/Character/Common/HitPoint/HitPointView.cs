@@ -12,17 +12,19 @@ namespace InGame.Character
         [SerializeField] private Image _diffGauge;
         [SerializeField] private TextMeshProUGUI _hpText;
         private Tween _hpGaugeSequence;
+        private int _maxHp; 
 
         public void Initialize(int currentHp, int maxHp)
         {
-            _hpText.text = $"{currentHp} / {maxHp}";
+            _maxHp = maxHp;
+            _hpText.text = $"{currentHp} / {_maxHp}";
         }
 
-        public void UpdateHp(int currentHp, int maxHp)
+        public void UpdateHp(int currentHp)
         {
-            _hpText.text = $"{currentHp} / {maxHp}";
+            _hpText.text = $"{currentHp} / {_maxHp}";
 
-            var rate = (float)currentHp / maxHp;
+            var rate = (float)currentHp / _maxHp;
 
             _hpGaugeSequence?.Kill();
 
