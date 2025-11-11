@@ -9,6 +9,9 @@ namespace InGame.Character
     {
         private StateMachine<TestEnemyCore> _stateMachine;
         private AttackObserver<Unit> _attackObserver;
+        
+        public IAttackable Attacker => _attacker;
+        
         public override void Initialize()
         {
             base.Initialize();
