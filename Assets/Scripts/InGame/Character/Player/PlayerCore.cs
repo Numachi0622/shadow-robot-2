@@ -139,7 +139,7 @@ namespace InGame.Character
         #endregion
 
         #region State Event
-        private void OnIdleStart()
+        public void OnIdleStart()
         {
             _stateMachine.SetState<PlayerIdleState>();
         }

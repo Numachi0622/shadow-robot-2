@@ -11,6 +11,9 @@ namespace InGame.Character
             {
                 Debug.Log($"[PlayerDamageState] OnEnter : {param.AttackPoint.RandomValue}");
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
+                HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
+                
+                Owner.OnIdleStart();
             }
         }
     }
