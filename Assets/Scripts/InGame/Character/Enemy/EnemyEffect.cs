@@ -56,19 +56,23 @@ public class EnemyEffect
         //     .SetLoops(loop);
     }
 
+    /// <summary>
+    /// 振動アニメーション再生
+    /// ダメージを受けたときに使用
+    /// </summary>
     public void ShakeBody(float strength = 0.15f, int vibrato = 30)
     {
         _shakeSequence?.Kill();
         
         _shakeSequence = DOTween.Sequence()
-            .SetLink(_bodyTransform.gameObject)
+            .SetLink(_rootTransform.gameObject)
             .Append(DOTween.Shake(
                 () => Vector3.zero,
                 offset => _shakeOffset = offset,
                 _params.EffectParams.KnockBackDuration,
                 strength,
                 vibrato,
-                fadeOut:true))
+                fadeOut: true))
             .Append(DOTween.To(
                 () => _shakeOffset,
                 offset => _shakeOffset = offset,
@@ -79,16 +83,33 @@ public class EnemyEffect
             .SetUpdate(UpdateType.Late);
     }
 
+    /// <summary>
+    /// 振動アニメーション再生
+    /// AttackReadyの予備動作として使用
+    /// </summary>
+    /// <param name="loop"></param>
     public void ShakeBody(int loop)
     {
-        // _shakeSequence?.Kill();
-        //
-        // _shakeSequence = DOTween.Sequence()
-        //     .SetLink(gameObject)
-        //     .Append(DOTween.Shake(() => Vector3.zero, offset => _shakeOffset = offset, _attackReadyShakeDuration, _attackReadyShakeStrength, _attackReadyShakeVibrato, fadeOut: false))
-        //     .OnUpdate(() => _bodyTransform.localPosition += _shakeOffset)
-        //     .SetUpdate(UpdateType.Late)
-        //     .SetLoops(loop);
+        _shakeSequence?.Kill();
+        
+        _shakeSequence = DOTween.Sequence()
+            .SetLink(_rootTransform.gameObject)
+            .Append(DOTween.Shake(
+                () => Vector3.zero,
+                offset => _shakeOffset = offset, 
+                _attackReadyShakeDuration, 
+                _attackReadyShakeStrength, 
+                _attackReadyShakeVibrato, 
+                fadeOut: false))
+            .Append(DOTween.To(
+                () => _shakeOffset,
+                offset => _shakeOffset = offset,
+                Vector3.zero,
+                0.05f
+                ))
+            .OnUpdate(() => _bodyTransform.localPosition = _shakeOffset)
+            .SetUpdate(UpdateType.Late)
+            .SetLoops(loop);
     }
 
     public void Disovle(float delay = 0, Action onComplete = null)
