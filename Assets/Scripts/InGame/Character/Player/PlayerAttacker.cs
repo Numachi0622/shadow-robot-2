@@ -9,15 +9,20 @@ namespace InGame.Character
         {
         }
 
-        private void SetAttackParam(float velocity, AttackType attackType)
+        private void SetAttackParam(Vector3 dir, float velocity, AttackType attackType)
         {
-            _attackParam.AttackVelocity = velocity;
-            _attackParam.AttackType = attackType;
+            _attackParam = new AttackParam()
+            {
+                AttackPoint = _attackPoint,
+                AttackDirection = dir,
+                AttackVelocity = velocity,
+                AttackType = attackType
+            };
         }
 
         public override void Attack(Vector3 dir, float velocity = 0f, float waitTime = 0f)
         {
-            SetAttackParam(velocity, AttackType.PlayerToEnemyNormal);
+            SetAttackParam(dir, velocity, AttackType.PlayerToEnemyNormal);
             
             _attackCollider.AttackImpact(_attackParam);
         }

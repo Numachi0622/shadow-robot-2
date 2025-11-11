@@ -12,9 +12,11 @@ namespace InGame.Character
         {
             if (parameter is AttackParam param)
             {
-                Owner.AttackCancel();
                 Debug.Log($"<color=red>[NormalEnemyDamageState] OnEnter : {param.AttackPoint.RandomValue}</color>");
+                Owner.AttackCancel();
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
+                Owner.EnemyEffect.KnockBack(param.AttackDirection);
+                Owner.EnemyEffect.ShakeBody();
                 DamageCoolTime();
             }
         }

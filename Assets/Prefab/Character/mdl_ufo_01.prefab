@@ -557,7 +557,7 @@ MonoBehaviour:
   _params: {fileID: 11400000, guid: 1095805caf86d1344a400413ae9b97ce, type: 2}
   _attackCollider: {fileID: 9172723521320366530}
   _damageCollider: {fileID: 8046385156239728229}
-  _effect:
+  _effectComponents:
     AttackEffect: {fileID: 8578123950472937333}
   _hpPresenter: {fileID: 8697010906112714831}
 --- !u!114 &8697010906112714831

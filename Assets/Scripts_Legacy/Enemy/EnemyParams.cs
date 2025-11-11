@@ -12,4 +12,5 @@ public class EnemyParams : CharacterParams
     public float DamageCoolTime;
 
     public Color AttackReadyColor;
+    public EnemyEffectParams EffectParams;
 }

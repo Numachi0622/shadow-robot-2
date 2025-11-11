@@ -24,3 +24,4 @@ MonoBehaviour:
   AttackCoolTime: 3
   DamageCoolTime: 1
   AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
+  EffectParams: {fileID: 11400000, guid: f20b1b0e2dfec4f82b57e091b30f93ed, type: 2}

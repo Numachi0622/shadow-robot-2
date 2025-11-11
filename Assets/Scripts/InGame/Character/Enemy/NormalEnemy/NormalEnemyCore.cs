@@ -21,12 +21,14 @@ namespace InGame.Character
         private StateMachine<NormalEnemyCore> _stateMachine;
         private NormalEnemyAttackObserver _attackObserver;
         private NormalEnemyMoveObserver _moveObserver;
+        private EnemyEffect _enemyEffect;
         private Transform _targetTransform;
         private CancellationTokenSource _cancellationTokenSource;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
         public NormalEnemyEffectComponents Effect => _effectComponents;
+        public EnemyEffect EnemyEffect => _enemyEffect;
 
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;
@@ -49,6 +51,7 @@ namespace InGame.Character
             _attacker = new NormalEnemyAttacker(_params, _attackCollider);
             _damager = new Damager(_hpPresenter);
             _mover = new NormalEnemyMover(transform);
+            _enemyEffect = new EnemyEffect(_params, transform, transform.GetChild(0));
 
             _stateMachine = new StateMachine<NormalEnemyCore>(this);
             _attackObserver = new NormalEnemyAttackObserver(
