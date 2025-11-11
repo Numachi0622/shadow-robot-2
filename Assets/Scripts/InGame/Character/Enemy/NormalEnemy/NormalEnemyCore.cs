@@ -10,12 +10,12 @@ namespace InGame.Character
     public class NormalEnemyCore : EnemyCore
     {
         [Serializable]
-        public class NormalEnemyEffect
+        public class NormalEnemyEffectComponents
         {
             public ParticleSystem AttackEffect;
         }
 
-        [SerializeField] private NormalEnemyEffect _effect;
+        [SerializeField] private NormalEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
 
         private StateMachine<NormalEnemyCore> _stateMachine;
@@ -26,7 +26,7 @@ namespace InGame.Character
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
-        public NormalEnemyEffect Effect => _effect;
+        public NormalEnemyEffectComponents Effect => _effectComponents;
 
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;
