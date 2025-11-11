@@ -43,7 +43,7 @@ namespace InGame.Character
             }
         }
 
-    public override void Initialize()
+        public override void Initialize()
         {
             base.Initialize();
             _attacker = new NormalEnemyAttacker(_params, _attackCollider);
