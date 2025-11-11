@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using InGame.Character;
 using SynMotion;
+using TNRD;
 using UnityEngine;
+using Utility;
 
 namespace InGame.System
 {
@@ -14,6 +17,16 @@ namespace InGame.System
         [SerializeField] private CharacterCore _buildingCore;
         private MotionReceiver _motionReceiver;
         private SynMotionSystem _synMotion;
+        
+        [SerializeField] private List<SerializableInterface<ISingleton>> _singletons;
+
+        private void Awake()
+        {
+            foreach (var singleton in _singletons)
+            {
+                singleton.Value.Initialize();
+            }
+        }
 
         private void Start()
         {
