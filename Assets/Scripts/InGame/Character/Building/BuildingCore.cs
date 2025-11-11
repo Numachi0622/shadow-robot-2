@@ -1,4 +1,5 @@
 using System;
+using InGame.System;
 using UniRx;
 using UnityEngine;
 
@@ -37,6 +38,7 @@ namespace InGame.Character
         {
             Debug.Log($"[BuildingCore] OnTakeDamage : {param.AttackPoint.RandomValue}");
             _hpPresenter.DecreaseHp(param.AttackPoint.RandomValue);
+            HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
         }
 
         private void OnDead(Unit unit)

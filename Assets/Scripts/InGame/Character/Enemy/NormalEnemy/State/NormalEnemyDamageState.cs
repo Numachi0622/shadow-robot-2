@@ -17,6 +17,7 @@ namespace InGame.Character
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
                 Owner.EnemyEffect.KnockBack(param.AttackDirection);
                 Owner.EnemyEffect.ShakeBody();
+                HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
                 DamageCoolTime();
             }
         }

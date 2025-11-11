@@ -1,6 +1,7 @@
 using InGame.System;
 using UniRx;
 using UnityEngine;
+using Utility;
 
 namespace InGame.Character
 {
@@ -10,9 +11,10 @@ namespace InGame.Character
         private AttackObserver<Unit> _attackObserver;
         public override void Initialize()
         {
+            base.Initialize();
             _stateMachine = new StateMachine<TestEnemyCore>(this);
             _attackObserver = new TestEnemyAttackObserver();
-            base.Initialize();
+            _attacker = new TestEnemyAttacker(_params, _attackCollider); 
             Bind();
         }
         
@@ -35,12 +37,11 @@ namespace InGame.Character
         #region State Event
         private void OnAttackStart(Unit unit)
         {
-            _attacker.Attack(Vector3.zero);
-            Debug.Log($"[TestEnemyCore] OnAttackStart");
+            _attacker.Attack(Vector3.zero, 0f, GameConst.COLLIDER_ACTIVE_TIME);
         }
         private void OnTakeDamage(AttackParam param)
         {
-            Debug.Log($"[TestEnemyCore] OnTakeDamage : {param.AttackPoint.RandomValue}");
+            HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
         }
         #endregion
     }

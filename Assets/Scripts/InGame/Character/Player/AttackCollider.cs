@@ -22,7 +22,8 @@ namespace InGame.Character
         private void DealDamage(Collider targetCollider)
         {
             if(!targetCollider.TryGetComponent<DamageCollider>(out var damageCollider)) return;
-            
+
+            _attackParam.HitPosition = targetCollider.ClosestPoint(transform.position);
             damageCollider.TakeDamage(_attackParam);
         }
 
