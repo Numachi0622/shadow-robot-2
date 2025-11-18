@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68e44e2ad52040f89de3c72fc60c0477, type: 3}
-  m_Name: NormalEnemyEffectParams
+  m_Script: {fileID: 11500000, guid: 615cb98598bc4f1ebc4566bfd01e4aac, type: 3}
+  m_Name: Default
   m_EditorClassIdentifier: 
-  KnockBackDistance: 5
-  DeadKnockBackDistance: 8

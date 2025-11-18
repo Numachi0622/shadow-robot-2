@@ -24,4 +24,23 @@ MonoBehaviour:
   AttackCoolTime: 3
   DamageCoolTime: 1
   AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
-  EffectParams: {fileID: 11400000, guid: f20b1b0e2dfec4f82b57e091b30f93ed, type: 2}
+  EffectParams:
+    KnockBackDuration: 0.5
+    KnockBackDistance: 5
+    DeadKnockBackDistance: 8
+  AttackPatternParams:
+  - Type: 0
+    AnimationTrigger: Attack01
+    AnimationStartFrame: 0
+    OccurrenceRate: 0.35
+    AttackPattern: {fileID: 11400000, guid: 36c6615049e44d14db3d9ccbdc40bfb9, type: 2}
+  - Type: 0
+    AnimationTrigger: Attack02
+    AnimationStartFrame: 0
+    OccurrenceRate: 0.35
+    AttackPattern: {fileID: 11400000, guid: 36c6615049e44d14db3d9ccbdc40bfb9, type: 2}
+  - Type: 1
+    AnimationTrigger: Attack03
+    AnimationStartFrame: 0
+    OccurrenceRate: 0.3
+    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}

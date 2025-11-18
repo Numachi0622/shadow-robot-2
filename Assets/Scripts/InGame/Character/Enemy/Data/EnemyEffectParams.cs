@@ -1,9 +1,9 @@
-using UnityEngine;
+using System;
 
 namespace InGame.Character
 {
-    [CreateAssetMenu(fileName = "EnemyEffectParams", menuName = "Character/Enemy/EnemyEffectParams")]
-    public class EnemyEffectParams : ScriptableObject
+    [Serializable]
+    public class EnemyEffectParams
     {
         public float KnockBackDuration = 0.5f;
         public float KnockBackDistance = 5f;

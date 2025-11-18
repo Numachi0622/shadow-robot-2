@@ -1,6 +1,7 @@
 using System;
 using DG.Tweening;
 using Enemy;
+using InGame.Character;
 using UnityEngine;
 using UniRx;
 using UniRx.Triggers;

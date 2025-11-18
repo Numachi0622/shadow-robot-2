@@ -13,10 +13,7 @@ namespace InGame.Character
                 Debug.Log("[NormalEnemyAttackState] OnEnter");
                 Owner.Attacker.Attack(param.Direction);
                 Owner.Animator.SetTrigger(AnimationUtility.AttackHash);
-                if (param.AttackIndex == 3)
-                {
-                    Owner.Effect.AttackEffect.Play();
-                }
+                Owner.Params.AttackPatternParams[param.AttackIndex].AttackPattern.Execute(Owner);
 
                 Owner.OnCoolTimeStart();
             }   
