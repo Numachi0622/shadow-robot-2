@@ -14,7 +14,9 @@ namespace InGame.Character
         {
             public ParticleSystem AttackEffect;
         }
-
+        
+        [SerializeField] private Transform _bodyTransform;
+        [SerializeField] private Animator _animator;
         [SerializeField] private NormalEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
 
@@ -29,6 +31,7 @@ namespace InGame.Character
         public IMovable Mover => _mover;
         public NormalEnemyEffectComponents Effect => _effectComponents;
         public EnemyEffect EnemyEffect => _enemyEffect;
+        public Animator Animator => _animator;
 
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;
@@ -51,7 +54,7 @@ namespace InGame.Character
             _attacker = new NormalEnemyAttacker(_params, _attackCollider);
             _damager = new Damager(_hpPresenter);
             _mover = new NormalEnemyMover(transform);
-            _enemyEffect = new EnemyEffect(_params, transform, transform.GetChild(0));
+            _enemyEffect = new EnemyEffect(_params, transform, _bodyTransform);
 
             _stateMachine = new StateMachine<NormalEnemyCore>(this);
             _attackObserver = new NormalEnemyAttackObserver(

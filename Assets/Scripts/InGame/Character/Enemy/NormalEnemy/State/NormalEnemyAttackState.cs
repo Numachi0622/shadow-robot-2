@@ -11,8 +11,13 @@ namespace InGame.Character
             if (parameter is EnemyAttackParam param)
             {
                 Debug.Log("[NormalEnemyAttackState] OnEnter");
-                Owner.Attacker.Attack(param.Direction, 0f, GameConst.COLLIDER_ACTIVE_TIME);
-                Owner.Effect.AttackEffect.Play();
+                Owner.Attacker.Attack(param.Direction);
+                Owner.Animator.SetTrigger(AnimationUtility.AttackHash);
+                if (param.AttackIndex == 3)
+                {
+                    Owner.Effect.AttackEffect.Play();
+                }
+
                 Owner.OnCoolTimeStart();
             }   
         }

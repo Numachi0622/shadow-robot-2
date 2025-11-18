@@ -79,7 +79,7 @@ public class EnemyEffect
                 Vector3.zero,
                 0.3f
             ).SetEase(Ease.OutQuad))
-            .OnUpdate(() => _bodyTransform.localPosition = _shakeOffset)
+            .OnUpdate(() => _bodyTransform.localPosition += _shakeOffset)
             .SetUpdate(UpdateType.Late);
     }
 
@@ -107,7 +107,7 @@ public class EnemyEffect
                 Vector3.zero,
                 0.05f
                 ))
-            .OnUpdate(() => _bodyTransform.localPosition = _shakeOffset)
+            .OnUpdate(() => _bodyTransform.localPosition += _shakeOffset)
             .SetUpdate(UpdateType.Late)
             .SetLoops(loop);
     }

@@ -7,5 +7,6 @@ namespace InGame.Character
     {
         public Vector3 Direction;
         public float AttackReadyTime;
+        public int AttackIndex;
     }
 }

@@ -29,7 +29,7 @@ namespace InGame.System
                 AttackVelocity = 0f,
                 AttackType = AttackType.PlayerToEnemyNormal
             };
-            _attackCollider.AttackImpactAsync(attackParam, 1f).Forget();
+            _attackCollider.AttackImpactAsync(attackParam).Forget();
         }
         
         [Button]
@@ -42,7 +42,7 @@ namespace InGame.System
                 AttackVelocity = 0f,
                 AttackType = AttackType.PlayerToEnemyNormal
             };
-            _attackCollider.AttackImpactAsync(attackParam, GameConst.COLLIDER_ACTIVE_TIME).Forget();
+            _attackCollider.AttackImpactAsync(attackParam).Forget();
         }
         
         [Button]

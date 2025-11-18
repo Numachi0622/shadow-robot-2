@@ -1,6 +1,8 @@
 using System;
 using InGame.System;
 using UnityEngine;
+using Utility;
+using Random = UnityEngine.Random;
 
 namespace InGame.Character
 {
@@ -13,6 +15,13 @@ namespace InGame.Character
             if (parameter is EnemyAttackParam param)
             {
                 Debug.Log("[NormalEnemyAttackReadyState] OnEnter");
+                
+                // アニメーション再生
+                var attackIndex = Random.Range(0, 4);
+                var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
+                Owner.Animator.SetTrigger(animationHash);
+                param.AttackIndex = attackIndex;
+                
                 AttackReady(param);
             }   
         }

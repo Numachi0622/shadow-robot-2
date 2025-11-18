@@ -40,7 +40,7 @@ namespace InGame.Character
         #region State Event
         private void OnAttackStart(Unit unit)
         {
-            _attacker.Attack(Vector3.zero, 0f, GameConst.COLLIDER_ACTIVE_TIME);
+            _attacker.Attack(Vector3.zero);
         }
         private void OnTakeDamage(AttackParam param)
         {

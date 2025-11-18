@@ -3,6 +3,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UniRx;
 using UniRx.Triggers;
+using Utility;
 
 namespace InGame.Character
 {
@@ -35,12 +36,14 @@ namespace InGame.Character
             _attackCollider.enabled = true;
         }
         
-        public async UniTask AttackImpactAsync(AttackParam attackParam, float waitTime)
+        public async UniTask AttackImpactAsync(AttackParam attackParam, float waitTime = 0f)
         {
             _attackParam = attackParam;
+
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
             
             _attackCollider.enabled = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
+            await UniTask.Delay(TimeSpan.FromSeconds(GameConst.COLLIDER_ACTIVE_TIME));
             _attackCollider.enabled = false;
         }
 
