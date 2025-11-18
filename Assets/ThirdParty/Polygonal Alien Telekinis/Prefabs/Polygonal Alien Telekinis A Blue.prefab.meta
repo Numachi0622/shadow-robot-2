@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: f56d986a7a878694486580432fb980e4
+timeCreated: 1528276288
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 120257
+  packageName: Polygonal - Alien Telekinis
+  packageVersion: 1.0
+  assetPath: Assets/Polygonal Alien Telekinis/Prefabs/Polygonal Alien Telekinis A
+    Blue.prefab
+  uploadId: 249849

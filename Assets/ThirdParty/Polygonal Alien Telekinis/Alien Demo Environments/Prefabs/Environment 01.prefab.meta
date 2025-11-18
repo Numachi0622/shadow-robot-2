@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 9397a7abb9c72f548811d8493222bc11
+timeCreated: 1525597043
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 120257
+  packageName: Polygonal - Alien Telekinis
+  packageVersion: 1.0
+  assetPath: Assets/Polygonal Alien Telekinis/Alien Demo Environments/Prefabs/Environment
+    01.prefab
+  uploadId: 249849
