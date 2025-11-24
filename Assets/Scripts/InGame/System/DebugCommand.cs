@@ -16,7 +16,7 @@ namespace InGame.System
         [SerializeField] private AttackCollider _attackCollider;
         [SerializeField] private AttackPoint _saikyoAttackParam;
         [SerializeField] private AttackPoint _saijakuAttackParam;
-        [ReadOnly] [SerializeField] private GameStateType currentState = GameStateType.Title;
+        [SerializeField, ReadOnly] private GameStateType currentState = GameStateType.Title;
         
         private IPublisher<StateChangeMessage> _stateChangePublisher;
         

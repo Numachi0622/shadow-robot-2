@@ -28,14 +28,11 @@ namespace InGame.System
             _factory = factory;
             _registry = registry;
             _subscriber = subscriber;
-            Debug.Log("[CharacterSpawner] Constructor called");
         }
 
         public void Initialize()
         {
-            Debug.Log("[CharacterSpawner] Initialize called - Subscribing to SpawnCharacterMessage");
             _subscription = _subscriber.Subscribe(OnSpawnRequested);
-            Debug.Log("[CharacterSpawner] Subscribed successfully");
         }
 
         /// <summary>

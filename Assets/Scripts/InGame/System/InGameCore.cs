@@ -35,7 +35,7 @@ namespace InGame.System
             Bind();
             
             _stateMachine = new StateMachine<InGameCore>(this);
-            _stateMachine.SetState<NormalBattleState>();
+            _stateMachine.SetState<TitleState>();
         }
         
         public void Tick()

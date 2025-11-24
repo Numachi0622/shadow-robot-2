@@ -314,7 +314,7 @@ MonoBehaviour:
   _saijakuAttackParam:
     _minAttackPoint: 0
     _maxAttackPoint: 0
-  currentState: 1
+  currentState: 0
 --- !u!1 &1337430285
 GameObject:
   m_ObjectHideFlags: 0

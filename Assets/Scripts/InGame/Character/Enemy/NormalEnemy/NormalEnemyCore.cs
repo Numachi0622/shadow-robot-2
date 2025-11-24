@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using InGame.System;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace InGame.Character
 {
@@ -26,6 +27,8 @@ namespace InGame.Character
         private EnemyEffect _enemyEffect;
         private Transform _targetTransform;
         private CancellationTokenSource _cancellationTokenSource;
+        
+        private CharacterRegistry _characterRegistry;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
@@ -47,6 +50,12 @@ namespace InGame.Character
                 }
                 return _cancellationTokenSource;
             }
+        }
+        
+        [Inject]
+        public void Construct(CharacterRegistry characterRegistry)
+        {
+            _characterRegistry = characterRegistry;
         }
 
         public override void Initialize()
@@ -100,7 +109,8 @@ namespace InGame.Character
 
         public override void OnUpdate()
         {
-            //_targetTransform = CharacterRegistry.GetNearestBuilding(transform.position).transform;
+            _targetTransform = _characterRegistry.GetNearestBuilding(transform.position)?.transform;
+            if (_targetTransform == null) return;
             
             var dest = _targetTransform.position;
             if (IsIdle || IsMoving)

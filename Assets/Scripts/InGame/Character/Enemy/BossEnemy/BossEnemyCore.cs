@@ -3,6 +3,7 @@ using System.Threading;
 using InGame.System;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace InGame.Character
 {
@@ -26,6 +27,8 @@ namespace InGame.Character
         private EnemyEffect _enemyEffect;
         private Transform _targetTransform;
         private CancellationTokenSource _cancellationTokenSource;
+
+        private CharacterRegistry _characterRegistry;
         
         public EnemyParams Params => _params;
         public EnemyEffect EnemyEffect => _enemyEffect;
@@ -47,6 +50,12 @@ namespace InGame.Character
         
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
+        
+        [Inject]
+        public void Construct(CharacterRegistry characterRegistry)
+        {
+            _characterRegistry = characterRegistry;
+        }
 
         public override void Initialize() 
         {
@@ -85,7 +94,8 @@ namespace InGame.Character
         
         public override void OnUpdate()
         {
-            //_targetTransform = CharacterRegistry.GetNearestPlayer(transform.position).transform;
+            _targetTransform = _characterRegistry.GetNearestPlayer(transform.position)?.transform;
+            if (_targetTransform == null) return;
 
             var dest = _targetTransform.position;
             if (IsIdle)
