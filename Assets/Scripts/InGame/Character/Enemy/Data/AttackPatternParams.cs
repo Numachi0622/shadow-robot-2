@@ -14,7 +14,7 @@ namespace InGame.Character
         public float AttackImpactWaitTime(int index = 0)
         {
             if (_animationClip == null) return 0f;
-            
+
             var events = _animationClip.events;
             if (events.Length <= 0) return 0f;
 

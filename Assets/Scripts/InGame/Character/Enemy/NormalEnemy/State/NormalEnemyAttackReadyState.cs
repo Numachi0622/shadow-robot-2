@@ -15,17 +15,20 @@ namespace InGame.Character
             if (parameter is EnemyAttackParam param)
             {
                 Debug.Log("[NormalEnemyAttackReadyState] OnEnter");
-                
+
+                // OccurrenceRateを使った重み付けランダム選択
+                var attackIndex = Owner.Params.SelectAttackPatternIndex();
+                var selectedPattern = Owner.Params.AttackPatternParams[attackIndex];
+
                 // アニメーション再生
-                var attackIndex = Random.Range(0, 4);
                 var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
                 Owner.Animator.SetTrigger(animationHash);
-                
+
                 param.AttackIndex = attackIndex;
-                param.AttackImpactWaitTime = Owner.Params.AttackPatternParams[attackIndex].AttackImpactWaitTime();
-                
+                param.AttackImpactWaitTime = selectedPattern.AttackImpactWaitTime();
+
                 AttackReady(param);
-            }   
+            }
         }
 
         private async void AttackReady(EnemyAttackParam param)
