@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using Utility;
 
@@ -23,6 +25,22 @@ namespace InGame.Character
                     break;
                 case BuildingCore:
                     _buildings.Add(character);
+                    break;
+            }
+        }
+
+        public static void Remove(CharacterCore character)
+        {
+            switch (character)
+            {
+                case PlayerCore:
+                    _players.Remove(character);
+                    break;
+                case EnemyCore:
+                    _enemies.Remove(character);
+                    break;
+                case BuildingCore:
+                    _buildings.Remove(character);
                     break;
             }
         }

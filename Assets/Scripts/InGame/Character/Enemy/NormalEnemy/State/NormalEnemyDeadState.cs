@@ -1,5 +1,7 @@
 using InGame.System;
 using UnityEngine;
+using Utility;
+using Utility.Extensions;
 
 namespace InGame.Character
 {
@@ -8,6 +10,9 @@ namespace InGame.Character
         public override void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[NormalEnemyDeadState] OnEnter");
+            Owner.Animator.SetTrigger(AnimationUtility.DeathHash);
+            
+            CharacterRegistry.Remove(Owner);
         }
     }
 }

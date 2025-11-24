@@ -35,6 +35,7 @@ namespace InGame.Character
 
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;
+        private bool IsDead => _stateMachine.CurrentState is NormalEnemyDeadState;
 
         public CancellationTokenSource CancellationTokenSource
         {
@@ -118,6 +119,7 @@ namespace InGame.Character
         #region State Event
         public void OnIdleStart(Unit unit)
         {
+            if (IsDead) return;
             _stateMachine.SetState<NormalEnemyIdleState>();
         }   
         private void OnMoveStart(Unit unit)
@@ -146,6 +148,7 @@ namespace InGame.Character
         private void OnDeadStart(Unit unit)
         {
             _stateMachine.SetState<NormalEnemyDeadState>();
+            Destroy(gameObject, 3f);
         }
         #endregion
         

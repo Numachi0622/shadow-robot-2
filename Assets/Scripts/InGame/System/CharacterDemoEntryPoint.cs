@@ -45,11 +45,12 @@ namespace InGame.System
         
         private void Update()
         {
-            _motionReceiver.UpdateMotion();
-            _playerCore.OnUpdate();
-            _testEnemyCore.OnUpdate();
-            _normalEnemyCore.OnUpdate();
-            _buildingCore.OnUpdate();
+            _motionReceiver?.UpdateMotion();
+
+            if (_playerCore != null) _playerCore.OnUpdate();
+            if (_testEnemyCore != null) _testEnemyCore.OnUpdate();
+            if (_normalEnemyCore != null) _normalEnemyCore.OnUpdate();
+            if (_buildingCore != null) _buildingCore.OnUpdate();
         }
     }
 }
