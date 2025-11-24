@@ -15,6 +15,7 @@ namespace InGame.System
         [SerializeField] private CharacterCore _testEnemyCore;
         [SerializeField] private CharacterCore _normalEnemyCore;
         [SerializeField] private CharacterCore _buildingCore;
+        [SerializeField] private CharacterCore _bossEnemyCore;
         private MotionReceiver _motionReceiver;
         private SynMotionSystem _synMotion;
         
@@ -32,15 +33,17 @@ namespace InGame.System
         {
             _synMotion = new SynMotionSystem();
             _motionReceiver = new MotionReceiver(_deviceSettings, _synMotion);
-            _playerCore.Initialize(0, _synMotion);
-            _testEnemyCore.Initialize();
-            _normalEnemyCore.Initialize();
-            _buildingCore.Initialize();
+            _playerCore?.Initialize(0, _synMotion);
+            _testEnemyCore?.Initialize();
+            _normalEnemyCore?.Initialize();
+            _buildingCore?.Initialize();
+            _bossEnemyCore?.Initialize();
             
             CharacterRegistry.Register(_playerCore);
             CharacterRegistry.Register(_testEnemyCore);
             CharacterRegistry.Register(_normalEnemyCore);
             CharacterRegistry.Register(_buildingCore);
+            CharacterRegistry.Register(_bossEnemyCore);
         }
         
         private void Update()
@@ -51,6 +54,7 @@ namespace InGame.System
             if (_testEnemyCore != null) _testEnemyCore.OnUpdate();
             if (_normalEnemyCore != null) _normalEnemyCore.OnUpdate();
             if (_buildingCore != null) _buildingCore.OnUpdate();
+            if (_bossEnemyCore != null) _bossEnemyCore.OnUpdate();
         }
     }
 }
