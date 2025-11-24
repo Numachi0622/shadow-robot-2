@@ -1,3 +1,5 @@
+using System;
+using InGame.Character;
 using InGame.Message;
 using MessagePipe;
 using UnityEngine;
@@ -8,6 +10,16 @@ namespace InGame.System
 {
     public class InGameLifetimeScope : LifetimeScope
     {
+        [Serializable]
+        private class CharacterPrefabs
+        {
+            public PlayerCore Player;
+            public NormalEnemyCore NormalEnemyCore;
+            public BossEnemyCore BossEnemyCore;
+        }
+        
+        [SerializeField] private CharacterPrefabs _characterPrefabs;
+        
         [SerializeField] private DebugCommand _debugCommand;
         
         protected override void Configure(IContainerBuilder builder)
@@ -16,9 +28,20 @@ namespace InGame.System
 
             var options = builder.RegisterMessagePipe();
             builder.RegisterMessageBroker<StateChangeMessage>(options);
+            builder.RegisterMessageBroker<SpawnCharacterMessage>(options);
 
+            // インゲーム基盤システム
             builder.RegisterEntryPoint<InGameCore>().AsSelf();
+            
+            // キャラクターのPrefabを登録
+            builder.RegisterInstance(_characterPrefabs.Player);
+            builder.RegisterInstance(_characterPrefabs.NormalEnemyCore);
+            builder.RegisterInstance(_characterPrefabs.BossEnemyCore);
+
+            // キャラクター生成
             builder.Register<CharacterFactory>(Lifetime.Singleton).AsSelf();
+            builder.RegisterEntryPoint<CharacterRegistry>().AsSelf();
+            builder.RegisterEntryPoint<CharacterSpawner>().AsSelf();
 
             builder.RegisterComponent(_debugCommand);
         }

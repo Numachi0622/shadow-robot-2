@@ -85,7 +85,7 @@ namespace InGame.Character
         
         public override void OnUpdate()
         {
-            _targetTransform = CharacterRegistry.GetNearestPlayer(transform.position).transform;
+            //_targetTransform = CharacterRegistry.GetNearestPlayer(transform.position).transform;
 
             var dest = _targetTransform.position;
             if (IsIdle)

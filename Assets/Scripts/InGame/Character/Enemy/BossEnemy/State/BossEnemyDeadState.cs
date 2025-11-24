@@ -11,7 +11,7 @@ namespace InGame.Character
             Debug.Log("[BossEnemyDeadState] OnEnter");
             Owner.Animator.SetTrigger(AnimationUtility.DeathHash);
             
-            CharacterRegistry.Remove(Owner);
+            //CharacterRegistry.Remove(Owner);
         }
     }
 }

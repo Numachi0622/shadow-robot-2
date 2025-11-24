@@ -1,4 +1,3 @@
-using InGame.Character;
 using UnityEngine;
 
 namespace InGame.Message

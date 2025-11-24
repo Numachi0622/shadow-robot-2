@@ -12,7 +12,7 @@ namespace InGame.Character
             Debug.Log("[NormalEnemyDeadState] OnEnter");
             Owner.Animator.SetTrigger(AnimationUtility.DeathHash);
             
-            CharacterRegistry.Remove(Owner);
+            //CharacterRegistry.Remove(Owner);
         }
     }
 }

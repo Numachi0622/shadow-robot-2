@@ -39,11 +39,11 @@ namespace InGame.System
             _buildingCore?.Initialize();
             _bossEnemyCore?.Initialize();
             
-            CharacterRegistry.Register(_playerCore);
-            CharacterRegistry.Register(_testEnemyCore);
-            CharacterRegistry.Register(_normalEnemyCore);
-            CharacterRegistry.Register(_buildingCore);
-            CharacterRegistry.Register(_bossEnemyCore);
+            // CharacterRegistry.Register(_playerCore);
+            // CharacterRegistry.Register(_testEnemyCore);
+            // CharacterRegistry.Register(_normalEnemyCore);
+            // CharacterRegistry.Register(_buildingCore);
+            // CharacterRegistry.Register(_bossEnemyCore);
         }
         
         private void Update()

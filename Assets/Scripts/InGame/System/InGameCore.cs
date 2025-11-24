@@ -8,17 +8,21 @@ namespace InGame.System
 {
     public class InGameCore : ITickable, IInitializable, IDisposable
     {
-        private ISubscriber<StateChangeMessage> _stateChangeSubscriber;
+        private readonly ISubscriber<StateChangeMessage> _stateChangeSubscriber;
+        private readonly IPublisher<SpawnCharacterMessage> _spawnCharacterPublisher;
         private IDisposable _stateChangeSubscription;
 
         private StateMachine<InGameCore> _stateMachine;
+        
+        public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher => _spawnCharacterPublisher;
 
         [Inject]
-        public void Construct(ISubscriber<StateChangeMessage> stateChangeSubscriber)
+        public InGameCore(
+            ISubscriber<StateChangeMessage> stateChangeSubscriber,
+            IPublisher<SpawnCharacterMessage> spawnCharacterPublisher)
         {
             _stateChangeSubscriber = stateChangeSubscriber;
-
-            Bind();
+            _spawnCharacterPublisher = spawnCharacterPublisher;
         }
 
         private void Bind()
@@ -28,6 +32,8 @@ namespace InGame.System
         
         public void Initialize()
         {
+            Bind();
+            
             _stateMachine = new StateMachine<InGameCore>(this);
             _stateMachine.SetState<NormalBattleState>();
         }

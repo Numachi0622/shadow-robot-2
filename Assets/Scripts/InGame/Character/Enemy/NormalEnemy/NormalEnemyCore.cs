@@ -100,7 +100,7 @@ namespace InGame.Character
 
         public override void OnUpdate()
         {
-            _targetTransform = CharacterRegistry.GetNearestBuilding(transform.position).transform;
+            //_targetTransform = CharacterRegistry.GetNearestBuilding(transform.position).transform;
             
             var dest = _targetTransform.position;
             if (IsIdle || IsMoving)

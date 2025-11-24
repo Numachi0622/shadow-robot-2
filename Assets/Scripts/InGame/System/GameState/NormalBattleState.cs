@@ -1,3 +1,4 @@
+using InGame.Message;
 using UnityEngine;
 
 namespace InGame.System
@@ -7,6 +8,11 @@ namespace InGame.System
         public override void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[NormalBattleState] OnEnter");
+            Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
+                CharacterType.NormalEnemy,
+                new Vector3(0, 0, 0),
+                Quaternion.identity
+            ));
         }
     }
 }
