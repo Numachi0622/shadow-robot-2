@@ -12,7 +12,7 @@ public class EnemyEffect
     private Transform _rootTransform;
     private Transform _bodyTransform;
     //[SerializeField] private SkinnedMeshRenderer _skinnedMeshRenderer;
-    private float _attackReadyShakeStrength = 0.1f;
+    private float _attackReadyShakeStrength = 0.06f;
     private int _attackReadyShakeVibrato = 20;
     private float _attackReadyShakeDuration = 0.5f;
 

@@ -20,7 +20,7 @@ MonoBehaviour:
   MoveSpeed: 4
   SearchRange: 30
   AttackRange: 2
-  AttackReadyTime: 1.2
+  AttackReadyTime: 0.8
   AttackCoolTime: 3
   DamageCoolTime: 1
   AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
