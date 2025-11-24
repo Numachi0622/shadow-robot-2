@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "com.cysharp.messagepipe": "1.8.1",
+    "com.cysharp.messagepipe.vcontainer": "1.8.1",
     "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
     "com.cysharp.zlinq": "https://github.com/Cysharp/ZLinq.git?path=src/ZLinq.Unity/Assets/ZLinq.Unity",
     "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
@@ -30,6 +32,7 @@
     "com.unity.toolchain.win-x86_64-linux-x86_64": "2.0.10",
     "com.unity.ugui": "2.0.0",
     "com.unity.visualscripting": "1.9.7",
+    "jp.hadashikick.vcontainer": "1.17.0",
     "net.tnrd.serializableinterface": "2.2.1",
     "com.unity.modules.accessibility": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
@@ -72,16 +75,22 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.github-glitchenzo.nugetforunity"
-      ],
-      "overrideBuiltIns": false
+      ]
     },
     {
       "name": "OpenUPM",
       "url": "https://package.openupm.com",
       "scopes": [
         "net.tnrd.serializableinterface"
-      ],
-      "overrideBuiltIns": false
+      ]
+    },
+    {
+      "name": "VContainer",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "jp.hadashikick.vcontainer",
+        "com.cysharp"
+      ]
     }
   ]
 }
