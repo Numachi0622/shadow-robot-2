@@ -1,5 +1,4 @@
 using InGame.System;
-using NUnit.Framework.Internal;
 using UnityEngine;
 
 namespace InGame.Character

@@ -3,6 +3,8 @@ using Cysharp.Threading.Tasks;
 using InGame.System;
 using UniRx;
 using UnityEngine;
+using Utility;
+using Utility.Extensions;
 
 namespace InGame.Character
 {
@@ -13,6 +15,11 @@ namespace InGame.Character
             if (parameter is AttackParam param)
             {
                 Debug.Log($"<color=red>[NormalEnemyDamageState] OnEnter : {param.AttackPoint.RandomValue}</color>");
+                
+                // 既にトリガーされていたアニメーションをキャンセルしてからダメージアニメーションを再生する
+                Owner.Animator.ResetAllTriggers();
+                Owner.Animator.SetTrigger(AnimationUtility.DamageHash);
+                
                 Owner.AttackCancel();
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
                 Owner.EnemyEffect.KnockBack(param.AttackDirection);
