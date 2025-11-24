@@ -11,7 +11,7 @@ namespace InGame.Character
             if (parameter is EnemyAttackParam param)
             {
                 Debug.Log("[NormalEnemyAttackState] OnEnter");
-                Owner.Attacker.Attack(param.Direction);
+                Owner.Attacker.Attack(param.Direction, waitTime:param.AttackImpactWaitTime);
                 Owner.Animator.SetTrigger(AnimationUtility.AttackHash);
                 Owner.Params.AttackPatternParams[param.AttackIndex].AttackPattern.Execute(Owner);
 

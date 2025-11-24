@@ -20,7 +20,9 @@ namespace InGame.Character
                 var attackIndex = Random.Range(0, 4);
                 var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
                 Owner.Animator.SetTrigger(animationHash);
+                
                 param.AttackIndex = attackIndex;
+                param.AttackImpactWaitTime = Owner.Params.AttackPatternParams[attackIndex].AttackImpactWaitTime();
                 
                 AttackReady(param);
             }   

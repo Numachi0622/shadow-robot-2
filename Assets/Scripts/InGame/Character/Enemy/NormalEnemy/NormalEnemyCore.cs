@@ -119,7 +119,7 @@ namespace InGame.Character
         public void OnIdleStart(Unit unit)
         {
             _stateMachine.SetState<NormalEnemyIdleState>();
-        }
+        }   
         private void OnMoveStart(Unit unit)
         {
             _stateMachine.SetState<NormalEnemyMoveState>();
@@ -154,6 +154,10 @@ namespace InGame.Character
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = null;
+        }
+
+        public void AnimationEventTemp()
+        {
         }
     }
 }
