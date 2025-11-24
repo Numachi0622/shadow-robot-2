@@ -1,3 +1,4 @@
+using System;
 using MessagePipe;
 using VContainer;
 using VContainer.Unity;
@@ -5,23 +6,24 @@ using InGame.Message;
 
 namespace InGame.System
 {
-    public class InGameCore : ITickable, IInitializable
+    public class InGameCore : ITickable, IInitializable, IDisposable
     {
         private ISubscriber<StateChangeMessage> _stateChangeSubscriber;
-        
+        private IDisposable _stateChangeSubscription;
+
         private StateMachine<InGameCore> _stateMachine;
-        
+
         [Inject]
         public void Construct(ISubscriber<StateChangeMessage> stateChangeSubscriber)
         {
             _stateChangeSubscriber = stateChangeSubscriber;
-            
+
             Bind();
         }
 
         private void Bind()
         {
-            _stateChangeSubscriber.Subscribe(OnStateChange);
+            _stateChangeSubscription = _stateChangeSubscriber.Subscribe(OnStateChange);
         }
         
         public void Initialize()
@@ -78,5 +80,10 @@ namespace InGame.System
             _stateMachine.SetState<ResultState>(message.Parameter);
         }
         #endregion
+
+        public void Dispose()
+        {
+            _stateChangeSubscription?.Dispose();
+        }
     }
 }

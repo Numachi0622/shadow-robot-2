@@ -1,6 +1,5 @@
 using InGame.Message;
 using MessagePipe;
-using NaughtyAttributes;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
