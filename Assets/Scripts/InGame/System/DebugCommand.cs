@@ -1,9 +1,12 @@
 using System;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
+using InGame.Message;
+using MessagePipe;
 using UnityEngine;
 using NaughtyAttributes;
 using Utility;
+using VContainer;
 
 namespace InGame.System
 {
@@ -13,6 +16,23 @@ namespace InGame.System
         [SerializeField] private AttackCollider _attackCollider;
         [SerializeField] private AttackPoint _saikyoAttackParam;
         [SerializeField] private AttackPoint _saijakuAttackParam;
+        [ReadOnly] [SerializeField] private GameStateType currentState = GameStateType.NormalBattle;
+        
+        private IPublisher<StateChangeMessage> _stateChangePublisher;
+        
+        [Inject]
+        public void Construct(IPublisher<StateChangeMessage> stateChangePublisher)
+        {
+            _stateChangePublisher = stateChangePublisher;
+        }
+
+        [Button]
+        public void ChangeStateCommand()
+        {
+            var stateCount = Enum.GetValues(typeof(GameStateType)).Length;
+            currentState = (GameStateType)(((int)currentState + 1) % stateCount);
+            _stateChangePublisher.Publish(new StateChangeMessage(currentState));
+        }
 
         [Button]
         public void SaikyoAttack()
