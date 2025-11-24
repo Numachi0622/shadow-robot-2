@@ -18,7 +18,6 @@ namespace InGame.Character
             _attacker = new EnemyAttacker(_params, _attackCollider);
             _damageObserver = new DamageObserver();
             
-            _attackCollider.Initialize();
             _damageCollider.Initialize(_damageObserver);
         }
 

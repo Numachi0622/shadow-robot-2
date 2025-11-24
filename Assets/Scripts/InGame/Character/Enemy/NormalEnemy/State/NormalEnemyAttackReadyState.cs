@@ -12,7 +12,7 @@ namespace InGame.Character
         
         public override void OnEnter(IStateParameter parameter = null)
         {
-            if (parameter is EnemyAttackParam param)
+            if (parameter is AttackReadyParam param)
             {
                 Debug.Log("[NormalEnemyAttackReadyState] OnEnter");
 
@@ -31,7 +31,7 @@ namespace InGame.Character
             }
         }
 
-        private async void AttackReady(EnemyAttackParam param)
+        private async void AttackReady(AttackReadyParam param)
         {
             var token = Owner.CancellationTokenSource.Token;
             Owner.EnemyEffect.ShakeBody(_shakeCount);

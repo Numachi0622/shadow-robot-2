@@ -124,11 +124,11 @@ namespace InGame.Character
         {
             _stateMachine.SetState<NormalEnemyMoveState>();
         }
-        private void OnAttackReadyStart(EnemyAttackParam param)
+        private void OnAttackReadyStart(AttackReadyParam param)
         {
             _stateMachine.SetState<NormalEnemyAttackReadyState>(param);
         }
-        public void OnAttackStart(EnemyAttackParam param)
+        public void OnAttackStart(AttackReadyParam param)
         {
             _stateMachine.SetState<NormalEnemyAttackState>(param);
         }

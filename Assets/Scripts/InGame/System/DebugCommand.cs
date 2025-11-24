@@ -14,11 +14,6 @@ namespace InGame.System
         [SerializeField] private AttackPoint _saikyoAttackParam;
         [SerializeField] private AttackPoint _saijakuAttackParam;
 
-        private void Start()
-        {
-            _attackCollider.Initialize();
-        }
-
         [Button]
         public void SaikyoAttack()
         {

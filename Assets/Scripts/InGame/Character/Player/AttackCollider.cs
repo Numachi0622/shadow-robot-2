@@ -13,12 +13,7 @@ namespace InGame.Character
         [SerializeField] private Collider _attackCollider;
         private AttackParam _attackParam;
 
-        public void Initialize()
-        {
-            _attackCollider.OnTriggerEnterAsObservable()
-                .Subscribe(DealDamage)
-                .AddTo(this);
-        }
+        private void OnTriggerEnter(Collider targetCollider) => DealDamage(targetCollider);
 
         private void DealDamage(Collider targetCollider)
         {

@@ -8,12 +8,20 @@ namespace InGame.Character
     {
         public override void OnEnter(IStateParameter parameter = null)
         {
-            if (parameter is EnemyAttackParam param)
+            if (parameter is AttackReadyParam param)
             {
                 Debug.Log("[NormalEnemyAttackState] OnEnter");
-                Owner.Attacker.Attack(param.Direction, waitTime:param.AttackImpactWaitTime);
                 Owner.Animator.SetTrigger(AnimationUtility.AttackHash);
-                Owner.Params.AttackPatternParams[param.AttackIndex].AttackPattern.Execute(Owner);
+
+                var attackPatternParams = Owner.Params.AttackPatternParams[param.AttackIndex];
+                if (attackPatternParams.Type == PatternType.Physical)
+                {
+                    Owner.Attacker.Attack(param.Direction, waitTime: param.AttackImpactWaitTime);
+                }
+                else if (attackPatternParams.Type == PatternType.LongRange)
+                {
+                    attackPatternParams.AttackPattern.Execute(Owner, param);
+                }
 
                 Owner.OnCoolTimeStart();
             }   

@@ -6,12 +6,12 @@ namespace InGame.Character
 {
     public class NormalEnemyAttackObserver
     {
-        private readonly Subject<EnemyAttackParam> _onAttackStart = new();
+        private readonly Subject<AttackReadyParam> _onAttackStart = new();
         private readonly Transform _transform;
         private readonly float _attackRange;
         private readonly float _readyTime;
         
-        public IObservable<EnemyAttackParam> OnAttackStart => _onAttackStart;
+        public IObservable<AttackReadyParam> OnAttackStart => _onAttackStart;
         
         public NormalEnemyAttackObserver(Transform transform, float attackRange, float readyTime)
         {
@@ -26,7 +26,7 @@ namespace InGame.Character
             if (dist < _attackRange)
             {
                 var dir = (destination - _transform.position).normalized;
-                var param = new EnemyAttackParam()
+                var param = new AttackReadyParam()
                 {
                     Direction = dir,
                     AttackReadyTime = _readyTime,

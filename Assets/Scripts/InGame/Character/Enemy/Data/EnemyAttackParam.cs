@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace InGame.Character
 {
-    public struct EnemyAttackParam : IStateParameter
+    public struct AttackReadyParam : IStateParameter
     {
         public Vector3 Direction;
         public float AttackReadyTime;

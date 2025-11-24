@@ -56,9 +56,6 @@ namespace InGame.Character
         {
             _damager = new Damager(_hpPresenter);
             
-            _leftHandCollider.Initialize();
-            _rightHandCollider.Initialize();
-            
             _playerId = id;
             _synMotion = synMotion;
             _stateMachine = new StateMachine<PlayerCore>(this);
