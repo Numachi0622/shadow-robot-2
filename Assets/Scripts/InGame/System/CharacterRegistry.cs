@@ -63,6 +63,15 @@ namespace InGame.System
                     break;
             }
         }
+
+        public void RemoveAt(int index)
+        {
+            var character = _playerCores[index];
+            _playerCores.Remove(character);
+            _allCharacters.Remove(character);
+            
+            (character as PlayerCore)?.Dispose();
+        }
         
         public IReadOnlyList<CharacterCore> GetAllPlayers() => _playerCores;
 

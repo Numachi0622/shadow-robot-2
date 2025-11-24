@@ -2,6 +2,7 @@ using System;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
+using SynMotion;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -16,23 +17,33 @@ namespace InGame.System
     {
         private readonly CharacterFactory _factory;
         private readonly CharacterRegistry _registry;
-        private readonly ISubscriber<SpawnCharacterMessage> _subscriber;
+        private readonly SynMotionSystem _synMotion;
+        private readonly ISubscriber<SpawnCharacterMessage> _spawnSubscriber;
+        private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
         private IDisposable _subscription;
 
         [Inject]
         public CharacterSpawner(
             CharacterFactory factory,
             CharacterRegistry registry,
-            ISubscriber<SpawnCharacterMessage> subscriber)
+            SynMotionSystem synMotion,
+            ISubscriber<SpawnCharacterMessage> spawnSubscriber,
+            ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber)
         {
             _factory = factory;
             _registry = registry;
-            _subscriber = subscriber;
+            _synMotion = synMotion;
+            _spawnSubscriber = spawnSubscriber;
+            _despawnSubscriber = playerDespawnSubscriber;
         }
 
         public void Initialize()
         {
-            _subscription = _subscriber.Subscribe(OnSpawnRequested);
+            var bag = DisposableBag.CreateBuilder();
+            bag.Add(_spawnSubscriber.Subscribe(OnSpawnRequested));
+            bag.Add(_despawnSubscriber.Subscribe(OnDespawnRequested));
+            
+            _subscription = bag.Build();
         }
 
         /// <summary>
@@ -41,12 +52,16 @@ namespace InGame.System
         private void OnSpawnRequested(SpawnCharacterMessage message)
         {
             if (message.CharacterType == CharacterType.Player) SpawnPlayer(message);
-            else SpawnEnemy(message);
+            else SpawnEnemy(message);   
         }
 
         private void SpawnPlayer(SpawnCharacterMessage message)
         {
+            var character = _factory.Create<PlayerCore>(message.Position, message.Rotation);
+            if (character is not PlayerCore player) return;
             
+            player.Initialize(message.CharacterId, _synMotion);
+            _registry.Register(player);
         }
 
         private void SpawnEnemy(SpawnCharacterMessage message)
@@ -63,6 +78,12 @@ namespace InGame.System
                 character.Initialize();
                 _registry.Register(character);
             }
+        }
+        
+        private void OnDespawnRequested(DespawnCharacterMessage message)
+        {
+            if (message.CharacterId.Value == -1) return;
+            _registry.RemoveAt(message.CharacterId.Value);
         }
 
         public void Dispose()

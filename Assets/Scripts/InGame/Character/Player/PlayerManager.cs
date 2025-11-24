@@ -18,20 +18,20 @@ namespace InGame.Character
         public void Initialize()
         {
             _synMotion = new SynMotionSystem();
-            _motionReceiver = new MotionReceiver(_deviceSettings, _synMotion);
+            //_motionReceiver = new MotionReceiver(_deviceSettings, _synMotion);
             
             Bind();
         }
 
         private void Bind()
         {
-            for (var i = 0; i < _motionReceiver.ConnectedFlags.Length; i++)
-            {
-                var playerId = i;
-                _motionReceiver.ConnectedFlags[playerId]
-                    .Subscribe(isConnected => OnConnected(isConnected, playerId, _synMotion))
-                    .AddTo(this);
-            }
+            // for (var i = 0; i < _motionReceiver.ConnectedFlags.Length; i++)
+            // {
+            //     var playerId = i;
+            //     _motionReceiver.ConnectedFlags[playerId]
+            //         .Subscribe(isConnected => OnConnected(isConnected, playerId, _synMotion))
+            //         .AddTo(this);
+            // }
         }
 
         private void OnConnected(bool isConnected, int playerId, SynMotionSystem synMotion)
@@ -42,11 +42,11 @@ namespace InGame.Character
             }
             else
             {
-                var player = _players.Find(p => p.PlayerId == playerId);
-                if (player == null) return;
-                
-                _players.Remove(player);
-                Destroy(player.gameObject);
+                //var player = _players.Find(p => p.PlayerId == playerId);
+                // if (player == null) return;
+                //
+                // _players.Remove(player);
+                // Destroy(player.gameObject);
             }
         }
 
@@ -55,13 +55,13 @@ namespace InGame.Character
             var player = Instantiate(_playerPrefab).GetComponent<PlayerCore>();
             player.transform.position = new Vector3(-1 + playerId * 2, 0, 0);
             if (player == null) return;
-            player.Initialize(playerId, synMotion);
+            //player.Initialize(playerId, synMotion);
             _players.Add(player);
         }
 
         public void OnUpdate()
         {
-            _motionReceiver.UpdateMotion();
+            //_motionReceiver.UpdateMotion();
 
             foreach (var player in _players)
             {

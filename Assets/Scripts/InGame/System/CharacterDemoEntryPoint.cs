@@ -32,8 +32,8 @@ namespace InGame.System
         private void Start()
         {
             _synMotion = new SynMotionSystem();
-            _motionReceiver = new MotionReceiver(_deviceSettings, _synMotion);
-            _playerCore?.Initialize(0, _synMotion);
+            //_motionReceiver = new MotionReceiver(_deviceSettings, _synMotion);
+            //_playerCore?.Initialize(0, _synMotion);
             _testEnemyCore?.Initialize();
             _normalEnemyCore?.Initialize();
             _buildingCore?.Initialize();
@@ -48,7 +48,7 @@ namespace InGame.System
         
         private void Update()
         {
-            _motionReceiver?.UpdateMotion();
+            //_motionReceiver?.UpdateMotion();
 
             if (_playerCore != null) _playerCore.OnUpdate();
             if (_testEnemyCore != null) _testEnemyCore.OnUpdate();

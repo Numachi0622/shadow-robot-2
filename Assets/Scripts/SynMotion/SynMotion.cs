@@ -4,14 +4,9 @@ namespace SynMotion
 {
     public class SynMotionSystem
     {
-        private MotionParam[] _motionParams;
+        private readonly MotionParam[] _motionParams = new MotionParam[3];
 
         private readonly Quaternion _comp = Quaternion.AngleAxis(90f, Vector3.up) * Quaternion.AngleAxis(-90f, Vector3.forward);
-        
-        public SynMotionSystem(int playerCount = 3)
-        {
-            _motionParams = new MotionParam[playerCount];
-        }
 
         public void SetMotionParam(MotionParam[] motionParams)
         {

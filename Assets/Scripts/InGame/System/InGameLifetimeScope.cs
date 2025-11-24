@@ -2,6 +2,7 @@ using System;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
+using SynMotion;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -19,6 +20,7 @@ namespace InGame.System
         }
         
         [SerializeField] private CharacterPrefabs _characterPrefabs;
+        [SerializeField] private DeviceSettings _deviceSettings;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -37,6 +39,11 @@ namespace InGame.System
             builder.RegisterInstance(_characterPrefabs.Player);
             builder.RegisterInstance(_characterPrefabs.NormalEnemyCore);
             builder.RegisterInstance(_characterPrefabs.BossEnemyCore);
+            
+            // プレイヤー生成
+            builder.RegisterInstance(_deviceSettings);
+            builder.RegisterEntryPoint<MotionReceiver>().AsSelf();
+            builder.Register<SynMotionSystem>(Lifetime.Singleton).AsSelf();
 
             // キャラクター生成
             builder.Register<CharacterFactory>(Lifetime.Singleton).AsSelf();

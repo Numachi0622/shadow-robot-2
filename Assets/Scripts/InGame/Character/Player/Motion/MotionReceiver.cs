@@ -1,44 +1,53 @@
+using System;
 using Windows.Kinect;
+using InGame.Message;
+using MessagePipe;
 using OscCore;
 using SynMotion;
-using UniRx;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace InGame.Character
 {
-    public class MotionReceiver
+    public class MotionReceiver : ITickable, IInitializable, IDisposable
     {
         private readonly OscServer _receiver;
-        private MotionParam[] _motionParam;
-        private SynMotionSystem _synMotion;
-        private ReactiveProperty<bool>[] _connectedFlags;
-        private int _maxDeviceCount;
-        private int _maxTrackingCount;
+        private readonly MotionParam[] _motionParam;
+        private readonly SynMotionSystem _synMotion;
+        private readonly bool[] _connectedFlags;
+        private readonly int _maxDeviceCount;
+        private readonly int _maxTrackingCount;
+        private readonly IPublisher<SpawnCharacterMessage> _spawnPublisher;
+        private readonly IPublisher<DespawnCharacterMessage> _despawnPublisher;
 
-        public IReadOnlyReactiveProperty<bool>[] ConnectedFlags => _connectedFlags;
-
-        public MotionReceiver(DeviceSettings settings, SynMotionSystem synMotion)
+        [Inject]
+        public MotionReceiver(
+            DeviceSettings settings, 
+            SynMotionSystem synMotion,
+            IPublisher<SpawnCharacterMessage> spawnPublisher,
+            IPublisher<DespawnCharacterMessage> despawnPublisher)
         {
             _receiver = new OscServer(settings.Port);
             _synMotion = synMotion;
-            _motionParam = new MotionParam[]
-            {
-                new MotionParam() { IsTracked = false },
-                new MotionParam() { IsTracked = false },
-                new MotionParam() { IsTracked = false },
-                new MotionParam() { IsTracked = false }
-            };
-            _connectedFlags = new ReactiveProperty<bool>[]
-            {
-                new ReactiveProperty<bool>(false),
-                new ReactiveProperty<bool>(false),
-                new ReactiveProperty<bool>(false),
-                new ReactiveProperty<bool>(false)
-            };
             _maxDeviceCount = settings.MaxDeviceCount;
             _maxTrackingCount = settings.MaxTrackingCountPerDevice;
-
+            
+            _motionParam = new MotionParam[_maxDeviceCount * _maxTrackingCount];
+            _connectedFlags = new bool[_maxDeviceCount * _maxTrackingCount];
+            
+            _spawnPublisher = spawnPublisher;
+            _despawnPublisher = despawnPublisher;
+        }
+        
+        public void Initialize()
+        {
             Bind();
+        }
+        
+        public void Dispose()
+        {
+            _receiver.Dispose();
         }
 
         private void Bind()
@@ -146,14 +155,30 @@ namespace InGame.Character
                 );
             }
         }
-
-        public void UpdateMotion()
+        
+        public void Tick()
         {
             _synMotion.SetMotionParam(_motionParam);
 
             for (var i = 0; i < _motionParam.Length; i++)
             {
-                _connectedFlags[i].Value = _motionParam[i].IsTracked;
+                if (!_connectedFlags[i] && _motionParam[i].IsTracked)
+                {
+                    // 未接続 -> 接続
+                    _connectedFlags[i] = _motionParam[i].IsTracked;
+                    _spawnPublisher.Publish(new SpawnCharacterMessage(
+                        new CharacterId(i),
+                        CharacterType.Player,
+                        Vector3.zero,
+                        Quaternion.identity
+                    ));
+                }
+                else if (_connectedFlags[i] && !_motionParam[i].IsTracked)
+                {
+                    // 接続 -> 未接続
+                    _connectedFlags[i] = _motionParam[i].IsTracked;
+                    _despawnPublisher.Publish(new DespawnCharacterMessage(new CharacterId(i)));
+                }
             }
         }
 

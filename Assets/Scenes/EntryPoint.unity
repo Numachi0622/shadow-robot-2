@@ -119,6 +119,67 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &136692418
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2410542185320871873, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_Name
+      value: Kinect
+      objectReference: {fileID: 0}
+    - target: {fileID: 4193273025034183559, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6167980404713248946, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
 --- !u!1 &315210975
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,6 +354,7 @@ MonoBehaviour:
     Player: {fileID: 2580647560496031150, guid: 057cad60f98161749a95444f7dcefde7, type: 3}
     NormalEnemyCore: {fileID: 1557136414831129136, guid: 0f33b2c16e9d8eb49bf20dfd123ebed4, type: 3}
     BossEnemyCore: {fileID: 2789152242694410966, guid: b23a9bcece7501045a86ade96925db85, type: 3}
+  _deviceSettings: {fileID: 11400000, guid: 0f4c60d026cece94a9a7989a30010ae7, type: 2}
   _debugCommand: {fileID: 613532413}
 --- !u!114 &613532413
 MonoBehaviour:
@@ -414,3 +476,4 @@ SceneRoots:
   - {fileID: 1337430288}
   - {fileID: 315210977}
   - {fileID: 613532411}
+  - {fileID: 136692418}

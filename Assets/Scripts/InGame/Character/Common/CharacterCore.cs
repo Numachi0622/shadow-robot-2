@@ -13,7 +13,7 @@ namespace InGame.Character
         public IDamageable Damager => _damager;
         public IMovable Mover => _mover;
 
-        public virtual void Initialize(int id, SynMotionSystem synMotion)
+        public virtual void Initialize(CharacterId id, SynMotionSystem synMotion)
         {
         }
 

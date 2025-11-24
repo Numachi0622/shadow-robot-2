@@ -42,17 +42,17 @@ namespace InGame.Character
         private DamageObserver _damageObserver;
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
-        [SerializeField] private int _playerId = 0;
+        private CharacterId _playerId;
 
         [SerializeField] private bool _debugMode = false;
         
-        public int PlayerId => _playerId;
+        public CharacterId PlayerId => _playerId;
         
         public IAttackable LeftHandAttacker => _leftHandAttacker;
         public IAttackable RightHandAttacker => _rightHandAttacker;
         public IDamageable Damager => _damager;
 
-        public override void Initialize(int id, SynMotionSystem synMotion)
+        public override void Initialize(CharacterId id, SynMotionSystem synMotion)
         {
             _damager = new Damager(_hpPresenter);
             
@@ -105,12 +105,17 @@ namespace InGame.Character
             _leftHandObserver.Observe();
             _rightHandObserver.Observe();
 
-            var motionParam = _synMotion.GetMotionParam(_playerId);
+            var motionParam = _synMotion.GetMotionParam(_playerId.Value);
             var pos = !_debugMode
                 ? motionParam.SpineMidPosition
                 : transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.deltaTime * 5f);
             _mover.Move(pos);
             _motionMover.UpdateMotion(motionParam);
+        }
+
+        public void Dispose()
+        {
+            Destroy(gameObject);
         }
 
         #region Non State Event
