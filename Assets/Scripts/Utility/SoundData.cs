@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Utility
 {
-    [CreateAssetMenu(fileName = "SoundData", menuName = "ScriptableObjects/SoundData")]
+    [CreateAssetMenu(fileName = "SoundData", menuName = "SoundData")]
     public class SoundData : ScriptableObject
     {
         public Sound[] Sounds;

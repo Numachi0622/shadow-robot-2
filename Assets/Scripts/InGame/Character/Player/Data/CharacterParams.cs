@@ -4,7 +4,7 @@ using Random = UnityEngine.Random;
 
 namespace InGame.Character
 {
-    [CreateAssetMenu(fileName = "CharacterParams", menuName = "ScriptableObjects/Character/CharacterParams", order = 1)]
+    [CreateAssetMenu(fileName = "CharacterParams", menuName = "Character/Params/CharacterParams", order = 1)]
     public class CharacterParams : ScriptableObject
     {
         public int MaxHp;

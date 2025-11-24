@@ -22,4 +22,10 @@ MonoBehaviour:
   AttackRange: 0
   AttackReadyTime: 0
   AttackCoolTime: 0
+  DamageCoolTime: 0
   AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
+  EffectParams:
+    KnockBackDuration: 0.5
+    KnockBackDistance: 5
+    DeadKnockBackDistance: 8
+  AttackPatternParams: []

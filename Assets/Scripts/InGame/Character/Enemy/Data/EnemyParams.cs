@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace InGame.Character
 {
-    [CreateAssetMenu(fileName = "EnemyParams", menuName = "ScriptableObjects/EnemyParams")]
+    [CreateAssetMenu(fileName = "EnemyParams", menuName = "Character/Params/EnemyParams")]
     public class EnemyParams : CharacterParams
     {
         public float MoveSpeed;

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace InGame.Character
 {
-    [CreateAssetMenu(fileName = "DeviceSettings", menuName = "ScriptableObject/DeviceSettings")]
+    [CreateAssetMenu(fileName = "DeviceSettings", menuName = "DeviceSettings")]
     public class DeviceSettings : ScriptableObject
     {
         public string IpAddress = "192.0.0.1";
