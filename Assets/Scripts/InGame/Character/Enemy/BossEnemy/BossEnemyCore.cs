@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using InGame.System;
 using UniRx;
@@ -7,8 +8,17 @@ namespace InGame.Character
 {
     public class BossEnemyCore : EnemyCore
     {
+        [Serializable]
+        public class BossEnemyEffectComponents
+        {
+            public ParticleSystem FireBallEffectPrefab;
+            public ParticleSystem DeathBallEffectPrefab;
+        }
+        
+        [SerializeField] private CharacterCore _normalEnemyPrefab;
         [SerializeField] private Transform _bodyTransform;
         [SerializeField] private Animator _animator;
+        [SerializeField] private BossEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
 
         private StateMachine<BossEnemyCore> _stateMachine;
@@ -20,6 +30,8 @@ namespace InGame.Character
         public EnemyParams Params => _params;
         public EnemyEffect EnemyEffect => _enemyEffect;
         public Animator Animator => _animator;
+        public CharacterCore NormalEnemyPrefab => _normalEnemyPrefab;
+        public BossEnemyEffectComponents EffectComponents => _effectComponents;
         
         public CancellationTokenSource CancellationTokenSource
         {

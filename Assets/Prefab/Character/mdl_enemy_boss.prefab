@@ -396,6 +396,7 @@ MonoBehaviour:
   _params: {fileID: 11400000, guid: da3a45715e67a934fbaf7b98347abc32, type: 2}
   _attackCollider: {fileID: 4840855209724734867}
   _damageCollider: {fileID: 6266709960230246759}
+  _normalEnemyPrefab: {fileID: 1557136414831129136, guid: 0f33b2c16e9d8eb49bf20dfd123ebed4, type: 3}
   _bodyTransform: {fileID: 456520}
   _animator: {fileID: 9584802}
   _hpPresenter: {fileID: 8098226509904507825}
