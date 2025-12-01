@@ -17,9 +17,10 @@ namespace InGame.System
         [SerializeField] private AttackPoint _saikyoAttackParam;
         [SerializeField] private AttackPoint _saijakuAttackParam;
         [SerializeField, ReadOnly] private GameStateType currentState = GameStateType.Title;
-        
+
         private IPublisher<StateChangeMessage> _stateChangePublisher;
-        
+        private readonly bool[] _isTestConnected = new bool[3];
+
         [Inject]
         public void Construct(IPublisher<StateChangeMessage> stateChangePublisher)
         {
@@ -46,7 +47,7 @@ namespace InGame.System
             };
             _attackCollider.AttackImpactAsync(attackParam).Forget();
         }
-        
+
         [Button]
         public void SaijakuAttack()
         {
@@ -59,11 +60,44 @@ namespace InGame.System
             };
             _attackCollider.AttackImpactAsync(attackParam).Forget();
         }
-        
+
         [Button]
         public void TestEnemyAttack()
         {
             _testEnemyCore?.Attacker.Attack(Vector3.zero);
+        }
+
+        [Button]
+        public void RegisterPlayer01()
+        {
+            _isTestConnected[0] = !_isTestConnected[0];
+        }
+
+        [Button]
+        public void RegisterPlayer02()
+        {
+            _isTestConnected[1] = !_isTestConnected[1];
+        }
+
+        [Button]
+        public void RegisterPlayer03()
+        {
+            _isTestConnected[2] = !_isTestConnected[2];
+        }
+
+        private void Update()
+        {
+            for (var i = 0; i < _isTestConnected.Length; i++)
+            {
+                if (_isTestConnected[i])
+                {
+                    var deviceId = (i == 0 || i == 1) ? 0 : 1;
+                    var playerId = i % 2;
+                    BodySourceManager.Instance?.MotionSender.SendFlag(
+                        OscAddress.GetFlagAddress(deviceId, playerId), 1
+                    );
+                }
+            }
         }
     }
 }

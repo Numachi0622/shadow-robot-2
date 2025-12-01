@@ -44,7 +44,8 @@ namespace InGame.System
         }
 
         #region State Events
-        public void OnStateChange(StateChangeMessage message)
+
+        private void OnStateChange(StateChangeMessage message)
         {
             switch (message.StateType)
             {

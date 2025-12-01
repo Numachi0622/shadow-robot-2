@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
@@ -20,6 +21,7 @@ namespace InGame.System
         }
         
         [SerializeField] private CharacterPrefabs _characterPrefabs;
+        [SerializeField] private PlayerSpawnSettings _playerSpawnSettings;
         [SerializeField] private DeviceSettings _deviceSettings;
         
         [SerializeField] private DebugCommand _debugCommand;
@@ -39,6 +41,9 @@ namespace InGame.System
             builder.RegisterInstance(_characterPrefabs.Player);
             builder.RegisterInstance(_characterPrefabs.NormalEnemyCore);
             builder.RegisterInstance(_characterPrefabs.BossEnemyCore);
+            
+            // キャラクター生成位置登録
+            builder.RegisterInstance(_playerSpawnSettings);
             
             // プレイヤー生成
             builder.RegisterInstance(_deviceSettings);

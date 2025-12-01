@@ -15,6 +15,7 @@ namespace InGame.Character
         private readonly OscServer _receiver;
         private readonly MotionParam[] _motionParam;
         private readonly SynMotionSystem _synMotion;
+        private readonly PlayerSpawnSettings _playerSpawnSettings;
         private readonly bool[] _connectedFlags;
         private readonly int _maxDeviceCount;
         private readonly int _maxTrackingCount;
@@ -25,6 +26,7 @@ namespace InGame.Character
         public MotionReceiver(
             DeviceSettings settings, 
             SynMotionSystem synMotion,
+            PlayerSpawnSettings playerSpawnSettings,
             IPublisher<SpawnCharacterMessage> spawnPublisher,
             IPublisher<DespawnCharacterMessage> despawnPublisher)
         {
@@ -32,6 +34,7 @@ namespace InGame.Character
             _synMotion = synMotion;
             _maxDeviceCount = settings.MaxDeviceCount;
             _maxTrackingCount = settings.MaxTrackingCountPerDevice;
+            _playerSpawnSettings = playerSpawnSettings;
             
             _motionParam = new MotionParam[_maxDeviceCount * _maxTrackingCount];
             _connectedFlags = new bool[_maxDeviceCount * _maxTrackingCount];
@@ -166,10 +169,11 @@ namespace InGame.Character
                 {
                     // 未接続 -> 接続
                     _connectedFlags[i] = _motionParam[i].IsTracked;
+                    var pos = _playerSpawnSettings.SpawnPositions[i];
                     _spawnPublisher.Publish(new SpawnCharacterMessage(
                         new CharacterId(i),
                         CharacterType.Player,
-                        Vector3.zero,
+                        pos,
                         Quaternion.identity
                     ));
                 }
