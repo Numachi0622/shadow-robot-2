@@ -372,6 +372,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38361aaff6184222ac66b4f49881d496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deviceSettings: {fileID: 11400000, guid: 0f4c60d026cece94a9a7989a30010ae7, type: 2}
   _testEnemyCore: {fileID: 0}
   _attackCollider: {fileID: 0}
   _saikyoAttackParam:

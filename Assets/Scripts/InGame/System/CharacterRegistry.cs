@@ -64,9 +64,10 @@ namespace InGame.System
             }
         }
 
-        public void RemoveAt(int index)
+        public void RemoveAt(int characterId)
         {
-            var character = _playerCores[index];
+            var character = _playerCores.FirstOrDefault(p => (p as PlayerCore)?.PlayerId.Value == characterId);
+            if (character == null) return;
             _playerCores.Remove(character);
             _allCharacters.Remove(character);
             

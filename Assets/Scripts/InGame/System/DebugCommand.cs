@@ -1,10 +1,13 @@
 using System;
+using System.Text;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
 using UnityEngine;
 using NaughtyAttributes;
+using OscCore;
+using SynMotion;
 using Utility;
 using VContainer;
 
@@ -12,6 +15,7 @@ namespace InGame.System
 {
     public class DebugCommand : MonoBehaviour
     {
+        [SerializeField] private DeviceSettings _deviceSettings;
         [SerializeField] private CharacterCore _testEnemyCore;
         [SerializeField] private AttackCollider _attackCollider;
         [SerializeField] private AttackPoint _saikyoAttackParam;
@@ -20,11 +24,17 @@ namespace InGame.System
 
         private IPublisher<StateChangeMessage> _stateChangePublisher;
         private readonly bool[] _isTestConnected = new bool[3];
+        private IMotionSender _motionSender;
 
         [Inject]
         public void Construct(IPublisher<StateChangeMessage> stateChangePublisher)
         {
             _stateChangePublisher = stateChangePublisher;
+        }
+
+        private void Start()
+        {
+            _motionSender = new MotionSender(_deviceSettings.IpAddress, _deviceSettings.Port);
         }
 
         [Button]
@@ -89,13 +99,15 @@ namespace InGame.System
         {
             for (var i = 0; i < _isTestConnected.Length; i++)
             {
+                var deviceId = (i == 0 || i == 1) ? 0 : 1;
+                var playerId = i % 2;
                 if (_isTestConnected[i])
                 {
-                    var deviceId = (i == 0 || i == 1) ? 0 : 1;
-                    var playerId = i % 2;
-                    BodySourceManager.Instance?.MotionSender.SendFlag(
-                        OscAddress.GetFlagAddress(deviceId, playerId), 1
-                    );
+                    _motionSender.SendFlag(OscAddress.GetFlagAddress(deviceId, playerId), 1);
+                }
+                else
+                {
+                    _motionSender.SendFlag(OscAddress.GetFlagAddress(deviceId, playerId), 0);
                 }
             }
         }
