@@ -7,5 +7,6 @@ namespace InGame.System
     public class StageReferences
     {
         public GameObject TitleStage;
+        public GameObject MainStage;
     }
 }

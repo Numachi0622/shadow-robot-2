@@ -1,5 +1,6 @@
 using InGame.Message;
 using UnityEngine;
+using VContainer.Unity;
 
 namespace InGame.System
 {
@@ -13,6 +14,8 @@ namespace InGame.System
                 new Vector3(0, 0, 0),
                 Quaternion.identity
             ));
+            
+            Owner.StageReferences.MainStage.SetActive(false);
         }
     }
 }
