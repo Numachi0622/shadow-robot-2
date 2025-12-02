@@ -11,5 +11,10 @@ namespace InGame.System
             
             Owner.StageReferences.TitleStage.SetActive(true);
         }
+        
+        public override void OnExit()
+        {
+            Owner.StageReferences.TitleStage.SetActive(false);
+        }
     }
 }
