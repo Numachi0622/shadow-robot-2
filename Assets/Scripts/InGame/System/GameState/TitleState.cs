@@ -1,4 +1,5 @@
 using UnityEngine;
+using VContainer.Unity;
 
 namespace InGame.System
 {
@@ -7,6 +8,8 @@ namespace InGame.System
         public override void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[TitleState] OnEnter");
+            
+            Owner.StageReferences.TitleStage.SetActive(true);
         }
     }
 }

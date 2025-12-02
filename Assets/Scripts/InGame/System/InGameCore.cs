@@ -3,6 +3,8 @@ using MessagePipe;
 using VContainer;
 using VContainer.Unity;
 using InGame.Message;
+using NaughtyAttributes.Test;
+using UnityEditor.SceneManagement;
 
 namespace InGame.System
 {
@@ -11,16 +13,24 @@ namespace InGame.System
         private readonly ISubscriber<StateChangeMessage> _stateChangeSubscriber;
         private readonly IPublisher<SpawnCharacterMessage> _spawnCharacterPublisher;
         private IDisposable _stateChangeSubscription;
+        private IObjectResolver _container;
 
+        private StageReferences _stageReferences;
         private StateMachine<InGameCore> _stateMachine;
-        
+
+        public IObjectResolver Container => _container;
         public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher => _spawnCharacterPublisher;
+        public StageReferences StageReferences => _stageReferences;
 
         [Inject]
         public InGameCore(
+            IObjectResolver container,
+            StageReferences stageReferences,
             ISubscriber<StateChangeMessage> stateChangeSubscriber,
             IPublisher<SpawnCharacterMessage> spawnCharacterPublisher)
         {
+            _container = container;
+            _stageReferences = stageReferences;
             _stateChangeSubscriber = stateChangeSubscriber;
             _spawnCharacterPublisher = spawnCharacterPublisher;
         }
