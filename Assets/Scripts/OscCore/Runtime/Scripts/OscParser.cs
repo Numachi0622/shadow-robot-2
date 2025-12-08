@@ -52,7 +52,12 @@ namespace OscCore
                 alignedAddressLength += 4;
 
             var tagCount = ParseTags(Buffer, alignedAddressLength);
-            var offset = alignedAddressLength + (tagCount + 4) & ~3;
+            // タグ文字列 = カンマ(1) + タグ(tagCount) を4バイトアライメント
+            var tagStringLength = tagCount + 1;
+            var alignedTagLength = (tagStringLength + 3) & ~3;
+            if (alignedTagLength == tagStringLength)
+                alignedTagLength += 4;
+            var offset = alignedAddressLength + alignedTagLength;
             FindOffsets(offset);
             return addressLength;
         }
@@ -77,7 +82,12 @@ namespace OscCore
 
             var startPlusAlignedLength = startingByteOffset + alignedAddressLength;
             var tagCount = ParseTags(Buffer, startPlusAlignedLength);
-            var offset = startPlusAlignedLength + (tagCount + 4) & ~3;
+            // タグ文字列 = カンマ(1) + タグ(tagCount) を4バイトアライメント
+            var tagStringLength = tagCount + 1;
+            var alignedTagLength = (tagStringLength + 3) & ~3;
+            if (alignedTagLength == tagStringLength)
+                alignedTagLength += 4;
+            var offset = startPlusAlignedLength + alignedTagLength;
             FindOffsets(offset);
             return addressLength;
         }
