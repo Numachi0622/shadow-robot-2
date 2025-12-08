@@ -23,6 +23,7 @@ namespace InGame.System
 
         public IObjectResolver Container => _container;
         public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher => _spawnCharacterPublisher;
+        public IPublisher<InitGameMessage> InitGamePublisher => _initGamePublisher;
         public StageReferences StageReferences => _stageReferences;
         public CharacterRegistry CharacterRegistry => _characterRegistry;
 

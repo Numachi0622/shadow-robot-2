@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1492303356425089944
 Transform:
   m_ObjectHideFlags: 0
@@ -92,7 +92,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88782413253875235}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!114 &6834258723744864388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +487,7 @@ MonoBehaviour:
   _rightHandCollider: {fileID: 8599948126364304283}
   _damageCollider: {fileID: 8376447254492991157}
   _hpPresenter: {fileID: 5951322870493153232}
-  _debugMode: 1
+  _playerCamera: {fileID: 6552503104311022123}
 --- !u!114 &5951322870493153232
 MonoBehaviour:
   m_ObjectHideFlags: 0

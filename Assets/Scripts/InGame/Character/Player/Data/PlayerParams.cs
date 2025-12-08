@@ -10,5 +10,6 @@ namespace InGame.Character
         [Range(0f, 1f)] public float RocketPunchDistThreshold = 0.5f;
         public float MaxRocketPunchReadyTime = 1f;
         public float RocketPunchChargeDistanceThreshold = 1f;
+        public float MoveWeight = 10f;
     }
 }

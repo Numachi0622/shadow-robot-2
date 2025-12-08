@@ -35,6 +35,7 @@ namespace InGame.Character
         [SerializeField] private AttackCollider _rightHandCollider;
         [SerializeField] private DamageCollider _damageCollider;
         [SerializeField] private HitPointPresenter _hpPresenter;
+        [SerializeField] private Camera _playerCamera;
 
         private StateMachine<PlayerCore> _stateMachine;
         private IAttackable _leftHandAttacker, _rightHandAttacker;
@@ -43,8 +44,7 @@ namespace InGame.Character
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
         private CharacterId _playerId;
-
-        [SerializeField] private bool _debugMode = false;
+        private bool _isMovable = false;
         
         public CharacterId PlayerId => _playerId;
         
@@ -106,8 +106,8 @@ namespace InGame.Character
             _rightHandObserver.Observe();
 
             var motionParam = _synMotion.GetMotionParam(_playerId.Value);
-            var pos = !_debugMode
-                ? motionParam.SpineMidPosition
+            var pos = _isMovable
+                ? motionParam.SpineMidPosition * _params.MoveWeight
                 : transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.deltaTime * 5f);
             _mover.Move(pos);
             _motionMover.UpdateMotion(motionParam);
@@ -156,5 +156,15 @@ namespace InGame.Character
             _stateMachine.SetState<PlayerDeadState>();
         }
         #endregion
+        
+        public void SetMovable(bool isMovable)
+        {
+            _isMovable = isMovable;
+        }
+
+        public void SetCamera(bool isActive)
+        {
+            _playerCamera.gameObject.SetActive(isActive);
+        }
     }
 }

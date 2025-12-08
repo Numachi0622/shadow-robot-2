@@ -1,3 +1,4 @@
+using InGame.Character;
 using InGame.Message;
 using UnityEngine;
 using VContainer.Unity;
@@ -16,9 +17,15 @@ namespace InGame.System
             ));
             
             // プレイヤー数に応じてゲーム環境を構築する
-            if (parameter is InitGameMessage initGameMessage)
+            if (parameter is not InitGameMessage initGameMessage) return;
+            
+            Owner.InitGamePublisher.Publish(initGameMessage);
+            
+            foreach (var chara in Owner.CharacterRegistry.GetAllPlayers())
             {
-                Debug.Log(initGameMessage.PlayerCount);   
+                var playerCore = chara as PlayerCore;
+                playerCore?.SetMovable(true);
+                playerCore?.SetCamera(true);
             }
             
             Owner.StageReferences.MainStage.SetActive(true);
