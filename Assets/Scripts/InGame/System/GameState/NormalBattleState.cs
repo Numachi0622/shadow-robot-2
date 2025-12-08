@@ -15,7 +15,13 @@ namespace InGame.System
                 Quaternion.identity
             ));
             
-            Owner.StageReferences.MainStage.SetActive(false);
+            // プレイヤー数に応じてゲーム環境を構築する
+            if (parameter is InitGameMessage initGameMessage)
+            {
+                Debug.Log(initGameMessage.PlayerCount);   
+            }
+            
+            Owner.StageReferences.MainStage.SetActive(true);
         }
     }
 }

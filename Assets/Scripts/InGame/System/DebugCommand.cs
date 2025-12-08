@@ -25,11 +25,15 @@ namespace InGame.System
         private IPublisher<StateChangeMessage> _stateChangePublisher;
         private readonly bool[] _isTestConnected = new bool[3];
         private IMotionSender _motionSender;
+        private CharacterRegistry _characterRegistry;
 
         [Inject]
-        public void Construct(IPublisher<StateChangeMessage> stateChangePublisher)
+        public void Construct(
+            IPublisher<StateChangeMessage> stateChangePublisher,
+            CharacterRegistry characterRegistry)
         {
             _stateChangePublisher = stateChangePublisher;
+            _characterRegistry = characterRegistry;
         }
 
         private void Start()
@@ -42,7 +46,8 @@ namespace InGame.System
         {
             var stateCount = Enum.GetValues(typeof(GameStateType)).Length;
             currentState = (GameStateType)(((int)currentState + 1) % stateCount);
-            _stateChangePublisher.Publish(new StateChangeMessage(currentState));
+            var playerCount = _characterRegistry.GetAllPlayers().Count;
+            _stateChangePublisher.Publish(new StateChangeMessage(currentState, new InitGameMessage(playerCount)));
         }
 
         [Button]
@@ -101,12 +106,15 @@ namespace InGame.System
             {
                 var deviceId = (i == 0 || i == 1) ? 0 : 1;
                 var playerId = i % 2;
+                
                 if (_isTestConnected[i])
                 {
                     _motionSender.SendFlag(OscAddress.GetFlagAddress(deviceId, playerId), 1);
                 }
                 else
                 {
+                    if (BodySourceManager.Instance.Sensor.IsOpen) return;
+                    
                     _motionSender.SendFlag(OscAddress.GetFlagAddress(deviceId, playerId), 0);
                 }
             }

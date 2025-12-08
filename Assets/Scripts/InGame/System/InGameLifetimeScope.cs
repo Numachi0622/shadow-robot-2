@@ -33,6 +33,7 @@ namespace InGame.System
             var options = builder.RegisterMessagePipe();
             builder.RegisterMessageBroker<StateChangeMessage>(options);
             builder.RegisterMessageBroker<SpawnCharacterMessage>(options);
+            builder.RegisterMessageBroker<InitGameMessage>(options);
 
             // インゲーム基盤システム
             builder.RegisterEntryPoint<InGameCore>().AsSelf();

@@ -12,27 +12,35 @@ namespace InGame.System
     {
         private readonly ISubscriber<StateChangeMessage> _stateChangeSubscriber;
         private readonly IPublisher<SpawnCharacterMessage> _spawnCharacterPublisher;
-        private IDisposable _stateChangeSubscription;
-        private IObjectResolver _container;
-
-        private StageReferences _stageReferences;
+        private readonly IPublisher<InitGameMessage> _initGamePublisher;
+        private readonly IObjectResolver _container;
+        private readonly StageReferences _stageReferences;
+        private readonly CharacterRegistry _characterRegistry;
+        
         private StateMachine<InGameCore> _stateMachine;
+        private IDisposable _stateChangeSubscription;
+
 
         public IObjectResolver Container => _container;
         public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher => _spawnCharacterPublisher;
         public StageReferences StageReferences => _stageReferences;
+        public CharacterRegistry CharacterRegistry => _characterRegistry;
 
         [Inject]
         public InGameCore(
             IObjectResolver container,
             StageReferences stageReferences,
+            CharacterRegistry characterRegistry,
             ISubscriber<StateChangeMessage> stateChangeSubscriber,
-            IPublisher<SpawnCharacterMessage> spawnCharacterPublisher)
+            IPublisher<SpawnCharacterMessage> spawnCharacterPublisher,
+            IPublisher<InitGameMessage> initGamePublisher)
         {
             _container = container;
             _stageReferences = stageReferences;
+            _characterRegistry = characterRegistry;
             _stateChangeSubscriber = stateChangeSubscriber;
             _spawnCharacterPublisher = spawnCharacterPublisher;
+            _initGamePublisher = initGamePublisher;
         }
 
         private void Bind()
