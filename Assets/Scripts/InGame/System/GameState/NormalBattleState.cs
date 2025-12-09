@@ -1,13 +1,18 @@
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
 using UnityEngine;
+using Utility;
 using VContainer.Unity;
+using Random = UnityEngine.Random;
 
 namespace InGame.System
 {
     public class NormalBattleState : StateMachine<InGameCore>.State
     {
-        public override void OnEnter(IStateParameter parameter = null)
+        public override async void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[NormalBattleState] OnEnter");
             // Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
@@ -40,6 +45,35 @@ namespace InGame.System
                     Quaternion.identity,
                     Owner.MainStageManager.BuildingParent
                 ));
+            }
+
+            var ct = new CancellationTokenSource().Token;
+            await NormalBattleLoopAsync(ct);
+        }
+
+        private async UniTask NormalBattleLoopAsync(CancellationToken ct)
+        {
+            //await Hoge TODO: ゲームスタート演出待機
+            
+            while (true)
+            {
+                try
+                {
+                    foreach (var pos in Owner.MainStageManager.EnemySpawnPositions)
+                    {
+                        Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
+                            CharacterType.NormalEnemy,
+                            pos,
+                            Quaternion.identity
+                        ));
+                    }
+
+                    await UniTask.Delay(TimeSpan.FromSeconds(GameConst.NormalEnemyGenerateInterval), cancellationToken: ct);
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
             }
         }
     }
