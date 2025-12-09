@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d61a1eed997472f8f0e7343db1d4804, type: 3}
+  m_Name: CharacterPrefabs
+  m_EditorClassIdentifier: 
+  PlayerPrefab: {fileID: 2580647560496031150, guid: 057cad60f98161749a95444f7dcefde7, type: 3}
+  NormalEnemyPrefab: {fileID: 1557136414831129136, guid: 0f33b2c16e9d8eb49bf20dfd123ebed4, type: 3}
+  BossEnemyPrefab: {fileID: 2789152242694410966, guid: b23a9bcece7501045a86ade96925db85, type: 3}
+  BuildingPrefabs:
+  - {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+  - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+  - {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+  - {fileID: 5025632902983890813, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+  - {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}

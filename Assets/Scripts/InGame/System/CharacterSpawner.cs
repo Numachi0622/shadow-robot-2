@@ -19,6 +19,7 @@ namespace InGame.System
         private readonly CharacterRegistry _registry;
         private readonly SynMotionSystem _synMotion;
         private readonly ISubscriber<SpawnCharacterMessage> _spawnSubscriber;
+        private readonly ISubscriber<CreateBuildingMessage> _createBuildingSubscriber;
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
         private IDisposable _subscription;
 
@@ -28,12 +29,14 @@ namespace InGame.System
             CharacterRegistry registry,
             SynMotionSystem synMotion,
             ISubscriber<SpawnCharacterMessage> spawnSubscriber,
+            ISubscriber<CreateBuildingMessage> createBuildingSubscriber,
             ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber)
         {
             _factory = factory;
             _registry = registry;
             _synMotion = synMotion;
             _spawnSubscriber = spawnSubscriber;
+            _createBuildingSubscriber = createBuildingSubscriber;
             _despawnSubscriber = playerDespawnSubscriber;
         }
 
@@ -42,6 +45,7 @@ namespace InGame.System
             var bag = DisposableBag.CreateBuilder();
             bag.Add(_spawnSubscriber.Subscribe(OnSpawnRequested));
             bag.Add(_despawnSubscriber.Subscribe(OnDespawnRequested));
+            bag.Add(_createBuildingSubscriber.Subscribe(CreateBuilding));
             
             _subscription = bag.Build();
         }
@@ -51,8 +55,18 @@ namespace InGame.System
         /// </summary>
         private void OnSpawnRequested(SpawnCharacterMessage message)
         {
-            if (message.CharacterType == CharacterType.Player) SpawnPlayer(message);
-            else SpawnEnemy(message);   
+            switch (message.CharacterType)
+            {
+                case CharacterType.Player:
+                    SpawnPlayer(message);
+                    break;
+                case CharacterType.NormalEnemy:
+                case CharacterType.BossEnemy:
+                    SpawnEnemy(message);
+                    break;
+                case CharacterType.Building:
+                    break;
+            }
         }
 
         private void SpawnPlayer(SpawnCharacterMessage message)
@@ -78,6 +92,18 @@ namespace InGame.System
                 character.Initialize();
                 _registry.Register(character);
             }
+        }
+
+        private void CreateBuilding(CreateBuildingMessage message)
+        {
+            var building = _factory.Create(
+                message.BuildingCore,
+                message.Position,
+                message.Rotation,
+                message.Parent
+            );
+            building.Initialize();
+            _registry.Register(building);
         }
         
         private void OnDespawnRequested(DespawnCharacterMessage message)

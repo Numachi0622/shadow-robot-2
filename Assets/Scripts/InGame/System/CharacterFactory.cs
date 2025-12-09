@@ -21,5 +21,11 @@ namespace InGame.System
             var instance = _container.Instantiate(prefab, position, rotation, parent);
             return instance;
         }
+
+        public CharacterCore Create(CharacterCore prefab, Vector3 position, Quaternion rotation, Transform parent = null)
+        {
+            var instance = _container.Instantiate(prefab, position, rotation, parent);
+            return instance;
+        }
     }
 }

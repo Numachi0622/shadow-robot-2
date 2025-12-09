@@ -1,47 +1,52 @@
 using System;
+using System.Collections.Generic;
+using InGame.Character;
+using InGame.Environment;
 using MessagePipe;
 using VContainer;
 using VContainer.Unity;
 using InGame.Message;
-using NaughtyAttributes.Test;
-using UnityEditor.SceneManagement;
 
 namespace InGame.System
 {
     public class InGameCore : ITickable, IInitializable, IDisposable
     {
         private readonly ISubscriber<StateChangeMessage> _stateChangeSubscriber;
-        private readonly IPublisher<SpawnCharacterMessage> _spawnCharacterPublisher;
-        private readonly IPublisher<InitGameMessage> _initGamePublisher;
-        private readonly IObjectResolver _container;
-        private readonly StageReferences _stageReferences;
-        private readonly CharacterRegistry _characterRegistry;
+        private readonly MainStageManager _mainStageManager;
         
         private StateMachine<InGameCore> _stateMachine;
         private IDisposable _stateChangeSubscription;
-
-
-        public IObjectResolver Container => _container;
-        public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher => _spawnCharacterPublisher;
-        public IPublisher<InitGameMessage> InitGamePublisher => _initGamePublisher;
-        public StageReferences StageReferences => _stageReferences;
-        public CharacterRegistry CharacterRegistry => _characterRegistry;
+        
+        public IObjectResolver Container { get; private set; }
+        public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher { get; private set; }
+        public IPublisher<CreateBuildingMessage> CreateBuildingPublisher { get; private set; }
+        public IPublisher<InitGameMessage> InitGamePublisher { get; private set; }
+        public StageReferences StageReferences { get; private set; }
+        public CharacterRegistry CharacterRegistry { get; private set; }
+        public MainStageManager MainStageManager => _mainStageManager;
+        public List<BuildingCore> BuildingPrefabs { get; private set; }
 
         [Inject]
         public InGameCore(
             IObjectResolver container,
             StageReferences stageReferences,
             CharacterRegistry characterRegistry,
+            MainStageManager mainStageManager,
+            CharacterPrefabs characterPrefabs,
             ISubscriber<StateChangeMessage> stateChangeSubscriber,
             IPublisher<SpawnCharacterMessage> spawnCharacterPublisher,
+            IPublisher<CreateBuildingMessage> createBuildingPublisher,
             IPublisher<InitGameMessage> initGamePublisher)
         {
-            _container = container;
-            _stageReferences = stageReferences;
-            _characterRegistry = characterRegistry;
+            Container = container;
+            StageReferences = stageReferences;
+            CharacterRegistry = characterRegistry;
+            _mainStageManager = mainStageManager;
+            BuildingPrefabs = characterPrefabs.BuildingPrefabs;
             _stateChangeSubscriber = stateChangeSubscriber;
-            _spawnCharacterPublisher = spawnCharacterPublisher;
-            _initGamePublisher = initGamePublisher;
+            SpawnCharacterPublisher = spawnCharacterPublisher;
+            CreateBuildingPublisher = createBuildingPublisher;
+            InitGamePublisher = initGamePublisher;
         }
 
         private void Bind()
@@ -55,6 +60,7 @@ namespace InGame.System
             
             _stateMachine = new StateMachine<InGameCore>(this);
             _stateMachine.SetState<TitleState>();
+            _mainStageManager.Initialize();
         }
         
         public void Tick()

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace InGame.System
+namespace InGame.Environment
 {
     [Serializable]
     public class StageReferences

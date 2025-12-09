@@ -24,11 +24,23 @@ namespace InGame.System
             foreach (var chara in Owner.CharacterRegistry.GetAllPlayers())
             {
                 var playerCore = chara as PlayerCore;
-                playerCore?.SetMovable(true);
+                //playerCore?.SetMovable(true);
                 playerCore?.SetCamera(true, initGameMessage.PlayerCount);
             }
             
             Owner.StageReferences.MainStage.SetActive(true);
+            
+            // ビルの生成
+            foreach (var pos in Owner.MainStageManager.BuildingPositions)
+            {
+                var buildingPrefab = Owner.BuildingPrefabs[Random.Range(0, Owner.BuildingPrefabs.Count)];
+                Owner.CreateBuildingPublisher.Publish(new CreateBuildingMessage(
+                    buildingPrefab,
+                    pos,
+                    Quaternion.identity,
+                    Owner.MainStageManager.BuildingParent
+                ));
+            }
         }
     }
 }

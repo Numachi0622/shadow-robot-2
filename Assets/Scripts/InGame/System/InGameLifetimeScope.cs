@@ -1,5 +1,6 @@
 using System;
 using InGame.Character;
+using InGame.Environment;
 using InGame.Message;
 using MessagePipe;
 using SynMotion;
@@ -11,18 +12,12 @@ namespace InGame.System
 {
     public class InGameLifetimeScope : LifetimeScope
     {
-        [Serializable]
-        private class CharacterPrefabs
-        {
-            public PlayerCore Player;
-            public NormalEnemyCore NormalEnemyCore;
-            public BossEnemyCore BossEnemyCore;
-        }
-        
         [SerializeField] private CharacterPrefabs _characterPrefabs;
         [SerializeField] private StageReferences _stageReferences;
+        [SerializeField] private EnvironmentPrefabs _environmentPrefabs;
         [SerializeField] private PlayerSpawnSettings _playerSpawnSettings;
         [SerializeField] private DeviceSettings _deviceSettings;
+        [SerializeField] private MainStageManager _mainStageManager;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -33,18 +28,22 @@ namespace InGame.System
             var options = builder.RegisterMessagePipe();
             builder.RegisterMessageBroker<StateChangeMessage>(options);
             builder.RegisterMessageBroker<SpawnCharacterMessage>(options);
+            builder.RegisterMessageBroker<DespawnCharacterMessage>(options);
             builder.RegisterMessageBroker<InitGameMessage>(options);
 
             // インゲーム基盤システム
             builder.RegisterEntryPoint<InGameCore>().AsSelf();
             
             // キャラクターのPrefabを登録
-            builder.RegisterInstance(_characterPrefabs.Player);
-            builder.RegisterInstance(_characterPrefabs.NormalEnemyCore);
-            builder.RegisterInstance(_characterPrefabs.BossEnemyCore);
+            builder.RegisterInstance(_characterPrefabs);
+            builder.RegisterInstance(_characterPrefabs.PlayerPrefab);
+            builder.RegisterInstance(_characterPrefabs.NormalEnemyPrefab);
+            builder.RegisterInstance(_characterPrefabs.BossEnemyPrefab);
             
             // ステージ等のPrefabを登録
             builder.RegisterInstance(_stageReferences);
+            //builder.RegisterInstance(_environmentPrefabs);
+            builder.RegisterInstance(_mainStageManager);
             
             // キャラクター生成位置登録
             builder.RegisterInstance(_playerSpawnSettings);
