@@ -69,6 +69,7 @@ namespace InGame.Character
             
             _damageCollider.Initialize(_damageObserver);
             _hpPresenter.Initialize(_params);
+            gameObject.name += _playerId.Value.ToString();
 
             Bind();
         }
@@ -162,8 +163,13 @@ namespace InGame.Character
             _isMovable = isMovable;
         }
 
-        public void SetCamera(bool isActive)
+        public void SetCamera(bool isActive, int totalPlayerCount)
         {
+            var width = 1f / totalPlayerCount;
+            _playerCamera.rect = new Rect(
+                width * _playerId.Value, 0, 
+                width, 1f
+            );
             _playerCamera.gameObject.SetActive(isActive);
         }
     }

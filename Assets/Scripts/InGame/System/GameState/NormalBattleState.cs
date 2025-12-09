@@ -25,7 +25,7 @@ namespace InGame.System
             {
                 var playerCore = chara as PlayerCore;
                 playerCore?.SetMovable(true);
-                playerCore?.SetCamera(true);
+                playerCore?.SetCamera(true, initGameMessage.PlayerCount);
             }
             
             Owner.StageReferences.MainStage.SetActive(true);
