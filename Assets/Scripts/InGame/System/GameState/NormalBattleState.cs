@@ -15,11 +15,6 @@ namespace InGame.System
         public override async void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[NormalBattleState] OnEnter");
-            // Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
-            //     CharacterType.NormalEnemy,
-            //     new Vector3(0, 0, 0),
-            //     Quaternion.identity
-            // ));
             
             // プレイヤー数に応じてゲーム環境を構築する
             if (parameter is not InitGameMessage initGameMessage) return;
@@ -36,22 +31,27 @@ namespace InGame.System
             Owner.StageReferences.MainStage.SetActive(true);
             
             // ビルの生成
-            foreach (var pos in Owner.MainStageManager.BuildingPositions)
+            var areaCount = Mathf.Min(initGameMessage.PlayerCount, Owner.MainStageManager.AreaCount);
+            for (var i = 0; i < areaCount; i++)
             {
-                var buildingPrefab = Owner.BuildingPrefabs[Random.Range(0, Owner.BuildingPrefabs.Count)];
-                Owner.CreateBuildingPublisher.Publish(new CreateBuildingMessage(
-                    buildingPrefab,
-                    pos,
-                    Quaternion.identity,
-                    Owner.MainStageManager.BuildingParent
-                ));
+                var buildingPositions = Owner.MainStageManager.BuildingPositionsByArea(new AreaId(i));
+                foreach (var pos in buildingPositions)
+                {
+                    var buildingPrefab = Owner.BuildingPrefabs[Random.Range(0, Owner.BuildingPrefabs.Count)];
+                    Owner.CreateBuildingPublisher.Publish(new CreateBuildingMessage(
+                        buildingPrefab,
+                        pos,
+                        Quaternion.identity,
+                        Owner.MainStageManager.BuildingParent
+                    ));
+                }
             }
 
             var ct = new CancellationTokenSource().Token;
-            await NormalBattleLoopAsync(ct);
+            await NormalBattleLoopAsync(initGameMessage, ct);
         }
 
-        private async UniTask NormalBattleLoopAsync(CancellationToken ct)
+        private async UniTask NormalBattleLoopAsync(InitGameMessage message, CancellationToken ct)
         {
             //await Hoge TODO: ゲームスタート演出待機
             
@@ -59,8 +59,10 @@ namespace InGame.System
             {
                 try
                 {
-                    foreach (var pos in Owner.MainStageManager.EnemySpawnPositions)
+                    var areaCount = Mathf.Min(message.PlayerCount, Owner.MainStageManager.EnemySpawnPositions.Count);
+                    for (var i = 0; i < areaCount; i++)
                     {
+                        var pos = Owner.MainStageManager.EnemySpawnPositions[i];
                         Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
                             CharacterType.NormalEnemy,
                             pos,

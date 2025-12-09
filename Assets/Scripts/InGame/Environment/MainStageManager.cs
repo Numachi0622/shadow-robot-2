@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using InGame.System;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace InGame.Environment
@@ -9,23 +11,35 @@ namespace InGame.Environment
         [SerializeField] private List<Transform> _playerSpawnPoints;
         [SerializeField] private List<Transform> _enemySpawnPoints;
         [SerializeField] private Transform _buildingParent;
-        private readonly List<Vector3> _buildingPositions = new();
+        private readonly Dictionary<AreaId, List<Vector3>> _buildingPositions = new();
 
-        public IReadOnlyList<Vector3> BuildingPositions => _buildingPositions;
         public IReadOnlyList<Vector3> PlayerSpawnPositions => _playerSpawnPoints.ConvertAll(point => point.position);
         public IReadOnlyList<Vector3> EnemySpawnPositions => _enemySpawnPoints.ConvertAll(point => point.position);
         public Transform BuildingParent => _buildingParent;
 
         public void Initialize()
         {
+            var areaIdValue = 0;
             foreach (var element in _elements)
             {
                 element.Initialize();
+
+                var positions = new List<Vector3>();
                 foreach (var pos in element.BuildingPositions)
                 {
-                    _buildingPositions.Add(pos);
+                    positions.Add(pos);
                 }
+                _buildingPositions.Add(new AreaId(areaIdValue), positions);
+                
+                areaIdValue++;
             }
         }
+        
+        public IReadOnlyList<Vector3> BuildingPositionsByArea(AreaId areaId)
+        {
+            return _buildingPositions.GetValueOrDefault(areaId);
+        }
+        
+        public int AreaCount => _elements.Count;
     }
 }
