@@ -12,8 +12,7 @@ namespace InGame.System
         [SerializeField] private SerializableDictionary<AttackType, ParticleSystem> _hitEffectPrefabs;
         private readonly int _defaultCapacity = 10;
         private readonly int _maxSize = 20;
-        
-        private Dictionary<AttackType, ObjectPool<ParticleSystem>> _hitEffectPools = new();
+        private readonly Dictionary<AttackType, ObjectPool<ParticleSystem>> _hitEffectPools = new();
 
         public override void Initialize()
         {
@@ -86,7 +85,6 @@ namespace InGame.System
 
         private void OnStopped()
         {
-            Debug.Log("OnStop");
             OnParticleSystemStopped?.Invoke();
         }
     }
