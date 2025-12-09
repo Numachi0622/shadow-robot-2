@@ -31,6 +31,8 @@ namespace InGame.System
             builder.RegisterMessageBroker<DespawnCharacterMessage>(options);
             builder.RegisterMessageBroker<InitGameMessage>(options);
 
+            builder.RegisterMessageBroker<CharacterId, GameStartPlayerInitMessage>(options);
+
             // インゲーム基盤システム
             builder.RegisterEntryPoint<InGameCore>().AsSelf();
             

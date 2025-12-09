@@ -24,8 +24,13 @@ namespace InGame.System
             foreach (var chara in Owner.CharacterRegistry.GetAllPlayers())
             {
                 var playerCore = chara as PlayerCore;
-                //playerCore?.SetMovable(true);
-                playerCore?.SetCamera(true, initGameMessage.PlayerCount);
+                if (playerCore == null) continue;
+
+                var characterId = playerCore.PlayerId;
+                Owner.GameStartPlayerInitPublisher.Publish(characterId, new GameStartPlayerInitMessage(
+                    Owner.MainStageManager.PlayerSpawnPositions[characterId.Value],
+                    initGameMessage.PlayerCount
+                ));
             }
             
             Owner.StageReferences.MainStage.SetActive(true);

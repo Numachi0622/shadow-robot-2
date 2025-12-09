@@ -1,10 +1,13 @@
 using System;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
+using InGame.Message;
 using InGame.System;
+using MessagePipe;
 using SynMotion;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace InGame.Character
 {
@@ -45,6 +48,10 @@ namespace InGame.Character
         private SynMotionSystem _synMotion;
         private CharacterId _playerId;
         private bool _isMovable = false;
+        private Vector3 _baseWorldPosition;
+        private Vector3 _baseTrackingPosition;
+        
+        private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         
         public CharacterId PlayerId => _playerId;
         
@@ -73,9 +80,17 @@ namespace InGame.Character
 
             Bind();
         }
+        
+        [Inject]
+        public void Construct(
+            ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber)
+        {
+            _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
+        }
 
         private void Bind()
         {
+            // オブザーバーを購読
             _leftHandObserver.OnAttackStart
                 .Subscribe(OnLeftHandAttackStart)
                 .AddTo(this);
@@ -99,19 +114,24 @@ namespace InGame.Character
             _hpPresenter.OnHpDecreased
                 .Subscribe(OnDeadStart)
                 .AddTo(this);
+            
+            // MessagePipeを購読
+            _gameStartPlayerInitSubscriber.Subscribe(_playerId, OnGameStartInitialize).AddTo(this);
         }
 
         public override void OnUpdate()
         {
             _leftHandObserver.Observe();
             _rightHandObserver.Observe();
-
+            
             var motionParam = _synMotion.GetMotionParam(_playerId.Value);
-            var pos = _isMovable
-                ? motionParam.SpineMidPosition * _params.MoveWeight
-                : transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.deltaTime * 5f);
-            _mover.Move(pos);
             _motionMover.UpdateMotion(motionParam);
+
+            if (!_isMovable) return; 
+            var moveValue = motionParam.SpineMidPosition * _params.MoveWeight - _baseTrackingPosition;
+            var movedPos = _baseWorldPosition + moveValue;
+            // pos = transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.deltaTime * 5f);
+            _mover.Move(movedPos);
         }
 
         public void Dispose()
@@ -157,13 +177,30 @@ namespace InGame.Character
             _stateMachine.SetState<PlayerDeadState>();
         }
         #endregion
+
+        #region MessagePipe Event
+
+        private void OnGameStartInitialize(GameStartPlayerInitMessage message)
+        {
+            _baseWorldPosition = message.GameStartPosition;
+            transform.position = _baseWorldPosition;
+
+            // トラッキング位置を基準位置に設定
+            var trackingPos = _synMotion.GetMotionParam(_playerId.Value).SpineMidPosition * _params.MoveWeight;
+            _baseTrackingPosition = trackingPos;
+            
+            SetMovable(true);
+            SetCamera(true, message.TotalPlayerCount);
+        }     
         
-        public void SetMovable(bool isMovable)
+        #endregion
+        
+        private void SetMovable(bool isMovable)
         {
             _isMovable = isMovable;
         }
 
-        public void SetCamera(bool isActive, int totalPlayerCount)
+        private void SetCamera(bool isActive, int totalPlayerCount)
         {
             var width = 1f / totalPlayerCount;
             _playerCamera.rect = new Rect(
