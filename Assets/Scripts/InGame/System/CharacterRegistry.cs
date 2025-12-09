@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using VContainer.Unity;
 using InGame.Character;
+using Unity.VisualScripting;
+using Utility;
 
 namespace InGame.System
 {
@@ -11,7 +13,7 @@ namespace InGame.System
     {
         private readonly List<CharacterCore> _allCharacters = new();
         private readonly List<CharacterCore> _playerCores = new();
-        private readonly List<CharacterCore> _enemyCores = new();
+        private readonly Dictionary<AreaId, List<CharacterCore>> _enemyCores = new();
         private readonly List<CharacterCore> _buildingCores = new();
         
         public void Tick()
@@ -38,13 +40,20 @@ namespace InGame.System
                 case PlayerCore:
                     _playerCores.Add(character);
                     break;
-                case EnemyCore:
-                    _enemyCores.Add(character);
-                    break;
                 case BuildingCore:
                     _buildingCores.Add(character);
                     break;
             }
+        }
+
+        public void Register(CharacterCore character, AreaId areaId)
+        {
+            _allCharacters.Add(character);
+            if (!_enemyCores.ContainsKey(areaId))
+            {
+                _enemyCores[areaId] = new List<CharacterCore>();
+            }
+            _enemyCores[areaId].Add(character);
         }
 
         public void Remove(CharacterCore character)
@@ -55,13 +64,16 @@ namespace InGame.System
                 case PlayerCore:
                     _playerCores.Remove(character);
                     break;
-                case EnemyCore:
-                    _enemyCores.Remove(character);
-                    break;
                 case BuildingCore:
                     _buildingCores.Remove(character);
                     break;
             }
+        }
+
+        public void Remove(CharacterCore character, AreaId areaId)
+        {
+            _allCharacters.Remove(character);
+            _enemyCores.GetValueOrDefault(areaId)?.Remove(character);
         }
 
         public void RemoveAt(int characterId)
@@ -90,6 +102,21 @@ namespace InGame.System
             return _buildingCores.Where(b => b != null)
                 .OrderBy(b => (b.transform.position - position).sqrMagnitude)
                 .FirstOrDefault();
+        }
+        
+        public IReadOnlyList<CharacterCore> GetEnemiesByArea(AreaId areaId)
+        {
+            return _enemyCores.GetValueOrDefault(areaId);
+        }
+
+        public bool IsEnemyFullByArea(AreaId areaId)
+        {
+            if (!_enemyCores.TryGetValue(areaId, out var enemies))
+            {
+                return false;
+            }
+            
+            return enemies.Count >= GameConst.NormalEnemyMaxCountPerArea;
         }
     }
 }

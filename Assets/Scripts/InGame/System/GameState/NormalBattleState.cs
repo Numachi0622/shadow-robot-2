@@ -62,11 +62,18 @@ namespace InGame.System
                     var areaCount = Mathf.Min(message.PlayerCount, Owner.MainStageManager.EnemySpawnPositions.Count);
                     for (var i = 0; i < areaCount; i++)
                     {
+                        var areaId = new AreaId(i);
+                        if (Owner.CharacterRegistry.IsEnemyFullByArea(areaId))
+                        {
+                            continue;
+                        }
+                        
                         var pos = Owner.MainStageManager.EnemySpawnPositions[i];
                         Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
                             CharacterType.NormalEnemy,
                             pos,
-                            Quaternion.identity
+                            Quaternion.identity, 
+                            areaId
                         ));
                     }
 

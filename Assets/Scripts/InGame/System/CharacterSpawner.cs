@@ -84,13 +84,13 @@ namespace InGame.System
             {
                 var character = _factory.Create<NormalEnemyCore>(message.Position, message.Rotation);
                 character.Initialize();
-                _registry.Register(character);
+                _registry.Register(character, message.AreaId);
             }
             else if (message.CharacterType == CharacterType.BossEnemy)
             {
                 var character = _factory.Create<BossEnemyCore>(message.Position, message.Rotation);
                 character.Initialize();
-                _registry.Register(character);
+                _registry.Register(character, message.AreaId);
             }
         }
 

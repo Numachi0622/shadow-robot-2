@@ -10,7 +10,8 @@ namespace InGame.System
             Owner.SpawnCharacterPublisher.Publish(new Message.SpawnCharacterMessage(
                 Message.CharacterType.BossEnemy,
                 new Vector3(0, 0, 0),
-                Quaternion.identity
+                Quaternion.identity,
+                new AreaId(-1)
             ));
         }
     }
