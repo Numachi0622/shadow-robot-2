@@ -1104,7 +1104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1871124708917094919, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
       propertyPath: m_Name
-      value: mdl_main_Stage
+      value: mdl_main_stage
       objectReference: {fileID: 0}
     - target: {fileID: 1871124708917094919, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
       propertyPath: m_IsActive

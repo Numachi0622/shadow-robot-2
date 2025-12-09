@@ -10,11 +10,11 @@ namespace InGame.System
         public override void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[NormalBattleState] OnEnter");
-            Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
-                CharacterType.NormalEnemy,
-                new Vector3(0, 0, 0),
-                Quaternion.identity
-            ));
+            // Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
+            //     CharacterType.NormalEnemy,
+            //     new Vector3(0, 0, 0),
+            //     Quaternion.identity
+            // ));
             
             // プレイヤー数に応じてゲーム環境を構築する
             if (parameter is not InitGameMessage initGameMessage) return;

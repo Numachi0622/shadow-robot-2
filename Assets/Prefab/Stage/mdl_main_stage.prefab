@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 572382698734079485}
   - component: {fileID: 890918116274506576}
   m_Layer: 0
-  m_Name: mdl_main_Stage
+  m_Name: mdl_main_stage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
