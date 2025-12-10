@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using InGame.Message;
 using MessagePipe;
 using UniRx;
@@ -22,23 +23,22 @@ namespace InGame.System.UI
             _model = new BuildingModel(playerCount);
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             
+            _view.Initialize(playerCount);
             Bind(playerCount);
         }
 
         private void Bind(int playerCount)
         {
-            var bag = DisposableBag.CreateBuilder();
             for (var i = 0; i < playerCount; i++)
             {
                 var areaId = new AreaId(i);
                 
                 // scene => model
-                bag.Add(_buildingCountChangeSubscriber.Subscribe(areaId, message => _model.Decrease(areaId, message.CurrentCount)));
+                _buildingCountChangeSubscriber.Subscribe(areaId, message => _model.Decrease(areaId, message.CurrentCount)).AddTo(this);
                 
                 // model => view
                 _model.BuildingCount(areaId).Subscribe(count => OnBuildingCountChanged(areaId, count)).AddTo(this);
             }
-            _subscription = bag.Build();
             
             // model => scene
             _model.OnAllBuildingsDecreased.Subscribe(OnAllBuildingsDecreased).AddTo(this);

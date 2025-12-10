@@ -9,6 +9,12 @@ namespace InGame.System.UI
         [SerializeField] private List<CanvasGroup> _buildingElements;
         private Sequence _fadeSequence;
 
+        public void Initialize(bool isActive, Vector2 position)
+        {
+            gameObject.SetActive(isActive);
+            transform.localPosition = position;
+        }
+
         public void UpdateBuildingLine(int buildingCount)
         {
             for (var i = _buildingElements.Count - 1; i >= buildingCount; i--)

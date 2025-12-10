@@ -2,6 +2,7 @@ using System;
 using InGame.Character;
 using InGame.Environment;
 using InGame.Message;
+using InGame.System.UI;
 using MessagePipe;
 using SynMotion;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace InGame.System
         [SerializeField] private PlayerSpawnSettings _playerSpawnSettings;
         [SerializeField] private DeviceSettings _deviceSettings;
         [SerializeField] private MainStageManager _mainStageManager;
+        [SerializeField] private InGameUIController _inGameUIController;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -32,6 +34,7 @@ namespace InGame.System
             builder.RegisterMessageBroker<InitGameMessage>(options);
 
             builder.RegisterMessageBroker<CharacterId, GameStartPlayerInitMessage>(options);
+            builder.RegisterMessageBroker<AreaId, BuildingCountChangeMessage>(options);
 
             // インゲーム基盤システム
             builder.RegisterEntryPoint<InGameCore>().AsSelf();
@@ -59,6 +62,9 @@ namespace InGame.System
             builder.Register<CharacterFactory>(Lifetime.Singleton).AsSelf();
             builder.RegisterEntryPoint<CharacterRegistry>().AsSelf();
             builder.RegisterEntryPoint<CharacterSpawner>().AsSelf();
+            
+            // UIコンポーネント
+            builder.RegisterComponent(_inGameUIController);
 
             builder.RegisterComponent(_debugCommand);
         }
