@@ -14,7 +14,7 @@ namespace InGame.System
         private readonly List<CharacterCore> _allCharacters = new();
         private readonly List<CharacterCore> _playerCores = new();
         private readonly Dictionary<AreaId, List<CharacterCore>> _enemyCores = new();
-        private readonly List<CharacterCore> _buildingCores = new();
+        private readonly Dictionary<AreaId, List<CharacterCore>> _buildingCores = new();
         
         public void Tick()
         {
@@ -35,45 +35,51 @@ namespace InGame.System
         public void Register(CharacterCore character)
         {
             _allCharacters.Add(character);
-            switch (character)
-            {
-                case PlayerCore:
-                    _playerCores.Add(character);
-                    break;
-                case BuildingCore:
-                    _buildingCores.Add(character);
-                    break;
-            }
+            _playerCores.Add(character);
         }
 
         public void Register(CharacterCore character, AreaId areaId)
         {
             _allCharacters.Add(character);
-            if (!_enemyCores.ContainsKey(areaId))
+
+            switch (character)
             {
-                _enemyCores[areaId] = new List<CharacterCore>();
+                case EnemyCore:
+                    if (!_enemyCores.ContainsKey(areaId))
+                    {
+                        _enemyCores[areaId] = new List<CharacterCore>();
+                    }
+                    _enemyCores[areaId].Add(character);
+                    break;
+                
+                case BuildingCore:
+                    if (!_buildingCores.ContainsKey(areaId))
+                    {
+                        _buildingCores[areaId] = new List<CharacterCore>();
+                    }
+                    _buildingCores[areaId].Add(character);
+                    break;
             }
-            _enemyCores[areaId].Add(character);
         }
 
         public void Remove(CharacterCore character)
         {
             _allCharacters.Remove(character);
-            switch (character)
-            {
-                case PlayerCore:
-                    _playerCores.Remove(character);
-                    break;
-                case BuildingCore:
-                    _buildingCores.Remove(character);
-                    break;
-            }
+            _playerCores.Remove(character);
         }
 
         public void Remove(CharacterCore character, AreaId areaId)
         {
             _allCharacters.Remove(character);
-            _enemyCores.GetValueOrDefault(areaId)?.Remove(character);
+            switch (character)
+            {
+                case EnemyCore:
+                    _enemyCores.GetValueOrDefault(areaId)?.Remove(character);
+                    break;
+                case BuildingCore:
+                    _buildingCores.GetValueOrDefault(areaId)?.Remove(character);
+                    break;
+            }
         }
 
         public void RemoveAt(int characterId)
@@ -95,11 +101,13 @@ namespace InGame.System
                 .FirstOrDefault();
         }
 
-        public IReadOnlyList<CharacterCore> GetAllBuildings() => _buildingCores;
+        public IReadOnlyList<CharacterCore> GetBuildings(AreaId areaId) => _buildingCores.GetValueOrDefault(areaId);
         
-        public CharacterCore GetNearestBuilding(Vector3 position)
+        public CharacterCore GetNearestBuilding(AreaId areaId, Vector3 position)
         {
-            return _buildingCores.Where(b => b != null)
+            return _buildingCores
+                .GetValueOrDefault(areaId)
+                .Where(b => b != null)
                 .OrderBy(b => (b.transform.position - position).sqrMagnitude)
                 .FirstOrDefault();
         }
