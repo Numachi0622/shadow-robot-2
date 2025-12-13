@@ -45,6 +45,7 @@ namespace InGame.System
                     var buildingPrefab = Owner.BuildingPrefabs[Random.Range(0, Owner.BuildingPrefabs.Count)];
                     Owner.CreateBuildingPublisher.Publish(new CreateBuildingMessage(
                         buildingPrefab,
+                        new AreaId(i),
                         pos,
                         Quaternion.identity,
                         Owner.MainStageManager.BuildingParent

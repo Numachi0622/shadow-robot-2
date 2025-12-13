@@ -84,6 +84,7 @@ namespace InGame.System
             {
                 var character = _factory.Create<NormalEnemyCore>(message.Position, message.Rotation);
                 character.Initialize();
+                (character as NormalEnemyCore)?.SetAreaId(message.AreaId);
                 _registry.Register(character, message.AreaId);
             }
             else if (message.CharacterType == CharacterType.BossEnemy)
@@ -103,7 +104,7 @@ namespace InGame.System
                 message.Parent
             );
             building.Initialize();
-            _registry.Register(building);
+            _registry.Register(building, message.AreaId);
         }
         
         private void OnDespawnRequested(DespawnCharacterMessage message)

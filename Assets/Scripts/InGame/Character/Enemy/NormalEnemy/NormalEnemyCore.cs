@@ -27,8 +27,8 @@ namespace InGame.Character
         private EnemyEffect _enemyEffect;
         private Transform _targetTransform;
         private CancellationTokenSource _cancellationTokenSource;
-        
         private CharacterRegistry _characterRegistry;
+        private AreaId _areaId;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
@@ -83,6 +83,11 @@ namespace InGame.Character
             
             Bind();
         }
+        
+        public void SetAreaId(AreaId areaId)
+        {
+            _areaId = areaId;
+        }
 
         private void Bind()
         {
@@ -109,7 +114,7 @@ namespace InGame.Character
 
         public override void OnUpdate()
         {
-            _targetTransform = _characterRegistry.GetNearestBuilding(transform.position)?.transform;
+            _targetTransform = _characterRegistry.GetNearestBuilding(_areaId, transform.position)?.transform;
             if (_targetTransform == null) return;
             
             var dest = _targetTransform.position;
