@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _params: {fileID: 11400000, guid: 5fa639e77a6194c44ac5d0cc8d93abd8, type: 2}
-  _hpPresenter: {fileID: -4919131603028785795, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+  _hpPresenter: {fileID: -5251470458325273176}
   _damageCollider: {fileID: 2921540800848063361}
 --- !u!114 &-5251470458325273176
 MonoBehaviour:

@@ -21,6 +21,9 @@ namespace InGame.System
         private readonly ISubscriber<SpawnCharacterMessage> _spawnSubscriber;
         private readonly ISubscriber<CreateBuildingMessage> _createBuildingSubscriber;
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
+        private readonly ISubscriber<BuildingDestroyedMessage> _buildingDestroyedSubscriber;
+        private readonly IPublisher<AreaId, BuildingCountChangeMessage> _buildingCountChangePublisher;
+        private readonly IPublisher<AllBuildingsDestroyMessage> _allBuildingsDestroyPublisher;
         private IDisposable _subscription;
 
         [Inject]
@@ -30,7 +33,10 @@ namespace InGame.System
             SynMotionSystem synMotion,
             ISubscriber<SpawnCharacterMessage> spawnSubscriber,
             ISubscriber<CreateBuildingMessage> createBuildingSubscriber,
-            ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber)
+            ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber,
+            ISubscriber<BuildingDestroyedMessage> buildingDestroyedSubscriber,
+            IPublisher<AreaId, BuildingCountChangeMessage> buildingCountChangePublisher,
+            IPublisher<AllBuildingsDestroyMessage> allBuildingsDestroyPublisher)
         {
             _factory = factory;
             _registry = registry;
@@ -38,6 +44,9 @@ namespace InGame.System
             _spawnSubscriber = spawnSubscriber;
             _createBuildingSubscriber = createBuildingSubscriber;
             _despawnSubscriber = playerDespawnSubscriber;
+            _buildingDestroyedSubscriber = buildingDestroyedSubscriber;
+            _buildingCountChangePublisher = buildingCountChangePublisher;
+            _allBuildingsDestroyPublisher = allBuildingsDestroyPublisher;
         }
 
         public void Initialize()
@@ -46,7 +55,8 @@ namespace InGame.System
             bag.Add(_spawnSubscriber.Subscribe(OnSpawnRequested));
             bag.Add(_despawnSubscriber.Subscribe(OnDespawnRequested));
             bag.Add(_createBuildingSubscriber.Subscribe(CreateBuilding));
-            
+            bag.Add(_buildingDestroyedSubscriber.Subscribe(OnBuildingDestroyed));
+
             _subscription = bag.Build();
         }
 
@@ -104,6 +114,7 @@ namespace InGame.System
                 message.Parent
             );
             building.Initialize();
+            (building as BuildingCore)?.SetAreaId(message.AreaId);
             _registry.Register(building, message.AreaId);
         }
         
@@ -111,6 +122,19 @@ namespace InGame.System
         {
             if (message.CharacterId.Value == -1) return;
             _registry.RemoveAt(message.CharacterId.Value);
+        }
+
+        private void OnBuildingDestroyed(BuildingDestroyedMessage message)
+        {
+            _registry.Remove(message.Building, message.AreaId);
+
+            var remainingCount = _registry.GetBuildings(message.AreaId)?.Count ?? 0;
+            _buildingCountChangePublisher.Publish(message.AreaId, new BuildingCountChangeMessage(remainingCount));
+
+            if (remainingCount == 0)
+            {
+                _allBuildingsDestroyPublisher.Publish(new AllBuildingsDestroyMessage());
+            }
         }
 
         public void Dispose()

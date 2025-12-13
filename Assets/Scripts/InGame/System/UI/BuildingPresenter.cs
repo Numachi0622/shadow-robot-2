@@ -10,10 +10,9 @@ namespace InGame.System.UI
     public class BuildingPresenter : MonoBehaviour, IPresenter
     {
         [SerializeField] private BuildingView _view;
-        
+
         private BuildingModel _model;
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
-        private IPublisher<AllBuildingsDestroyMessage> _allBuildingsDestroyPublisher;
         private IDisposable _subscription;
 
         public void Initialize(
@@ -32,21 +31,13 @@ namespace InGame.System.UI
             for (var i = 0; i < playerCount; i++)
             {
                 var areaId = new AreaId(i);
-                
+
                 // scene => model
                 _buildingCountChangeSubscriber.Subscribe(areaId, message => _model.Decrease(areaId, message.CurrentCount)).AddTo(this);
-                
+
                 // model => view
                 _model.BuildingCount(areaId).Subscribe(count => OnBuildingCountChanged(areaId, count)).AddTo(this);
             }
-            
-            // model => scene
-            _model.OnAllBuildingsDecreased.Subscribe(OnAllBuildingsDecreased).AddTo(this);
-        }
-
-        private void OnAllBuildingsDecreased(AreaId areaId)
-        {
-            _allBuildingsDestroyPublisher.Publish(new AllBuildingsDestroyMessage());
         }
 
         private void OnBuildingCountChanged(AreaId areaId, int currentCount)

@@ -1,7 +1,10 @@
 using System;
+using InGame.Message;
 using InGame.System;
+using MessagePipe;
 using UniRx;
 using UnityEngine;
+using VContainer;
 
 namespace InGame.Character
 {
@@ -12,6 +15,20 @@ namespace InGame.Character
         [SerializeField] private DamageCollider _damageCollider;
 
         private DamageObserver _damageObserver;
+        private IPublisher<BuildingDestroyedMessage> _buildingDestroyedPublisher;
+
+        public AreaId AreaId { get; private set; }
+
+        [Inject]
+        public void Construct(IPublisher<BuildingDestroyedMessage> buildingDestroyedPublisher)
+        {
+            _buildingDestroyedPublisher = buildingDestroyedPublisher;
+        }
+
+        public void SetAreaId(AreaId areaId)
+        {
+            AreaId = areaId;
+        }
         
         public override void Initialize()
         {
@@ -19,7 +36,7 @@ namespace InGame.Character
             _damageObserver = new DamageObserver();
             _damageCollider.Initialize(_damageObserver);
             _hpPresenter.Initialize(_params);
-            
+
             Bind();
         }
         
@@ -36,14 +53,13 @@ namespace InGame.Character
         
         private void OnTakeDamage(AttackParam param)
         {
-            Debug.Log($"[BuildingCore] OnTakeDamage : {param.AttackPoint.RandomValue}");
             _hpPresenter.DecreaseHp(param.AttackPoint.RandomValue);
             HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
         }
 
         private void OnDead(Unit unit)
         {
-            Debug.Log("[BuildingCore] OnDead");
+            _buildingDestroyedPublisher.Publish(new BuildingDestroyedMessage(AreaId, this));
             gameObject.SetActive(false);
         }
     }

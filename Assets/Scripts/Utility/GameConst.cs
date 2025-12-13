@@ -15,6 +15,6 @@ namespace Utility
         public const int MAX_ROCKET_PUNCH_CHARGE = 100;
         public const int BOSS_GENERATION_KNOCK_DOWN_COUNT = 10;
         public const int NormalEnemyGenerateInterval = 7;
-        public const int NormalEnemyMaxCountPerArea = 5;
+        public const int NormalEnemyMaxCountPerArea = 1;
     }
 }
