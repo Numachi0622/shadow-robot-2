@@ -1,7 +1,9 @@
 using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using InGame.Message;
 using InGame.System;
+using MessagePipe;
 using UniRx;
 using UnityEngine;
 using VContainer;
@@ -15,7 +17,7 @@ namespace InGame.Character
         {
             public ParticleSystem AttackEffect;
         }
-        
+
         [SerializeField] private Transform _bodyTransform;
         [SerializeField] private Animator _animator;
         [SerializeField] private NormalEnemyEffectComponents _effectComponents;
@@ -28,6 +30,7 @@ namespace InGame.Character
         private Transform _targetTransform;
         private CancellationTokenSource _cancellationTokenSource;
         private CharacterRegistry _characterRegistry;
+        private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
         private AreaId _areaId;
 
         public EnemyParams Params => _params;
@@ -53,9 +56,12 @@ namespace InGame.Character
         }
         
         [Inject]
-        public void Construct(CharacterRegistry characterRegistry)
+        public void Construct(
+            CharacterRegistry characterRegistry,
+            IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher)
         {
             _characterRegistry = characterRegistry;
+            _enemyDestroyedPublisher = enemyDestroyedPublisher;
         }
 
         public override void Initialize()
@@ -163,6 +169,7 @@ namespace InGame.Character
         private void OnDeadStart(Unit unit)
         {
             _stateMachine.SetState<NormalEnemyDeadState>();
+            _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(_areaId, this));
             Destroy(gameObject, 3f);
         }
         #endregion

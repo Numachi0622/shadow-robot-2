@@ -22,6 +22,7 @@ namespace InGame.System
         private readonly ISubscriber<CreateBuildingMessage> _createBuildingSubscriber;
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
         private readonly ISubscriber<BuildingDestroyedMessage> _buildingDestroyedSubscriber;
+        private readonly ISubscriber<EnemyDestroyedMessage> _enemyDestroyedSubscriber;
         private readonly IPublisher<AreaId, BuildingCountChangeMessage> _buildingCountChangePublisher;
         private readonly IPublisher<StateChangeMessage> _stateChangePublisher;
         private IDisposable _subscription;
@@ -35,6 +36,7 @@ namespace InGame.System
             ISubscriber<CreateBuildingMessage> createBuildingSubscriber,
             ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber,
             ISubscriber<BuildingDestroyedMessage> buildingDestroyedSubscriber,
+            ISubscriber<EnemyDestroyedMessage> enemyDestroyedSubscriber,
             IPublisher<AreaId, BuildingCountChangeMessage> buildingCountChangePublisher,
             IPublisher<StateChangeMessage> stateChangePublisher)
         {
@@ -45,6 +47,7 @@ namespace InGame.System
             _createBuildingSubscriber = createBuildingSubscriber;
             _despawnSubscriber = playerDespawnSubscriber;
             _buildingDestroyedSubscriber = buildingDestroyedSubscriber;
+            _enemyDestroyedSubscriber = enemyDestroyedSubscriber;
             _buildingCountChangePublisher = buildingCountChangePublisher;
             _stateChangePublisher = stateChangePublisher;
         }
@@ -56,6 +59,7 @@ namespace InGame.System
             bag.Add(_despawnSubscriber.Subscribe(OnDespawnRequested));
             bag.Add(_createBuildingSubscriber.Subscribe(CreateBuilding));
             bag.Add(_buildingDestroyedSubscriber.Subscribe(OnBuildingDestroyed));
+            bag.Add(_enemyDestroyedSubscriber.Subscribe(OnEnemyDestroyed));
 
             _subscription = bag.Build();
         }
@@ -135,6 +139,11 @@ namespace InGame.System
             {
                 _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.GameOver));
             }
+        }
+
+        private void OnEnemyDestroyed(EnemyDestroyedMessage message)
+        {
+            _registry.Remove(message.Enemy, message.AreaId);
         }
 
         public void Dispose()

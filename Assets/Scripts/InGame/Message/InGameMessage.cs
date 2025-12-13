@@ -14,4 +14,16 @@ namespace InGame.Message
             Building = building;
         }
     }
+
+    public readonly struct EnemyDestroyedMessage
+    {
+        public readonly AreaId AreaId;
+        public readonly EnemyCore Enemy;
+
+        public EnemyDestroyedMessage(AreaId areaId, EnemyCore enemy)
+        {
+            AreaId = areaId;
+            Enemy = enemy;
+        }
+    }
 }

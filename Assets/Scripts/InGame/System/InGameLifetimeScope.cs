@@ -33,12 +33,14 @@ namespace InGame.System
             builder.RegisterMessageBroker<DespawnCharacterMessage>(options);
             builder.RegisterMessageBroker<InitGameMessage>(options);
             builder.RegisterMessageBroker<BuildingDestroyedMessage>(options);
+            builder.RegisterMessageBroker<EnemyDestroyedMessage>(options);
 
             builder.RegisterMessageBroker<CharacterId, GameStartPlayerInitMessage>(options);
             builder.RegisterMessageBroker<AreaId, BuildingCountChangeMessage>(options);
 
             // インゲーム基盤システム
             builder.RegisterEntryPoint<InGameCore>().AsSelf();
+            builder.RegisterEntryPoint<KillRecordManager>().AsSelf();
             
             // キャラクターのPrefabを登録
             builder.RegisterInstance(_characterPrefabs);

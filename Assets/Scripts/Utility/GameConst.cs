@@ -16,5 +16,6 @@ namespace Utility
         public const int BOSS_GENERATION_KNOCK_DOWN_COUNT = 10;
         public const int NormalEnemyGenerateInterval = 7;
         public const int NormalEnemyMaxCountPerArea = 1;
+        public const int RequiredNormalEnemyKillCount = 10;
     }
 }

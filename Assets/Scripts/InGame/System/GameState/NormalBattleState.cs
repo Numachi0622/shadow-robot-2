@@ -12,6 +12,8 @@ namespace InGame.System
 {
     public class NormalBattleState : StateMachine<InGameCore>.State
     {
+        private CancellationTokenSource _cts;
+        
         public override async void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[NormalBattleState] OnEnter");
@@ -53,8 +55,20 @@ namespace InGame.System
                 }
             }
 
-            var ct = new CancellationTokenSource().Token;
-            await NormalBattleLoopAsync(initGameMessage, ct);
+            _cts = new CancellationTokenSource();
+            try
+            {
+                await NormalBattleLoopAsync(initGameMessage, _cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
+        
+        public override void OnExit()
+        {
+            _cts?.Cancel();
+            _cts?.Dispose();
         }
 
         private async UniTask NormalBattleLoopAsync(InitGameMessage message, CancellationToken ct)
@@ -63,32 +77,25 @@ namespace InGame.System
             
             while (true)
             {
-                try
+                var areaCount = Mathf.Min(message.PlayerCount, Owner.MainStageManager.EnemySpawnPositions.Count);
+                for (var i = 0; i < areaCount; i++)
                 {
-                    var areaCount = Mathf.Min(message.PlayerCount, Owner.MainStageManager.EnemySpawnPositions.Count);
-                    for (var i = 0; i < areaCount; i++)
+                    var areaId = new AreaId(i);
+                    if (Owner.CharacterRegistry.IsEnemyFullByArea(areaId))
                     {
-                        var areaId = new AreaId(i);
-                        if (Owner.CharacterRegistry.IsEnemyFullByArea(areaId))
-                        {
-                            continue;
-                        }
-                        
-                        var pos = Owner.MainStageManager.EnemySpawnPositions[i];
-                        Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
-                            CharacterType.NormalEnemy,
-                            pos,
-                            Quaternion.identity, 
-                            areaId
-                        ));
+                        continue;
                     }
+                        
+                    var pos = Owner.MainStageManager.EnemySpawnPositions[i];
+                    Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
+                        CharacterType.NormalEnemy,
+                        pos,
+                        Quaternion.identity, 
+                        areaId
+                    ));
+                }
 
-                    await UniTask.Delay(TimeSpan.FromSeconds(GameConst.NormalEnemyGenerateInterval), cancellationToken: ct);
-                }
-                catch (OperationCanceledException)
-                {
-                    break;
-                }
+                await UniTask.Delay(TimeSpan.FromSeconds(GameConst.NormalEnemyGenerateInterval), cancellationToken: ct);
             }
         }
     }
