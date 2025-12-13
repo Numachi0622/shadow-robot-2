@@ -23,7 +23,7 @@ namespace InGame.System
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
         private readonly ISubscriber<BuildingDestroyedMessage> _buildingDestroyedSubscriber;
         private readonly IPublisher<AreaId, BuildingCountChangeMessage> _buildingCountChangePublisher;
-        private readonly IPublisher<AllBuildingsDestroyMessage> _allBuildingsDestroyPublisher;
+        private readonly IPublisher<StateChangeMessage> _stateChangePublisher;
         private IDisposable _subscription;
 
         [Inject]
@@ -36,7 +36,7 @@ namespace InGame.System
             ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber,
             ISubscriber<BuildingDestroyedMessage> buildingDestroyedSubscriber,
             IPublisher<AreaId, BuildingCountChangeMessage> buildingCountChangePublisher,
-            IPublisher<AllBuildingsDestroyMessage> allBuildingsDestroyPublisher)
+            IPublisher<StateChangeMessage> stateChangePublisher)
         {
             _factory = factory;
             _registry = registry;
@@ -46,7 +46,7 @@ namespace InGame.System
             _despawnSubscriber = playerDespawnSubscriber;
             _buildingDestroyedSubscriber = buildingDestroyedSubscriber;
             _buildingCountChangePublisher = buildingCountChangePublisher;
-            _allBuildingsDestroyPublisher = allBuildingsDestroyPublisher;
+            _stateChangePublisher = stateChangePublisher;
         }
 
         public void Initialize()
@@ -133,7 +133,7 @@ namespace InGame.System
 
             if (remainingCount == 0)
             {
-                _allBuildingsDestroyPublisher.Publish(new AllBuildingsDestroyMessage());
+                _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.GameOver));
             }
         }
 

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddbff7e8f976e9344ab10c61d45206b3, type: 3}
   m_Name: BuildingParams
   m_EditorClassIdentifier: 
-  MaxHp: 30
+  MaxHp: 10
   AttackPoint:
     _minAttackPoint: 0
     _maxAttackPoint: 0
