@@ -6,6 +6,7 @@ using Cysharp.Threading.Tasks;
 using InGame.Character;
 using SynMotion;
 using UnityEngine;
+using UnityEditor;
 using Utility.Extensions;
 
 namespace ShadowRobotDebug
@@ -22,10 +23,10 @@ namespace ShadowRobotDebug
             _transforms = transforms;
         }
         
-        public async UniTask<MotionParam> StartRecording(string fileName, float recordingTime)
+        public async UniTask<PoseData> StartRecording(string fileName, float recordingTime)
         {
-            var file = string.IsNullOrEmpty(fileName) ? "pose" : fileName + ".csv";
-            var path = Path.Combine(FilePath, file);
+            var csvFileName = string.IsNullOrEmpty(fileName) ? "pose" : fileName;
+            var csvPath = Path.Combine(FilePath, csvFileName + ".csv");
 
             // ディレクトリが存在しない場合は作成
             if (!Directory.Exists(FilePath))
@@ -34,7 +35,7 @@ namespace ShadowRobotDebug
             }
 
             var fileStream = new FileStream(
-                path,
+                csvPath,
                 FileMode.Create,
                 FileAccess.Write,
                 FileShare.Read
@@ -45,23 +46,29 @@ namespace ShadowRobotDebug
             Debug.Log("Recording Start");
 
             _cts = new CancellationTokenSource();
-            MotionParam result = default;
+            MotionParam motionParam = default;
+            PoseData poseData = null;
+
             try
             {
-                result = await RecordingLoop(recordingTime, _cts.Token);
+                motionParam = await RecordingLoop(recordingTime, _cts.Token);
 
-                // 平均値をCSVに書き込み
-                WriteMotionData(result);
+                // 平均値をCSVに書き込み（デバッグ用）
+                WriteMotionData(motionParam);
+
+                // ScriptableObjectを作成
+                poseData = CreatePoseDataAsset(csvFileName, motionParam);
             }
             catch (OperationCanceledException)
             {
+                Debug.LogWarning("Recording was cancelled");
             }
             finally
             {
                 StopRecording();
             }
 
-            return result;
+            return poseData;
         }
         
         private async UniTask<MotionParam> RecordingLoop(float recordingTime , CancellationToken token)
@@ -88,17 +95,18 @@ namespace ShadowRobotDebug
                 await UniTask.Yield();
             }
 
-            motionParam.SpineMidRotation = motionParam.SpineMidRotation.Divide(attemptCount);
-            motionParam.ElbowLeftRotation = motionParam.ElbowLeftRotation.Divide(attemptCount);
-            motionParam.WristLeftRotation = motionParam.WristLeftRotation.Divide(attemptCount);
-            motionParam.HandLeftRotation = motionParam.HandLeftRotation.Divide(attemptCount);
-            motionParam.ElbowRightRotation = motionParam.ElbowRightRotation.Divide(attemptCount);
-            motionParam.WristRightRotation = motionParam.WristRightRotation.Divide(attemptCount);
-            motionParam.HandRightRotation = motionParam.HandRightRotation.Divide(attemptCount);
-            motionParam.KneeLeftRotation = motionParam.KneeLeftRotation.Divide(attemptCount);
-            motionParam.AnkleLeftRotation = motionParam.AnkleLeftRotation.Divide(attemptCount);
-            motionParam.KneeRightRotation = motionParam.KneeRightRotation.Divide(attemptCount);
-            motionParam.AnkleRightRotation = motionParam.AnkleRightRotation.Divide(attemptCount);
+            // 平均を計算して正規化
+            motionParam.SpineMidRotation = motionParam.SpineMidRotation.Divide(attemptCount).normalized;
+            motionParam.ElbowLeftRotation = motionParam.ElbowLeftRotation.Divide(attemptCount).normalized;
+            motionParam.WristLeftRotation = motionParam.WristLeftRotation.Divide(attemptCount).normalized;
+            motionParam.HandLeftRotation = motionParam.HandLeftRotation.Divide(attemptCount).normalized;
+            motionParam.ElbowRightRotation = motionParam.ElbowRightRotation.Divide(attemptCount).normalized;
+            motionParam.WristRightRotation = motionParam.WristRightRotation.Divide(attemptCount).normalized;
+            motionParam.HandRightRotation = motionParam.HandRightRotation.Divide(attemptCount).normalized;
+            motionParam.KneeLeftRotation = motionParam.KneeLeftRotation.Divide(attemptCount).normalized;
+            motionParam.AnkleLeftRotation = motionParam.AnkleLeftRotation.Divide(attemptCount).normalized;
+            motionParam.KneeRightRotation = motionParam.KneeRightRotation.Divide(attemptCount).normalized;
+            motionParam.AnkleRightRotation = motionParam.AnkleRightRotation.Divide(attemptCount).normalized;
 
             return motionParam;
         }
@@ -135,6 +143,41 @@ namespace ShadowRobotDebug
             line.Append($"{motionParam.KneeRightRotation.x},{motionParam.KneeRightRotation.y},{motionParam.KneeRightRotation.z},{motionParam.KneeRightRotation.w},");
             line.Append($"{motionParam.AnkleRightRotation.x},{motionParam.AnkleRightRotation.y},{motionParam.AnkleRightRotation.z},{motionParam.AnkleRightRotation.w}");
             _writer.WriteLine(line.ToString());
+        }
+
+        private PoseData CreatePoseDataAsset(string fileName, MotionParam motionParam)
+        {
+            // ScriptableObjectのインスタンスを作成
+            var poseData = ScriptableObject.CreateInstance<PoseData>();
+
+            // データを設定
+            poseData.poseName = fileName;
+            poseData.spineMidRotation = motionParam.SpineMidRotation;
+            poseData.elbowLeftRotation = motionParam.ElbowLeftRotation;
+            poseData.wristLeftRotation = motionParam.WristLeftRotation;
+            poseData.handLeftRotation = motionParam.HandLeftRotation;
+            poseData.elbowRightRotation = motionParam.ElbowRightRotation;
+            poseData.wristRightRotation = motionParam.WristRightRotation;
+            poseData.handRightRotation = motionParam.HandRightRotation;
+            poseData.kneeLeftRotation = motionParam.KneeLeftRotation;
+            poseData.ankleLeftRotation = motionParam.AnkleLeftRotation;
+            poseData.kneeRightRotation = motionParam.KneeRightRotation;
+            poseData.ankleRightRotation = motionParam.AnkleRightRotation;
+
+            // デフォルト値を設定
+            poseData.matchThreshold = 0.8f;
+            poseData.allowedAngleDiff = 30f;
+            poseData.weights = new JointWeights(1f);
+
+            // アセットとして保存
+            var assetPath = Path.Combine(FilePath, fileName + ".asset");
+            AssetDatabase.CreateAsset(poseData, assetPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+
+            Debug.Log($"PoseData ScriptableObject created: {assetPath}");
+
+            return poseData;
         }
 
         private void StopRecording()

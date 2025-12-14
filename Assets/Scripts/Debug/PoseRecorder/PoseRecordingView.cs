@@ -10,6 +10,7 @@ namespace ShadowRobotDebug
         [SerializeField] private Button _dataTestButton;
         [SerializeField] private TMP_InputField _fileNameInputField;
         [SerializeField] private TMP_InputField _recordTimeInputField;
+        [SerializeField] private TMP_Text _poseDataPathText;
         
         public Button RecordStartButton => _recordStartButton;
 
@@ -20,7 +21,7 @@ namespace ShadowRobotDebug
 
         public void Initialize()
         {
-            
+            _dataTestButton.gameObject.SetActive(false);
         }
 
         public void SetButtonView(string text, Color color)
@@ -32,6 +33,12 @@ namespace ShadowRobotDebug
         public void ResetButtonView()
         {
             SetButtonView("Record Start", Color.white);
+        }
+
+        public void SetPoseDataView(string path)
+        {
+            _poseDataPathText.text = path;
+            _dataTestButton.gameObject.SetActive(true);
         }
     }
 }
