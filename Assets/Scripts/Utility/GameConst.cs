@@ -1,3 +1,5 @@
+using InGame.Character;
+
 namespace Utility
 {
     public static class GameConst
@@ -17,5 +19,6 @@ namespace Utility
         public const int NormalEnemyGenerateInterval = 7;
         public const int NormalEnemyMaxCountPerArea = 1;
         public const int RequiredNormalEnemyKillCount = 10;
+        public static readonly CharacterId BossPlayerId = new CharacterId(4);
     }
 }

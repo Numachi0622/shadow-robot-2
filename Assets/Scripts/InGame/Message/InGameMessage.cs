@@ -40,4 +40,13 @@ namespace InGame.Message
     public readonly struct AllPlayerDespawnMessage
     {
     }
+
+    public readonly struct InitBossBattleMessage : IStateParameter
+    {
+        public readonly int PlayerCount;
+        public InitBossBattleMessage(int playerCount)
+        {
+            PlayerCount = playerCount;
+        }
+    }
 }

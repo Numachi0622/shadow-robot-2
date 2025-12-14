@@ -11,10 +11,12 @@ namespace InGame.Environment
         [SerializeField] private List<Transform> _playerSpawnPoints;
         [SerializeField] private List<Transform> _enemySpawnPoints;
         [SerializeField] private Transform _buildingParent;
+        [SerializeField] private Transform _bossSpawnPoint;
         private readonly Dictionary<AreaId, IReadOnlyList<Vector3>> _buildingPositions = new();
 
         public IReadOnlyList<Vector3> PlayerSpawnPositions => _playerSpawnPoints.ConvertAll(point => point.position);
         public IReadOnlyList<Vector3> EnemySpawnPositions => _enemySpawnPoints.ConvertAll(point => point.position);
+        public Vector3 BossEnemySpawnPosition => _bossSpawnPoint.position;
         public Transform BuildingParent => _buildingParent;
 
         public void Initialize()

@@ -47,7 +47,13 @@ namespace InGame.System
             var stateCount = Enum.GetValues(typeof(GameStateType)).Length;
             currentState = (GameStateType)(((int)currentState + 1) % stateCount);
             var playerCount = _characterRegistry.GetAllPlayers().Count;
-            _stateChangePublisher.Publish(new StateChangeMessage(currentState, new InitGameMessage(playerCount)));
+            _stateChangePublisher.Publish(new StateChangeMessage(
+                currentState, 
+                currentState == GameStateType.NormalBattle 
+                    ? new InitGameMessage(playerCount)
+                    : new InitBossBattleMessage(playerCount)
+                )
+            );
         }
 
         [Button]

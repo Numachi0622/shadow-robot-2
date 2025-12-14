@@ -49,7 +49,10 @@ namespace InGame.System
             _currentKillCount++;
             if (_currentKillCount >= _requiredKillCount)
             {
-                _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.BossBattle));
+                _stateChangePublisher.Publish(new StateChangeMessage(
+                    GameStateType.BossBattle, 
+                    new InitBossBattleMessage(_playerCount))
+                );
             }
         }
 
