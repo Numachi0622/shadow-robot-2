@@ -37,8 +37,8 @@ namespace SynMotion
                 AnkleRightRotation = _motionParams[playerId].AnkleRightRotation * Quaternion.AngleAxis(180f, Vector3.right) * Quaternion.AngleAxis(-90f, Vector3.up),
                 
                 SpineMidPosition = new Vector3(
-                    _motionParams[playerId].SpineMidPosition.x, 
-                    0f, // TODO: ジャンプ機能追加予定
+                    _motionParams[playerId].SpineMidPosition.x,
+                    _motionParams[playerId].SpineMidPosition.y,
                     -_motionParams[playerId].SpineMidPosition.z)
             };
 

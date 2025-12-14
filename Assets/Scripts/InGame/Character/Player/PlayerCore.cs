@@ -47,9 +47,15 @@ namespace InGame.Character
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
         private CharacterId _playerId;
+        private JumpCalibrationSystem _calibrationSystem;
         private bool _isMovable = false;
+        private bool _isCalibrated = false;
         private Vector3 _baseWorldPosition;
         private Vector3 _baseTrackingPosition;
+        private float _calibratedGroundHeight;
+        private bool _isJumping;
+        private readonly float _jumpThresholdOffset = 0.2f;
+        private readonly float _jumpWeight = 2f;
         
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         
@@ -79,6 +85,16 @@ namespace InGame.Character
             gameObject.name += _playerId.Value.ToString();
 
             Bind();
+
+            // キャリブレーション開始
+            _calibrationSystem = new JumpCalibrationSystem(_synMotion, _playerId);
+            CalibrateAsync().Forget();
+        }
+
+        private async UniTaskVoid CalibrateAsync()
+        {
+            _calibratedGroundHeight = await _calibrationSystem.CalibrateGroundHeight(60);
+            _isCalibrated = true;
         }
         
         [Inject]
@@ -123,13 +139,18 @@ namespace InGame.Character
         {
             _leftHandObserver.Observe();
             _rightHandObserver.Observe();
-            
+
             var motionParam = _synMotion.GetMotionParam(_playerId.Value);
             _motionMover.UpdateMotion(motionParam);
 
-            if (!_isMovable) return; 
+            if (!_isMovable || !_isCalibrated) return; 
             var moveValue = motionParam.SpineMidPosition * _params.MoveWeight - _baseTrackingPosition;
             var movedPos = _baseWorldPosition + moveValue;
+            
+            var jumpThreshold = _calibratedGroundHeight + _jumpThresholdOffset;
+            _isJumping = movedPos.y > jumpThreshold;
+            movedPos.y = _isJumping ? (movedPos.y - jumpThreshold) * _jumpWeight : 0f;
+            
             // pos = transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * (Time.deltaTime * 5f);
             _mover.Move(movedPos);
         }
