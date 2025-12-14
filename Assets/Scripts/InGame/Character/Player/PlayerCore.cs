@@ -132,7 +132,7 @@ namespace InGame.Character
                 .AddTo(this);
             
             // MessagePipeを購読
-            _gameStartPlayerInitSubscriber.Subscribe(_playerId, OnGameStartInitialize).AddTo(this);
+            _gameStartPlayerInitSubscriber?.Subscribe(_playerId, OnGameStartInitialize).AddTo(this);
         }
 
         public override void OnUpdate()

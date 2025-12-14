@@ -169,8 +169,10 @@ namespace InGame.Character
                 {
                     // 未接続 -> 接続
                     _connectedFlags[i] = _motionParam[i].IsTracked;
+
+                    if (_playerSpawnSettings == null) continue;
                     var pos = _playerSpawnSettings.SpawnPositions[i];
-                    _spawnPublisher.Publish(new SpawnCharacterMessage(
+                    _spawnPublisher?.Publish(new SpawnCharacterMessage(
                         new CharacterId(i),
                         CharacterType.Player,
                         pos,
@@ -181,7 +183,7 @@ namespace InGame.Character
                 {
                     // 接続 -> 未接続
                     _connectedFlags[i] = _motionParam[i].IsTracked;
-                    _despawnPublisher.Publish(new DespawnCharacterMessage(new CharacterId(i)));
+                    _despawnPublisher?.Publish(new DespawnCharacterMessage(new CharacterId(i)));
                 }
             }
         }
