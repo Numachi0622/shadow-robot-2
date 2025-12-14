@@ -124,6 +124,7 @@ namespace InGame.Character
             _allEnemyDespawnSubscriber.Subscribe(_ =>
             {
                 // todo: エフェクト再生したい
+                enabled = false;
                 _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(_areaId, this));
                 Destroy(gameObject);
             }).AddTo(this);
