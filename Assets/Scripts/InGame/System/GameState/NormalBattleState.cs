@@ -5,7 +5,6 @@ using InGame.Character;
 using InGame.Message;
 using UnityEngine;
 using Utility;
-using VContainer.Unity;
 using Random = UnityEngine.Random;
 
 namespace InGame.System
@@ -69,6 +68,8 @@ namespace InGame.System
         {
             _cts?.Cancel();
             _cts?.Dispose();
+            
+            Owner.AllEnemyDespawnMessage.Publish(new AllEnemyDespawnMessage());
         }
 
         private async UniTask NormalBattleLoopAsync(InitGameMessage message, CancellationToken ct)

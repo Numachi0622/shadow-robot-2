@@ -26,4 +26,18 @@ namespace InGame.Message
             Enemy = enemy;
         }
     }
+    
+    /// <summary>
+    /// 敵を強制敵に消すメッセージ
+    /// </summary>
+    public readonly struct AllEnemyDespawnMessage
+    {
+    }
+
+    /// <summary>
+    /// プレイヤーを強制的に消すメッセージ
+    /// </summary>
+    public readonly struct AllPlayerDespawnMessage
+    {
+    }
 }

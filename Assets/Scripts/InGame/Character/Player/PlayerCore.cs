@@ -58,6 +58,8 @@ namespace InGame.Character
         private readonly float _jumpWeight = 2f;
         
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
+        private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
+        private IPublisher<DespawnCharacterMessage> _despawnPublisher;
         
         public CharacterId PlayerId => _playerId;
         
@@ -98,12 +100,16 @@ namespace InGame.Character
             _calibratedGroundHeight = await _calibrationSystem.CalibrateGroundHeight(60);
             _isCalibrated = true;
         }
-        
+
         [Inject]
         public void Construct(
-            ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber)
+            ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber,
+            ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
+            IPublisher<DespawnCharacterMessage> despawnPublisher)
         {
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
+            _allPlayerDespawnSubscriber = allPlayerDespawnSubscriber;
+            _despawnPublisher = despawnPublisher;
         }
 
         private void Bind()
@@ -135,6 +141,11 @@ namespace InGame.Character
             
             // MessagePipeを購読
             _gameStartPlayerInitSubscriber?.Subscribe(_playerId, OnGameStartInitialize).AddTo(this);
+            _allPlayerDespawnSubscriber?.Subscribe(_ =>
+            {
+                _despawnPublisher.Publish(new DespawnCharacterMessage(_playerId));
+                Destroy(gameObject);
+            }).AddTo(this);
         }
 
         public override void OnUpdate()

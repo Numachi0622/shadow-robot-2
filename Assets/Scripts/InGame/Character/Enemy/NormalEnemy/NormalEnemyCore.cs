@@ -31,6 +31,7 @@ namespace InGame.Character
         private CancellationTokenSource _cancellationTokenSource;
         private CharacterRegistry _characterRegistry;
         private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
+        private ISubscriber<AllEnemyDespawnMessage> _allEnemyDespawnSubscriber;
         private AreaId _areaId;
 
         public EnemyParams Params => _params;
@@ -58,10 +59,12 @@ namespace InGame.Character
         [Inject]
         public void Construct(
             CharacterRegistry characterRegistry,
-            IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher)
+            IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
+            ISubscriber<AllEnemyDespawnMessage> allEnemyDespawnSubscriber)
         {
             _characterRegistry = characterRegistry;
             _enemyDestroyedPublisher = enemyDestroyedPublisher;
+            _allEnemyDespawnSubscriber = allEnemyDespawnSubscriber;
         }
 
         public override void Initialize()
@@ -116,6 +119,14 @@ namespace InGame.Character
             _damageObserver.OnTakeDamage
                 .Subscribe(OnDamageStart)
                 .AddTo(this);
+            
+            // 外部から強制的にデスポーン（場面切り替えなど）
+            _allEnemyDespawnSubscriber.Subscribe(_ =>
+            {
+                // todo: エフェクト再生したい
+                _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(_areaId, this));
+                Destroy(gameObject);
+            }).AddTo(this);
         }
 
         public override void OnUpdate()
