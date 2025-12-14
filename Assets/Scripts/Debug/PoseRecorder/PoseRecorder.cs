@@ -12,16 +12,20 @@ namespace ShadowRobotDebug
 {
     public class PoseRecorder
     {
-        private string _fileName = "pose";
         private const string FilePath = "Assets/Data/PoseData";
         private StreamWriter _writer;
         private CancellationTokenSource _cts;
-        private float _recordingTime;
-        
-        public async UniTask<MotionParam> StartRecording(PlayerCore.MovementTransforms transforms)
+        private readonly PlayerCore.MovementTransforms _transforms;
+
+        public PoseRecorder(PlayerCore.MovementTransforms transforms)
         {
-            var fileName = _fileName + ".csv";
-            var path = Path.Combine(FilePath, fileName);
+            _transforms = transforms;
+        }
+        
+        public async UniTask<MotionParam> StartRecording(string fileName, float recordingTime)
+        {
+            var file = string.IsNullOrEmpty(fileName) ? "pose" : fileName + ".csv";
+            var path = Path.Combine(FilePath, file);
 
             // ディレクトリが存在しない場合は作成
             if (!Directory.Exists(FilePath))
@@ -44,7 +48,7 @@ namespace ShadowRobotDebug
             MotionParam result = default;
             try
             {
-                result = await RecordingLoop(transforms, _cts.Token);
+                result = await RecordingLoop(recordingTime, _cts.Token);
 
                 // 平均値をCSVに書き込み
                 WriteMotionData(result);
@@ -60,41 +64,41 @@ namespace ShadowRobotDebug
             return result;
         }
         
-        private async UniTask<MotionParam> RecordingLoop(PlayerCore.MovementTransforms transforms, CancellationToken token)
+        private async UniTask<MotionParam> RecordingLoop(float recordingTime , CancellationToken token)
         {
             float currentTime = 0;
             int attemptCount = 0;
             var motionParam = new MotionParam();
-            while (currentTime < _recordingTime)
+            while (currentTime < recordingTime)
             {
-                motionParam.SpineMidRotation.Add(transforms.FirstSpine.rotation);
-                motionParam.ElbowLeftRotation.Add(transforms.LeftArm.rotation);
-                motionParam.WristLeftRotation.Add(transforms.LeftForeArm.rotation);
-                motionParam.HandLeftRotation.Add(transforms.LeftHand.rotation);
-                motionParam.ElbowRightRotation.Add(transforms.RightArm.rotation);
-                motionParam.WristRightRotation.Add(transforms.RightForeArm.rotation);
-                motionParam.HandRightRotation.Add(transforms.RightHand.rotation);
-                motionParam.KneeLeftRotation.Add(transforms.LeftUpLeg.rotation);
-                motionParam.AnkleLeftRotation.Add(transforms.LeftLeg.rotation);
-                motionParam.KneeRightRotation.Add(transforms.LeftUpLeg.rotation);
-                motionParam.AnkleRightRotation.Add(transforms.RightLeg.rotation);
-
+                motionParam.SpineMidRotation = motionParam.SpineMidRotation.Add(_transforms.FirstSpine.rotation);
+                motionParam.ElbowLeftRotation = motionParam.ElbowLeftRotation.Add(_transforms.LeftArm.rotation);
+                motionParam.WristLeftRotation = motionParam.WristLeftRotation.Add(_transforms.LeftForeArm.rotation);
+                motionParam.HandLeftRotation = motionParam.HandLeftRotation.Add(_transforms.LeftHand.rotation);
+                motionParam.ElbowRightRotation = motionParam.ElbowRightRotation.Add(_transforms.RightArm.rotation);
+                motionParam.WristRightRotation = motionParam.WristRightRotation.Add(_transforms.RightForeArm.rotation);
+                motionParam.HandRightRotation = motionParam.HandRightRotation.Add(_transforms.RightHand.rotation);
+                motionParam.KneeLeftRotation = motionParam.KneeLeftRotation.Add(_transforms.LeftUpLeg.rotation);
+                motionParam.AnkleLeftRotation = motionParam.AnkleLeftRotation.Add(_transforms.LeftLeg.rotation);
+                motionParam.KneeRightRotation = motionParam.KneeRightRotation.Add(_transforms.LeftUpLeg.rotation);
+                motionParam.AnkleRightRotation = motionParam.AnkleRightRotation.Add(_transforms.RightLeg.rotation);
+                
                 currentTime += Time.deltaTime;
                 attemptCount++;
                 await UniTask.Yield();
             }
 
-            motionParam.SpineMidRotation.Divide(attemptCount);
-            motionParam.ElbowLeftRotation.Divide(attemptCount);
-            motionParam.WristLeftRotation.Divide(attemptCount);
-            motionParam.HandLeftRotation.Divide(attemptCount);
-            motionParam.ElbowRightRotation.Divide(attemptCount);
-            motionParam.WristRightRotation.Divide(attemptCount);
-            motionParam.HandRightRotation.Divide(attemptCount);
-            motionParam.KneeLeftRotation.Divide(attemptCount);
-            motionParam.AnkleLeftRotation.Divide(attemptCount);
-            motionParam.KneeRightRotation.Divide(attemptCount);
-            motionParam.AnkleRightRotation.Divide(attemptCount);
+            motionParam.SpineMidRotation = motionParam.SpineMidRotation.Divide(attemptCount);
+            motionParam.ElbowLeftRotation = motionParam.ElbowLeftRotation.Divide(attemptCount);
+            motionParam.WristLeftRotation = motionParam.WristLeftRotation.Divide(attemptCount);
+            motionParam.HandLeftRotation = motionParam.HandLeftRotation.Divide(attemptCount);
+            motionParam.ElbowRightRotation = motionParam.ElbowRightRotation.Divide(attemptCount);
+            motionParam.WristRightRotation = motionParam.WristRightRotation.Divide(attemptCount);
+            motionParam.HandRightRotation = motionParam.HandRightRotation.Divide(attemptCount);
+            motionParam.KneeLeftRotation = motionParam.KneeLeftRotation.Divide(attemptCount);
+            motionParam.AnkleLeftRotation = motionParam.AnkleLeftRotation.Divide(attemptCount);
+            motionParam.KneeRightRotation = motionParam.KneeRightRotation.Divide(attemptCount);
+            motionParam.AnkleRightRotation = motionParam.AnkleRightRotation.Divide(attemptCount);
 
             return motionParam;
         }

@@ -64,6 +64,8 @@ namespace InGame.Character
         public IAttackable LeftHandAttacker => _leftHandAttacker;
         public IAttackable RightHandAttacker => _rightHandAttacker;
         public IDamageable Damager => _damager;
+        
+        public MovementTransforms Transforms => _movementTransforms;
 
         public override void Initialize(CharacterId id, SynMotionSystem synMotion)
         {

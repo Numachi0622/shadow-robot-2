@@ -9,6 +9,7 @@ namespace ShadowRobotDebug
     {
         [SerializeField] private PlayerCore _playerCore;
         [SerializeField] private DeviceSettings _deviceSettings;
+        [SerializeField] private PoseRecordingPresenter _presenter;
         private MotionReceiver _receiver;
         private SynMotionSystem _synMotion;
         
@@ -18,6 +19,7 @@ namespace ShadowRobotDebug
             _receiver = new MotionReceiver(_deviceSettings, _synMotion, null, null, null);
             _receiver.Initialize();
             _playerCore.Initialize(new CharacterId(0), _synMotion);
+            _presenter.Initialize(_playerCore.Transforms);
         }
 
         private void Update()
