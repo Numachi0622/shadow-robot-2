@@ -128,7 +128,7 @@ namespace InGame.Character
                 .AddTo(this);
 
             _rightHandObserver.OnAttackEnd
-                .Subscribe(OnRightHAndAttackEnd)
+                .Subscribe(OnRightHandAttackEnd)
                 .AddTo(this);
 
             _damageObserver.OnTakeDamage
@@ -189,7 +189,7 @@ namespace InGame.Character
             _rightHandAttacker.Attack(param.Direction, param.Velocity);
         }
         
-        private void OnRightHAndAttackEnd(Unit unit)
+        private void OnRightHandAttackEnd(Unit unit)
         {
             _rightHandAttacker.AttackEnd();
         }
