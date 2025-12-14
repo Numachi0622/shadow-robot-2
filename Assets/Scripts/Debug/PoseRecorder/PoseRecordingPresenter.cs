@@ -1,5 +1,7 @@
+using System;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
+using InGame.System;
 using UniRx;
 using UnityEditor;
 using UnityEngine;
@@ -11,10 +13,12 @@ namespace ShadowRobotDebug
         [SerializeField] private PoseRecordingView _view;
         private PoseRecorder _recorder;
         private PoseData _prevPoseData;
+        private PlayerCore.MovementTransforms _transforms;
 
         public void Initialize(PlayerCore.MovementTransforms transforms)
         {
-            _recorder = new PoseRecorder(transforms);
+            _transforms = transforms;
+            _recorder = new PoseRecorder(_transforms);
             _view.Initialize();
             
             _view.RecordStartButton.OnClickAsObservable()
@@ -40,6 +44,13 @@ namespace ShadowRobotDebug
             if (_prevPoseData == null) return;
             var poseDataPath = AssetDatabase.GetAssetPath(_prevPoseData);
             _view.SetPoseDataView(poseDataPath);
+        }
+
+        private void Update()
+        {
+            if (_prevPoseData == null) return;
+            var poseMatch = PoseMatchSystem.MatchPose(_prevPoseData, _transforms); 
+            _view.SetMatchResultView(poseMatch.ToString());
         }
     }
 }
