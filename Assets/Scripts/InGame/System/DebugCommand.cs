@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Windows.Kinect;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
@@ -119,6 +120,8 @@ namespace InGame.System
                 }
                 else
                 {
+                    if (BodySourceManager.Instance == null) return;
+                    if (BodySourceManager.Instance.Sensor == null) return;
                     if (BodySourceManager.Instance.Sensor.IsOpen) return;
                     
                     _motionSender.SendFlag(OscAddress.GetFlagAddress(deviceId, playerId), 0);
