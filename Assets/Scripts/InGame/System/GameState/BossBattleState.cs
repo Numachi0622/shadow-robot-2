@@ -41,14 +41,18 @@ namespace InGame.System
             ));
             
             // await todo: 敵出現タイムライン
-            
-            Owner.AllPlayerDespawnMessage.Publish(new AllPlayerDespawnMessage());
-            Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
-                GameConst.BossPlayerId,
-                CharacterType.Player,
-                Vector3.zero, 
-                Quaternion.identity
-            ));
+
+            if (playerCount > 1)
+            {
+                Owner.AllPlayerDespawnMessage.Publish(new AllPlayerDespawnMessage());
+                Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
+                    GameConst.BossPlayerId,
+                    Message.CharacterType.CombinePlayer,
+                    Vector3.zero,
+                    Quaternion.identity,
+                    playerCount
+                ));   
+            }
             
             var character = Owner.CharacterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore;
             if (character == null)
@@ -57,12 +61,11 @@ namespace InGame.System
                 Debug.LogError("Player is Null");
                 return;
             }
-            Owner.GameStartPlayerInitPublisher.Publish(character.PlayerId, new GameStartPlayerInitMessage(
-                Vector3.zero,
-                playerCount
-            ));
 
             // await todo: 合体演出
+            
+            // 演出が全て終了した後にバトル開始メッセージを送信
+            Owner.BossBattleStartPublisher.Publish(new BossBattleStartMessage());
         }
     }
 }

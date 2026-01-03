@@ -24,6 +24,7 @@ namespace InGame.System
         public IPublisher<CharacterId, GameStartPlayerInitMessage> GameStartPlayerInitPublisher { get; private set; }
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnMessage { get; private set; }
         public IPublisher<AllPlayerDespawnMessage> AllPlayerDespawnMessage { get; private set; }
+        public IPublisher<BossBattleStartMessage> BossBattleStartPublisher { get; private set; }
         public StageReferences StageReferences { get; private set; }
         public CharacterRegistry CharacterRegistry { get; private set; }
         public MainStageManager MainStageManager => _mainStageManager;
@@ -42,7 +43,8 @@ namespace InGame.System
             IPublisher<InitGameMessage> initGamePublisher,
             IPublisher<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitPublisher,
             IPublisher<AllEnemyDespawnMessage> allEnemyDespawnMessage,
-            IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage)
+            IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage,
+            IPublisher<BossBattleStartMessage> bossBattleStartPublisher)
         {
             Container = container;
             StageReferences = stageReferences;
@@ -56,6 +58,7 @@ namespace InGame.System
             GameStartPlayerInitPublisher = gameStartPlayerInitPublisher;
             AllEnemyDespawnMessage = allEnemyDespawnMessage;
             AllPlayerDespawnMessage = allPlayerDespawnMessage;
+            BossBattleStartPublisher = bossBattleStartPublisher;
         }
 
         private void Bind()

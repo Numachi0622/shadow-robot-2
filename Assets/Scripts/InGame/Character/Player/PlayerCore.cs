@@ -47,6 +47,7 @@ namespace InGame.Character
         private PlayerMotionMover _motionMover;
         private SynMotionSystem _synMotion;
         private CharacterId _playerId;
+        private CharacterId _footPlayerId;
         private JumpCalibrationSystem _calibrationSystem;
         private bool _isMovable = false;
         private bool _isCalibrated = false;
@@ -54,12 +55,15 @@ namespace InGame.Character
         private Vector3 _baseTrackingPosition;
         private float _calibratedGroundHeight;
         private bool _isJumping;
+        private bool _isCombine;
+        private int _totalPlayerCount = -1;
         private readonly float _jumpThresholdOffset = 0.2f;
         private readonly float _jumpWeight = 2f;
         
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
         private IPublisher<DespawnCharacterMessage> _despawnPublisher;
+        private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
         
         public CharacterId PlayerId => _playerId;
         
@@ -69,12 +73,16 @@ namespace InGame.Character
         
         public MovementTransforms Transforms => _movementTransforms;
 
-        public override void Initialize(CharacterId id, SynMotionSystem synMotion)
+        public override void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {
             _damager = new Damager(_hpPresenter);
             
             _playerId = id;
             _synMotion = synMotion;
+            _totalPlayerCount = totalPlayerCount;
+            _isCombine = _totalPlayerCount > 1;
+            _footPlayerId = _isCombine ? new CharacterId(totalPlayerCount - 1) : id;
+            
             _stateMachine = new StateMachine<PlayerCore>(this);
             _leftHandObserver = new HandAttackObserver(_movementTransforms.LeftHand, _params.AttackableVelocity);
             _rightHandObserver = new HandAttackObserver(_movementTransforms.RightHand, _params.AttackableVelocity);
@@ -91,7 +99,7 @@ namespace InGame.Character
             Bind();
 
             // キャリブレーション開始
-            _calibrationSystem = new JumpCalibrationSystem(_synMotion, _playerId);
+            _calibrationSystem = new JumpCalibrationSystem(_synMotion, _footPlayerId);
             CalibrateAsync().Forget();
         }
 
@@ -105,11 +113,13 @@ namespace InGame.Character
         public void Construct(
             ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber,
             ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
-            IPublisher<DespawnCharacterMessage> despawnPublisher)
+            IPublisher<DespawnCharacterMessage> despawnPublisher,
+            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber)
         {
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
             _allPlayerDespawnSubscriber = allPlayerDespawnSubscriber;
             _despawnPublisher = despawnPublisher;
+            _bossBattleStartSubscriber = bossBattleStartSubscriber;
         }
 
         private void Bind()
@@ -146,6 +156,7 @@ namespace InGame.Character
                 _despawnPublisher.Publish(new DespawnCharacterMessage(_playerId));
                 Destroy(gameObject);
             }).AddTo(this);
+            _bossBattleStartSubscriber?.Subscribe(_ => OnBossBattleStart()).AddTo(this);
         }
 
         public override void OnUpdate()
@@ -153,7 +164,9 @@ namespace InGame.Character
             _leftHandObserver.Observe();
             _rightHandObserver.Observe();
 
-            var motionParam = _synMotion.GetMotionParam(_playerId.Value);
+            var motionParam = _isCombine
+                ? _synMotion.GetCombineMotionParam(_totalPlayerCount)
+                : _synMotion.GetMotionParam(_playerId.Value);
             _motionMover.UpdateMotion(motionParam);
 
             if (!_isMovable || !_isCalibrated) return; 
@@ -220,12 +233,18 @@ namespace InGame.Character
             transform.position = _baseWorldPosition;
 
             // トラッキング位置を基準位置に設定
-            var trackingPos = _synMotion.GetMotionParam(_playerId.Value).SpineMidPosition * _params.MoveWeight;
+            var trackingPos = _synMotion.GetMotionParam(_footPlayerId.Value).SpineMidPosition * _params.MoveWeight;
             _baseTrackingPosition = trackingPos;
             
             SetMovable(true);
             SetCamera(true, message.TotalPlayerCount);
-        }     
+        }
+
+        private void OnBossBattleStart()
+        {
+            _playerCamera.gameObject.SetActive(true);
+            _isMovable = true;
+        }
         
         #endregion
         

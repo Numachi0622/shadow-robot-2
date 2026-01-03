@@ -36,6 +36,7 @@ namespace InGame.System
             builder.RegisterMessageBroker<EnemyDestroyedMessage>(options);
             builder.RegisterMessageBroker<AllEnemyDespawnMessage>(options);
             builder.RegisterMessageBroker<AllPlayerDespawnMessage>(options);
+            builder.RegisterMessageBroker<BossBattleStartMessage>(options);
 
             builder.RegisterMessageBroker<CharacterId, GameStartPlayerInitMessage>(options);
             builder.RegisterMessageBroker<AreaId, BuildingCountChangeMessage>(options);

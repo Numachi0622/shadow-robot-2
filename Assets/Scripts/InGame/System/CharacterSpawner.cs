@@ -72,6 +72,7 @@ namespace InGame.System
             switch (message.CharacterType)
             {
                 case CharacterType.Player:
+                case CharacterType.CombinePlayer:
                     SpawnPlayer(message);
                     break;
                 case CharacterType.NormalEnemy:
@@ -88,7 +89,7 @@ namespace InGame.System
             var character = _factory.Create<PlayerCore>(message.Position, message.Rotation);
             if (character is not PlayerCore player) return;
             
-            player.Initialize(message.CharacterId, _synMotion);
+            player.Initialize(message.CharacterId, _synMotion, message.TotalPlayerCount);
             _registry.Register(player);
         }
 

@@ -14,6 +14,7 @@ namespace InGame.Message
         public readonly Vector3 Position;
         public readonly Quaternion Rotation;
         public readonly AreaId AreaId;
+        public readonly int TotalPlayerCount;
 
         public SpawnCharacterMessage(CharacterType characterType, Vector3 position, Quaternion rotation, AreaId areaId)
         {
@@ -22,6 +23,7 @@ namespace InGame.Message
             Position = position;
             Rotation = rotation;
             AreaId = areaId;
+            TotalPlayerCount = -1;
         }
         
         public SpawnCharacterMessage(CharacterId characterId, CharacterType characterType, Vector3 position, Quaternion rotation)
@@ -31,6 +33,17 @@ namespace InGame.Message
             Position = position;
             Rotation = rotation;
             AreaId = new AreaId(-1);
+            TotalPlayerCount = -1;
+        }
+        
+        public SpawnCharacterMessage(CharacterId characterId, CharacterType characterType, Vector3 position, Quaternion rotation, int totalPlayerCount)
+        {
+            CharacterId = characterId;
+            CharacterType = characterType;
+            Position = position;
+            Rotation = rotation;
+            AreaId = new AreaId(-1);
+            TotalPlayerCount = totalPlayerCount;
         }
     }
 
@@ -40,6 +53,7 @@ namespace InGame.Message
     public enum CharacterType
     {
         Player,
+        CombinePlayer,
         NormalEnemy,
         BossEnemy,
         Building

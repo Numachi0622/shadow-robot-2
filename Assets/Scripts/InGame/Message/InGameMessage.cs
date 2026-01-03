@@ -41,6 +41,9 @@ namespace InGame.Message
     {
     }
 
+    /// <summary>
+    /// ボス戦突入直後の初期化メッセージ
+    /// </summary>
     public readonly struct InitBossBattleMessage : IStateParameter
     {
         public readonly int PlayerCount;
@@ -48,5 +51,13 @@ namespace InGame.Message
         {
             PlayerCount = playerCount;
         }
+    }
+    
+    /// <summary>
+    /// ボスバトル開始のメッセージ
+    /// 初期化、演出が完全に終了した後に送信される
+    /// </summary>
+    public readonly struct BossBattleStartMessage
+    {
     }
 }
