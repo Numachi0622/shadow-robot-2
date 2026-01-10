@@ -35,7 +35,7 @@ namespace InGame.Character
             _damager = new Damager(_hpPresenter);
             _damageObserver = new DamageObserver();
             _damageCollider.Initialize(_damageObserver);
-            _hpPresenter.Initialize(_params);
+            _hpPresenter.Initialize(null, _params);
 
             Bind();
         }

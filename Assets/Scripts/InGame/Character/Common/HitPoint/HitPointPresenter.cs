@@ -1,23 +1,24 @@
 using UnityEngine;
 using UniRx;
 using System;
+using InGame.System.UI;
 
 namespace InGame.Character
 {
     public class HitPointPresenter : MonoBehaviour
     {
-        [SerializeField] private HitPointView _view;
+        private HitPointView _view;
         private HitPointModel _model;
-        
-        public int CurrentHp => _model.Hp.Value;
+
+        public int CurrentHp => _model.CurrentHp;
         public IObservable<Unit> OnHpDecreased => _model.OnHpDecreased;
 
-        public void Initialize(CharacterParams characterParams)
+        public void Initialize(HitPointView view, CharacterParams characterParams)
         {
+            _view = view;
             _model = new HitPointModel(characterParams.MaxHp);
 
-            var currentHp = _model.Hp.Value;
-            _view?.Initialize(currentHp, characterParams.MaxHp);
+            var currentHp = _model.CurrentHp;
 
             Bind();
         }
@@ -26,7 +27,7 @@ namespace InGame.Character
         {
             if (_view == null) return;
             
-            _model.Hp
+            _model.HpRate
                 .Where(_ => _view != null)
                 .Subscribe(_view.UpdateHp)
                 .AddTo(this);
@@ -35,7 +36,7 @@ namespace InGame.Character
         public void DecreaseHp(int value)
         {
             _model.Decrease(value);
-            Debug.Log($"<color=green>[{gameObject.name}] CurrentHp: {_model.Hp.Value}</color>");
+            Debug.Log($"<color=green>[{gameObject.name}] CurrentHp: {_model.CurrentHp}</color>");
         }
     }
 }

@@ -3,6 +3,7 @@ using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
 using InGame.System;
+using InGame.System.UI;
 using MessagePipe;
 using SynMotion;
 using UniRx;
@@ -40,6 +41,7 @@ namespace InGame.Character
         [SerializeField] private HitPointPresenter _hpPresenter;
         [SerializeField] private Camera _playerCamera;
 
+        private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
         private IAttackable _leftHandAttacker, _rightHandAttacker;
         private HandAttackObserver _leftHandObserver, _rightHandObserver;
@@ -93,7 +95,7 @@ namespace InGame.Character
             _motionMover = new PlayerMotionMover(_movementTransforms);
             
             _damageCollider.Initialize(_damageObserver);
-            _hpPresenter.Initialize(_params);
+            _hpPresenter.Initialize(_hpView, _params);
             gameObject.name += _playerId.Value.ToString();
 
             Bind();
@@ -111,11 +113,13 @@ namespace InGame.Character
 
         [Inject]
         public void Construct(
+            HitPointViewList hpViewList,
             ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber,
             ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
             IPublisher<DespawnCharacterMessage> despawnPublisher,
             ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber)
         {
+            _hpView = hpViewList.PlayerHitPointView;
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
             _allPlayerDespawnSubscriber = allPlayerDespawnSubscriber;
             _despawnPublisher = despawnPublisher;

@@ -20,6 +20,7 @@ namespace InGame.System
         [SerializeField] private DeviceSettings _deviceSettings;
         [SerializeField] private MainStageManager _mainStageManager;
         [SerializeField] private InGameUIController _inGameUIController;
+        [SerializeField] private HitPointViewList _hitPointViewList;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -71,8 +72,18 @@ namespace InGame.System
             
             // UIコンポーネント
             builder.RegisterComponent(_inGameUIController);
+            builder.RegisterInstance(_hitPointViewList);
 
             builder.RegisterComponent(_debugCommand);
         }
+    }
+
+    [Serializable]
+    public class HitPointViewList
+    {
+        [SerializeField] private HitPointView _playerHitPointView;
+        [SerializeField] private HitPointView _bossHitPointView;
+        public HitPointView PlayerHitPointView => _playerHitPointView;
+        public HitPointView BossHitPointView => _bossHitPointView;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Threading;
 using InGame.System;
+using InGame.System.UI;
 using UniRx;
 using UnityEngine;
 using VContainer;
@@ -22,6 +23,7 @@ namespace InGame.Character
         [SerializeField] private BossEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
 
+        private HitPointView _hpView;
         private StateMachine<BossEnemyCore> _stateMachine;
         private BossEnemyAttackObserver _attackObserver;
         private EnemyEffect _enemyEffect;
@@ -52,8 +54,11 @@ namespace InGame.Character
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
         
         [Inject]
-        public void Construct(CharacterRegistry characterRegistry)
+        public void Construct(
+            HitPointViewList hitPointViewList,
+            CharacterRegistry characterRegistry)
         {
+            _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
         }
 
@@ -71,7 +76,7 @@ namespace InGame.Character
                 3f,
                 _params.AttackReadyTime);
             
-            _hpPresenter.Initialize(_params);
+            _hpPresenter.Initialize(_hpView, _params);
             _stateMachine.SetState<BossEnemyIdleState>();
             
             Bind();

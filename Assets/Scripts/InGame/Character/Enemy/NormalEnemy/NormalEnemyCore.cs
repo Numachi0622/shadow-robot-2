@@ -87,7 +87,7 @@ namespace InGame.Character
                 _params.AttackRange
             );
             
-            _hpPresenter.Initialize(_params);
+            _hpPresenter.Initialize(null, _params);
             _stateMachine.SetState<NormalEnemyIdleState>();
             
             Bind();
