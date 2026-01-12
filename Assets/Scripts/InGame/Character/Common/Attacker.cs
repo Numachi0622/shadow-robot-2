@@ -14,7 +14,7 @@ namespace InGame.Character
         
         public Attacker(CharacterParams characterParams, AttackCollider attackCollider)
         {
-            _attackPoint = characterParams.AttackPoint;
+            _attackPoint = characterParams?.AttackPoint ?? default;
             _attackParam.AttackPoint = _attackPoint;
             _attackCollider = attackCollider;
         }

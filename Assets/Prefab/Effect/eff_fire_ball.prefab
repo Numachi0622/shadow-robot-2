@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6808087658621117120}
   - component: {fileID: 1784583601754760484}
-  - component: {fileID: 1725639558443685965}
+  - component: {fileID: 8427461916856305119}
+  - component: {fileID: 7612469532117511486}
   m_Layer: 8
-  m_Name: EnergyBall
+  m_Name: eff_fire_ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +56,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1725639558443685965
+--- !u!114 &8427461916856305119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,15 +65,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 6097475869178643553}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5efa6cd0de504f51a7d726dfa2a41050, type: 3}
+  m_Script: {fileID: 11500000, guid: a09f6937f5e14b098ea8e5f126a8d76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _attackCollider: {fileID: 1784583601754760484}
-  _energyBallAttackPoint:
-    _minAttackPoint: 10
-    _maxAttackPoint: 20
-  _lifeTime: 3
-  _spped: 10
+--- !u!114 &7612469532117511486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6097475869178643553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eec4b309ffb94a3097dc8fdb2e319142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackCollider: {fileID: 8427461916856305119}
 --- !u!1001 &2554465438130746567
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -24,6 +24,7 @@ namespace InGame.Character
         [SerializeField] private Animator _animator;
         [SerializeField] private BossEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
+        [SerializeField] private Transform _fireBallFirePoint;
 
         private HitPointView _hpView;
         private StateMachine<BossEnemyCore> _stateMachine;
@@ -39,6 +40,7 @@ namespace InGame.Character
         public Animator Animator => _animator;
         public CharacterCore NormalEnemyPrefab => _normalEnemyPrefab;
         public BossEnemyEffectComponents EffectComponents => _effectComponents;
+        public Transform FireBallFirePoint => _fireBallFirePoint;
         
         public CancellationTokenSource CancellationTokenSource
         {

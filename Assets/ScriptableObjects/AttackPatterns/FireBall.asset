@@ -12,3 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07ef03df9354736964620380a8900b1, type: 3}
   m_Name: FireBall
   m_EditorClassIdentifier: 
+  _fireBallPrefab: {fileID: 7612469532117511486, guid: 5d69b065aaf78ca469e6888d2c9fab92, type: 3}
+  _instanceCount: 10
+  _fireballSpeed: 10
+  _attackPoint:
+    _minAttackPoint: 10
+    _maxAttackPoint: 20
+  _instanceRange: {x: -45, y: 45}
