@@ -25,6 +25,9 @@ namespace InGame.System
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnMessage { get; private set; }
         public IPublisher<AllPlayerDespawnMessage> AllPlayerDespawnMessage { get; private set; }
         public IPublisher<BossBattleStartMessage> BossBattleStartPublisher { get; private set; }
+        public ISubscriber<PoseMatchEventStartMessage> PoseMatchEventStartSubscriber { get; private set; }
+        public ISubscriber<PoseMatchEventResultMessage> PoseMatchEventResultSubscriber { get; private set; }
+        public IPublisher<PoseMatchEventEndMessage> PoseMatchEventEndPublisher { get; private set; }
         public StageReferences StageReferences { get; private set; }
         public CharacterRegistry CharacterRegistry { get; private set; }
         public MainStageManager MainStageManager => _mainStageManager;
@@ -44,7 +47,10 @@ namespace InGame.System
             IPublisher<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitPublisher,
             IPublisher<AllEnemyDespawnMessage> allEnemyDespawnMessage,
             IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage,
-            IPublisher<BossBattleStartMessage> bossBattleStartPublisher)
+            IPublisher<BossBattleStartMessage> bossBattleStartPublisher,
+            ISubscriber<PoseMatchEventStartMessage> poseMatchEventStartSubscriber,
+            ISubscriber<PoseMatchEventResultMessage> poseMatchEventResultSubscriber,
+            IPublisher<PoseMatchEventEndMessage> poseMatchEventEndPublisher)
         {
             Container = container;
             StageReferences = stageReferences;
@@ -59,6 +65,9 @@ namespace InGame.System
             AllEnemyDespawnMessage = allEnemyDespawnMessage;
             AllPlayerDespawnMessage = allPlayerDespawnMessage;
             BossBattleStartPublisher = bossBattleStartPublisher;
+            PoseMatchEventStartSubscriber = poseMatchEventStartSubscriber;
+            PoseMatchEventResultSubscriber = poseMatchEventResultSubscriber;
+            PoseMatchEventEndPublisher = poseMatchEventEndPublisher;
         }
 
         private void Bind()

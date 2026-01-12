@@ -72,8 +72,8 @@ namespace InGame.Character
         public IAttackable LeftHandAttacker => _leftHandAttacker;
         public IAttackable RightHandAttacker => _rightHandAttacker;
         public IDamageable Damager => _damager;
-        
         public MovementTransforms Transforms => _movementTransforms;
+        public Camera PlayerCamera => _playerCamera;
 
         public override void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {

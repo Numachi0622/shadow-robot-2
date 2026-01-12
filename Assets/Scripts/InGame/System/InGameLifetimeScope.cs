@@ -38,6 +38,9 @@ namespace InGame.System
             builder.RegisterMessageBroker<AllEnemyDespawnMessage>(options);
             builder.RegisterMessageBroker<AllPlayerDespawnMessage>(options);
             builder.RegisterMessageBroker<BossBattleStartMessage>(options);
+            builder.RegisterMessageBroker<PoseMatchEventStartMessage>(options);
+            builder.RegisterMessageBroker<PoseMatchEventResultMessage>(options);
+            builder.RegisterMessageBroker<PoseMatchEventEndMessage>(options);
 
             builder.RegisterMessageBroker<CharacterId, GameStartPlayerInitMessage>(options);
             builder.RegisterMessageBroker<AreaId, BuildingCountChangeMessage>(options);

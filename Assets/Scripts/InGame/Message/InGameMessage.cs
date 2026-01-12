@@ -60,4 +60,30 @@ namespace InGame.Message
     public readonly struct BossBattleStartMessage
     {
     }
+
+    /// <summary>
+    /// ポーズマッチイベント開始メッセージ
+    /// </summary>
+    public readonly struct PoseMatchEventStartMessage
+    {
+    }
+
+    /// <summary>
+    /// ポーズマッチの結果を返すメッセージ
+    /// </summary>
+    public readonly struct PoseMatchEventResultMessage
+    {
+        public readonly bool IsSuccess;
+        public PoseMatchEventResultMessage(bool isSuccess)
+        {
+            IsSuccess = isSuccess;
+        }
+    }
+    
+    /// <summary>
+    /// ポーズマッチイベント終了メッセージ
+    /// </summary>
+    public readonly struct PoseMatchEventEndMessage
+    {
+    }
 }

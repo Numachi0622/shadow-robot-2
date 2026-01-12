@@ -53,6 +53,8 @@ namespace InGame.Character
             }
         }
         public IPublisher<SpawnCharacterMessage> SummonEnemyPublisher { get; private set; }
+        public IPublisher<PoseMatchEventStartMessage> PoseMatchEventStartPublisher { get; private set; }
+        public ISubscriber<PoseMatchEventEndMessage> PoseMatchEventEndSubscriber { get; private set; }
         
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
@@ -61,11 +63,15 @@ namespace InGame.Character
         public void Construct(
             HitPointViewList hitPointViewList,
             CharacterRegistry characterRegistry,
-            IPublisher<SpawnCharacterMessage> summonEnemyPublisher)
+            IPublisher<SpawnCharacterMessage> summonEnemyPublisher,
+            IPublisher<PoseMatchEventStartMessage> poseMatchEventStartPublisher,
+            ISubscriber<PoseMatchEventEndMessage> poseMatchEventEndSubscriber)
         {
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
             SummonEnemyPublisher = summonEnemyPublisher;
+            PoseMatchEventStartPublisher = poseMatchEventStartPublisher;
+            PoseMatchEventEndSubscriber = poseMatchEventEndSubscriber;
         }
 
         public override void Initialize() 
