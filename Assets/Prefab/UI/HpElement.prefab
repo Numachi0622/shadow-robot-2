@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1272697368535337759}
   - component: {fileID: 8690039372938337550}
   - component: {fileID: 5327131183545903303}
+  - component: {fileID: 7917149641899479059}
   m_Layer: 5
   m_Name: HpElement
   m_TagString: Untagged
@@ -89,6 +90,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &7917149641899479059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5748275349379229566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e79baefbde54cb994e36c32c2a6d453, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rageImage: {fileID: 3935290606817920405}
 --- !u!1 &8846941579197405573
 GameObject:
   m_ObjectHideFlags: 0
