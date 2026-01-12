@@ -16,6 +16,8 @@ namespace InGame.Character
 
         public override void Rotate(Vector3 direction)
         {
+            if (direction.sqrMagnitude < 0.001f) return;
+
             var rotation = Quaternion.LookRotation(direction);
             _targetTransform.rotation = rotation;
         }

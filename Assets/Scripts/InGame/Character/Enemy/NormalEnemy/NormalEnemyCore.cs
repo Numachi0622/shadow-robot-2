@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using InGame.Message;
@@ -33,6 +34,7 @@ namespace InGame.Character
         private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
         private ISubscriber<AllEnemyDespawnMessage> _allEnemyDespawnSubscriber;
         private AreaId _areaId;
+        private TargetType _targetType;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
@@ -98,6 +100,11 @@ namespace InGame.Character
             _areaId = areaId;
         }
 
+        public void SetTarget(TargetType targetType)
+        {
+            _targetType = targetType;
+        }
+
         private void Bind()
         {
             _moveObserver.OnMoveStart
@@ -132,7 +139,9 @@ namespace InGame.Character
 
         public override void OnUpdate()
         {
-            _targetTransform = _characterRegistry.GetNearestBuilding(_areaId, transform.position)?.transform;
+            _targetTransform = _targetType == TargetType.Building 
+                ? _characterRegistry.GetNearestBuilding(_areaId, transform.position)?.transform
+                : _characterRegistry.GetAllPlayers().FirstOrDefault()?.transform;
             if (_targetTransform == null) return;
             
             var dest = _targetTransform.position;

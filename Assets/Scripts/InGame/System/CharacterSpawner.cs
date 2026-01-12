@@ -99,7 +99,11 @@ namespace InGame.System
             {
                 var character = _factory.Create<NormalEnemyCore>(message.Position, message.Rotation);
                 character.Initialize();
-                (character as NormalEnemyCore)?.SetAreaId(message.AreaId);
+                if (character is NormalEnemyCore normalEnemy)
+                {
+                    normalEnemy.SetAreaId(message.AreaId);
+                    normalEnemy.SetTarget(message.TargetType);
+                }
                 _registry.Register(character, message.AreaId);
             }
             else if (message.CharacterType == CharacterType.BossEnemy)

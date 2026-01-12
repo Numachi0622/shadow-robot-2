@@ -92,7 +92,8 @@ namespace InGame.System
                         CharacterType.NormalEnemy,
                         pos,
                         Quaternion.identity, 
-                        areaId
+                        areaId,
+                        TargetType.Building
                     ));
                 }
 

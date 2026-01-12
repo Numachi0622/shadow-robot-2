@@ -1,7 +1,9 @@
 using System;
 using System.Threading;
+using InGame.Message;
 using InGame.System;
 using InGame.System.UI;
+using MessagePipe;
 using UniRx;
 using UnityEngine;
 using VContainer;
@@ -49,6 +51,7 @@ namespace InGame.Character
                 return _cancellationTokenSource;
             }
         }
+        public IPublisher<SpawnCharacterMessage> SummonEnemyPublisher { get; private set; }
         
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
@@ -56,10 +59,12 @@ namespace InGame.Character
         [Inject]
         public void Construct(
             HitPointViewList hitPointViewList,
-            CharacterRegistry characterRegistry)
+            CharacterRegistry characterRegistry,
+            IPublisher<SpawnCharacterMessage> summonEnemyPublisher)
         {
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
+            SummonEnemyPublisher = summonEnemyPublisher;
         }
 
         public override void Initialize() 

@@ -1,5 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
+using InGame.Message;
+using InGame.System;
 using Unity.Properties;
 using UnityEngine;
 
@@ -20,7 +22,15 @@ namespace InGame.Character
             for (var i = 0; i < 4; i++)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f * i));
-                Instantiate(owner.NormalEnemyPrefab);
+                //Instantiate(owner.NormalEnemyPrefab);
+                // todo: MessagePipeで生成
+                owner.SummonEnemyPublisher.Publish(new SpawnCharacterMessage(
+                    CharacterType.NormalEnemy,
+                    owner.transform.position + UnityEngine.Random.insideUnitSphere * 5f,
+                    Quaternion.identity,
+                    new AreaId(-1),
+                    TargetType.Player
+                ));
             }
         }
     }

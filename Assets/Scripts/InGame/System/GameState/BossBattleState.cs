@@ -37,7 +37,8 @@ namespace InGame.System
                 Message.CharacterType.BossEnemy,
                 Owner.MainStageManager.BossEnemySpawnPosition,
                 Quaternion.Euler(0, 180, 0),
-                new AreaId(-1)
+                new AreaId(-1),
+                TargetType.Player
             ));
             
             // await todo: 敵出現タイムライン
