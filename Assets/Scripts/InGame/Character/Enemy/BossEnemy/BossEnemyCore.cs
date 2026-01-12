@@ -13,17 +13,16 @@ namespace InGame.Character
     public class BossEnemyCore : EnemyCore
     {
         [Serializable]
-        public class BossEnemyEffectComponents
+        public class BossEnemyEffectComponents 
         {
-            public ParticleSystem FireBallEffectPrefab;
-            public ParticleSystem DeathBallEffectPrefab;
+            public ParticleSystem FlameThrowEffect;
         }
         
-        [SerializeField] private CharacterCore _normalEnemyPrefab;
         [SerializeField] private Transform _bodyTransform;
         [SerializeField] private Animator _animator;
-        [SerializeField] private BossEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
+        [SerializeField] private BossEnemyEffectComponents _effectComponents;
+        [SerializeField] private AttackCollider _flameThrowAttackCollider;
         [SerializeField] private Transform _fireBallFirePoint;
 
         private HitPointView _hpView;
@@ -38,10 +37,10 @@ namespace InGame.Character
         public EnemyParams Params => _params;
         public EnemyEffect EnemyEffect => _enemyEffect;
         public Animator Animator => _animator;
-        public CharacterCore NormalEnemyPrefab => _normalEnemyPrefab;
         public BossEnemyEffectComponents EffectComponents => _effectComponents;
         public Transform FireBallFirePoint => _fireBallFirePoint;
-        
+        public FlameThrowAttacker FlameThrowAttacker { get; private set; }
+
         public CancellationTokenSource CancellationTokenSource
         {
             get
@@ -82,6 +81,8 @@ namespace InGame.Character
                 transform,
                 3f,
                 _params.AttackReadyTime);
+            
+            FlameThrowAttacker = new FlameThrowAttacker(_flameThrowAttackCollider);
             
             _hpPresenter.Initialize(_hpView, _params);
             _stateMachine.SetState<BossEnemyIdleState>();
