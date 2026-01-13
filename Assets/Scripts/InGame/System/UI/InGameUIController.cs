@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using InGame.Message;
 using MessagePipe;
 using UnityEngine;
@@ -9,6 +10,7 @@ namespace InGame.System.UI
     public class InGameUIController : MonoBehaviour
     {
         [SerializeField] private BuildingPresenter _buildingPresenter;
+        [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
         
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
         private IDisposable _subscription;
@@ -32,6 +34,23 @@ namespace InGame.System.UI
         {
             _buildingPresenter.Initialize(message.PlayerCount, _buildingCountChangeSubscriber);
         }
+
+        #region PoseMatchEvent
+        public async UniTask ShowPoseMatchViewAsync()
+        {
+            await _poseMatchPresenter.ShowAsync();
+        } 
+        
+        public async UniTask HidePoseMatchViewAsync()
+        {
+            await _poseMatchPresenter.HideAsync();
+        }
+        
+        public async UniTask PoseMatchSuccessAnimationAsync()
+        {
+            await _poseMatchPresenter.PoseMatchSuccessAnimationAsync();
+        }
+        #endregion
 
         private void OnDestroy()
         {

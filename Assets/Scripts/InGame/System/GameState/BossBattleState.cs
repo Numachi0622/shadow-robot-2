@@ -86,6 +86,8 @@ namespace InGame.System
             camera.transform.SetParent(null);
             await camera.transform.DOMove(targetPos, 0.5f).ToUniTask();
 
+            await Owner.InGameUIController.ShowPoseMatchViewAsync();
+
             // ポーズマッチの結果が返ってくるまで待機
             var resultSource = new UniTaskCompletionSource<PoseMatchEventResultMessage>();
             var bag = DisposableBag.CreateBuilder();
@@ -95,10 +97,12 @@ namespace InGame.System
             var result = await resultSource.Task;
             if (result.IsSuccess)
             {
-                // todo: ポーズマッチ成功演出
+                await Owner.InGameUIController.PoseMatchSuccessAnimationAsync();
                 // todo: ガード展開
             }
-
+            
+            await Owner.InGameUIController.HidePoseMatchViewAsync();
+            
             camera.transform.SetParent(player.transform);
             await camera.transform.DOLocalMove(defaultPos, 0.5f).ToUniTask();
 

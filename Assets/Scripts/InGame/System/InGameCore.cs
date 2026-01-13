@@ -6,6 +6,7 @@ using MessagePipe;
 using VContainer;
 using VContainer.Unity;
 using InGame.Message;
+using InGame.System.UI;
 
 namespace InGame.System
 {
@@ -32,6 +33,7 @@ namespace InGame.System
         public CharacterRegistry CharacterRegistry { get; private set; }
         public MainStageManager MainStageManager => _mainStageManager;
         public List<BuildingCore> BuildingPrefabs { get; private set; }
+        public InGameUIController InGameUIController { get; set; }
 
         [Inject]
         public InGameCore(
@@ -40,6 +42,7 @@ namespace InGame.System
             CharacterRegistry characterRegistry,
             MainStageManager mainStageManager,
             CharacterPrefabs characterPrefabs,
+            InGameUIController inGameUIController,
             ISubscriber<StateChangeMessage> stateChangeSubscriber,
             IPublisher<SpawnCharacterMessage> spawnCharacterPublisher,
             IPublisher<CreateBuildingMessage> createBuildingPublisher,
@@ -57,6 +60,7 @@ namespace InGame.System
             CharacterRegistry = characterRegistry;
             _mainStageManager = mainStageManager;
             BuildingPrefabs = characterPrefabs.BuildingPrefabs;
+            InGameUIController = inGameUIController;
             _stateChangeSubscriber = stateChangeSubscriber;
             SpawnCharacterPublisher = spawnCharacterPublisher;
             CreateBuildingPublisher = createBuildingPublisher;

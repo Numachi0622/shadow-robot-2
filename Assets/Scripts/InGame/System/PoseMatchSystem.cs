@@ -5,6 +5,8 @@ namespace InGame.System
 {
     public static class PoseMatchSystem
     {
+        public const int MaxMatchValue = 11;
+        
         /// <summary>
         /// ポーズとの一致度を判定
         /// </summary>
