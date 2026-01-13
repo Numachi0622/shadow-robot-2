@@ -14,7 +14,8 @@ namespace InGame.System.UI
         private readonly float _limitTime;
         private float _currentTime;
         private bool _isMatched;
-        
+        private PoseData _poseData;
+
         public IReadOnlyReactiveProperty<float> PoseMatchRate => _poseMatchRate;
         public IReadOnlyReactiveProperty<float> PoseMatchLimitTime => _poseMatchLimitTimeRate;
         public IObservable<bool> OnMatchSuccess => _onMatchSuccess;
@@ -25,9 +26,17 @@ namespace InGame.System.UI
             _limitTime = limitTime;
         }
 
+        /// <summary>
+        /// マッチング対象のPoseDataを設定
+        /// </summary>
+        public void SetPoseData(PoseData poseData)
+        {
+            _poseData = poseData;
+        }
+
         public void UpdatePoseMatchRate()
         {
-            var poseMatchCount = PoseMatchSystem.MatchPose(null, _transforms);
+            var poseMatchCount = PoseMatchSystem.MatchPose(_poseData, _transforms);
             var rate = (float)poseMatchCount / PoseMatchSystem.MaxMatchValue;
             _poseMatchRate.Value = rate;
 

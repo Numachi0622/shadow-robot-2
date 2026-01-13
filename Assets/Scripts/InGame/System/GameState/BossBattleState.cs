@@ -15,13 +15,18 @@ namespace InGame.System
     {
         private CancellationTokenSource _cts;
         private IDisposable _subscription;
+        private PoseDataService _poseDataService;
         
         public override async void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[BossBattleState] OnEnter");
 
             if (parameter is not InitBossBattleMessage message) return;
-            
+
+            // PoseDataServiceの初期化とプリロード
+            _poseDataService = new PoseDataService();
+            await _poseDataService.PreloadAsync();
+
             var bag = DisposableBag.CreateBuilder();
             Owner.PoseMatchEventStartSubscriber.Subscribe(_ => PoseMatchEventAsync().Forget()).AddTo(bag);
 
@@ -80,13 +85,23 @@ namespace InGame.System
             var player = Owner.CharacterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore;
             if (player == null) return;
 
+            // ランダムにPoseDataを選択
+            var poseData = await _poseDataService.GetRandomPoseAsync();
+            if (poseData == null)
+            {
+                Debug.LogError("[BossBattleState] Failed to get PoseData");
+                return;
+            }
+
+            // カメラをポーズマッチ用の位置に移動
             var camera = player.PlayerCamera;
             var defaultPos = camera.transform.localPosition;
             var targetPos = new Vector3(0, 1, 0);
             camera.transform.SetParent(null);
             await camera.transform.DOMove(targetPos, 0.5f).ToUniTask();
 
-            await Owner.InGameUIController.ShowPoseMatchViewAsync();
+            // ポーズマッチUI表示（PoseDataを渡す）
+            await Owner.InGameUIController.ShowPoseMatchViewAsync(poseData);
 
             // ポーズマッチの結果が返ってくるまで待機
             var resultSource = new UniTaskCompletionSource<PoseMatchEventResultMessage>();
@@ -97,12 +112,15 @@ namespace InGame.System
             var result = await resultSource.Task;
             if (result.IsSuccess)
             {
+                // ポーズマッチ成功演出
                 await Owner.InGameUIController.PoseMatchSuccessAnimationAsync();
                 // todo: ガード展開
             }
             
+            // ポーズマッチUI非表示
             await Owner.InGameUIController.HidePoseMatchViewAsync();
             
+            // カメラを元の位置に戻す
             camera.transform.SetParent(player.transform);
             await camera.transform.DOLocalMove(defaultPos, 0.5f).ToUniTask();
 
@@ -115,6 +133,8 @@ namespace InGame.System
             _cts = null;
             _subscription?.Dispose();
             _subscription = null;
+            _poseDataService?.Dispose();
+            _poseDataService = null;
         }
     }
 }

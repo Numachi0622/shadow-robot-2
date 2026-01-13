@@ -1,5 +1,6 @@
 using System;
 using Cysharp.Threading.Tasks;
+using InGame.Character;
 using InGame.Message;
 using MessagePipe;
 using UnityEngine;
@@ -13,21 +14,29 @@ namespace InGame.System.UI
         [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
         
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
+        private IPublisher<PoseMatchEventResultMessage> _poseMatchEventResultPublisher;
         private IDisposable _subscription;
         
         [Inject]
         public void Construct(
             // Inject用
             ISubscriber<AreaId, BuildingCountChangeMessage> buildingCountChangeSubscriber,
+            IPublisher<PoseMatchEventResultMessage> poseMatchEventResultPublisher,
             // 購読のみ
             ISubscriber<InitGameMessage> initGameSubscriber)
         {
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
+            _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
             
             var bag = DisposableBag.CreateBuilder();
             bag.Add(initGameSubscriber.Subscribe(OnInitGame));
             
             _subscription = bag.Build();
+        }
+
+        public void Initialize()
+        {
+            _poseMatchPresenter.Initialize(_poseMatchEventResultPublisher);
         }
 
         private void OnInitGame(InitGameMessage message)
@@ -36,9 +45,9 @@ namespace InGame.System.UI
         }
 
         #region PoseMatchEvent
-        public async UniTask ShowPoseMatchViewAsync()
+        public async UniTask ShowPoseMatchViewAsync(PoseData poseData)
         {
-            await _poseMatchPresenter.ShowAsync();
+            await _poseMatchPresenter.ShowAsync(poseData);
         } 
         
         public async UniTask HidePoseMatchViewAsync()

@@ -86,6 +86,7 @@ namespace InGame.System
             _stateMachine = new StateMachine<InGameCore>(this);
             _stateMachine.SetState<TitleState>();
             _mainStageManager.Initialize();
+            InGameUIController.Initialize();
         }
         
         public void Tick()
