@@ -305,6 +305,14 @@ PrefabInstance:
       propertyPath: 'm_Bones.Array.data[17]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 3527392307264929745, guid: b88bd98a4dc674652be15d80bf13f664, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: e05ebf305b453e748be0a4772a2bba85, type: 2}
+    - target: {fileID: 3527392307264929745, guid: b88bd98a4dc674652be15d80bf13f664, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b301068a80b6ceb409c3709624cb0c24, type: 2}
     - target: {fileID: 5866666021909216657, guid: b88bd98a4dc674652be15d80bf13f664, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -500,7 +508,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a418068fe733af64c9184bf694bedfea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _view: {fileID: 0}
 --- !u!114 &7139223372765254890
 MonoBehaviour:
   m_ObjectHideFlags: 0
