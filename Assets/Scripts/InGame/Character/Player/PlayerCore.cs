@@ -68,6 +68,7 @@ namespace InGame.Character
         private IPublisher<DespawnCharacterMessage> _despawnPublisher;
         private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
         private ISubscriber<OpenShieldMessage> _openShieldSubscriber;
+        private IPublisher<StateChangeMessage> _stateChangePublisher;
         
         public CharacterId PlayerId => _playerId;
         
@@ -232,6 +233,7 @@ namespace InGame.Character
         private void OnDeadStart(Unit unit)
         {
             _stateMachine.SetState<PlayerDeadState>();
+            _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.GameOver));
         }
         #endregion
 
