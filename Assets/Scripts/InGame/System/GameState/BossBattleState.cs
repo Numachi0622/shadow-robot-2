@@ -98,7 +98,12 @@ namespace InGame.System
             var defaultPos = camera.transform.localPosition;
             var targetPos = new Vector3(0, 1, 0);
             camera.transform.SetParent(null);
-            await camera.transform.DOMove(targetPos, 0.5f).ToUniTask();
+            var cameraTask = camera.transform.DOMove(targetPos, 0.5f).ToUniTask();
+            
+            // HPゲージを非表示
+            var hpHideTask = Owner.InGameUIController.HideHitPointViewAsync();
+            
+            await UniTask.WhenAll(cameraTask, hpHideTask);
 
             // ポーズマッチUI表示（PoseDataを渡す）
             await Owner.InGameUIController.ShowPoseMatchViewAsync(poseData);
@@ -122,7 +127,12 @@ namespace InGame.System
             
             // カメラを元の位置に戻す
             camera.transform.SetParent(player.transform);
-            await camera.transform.DOLocalMove(defaultPos, 0.5f).ToUniTask();
+            cameraTask = camera.transform.DOLocalMove(defaultPos, 0.5f).ToUniTask();
+            
+            // HPゲージを再表示
+            var hpShowTask = Owner.InGameUIController.ShowHitPointViewAsync();
+            
+            await UniTask.WhenAll(cameraTask, hpShowTask);
 
             Owner.PoseMatchEventEndPublisher.Publish(new PoseMatchEventEndMessage());
         }

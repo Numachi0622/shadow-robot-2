@@ -598,6 +598,7 @@ MonoBehaviour:
   - {fileID: 440169416204013204}
   - {fileID: 3507679739270237437}
   - {fileID: 5217866300561689890}
+  _rectTransform: {fileID: 6832787722208566864}
 --- !u!1001 &1393470576181616909
 PrefabInstance:
   m_ObjectHideFlags: 0

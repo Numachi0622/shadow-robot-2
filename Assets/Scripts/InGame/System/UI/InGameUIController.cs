@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
@@ -19,6 +20,8 @@ namespace InGame.System.UI
         private IPublisher<PoseMatchEventResultMessage> _poseMatchEventResultPublisher;
         private CharacterRegistry _characterRegistry;
         private IDisposable _subscription;
+
+        private const int HitPointViewHidePositionX = 1000; 
         
         [Inject]
         public void Construct(
@@ -75,7 +78,20 @@ namespace InGame.System.UI
             _bossHpPresenter = boss.HpPresenter;
             _bossHpPresenter.Show();
         }
+
+        public async UniTask ShowHitPointViewAsync()
+        {
+            var playerTask = _playerHpPresenter.ShowAsync(new HitPointVisibilityContext(0));
+            var bossTask = _bossHpPresenter.ShowAsync(new HitPointVisibilityContext(0));
+            await UniTask.WhenAll(playerTask, bossTask);
+        }
         
+        public async UniTask HideHitPointViewAsync()
+        {
+            var playerTask = _playerHpPresenter.HideAsync(new HitPointVisibilityContext(-HitPointViewHidePositionX));
+            var bossTask = _bossHpPresenter.HideAsync(new HitPointVisibilityContext(HitPointViewHidePositionX));
+            await UniTask.WhenAll(playerTask, bossTask);
+        }
 
         #endregion
 

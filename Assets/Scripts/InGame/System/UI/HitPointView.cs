@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace InGame.System.UI
@@ -6,6 +7,7 @@ namespace InGame.System.UI
     public class HitPointView : MonoBehaviour, IVisibilityController
     {
         [SerializeField] private HitPointElementView[] _elementViews;
+        [SerializeField] private RectTransform _rectTransform;
 
         public void UpdateHp(float hpRate)
         {
@@ -34,6 +36,7 @@ namespace InGame.System.UI
         }
 
         public bool IsActive => gameObject.activeSelf;
+        
         public void Show()
         {
             if (gameObject.activeSelf) return;
@@ -46,18 +49,31 @@ namespace InGame.System.UI
             gameObject.SetActive(false);
         }
 
-        public UniTask ShowAsync(IVisibilityContext context = null)
+        public async UniTask ShowAsync(IVisibilityContext context = null)
         {
-            // todo: 左右に避けるアニメーションを実装予定
+            if (context is not HitPointVisibilityContext hpContext) return;
+            
             Show();
-            return UniTask.CompletedTask;
+            var target = hpContext.TargetPositionX;
+            await _rectTransform.DOAnchorPosX(target, 0.5f).ToUniTask();
         }
 
-        public UniTask HideAsync(IVisibilityContext context = null)
+        public async UniTask HideAsync(IVisibilityContext context = null)
         {
-            // todo: 左右に避けるアニメーションを実装予定
+            if (context is not HitPointVisibilityContext hpContext) return;
+
+            var target = hpContext.TargetPositionX;
+            await _rectTransform.DOAnchorPosX(target, 0.5f).ToUniTask();
             Hide();
-            return UniTask.CompletedTask;
+        }
+    }
+    
+    public struct HitPointVisibilityContext : IVisibilityContext
+    {
+        public readonly float TargetPositionX;
+        public HitPointVisibilityContext(float targetPositionX)
+        {
+            TargetPositionX = targetPositionX;
         }
     }
 }

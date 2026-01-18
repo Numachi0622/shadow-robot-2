@@ -1,6 +1,7 @@
 using UnityEngine;
 using UniRx;
 using System;
+using Cysharp.Threading.Tasks;
 using InGame.System.UI;
 
 namespace InGame.Character
@@ -38,6 +39,8 @@ namespace InGame.Character
         }
 
         public void Show() => _view.Show();
+        public UniTask ShowAsync(IVisibilityContext context = null) => _view.ShowAsync(context);
         public void Hide() => _view.Hide();
+        public UniTask HideAsync(IVisibilityContext context = null) => _view.HideAsync(context);
     }
 }
