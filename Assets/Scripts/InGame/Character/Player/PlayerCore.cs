@@ -74,6 +74,7 @@ namespace InGame.Character
         public IDamageable Damager => _damager;
         public MovementTransforms Transforms => _movementTransforms;
         public Camera PlayerCamera => _playerCamera;
+        public HitPointPresenter HpPresenter => _hpPresenter;
 
         public override void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {

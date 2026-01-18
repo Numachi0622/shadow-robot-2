@@ -13,6 +13,7 @@ namespace InGame.System.UI
     {
         [SerializeField] private BuildingPresenter _buildingPresenter;
         [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
+        private HitPointPresenter _playerHpPresenter, _bossHpPresenter;
         
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
         private IPublisher<PoseMatchEventResultMessage> _poseMatchEventResultPublisher;
@@ -27,7 +28,8 @@ namespace InGame.System.UI
             CharacterRegistry characterRegistry,
             // 購読のみ
             ISubscriber<InitGameMessage> initGameSubscriber,
-            ISubscriber<NormalBattleEndMessage> normalBattleEndSubscriber)
+            ISubscriber<NormalBattleEndMessage> normalBattleEndSubscriber,
+            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber)
         {
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
@@ -36,6 +38,7 @@ namespace InGame.System.UI
             var bag = DisposableBag.CreateBuilder();
             initGameSubscriber.Subscribe(OnInitGame).AddTo(bag);
             normalBattleEndSubscriber.Subscribe(_ => OnNormalBattleEnd()).AddTo(bag);
+            bossBattleStartSubscriber.Subscribe(_ => OnBossBattleStart()).AddTo(bag);
             
             _subscription = bag.Build();
         }
@@ -54,6 +57,26 @@ namespace InGame.System.UI
         {
             _buildingPresenter.Hide();
         }
+        #endregion
+
+        #region BossBattleEvent
+        private void OnBossBattleStart()
+        {
+            var player = _characterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore;
+            var boss = _characterRegistry.GetAllEnemies().FirstOrDefault() as BossEnemyCore;
+            if (!player || !boss)
+            {
+                Debug.LogError("[InGameUIController] Player or Boss not found for HitPointPresenter initialization.");
+                return;
+            }
+
+            _playerHpPresenter = player.HpPresenter;
+            _playerHpPresenter.Show();
+            _bossHpPresenter = boss.HpPresenter;
+            _bossHpPresenter.Show();
+        }
+        
+
         #endregion
 
         #region PoseMatchEvent

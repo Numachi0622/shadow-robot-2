@@ -40,6 +40,7 @@ namespace InGame.Character
         public BossEnemyEffectComponents EffectComponents => _effectComponents;
         public Transform FireBallFirePoint => _fireBallFirePoint;
         public FlameThrowAttacker FlameThrowAttacker { get; private set; }
+        public HitPointPresenter HpPresenter => _hpPresenter;
 
         public CancellationTokenSource CancellationTokenSource
         {

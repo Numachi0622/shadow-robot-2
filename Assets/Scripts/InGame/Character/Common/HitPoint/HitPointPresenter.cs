@@ -17,9 +17,7 @@ namespace InGame.Character
         {
             _view = view;
             _model = new HitPointModel(characterParams.MaxHp);
-
-            var currentHp = _model.CurrentHp;
-
+            
             Bind();
         }
 
@@ -38,5 +36,8 @@ namespace InGame.Character
             _model.Decrease(value);
             Debug.Log($"<color=green>[{gameObject.name}] CurrentHp: {_model.CurrentHp}</color>");
         }
+
+        public void Show() => _view.Show();
+        public void Hide() => _view.Hide();
     }
 }

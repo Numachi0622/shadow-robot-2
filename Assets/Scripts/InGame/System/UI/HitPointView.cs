@@ -1,9 +1,9 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace InGame.System.UI
 {
-    public class HitPointView : MonoBehaviour
+    public class HitPointView : MonoBehaviour, IVisibilityController
     {
         [SerializeField] private HitPointElementView[] _elementViews;
 
@@ -31,6 +31,33 @@ namespace InGame.System.UI
                     _elementViews[i].UpdateRate(0f);
                 }
             }
+        }
+
+        public bool IsActive => gameObject.activeSelf;
+        public void Show()
+        {
+            if (gameObject.activeSelf) return;
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            if (!gameObject.activeSelf) return;
+            gameObject.SetActive(false);
+        }
+
+        public UniTask ShowAsync()
+        {
+            // todo: 左右に避けるアニメーションを実装予定
+            Show();
+            return UniTask.CompletedTask;
+        }
+
+        public UniTask HideAsync()
+        {
+            // todo: 左右に避けるアニメーションを実装予定
+            Hide();
+            return UniTask.CompletedTask;
         }
     }
 }
