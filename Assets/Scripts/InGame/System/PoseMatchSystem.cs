@@ -19,38 +19,38 @@ namespace InGame.System
                 return 0;
 
             int matchCount = 0;
-            float threshold = poseData.allowedAngleDiff;
+            float threshold = poseData.AllowedAngleDiff;
 
             // SpineMid
-            if (IsJointMatching(poseData.spineMidRotation, transforms.FirstSpine.rotation, threshold))
+            if (IsJointMatching(poseData.SpineMidRotation, transforms.FirstSpine.rotation, threshold))
                 matchCount++;
 
             // Left Arm
-            if (IsJointMatching(poseData.elbowLeftRotation, transforms.LeftArm.rotation, threshold))
+            if (IsJointMatching(poseData.ElbowLeftRotation, transforms.LeftArm.rotation, threshold))
                 matchCount++;
-            if (IsJointMatching(poseData.wristLeftRotation, transforms.LeftForeArm.rotation, threshold))
+            if (IsJointMatching(poseData.WristLeftRotation, transforms.LeftForeArm.rotation, threshold))
                 matchCount++;
-            if (IsJointMatching(poseData.handLeftRotation, transforms.LeftHand.rotation, threshold))
+            if (IsJointMatching(poseData.HandLeftRotation, transforms.LeftHand.rotation, threshold))
                 matchCount++;
 
             // Right Arm
-            if (IsJointMatching(poseData.elbowRightRotation, transforms.RightArm.rotation, threshold))
+            if (IsJointMatching(poseData.ElbowRightRotation, transforms.RightArm.rotation, threshold))
                 matchCount++;
-            if (IsJointMatching(poseData.wristRightRotation, transforms.RightForeArm.rotation, threshold))
+            if (IsJointMatching(poseData.WristRightRotation, transforms.RightForeArm.rotation, threshold))
                 matchCount++;
-            if (IsJointMatching(poseData.handRightRotation, transforms.RightHand.rotation, threshold))
+            if (IsJointMatching(poseData.HandRightRotation, transforms.RightHand.rotation, threshold))
                 matchCount++;
 
             // Left Leg
-            if (IsJointMatching(poseData.kneeLeftRotation, transforms.LeftUpLeg.rotation, threshold))
+            if (IsJointMatching(poseData.KneeLeftRotation, transforms.LeftUpLeg.rotation, threshold))
                 matchCount++;
-            if (IsJointMatching(poseData.ankleLeftRotation, transforms.LeftLeg.rotation, threshold))
+            if (IsJointMatching(poseData.AnkleLeftRotation, transforms.LeftLeg.rotation, threshold))
                 matchCount++;
 
             // Right Leg
-            if (IsJointMatching(poseData.kneeRightRotation, transforms.RightUpLeg.rotation, threshold))
+            if (IsJointMatching(poseData.KneeRightRotation, transforms.RightUpLeg.rotation, threshold))
                 matchCount++;
-            if (IsJointMatching(poseData.ankleRightRotation, transforms.RightLeg.rotation, threshold))
+            if (IsJointMatching(poseData.AnkleRightRotation, transforms.RightLeg.rotation, threshold))
                 matchCount++;
 
             return matchCount;

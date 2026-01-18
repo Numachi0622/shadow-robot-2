@@ -64,7 +64,7 @@ namespace InGame.System
                 await PreloadAsync();
             }
 
-            return _cachedPoseData?.Find(p => p.poseName == poseName);
+            return _cachedPoseData?.Find(p => p.PoseName == poseName);
         }
 
         /// <summary>

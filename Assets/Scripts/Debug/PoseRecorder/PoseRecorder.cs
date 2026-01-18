@@ -151,23 +151,22 @@ namespace ShadowRobotDebug
             var poseData = ScriptableObject.CreateInstance<PoseData>();
 
             // データを設定
-            poseData.poseName = fileName;
-            poseData.spineMidRotation = motionParam.SpineMidRotation;
-            poseData.elbowLeftRotation = motionParam.ElbowLeftRotation;
-            poseData.wristLeftRotation = motionParam.WristLeftRotation;
-            poseData.handLeftRotation = motionParam.HandLeftRotation;
-            poseData.elbowRightRotation = motionParam.ElbowRightRotation;
-            poseData.wristRightRotation = motionParam.WristRightRotation;
-            poseData.handRightRotation = motionParam.HandRightRotation;
-            poseData.kneeLeftRotation = motionParam.KneeLeftRotation;
-            poseData.ankleLeftRotation = motionParam.AnkleLeftRotation;
-            poseData.kneeRightRotation = motionParam.KneeRightRotation;
-            poseData.ankleRightRotation = motionParam.AnkleRightRotation;
+            poseData.PoseName = fileName;
+            poseData.SpineMidRotation = motionParam.SpineMidRotation;
+            poseData.ElbowLeftRotation = motionParam.ElbowLeftRotation;
+            poseData.WristLeftRotation = motionParam.WristLeftRotation;
+            poseData.HandLeftRotation = motionParam.HandLeftRotation;
+            poseData.ElbowRightRotation = motionParam.ElbowRightRotation;
+            poseData.WristRightRotation = motionParam.WristRightRotation;
+            poseData.HandRightRotation = motionParam.HandRightRotation;
+            poseData.KneeLeftRotation = motionParam.KneeLeftRotation;
+            poseData.AnkleLeftRotation = motionParam.AnkleLeftRotation;
+            poseData.KneeRightRotation = motionParam.KneeRightRotation;
+            poseData.AnkleRightRotation = motionParam.AnkleRightRotation;
 
             // デフォルト値を設定
-            poseData.matchThreshold = 0.8f;
-            poseData.allowedAngleDiff = 30f;
-            poseData.weights = new JointWeights(1f);
+            poseData.MatchThreshold = 0.8f;
+            poseData.AllowedAngleDiff = 30f;
 
             // アセットとして保存
             var assetPath = Path.Combine(FilePath, fileName + ".asset");
