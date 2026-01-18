@@ -10,7 +10,7 @@ namespace InGame.Character
     {
         private HitPointView _view;
         private HitPointModel _model;
-
+        
         public int CurrentHp => _model.CurrentHp;
         public IObservable<Unit> OnHpDecreased => _model.OnHpDecreased;
 

@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
+using UniRx.Triggers;
 
 namespace InGame.System.UI
 {
@@ -14,6 +15,7 @@ namespace InGame.System.UI
         private PoseMatchModel _model;
         private IPublisher<PoseMatchEventResultMessage> _poseMatchEventResultPublisher;
         private bool _initialized = false;
+        private bool _isShowing = false;
         
         public bool Initialized => _initialized;
 
@@ -30,6 +32,10 @@ namespace InGame.System.UI
 
         private void Bind()
         {
+            this.UpdateAsObservable()
+                .Where(_ => _isShowing && !_model.IsMatched)
+                .Subscribe(_ => OnUpdate(Time.deltaTime))
+                .AddTo(this);
             _model.PoseMatchRate.Subscribe(_view.UpdateMatchGauge).AddTo(this);
             _model.PoseMatchLimitTime.Subscribe(_view.UpdateTimeGauge).AddTo(this);
             _model.OnMatchSuccess.Subscribe(OnMatchSuccess).AddTo(this);
@@ -39,11 +45,14 @@ namespace InGame.System.UI
         {
             _model.SetPoseData(poseData);
             await _view.ShowAsync(new PoseMatchVisibilityContext(poseData.PoseIcon));
+            _isShowing = true;
         }
         
         public async UniTask HideAsync()
         {
             await _view.HideAsync();
+            _model.Reset();
+            _isShowing = false;
         }
         
         public async UniTask PoseMatchSuccessAnimationAsync()
@@ -54,6 +63,12 @@ namespace InGame.System.UI
         private void OnMatchSuccess(bool isSuccess)
         {
             _poseMatchEventResultPublisher.Publish(new PoseMatchEventResultMessage(isSuccess));
+        }
+
+        private void OnUpdate(float deltaTime)
+        {
+            _model.UpdateLimitTime(deltaTime);
+            _model.UpdatePoseMatchRate();
         }
     }
 }

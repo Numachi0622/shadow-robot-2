@@ -1,7 +1,5 @@
-using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using InGame.Character;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -76,8 +74,6 @@ namespace InGame.System.UI
 
         private void Refresh()
         {
-            _matchGauge.fillAmount = 1f;
-            _timeGauge.fillAmount = 1f;
             _matchGaugeRoot.localScale = Vector3.one;
             _matchGaugeRoot.localRotation = Quaternion.identity;
             _rootCanvasGroup.alpha = 1f;

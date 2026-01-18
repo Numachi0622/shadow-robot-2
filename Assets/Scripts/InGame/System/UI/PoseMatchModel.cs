@@ -19,11 +19,13 @@ namespace InGame.System.UI
         public IReadOnlyReactiveProperty<float> PoseMatchRate => _poseMatchRate;
         public IReadOnlyReactiveProperty<float> PoseMatchLimitTime => _poseMatchLimitTimeRate;
         public IObservable<bool> OnMatchSuccess => _onMatchSuccess;
+        public bool IsMatched => _isMatched;
 
         public PoseMatchModel(PlayerCore.MovementTransforms transforms, float limitTime)
         {
             _transforms = transforms;
             _limitTime = limitTime;
+            _currentTime = limitTime;
         }
 
         /// <summary>
