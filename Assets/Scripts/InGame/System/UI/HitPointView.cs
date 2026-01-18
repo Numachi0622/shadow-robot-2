@@ -46,14 +46,14 @@ namespace InGame.System.UI
             gameObject.SetActive(false);
         }
 
-        public UniTask ShowAsync()
+        public UniTask ShowAsync(IVisibilityContext context = null)
         {
             // todo: 左右に避けるアニメーションを実装予定
             Show();
             return UniTask.CompletedTask;
         }
 
-        public UniTask HideAsync()
+        public UniTask HideAsync(IVisibilityContext context = null)
         {
             // todo: 左右に避けるアニメーションを実装予定
             Hide();

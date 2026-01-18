@@ -46,13 +46,13 @@ namespace InGame.System.UI
             gameObject.SetActive(false);
         }
 
-        public UniTask ShowAsync()
+        public UniTask ShowAsync(IVisibilityContext context = null)
         {
             Show();
             return UniTask.CompletedTask;
         }
 
-        public UniTask HideAsync()
+        public UniTask HideAsync(IVisibilityContext context = null)
         {
             Hide();
             return UniTask.CompletedTask;

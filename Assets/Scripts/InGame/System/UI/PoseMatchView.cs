@@ -40,14 +40,14 @@ namespace InGame.System.UI
             gameObject.SetActive(false);
         }
 
-        public async UniTask ShowAsync()
+        public async UniTask ShowAsync(IVisibilityContext context = null)
         {
             Show();
             _rootCanvasGroup.alpha = 0f;
             await _rootCanvasGroup.DOFade(1f, 0.5f).ToUniTask();
         }
 
-        public async UniTask HideAsync()
+        public async UniTask HideAsync(IVisibilityContext context = null)
         {
             _rootCanvasGroup.alpha = 1f;
             await _rootCanvasGroup.DOFade(0f, 0.5f).ToUniTask();

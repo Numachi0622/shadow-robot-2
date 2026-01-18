@@ -7,7 +7,11 @@ namespace InGame.System.UI
         bool IsActive { get; }
         void Show();
         void Hide();
-        UniTask ShowAsync();
-        UniTask HideAsync();
+        UniTask ShowAsync(IVisibilityContext context = null);
+        UniTask HideAsync(IVisibilityContext context = null);
+    }
+
+    public interface IVisibilityContext
+    {
     }
 }
