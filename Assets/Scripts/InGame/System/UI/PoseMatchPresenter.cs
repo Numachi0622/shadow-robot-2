@@ -13,11 +13,19 @@ namespace InGame.System.UI
         [SerializeField] private float _limitTime = 10f;
         private PoseMatchModel _model;
         private IPublisher<PoseMatchEventResultMessage> _poseMatchEventResultPublisher;
+        private bool _initialized = false;
+        
+        public bool Initialized => _initialized;
 
-        public void Initialize(IPublisher<PoseMatchEventResultMessage> poseMatchEventResultPublisher)
+        public void Initialize(
+            PlayerCore.MovementTransforms transforms,
+            IPublisher<PoseMatchEventResultMessage> poseMatchEventResultPublisher)
         {
+            _model = new PoseMatchModel(transforms, _limitTime);
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
             Bind();
+            
+            _initialized = true;
         }
 
         private void Bind()

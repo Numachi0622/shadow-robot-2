@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
@@ -15,6 +16,7 @@ namespace InGame.System.UI
         
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
         private IPublisher<PoseMatchEventResultMessage> _poseMatchEventResultPublisher;
+        private CharacterRegistry _characterRegistry;
         private IDisposable _subscription;
         
         [Inject]
@@ -22,11 +24,13 @@ namespace InGame.System.UI
             // Inject用
             ISubscriber<AreaId, BuildingCountChangeMessage> buildingCountChangeSubscriber,
             IPublisher<PoseMatchEventResultMessage> poseMatchEventResultPublisher,
+            CharacterRegistry characterRegistry,
             // 購読のみ
             ISubscriber<InitGameMessage> initGameSubscriber)
         {
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
+            _characterRegistry = characterRegistry;
             
             var bag = DisposableBag.CreateBuilder();
             bag.Add(initGameSubscriber.Subscribe(OnInitGame));
@@ -36,7 +40,6 @@ namespace InGame.System.UI
 
         public void Initialize()
         {
-            _poseMatchPresenter.Initialize(_poseMatchEventResultPublisher);
         }
 
         private void OnInitGame(InitGameMessage message)
@@ -47,8 +50,20 @@ namespace InGame.System.UI
         #region PoseMatchEvent
         public async UniTask ShowPoseMatchViewAsync(PoseData poseData)
         {
+            if (!_poseMatchPresenter.Initialized)
+            {
+                var player = _characterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore;
+                if (player == null)
+                {
+                    Debug.LogError("[InGameUIController] No player found for PoseMatchPresenter initialization.");
+                    return;   
+                }
+                var transforms = player.Transforms;
+                _poseMatchPresenter.Initialize(transforms, _poseMatchEventResultPublisher);
+            }
+            
             await _poseMatchPresenter.ShowAsync(poseData);
-        } 
+        }
         
         public async UniTask HidePoseMatchViewAsync()
         {
