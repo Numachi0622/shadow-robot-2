@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Default Local Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Default Local Group
+  m_GUID: eed57f996c8066b4aa51800b1dd26de2
+  m_SerializeEntries:
+  - m_GUID: 426c0ec999a3fbe45932568741d74a53
+    m_Address: Assets/Data/PoseData/test4.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoseData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c5c4a007667b41c43a61e8353353ef2b
+    m_Address: Assets/Data/PoseData/test.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoseData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf3b67317548d5d4dba361d58a33f636
+    m_Address: Assets/Data/PoseData/test3.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoseData
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e63478e9778f2524893d6c1ab2942121
+    m_Address: Assets/Data/PoseData/test2.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoseData
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 25a660e3233c1f14a8c458f6e4c7dea5, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 7ca9dbaa10a96fa4194a1cccd70f9c8f, type: 2}
+    - {fileID: 11400000, guid: 64cb186951f71ce499dd172e93453d16, type: 2}

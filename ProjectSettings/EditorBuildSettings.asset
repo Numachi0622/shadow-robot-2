@@ -12,5 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/KinectClient.unity
     guid: 9f9909f12de58044f813f5954550054a
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 495a894419b80ee4cbf22233eed8fcc6, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
