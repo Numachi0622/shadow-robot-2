@@ -691,6 +691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _view: {fileID: 155418309702964352}
+  _limitTime: 10
 --- !u!114 &155418309702964352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -705,6 +706,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _matchGauge: {fileID: 5234997933160088101}
   _timeGauge: {fileID: 4186999154978080461}
+  _poseIcon: {fileID: 5350181965086831164}
   _matchGaugeRoot: {fileID: 846831748997007793}
   _rootCanvasGroup: {fileID: 1858827144463334020}
 --- !u!225 &1858827144463334020

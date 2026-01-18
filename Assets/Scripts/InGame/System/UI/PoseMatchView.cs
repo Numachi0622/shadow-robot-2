@@ -1,6 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using InGame.Character;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ namespace InGame.System.UI
     {
         [SerializeField] private Image _matchGauge;
         [SerializeField] private Image _timeGauge;
+        [SerializeField] private Image _poseIcon;
         [SerializeField] private Transform _matchGaugeRoot;
         [SerializeField] private CanvasGroup _rootCanvasGroup;
         private Sequence _poseMatchSuccessSequence;
@@ -42,6 +44,9 @@ namespace InGame.System.UI
 
         public async UniTask ShowAsync(IVisibilityContext context = null)
         {
+            if (context is not PoseMatchVisibilityContext poseMatchContext) return;
+            _poseIcon.sprite = poseMatchContext.IconSprite;
+            
             Show();
             _rootCanvasGroup.alpha = 0f;
             await _rootCanvasGroup.DOFade(1f, 0.5f).ToUniTask();
@@ -77,5 +82,14 @@ namespace InGame.System.UI
             _matchGaugeRoot.localRotation = Quaternion.identity;
             _rootCanvasGroup.alpha = 1f;
         } 
+    }
+    
+    public readonly struct PoseMatchVisibilityContext : IVisibilityContext
+    {
+        public readonly Sprite IconSprite;
+        public PoseMatchVisibilityContext(Sprite iconSprite)
+        {
+            IconSprite = iconSprite;
+        }
     }
 }

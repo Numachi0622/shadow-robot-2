@@ -38,7 +38,7 @@ namespace InGame.System.UI
         public async UniTask ShowAsync(PoseData poseData)
         {
             _model.SetPoseData(poseData);
-            await _view.ShowAsync();
+            await _view.ShowAsync(new PoseMatchVisibilityContext(poseData.PoseIcon));
         }
         
         public async UniTask HideAsync()

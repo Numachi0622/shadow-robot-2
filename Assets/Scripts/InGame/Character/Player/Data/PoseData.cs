@@ -1,4 +1,5 @@
 using System;
+using InGame.System.UI;
 using UnityEngine;
 
 namespace InGame.Character
@@ -11,6 +12,9 @@ namespace InGame.Character
     {
         [Header("Pose Information")]
         public string poseName;
+
+        [Header("Pose Icon")] 
+        public Sprite PoseIcon;
 
         [Header("Upper Body Rotations")]
         public Quaternion spineMidRotation;
