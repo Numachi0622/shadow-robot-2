@@ -70,6 +70,7 @@ namespace InGame.System
             _cts?.Dispose();
             
             Owner.AllEnemyDespawnMessage.Publish(new AllEnemyDespawnMessage());
+            Owner.NormalBattleEndPublisher.Publish(new NormalBattleEndMessage());
         }
 
         private async UniTask NormalBattleLoopAsync(InitGameMessage message, CancellationToken ct)

@@ -33,6 +33,7 @@ namespace InGame.System
             builder.RegisterMessageBroker<SpawnCharacterMessage>(options);
             builder.RegisterMessageBroker<DespawnCharacterMessage>(options);
             builder.RegisterMessageBroker<InitGameMessage>(options);
+            builder.RegisterMessageBroker<NormalBattleEndMessage>(options);
             builder.RegisterMessageBroker<BuildingDestroyedMessage>(options);
             builder.RegisterMessageBroker<EnemyDestroyedMessage>(options);
             builder.RegisterMessageBroker<AllEnemyDespawnMessage>(options);

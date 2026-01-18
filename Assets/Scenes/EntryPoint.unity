@@ -2595,6 +2595,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingView
       objectReference: {fileID: 0}
+    - target: {fileID: 6979615652834080836, guid: fe2e4d702fa1c9344b0b972baa6fbe64, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7522570419941982206, guid: fe2e4d702fa1c9344b0b972baa6fbe64, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1

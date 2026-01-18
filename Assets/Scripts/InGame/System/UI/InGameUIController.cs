@@ -26,14 +26,16 @@ namespace InGame.System.UI
             IPublisher<PoseMatchEventResultMessage> poseMatchEventResultPublisher,
             CharacterRegistry characterRegistry,
             // 購読のみ
-            ISubscriber<InitGameMessage> initGameSubscriber)
+            ISubscriber<InitGameMessage> initGameSubscriber,
+            ISubscriber<NormalBattleEndMessage> normalBattleEndSubscriber)
         {
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
             _characterRegistry = characterRegistry;
             
             var bag = DisposableBag.CreateBuilder();
-            bag.Add(initGameSubscriber.Subscribe(OnInitGame));
+            initGameSubscriber.Subscribe(OnInitGame).AddTo(bag);
+            normalBattleEndSubscriber.Subscribe(_ => OnNormalBattleEnd()).AddTo(bag);
             
             _subscription = bag.Build();
         }
@@ -42,10 +44,17 @@ namespace InGame.System.UI
         {
         }
 
+        #region NormalBattleEvent
         private void OnInitGame(InitGameMessage message)
         {
-            _buildingPresenter.Initialize(message.PlayerCount, _buildingCountChangeSubscriber);
+            _buildingPresenter.InitializeAndShow(message.PlayerCount, _buildingCountChangeSubscriber);
         }
+        
+        private void OnNormalBattleEnd()
+        {
+            _buildingPresenter.Hide();
+        }
+        #endregion
 
         #region PoseMatchEvent
         public async UniTask ShowPoseMatchViewAsync(PoseData poseData)

@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
+using NotImplementedException = System.NotImplementedException;
 
 namespace InGame.System.UI
 {
-    public class BuildingView : MonoBehaviour
+    public class BuildingView : MonoBehaviour, IVisibilityController
     {
         [SerializeField] private List<BuildingLineView> _buildingLines;
         
@@ -28,6 +31,31 @@ namespace InGame.System.UI
         public void UpdateBuildingView(AreaId areaId, int buildingCount)
         {
             _buildingLines[areaId.Value]?.UpdateBuildingLine(buildingCount);
+        }
+
+        public bool IsActive => gameObject.activeSelf;
+        public void Show()
+        {
+            if (gameObject.activeSelf) return;
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            if (!gameObject.activeSelf) return;
+            gameObject.SetActive(false);
+        }
+
+        public UniTask ShowAsync()
+        {
+            Show();
+            return UniTask.CompletedTask;
+        }
+
+        public UniTask HideAsync()
+        {
+            Hide();
+            return UniTask.CompletedTask;
         }
     }
 }

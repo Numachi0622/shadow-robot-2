@@ -1,5 +1,4 @@
 using System;
-using Cysharp.Threading.Tasks;
 using InGame.Message;
 using MessagePipe;
 using UniRx;
@@ -7,7 +6,7 @@ using UnityEngine;
 
 namespace InGame.System.UI
 {
-    public class BuildingPresenter : MonoBehaviour, IPresenter
+    public class BuildingPresenter : MonoBehaviour
     {
         [SerializeField] private BuildingView _view;
 
@@ -15,7 +14,7 @@ namespace InGame.System.UI
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
         private IDisposable _subscription;
 
-        public void Initialize(
+        public void InitializeAndShow(
             int playerCount,
             ISubscriber<AreaId, BuildingCountChangeMessage> buildingCountChangeSubscriber)
         {
@@ -23,8 +22,15 @@ namespace InGame.System.UI
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             
             _view.Initialize(playerCount);
+            _view.Show();
             Bind(playerCount);
         }
+
+        public void Hide()
+        {
+            _view.HideAsync();
+        }
+        
 
         private void Bind(int playerCount)
         {
@@ -44,15 +50,10 @@ namespace InGame.System.UI
         {
             _view.UpdateBuildingView(areaId, currentCount);
         }
-
-        public void Dispose()
-        {
-            _subscription?.Dispose();
-        }
         
         private void OnDestroy()
         {
-            Dispose();
+            _subscription?.Dispose();
         }
     }
 }

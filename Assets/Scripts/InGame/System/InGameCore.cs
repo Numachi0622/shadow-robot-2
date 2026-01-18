@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks.Triggers;
 using InGame.Character;
 using InGame.Environment;
 using MessagePipe;
@@ -23,6 +24,7 @@ namespace InGame.System
         public IPublisher<CreateBuildingMessage> CreateBuildingPublisher { get; private set; }
         public IPublisher<InitGameMessage> InitGamePublisher { get; private set; }
         public IPublisher<CharacterId, GameStartPlayerInitMessage> GameStartPlayerInitPublisher { get; private set; }
+        public IPublisher<NormalBattleEndMessage> NormalBattleEndPublisher { get; private set; }
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnMessage { get; private set; }
         public IPublisher<AllPlayerDespawnMessage> AllPlayerDespawnMessage { get; private set; }
         public IPublisher<BossBattleStartMessage> BossBattleStartPublisher { get; private set; }
@@ -48,6 +50,7 @@ namespace InGame.System
             IPublisher<CreateBuildingMessage> createBuildingPublisher,
             IPublisher<InitGameMessage> initGamePublisher,
             IPublisher<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitPublisher,
+            IPublisher<NormalBattleEndMessage> normalBattleEndPublisher,
             IPublisher<AllEnemyDespawnMessage> allEnemyDespawnMessage,
             IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage,
             IPublisher<BossBattleStartMessage> bossBattleStartPublisher,
@@ -66,6 +69,7 @@ namespace InGame.System
             CreateBuildingPublisher = createBuildingPublisher;
             InitGamePublisher = initGamePublisher;
             GameStartPlayerInitPublisher = gameStartPlayerInitPublisher;
+            NormalBattleEndPublisher = normalBattleEndPublisher;
             AllEnemyDespawnMessage = allEnemyDespawnMessage;
             AllPlayerDespawnMessage = allPlayerDespawnMessage;
             BossBattleStartPublisher = bossBattleStartPublisher;

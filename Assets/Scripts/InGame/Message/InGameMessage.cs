@@ -42,6 +42,13 @@ namespace InGame.Message
     }
 
     /// <summary>
+    /// Normalバトル終了メッセージ
+    /// </summary>
+    public readonly struct NormalBattleEndMessage
+    {
+    }
+
+    /// <summary>
     /// ボス戦突入直後の初期化メッセージ
     /// </summary>
     public readonly struct InitBossBattleMessage : IStateParameter
