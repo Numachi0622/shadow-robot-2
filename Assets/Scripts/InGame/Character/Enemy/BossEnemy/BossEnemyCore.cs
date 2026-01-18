@@ -31,8 +31,9 @@ namespace InGame.Character
         private EnemyEffect _enemyEffect;
         private Transform _targetTransform;
         private CancellationTokenSource _cancellationTokenSource;
-
         private CharacterRegistry _characterRegistry;
+        private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
+        private IPublisher<StateChangeMessage> _stateChangePublisher;
         
         public EnemyParams Params => _params;
         public EnemyEffect EnemyEffect => _enemyEffect;
@@ -66,13 +67,17 @@ namespace InGame.Character
             CharacterRegistry characterRegistry,
             IPublisher<SpawnCharacterMessage> summonEnemyPublisher,
             IPublisher<PoseMatchEventStartMessage> poseMatchEventStartPublisher,
-            ISubscriber<PoseMatchEventEndMessage> poseMatchEventEndSubscriber)
+            ISubscriber<PoseMatchEventEndMessage> poseMatchEventEndSubscriber,
+            IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
+            IPublisher<StateChangeMessage> stateChangePublisher)
         {
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
             SummonEnemyPublisher = summonEnemyPublisher;
             PoseMatchEventStartPublisher = poseMatchEventStartPublisher;
             PoseMatchEventEndSubscriber = poseMatchEventEndSubscriber;
+            _enemyDestroyedPublisher = enemyDestroyedPublisher;
+            _stateChangePublisher = stateChangePublisher;
         }
 
         public override void Initialize() 
@@ -151,6 +156,8 @@ namespace InGame.Character
         private void OnDeadStart(Unit unit)
         {
             _stateMachine.SetState<BossEnemyDeadState>();
+            _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(new AreaId(-1), this));
+            _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.Result));
             Destroy(gameObject, 3f);
         }
         #endregion
