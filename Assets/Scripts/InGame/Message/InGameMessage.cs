@@ -93,4 +93,11 @@ namespace InGame.Message
     public readonly struct PoseMatchEventEndMessage
     {
     }
+    
+    /// <summary>
+    /// シールド展開メッセージ
+    /// </summary>
+    public readonly struct OpenShieldMessage
+    {
+    }
 }

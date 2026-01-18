@@ -31,6 +31,7 @@ namespace InGame.System
         public ISubscriber<PoseMatchEventStartMessage> PoseMatchEventStartSubscriber { get; private set; }
         public ISubscriber<PoseMatchEventResultMessage> PoseMatchEventResultSubscriber { get; private set; }
         public IPublisher<PoseMatchEventEndMessage> PoseMatchEventEndPublisher { get; private set; }
+        public IPublisher<OpenShieldMessage> OpenShieldPublisher { get; private set; }
         public StageReferences StageReferences { get; private set; }
         public CharacterRegistry CharacterRegistry { get; private set; }
         public MainStageManager MainStageManager => _mainStageManager;
@@ -56,7 +57,8 @@ namespace InGame.System
             IPublisher<BossBattleStartMessage> bossBattleStartPublisher,
             ISubscriber<PoseMatchEventStartMessage> poseMatchEventStartSubscriber,
             ISubscriber<PoseMatchEventResultMessage> poseMatchEventResultSubscriber,
-            IPublisher<PoseMatchEventEndMessage> poseMatchEventEndPublisher)
+            IPublisher<PoseMatchEventEndMessage> poseMatchEventEndPublisher,
+            IPublisher<OpenShieldMessage> openShieldPublisher)
         {
             Container = container;
             StageReferences = stageReferences;
@@ -76,6 +78,7 @@ namespace InGame.System
             PoseMatchEventStartSubscriber = poseMatchEventStartSubscriber;
             PoseMatchEventResultSubscriber = poseMatchEventResultSubscriber;
             PoseMatchEventEndPublisher = poseMatchEventEndPublisher;
+            OpenShieldPublisher = openShieldPublisher;
         }
 
         private void Bind()

@@ -119,7 +119,9 @@ namespace InGame.System
             {
                 // ポーズマッチ成功演出
                 await Owner.InGameUIController.PoseMatchSuccessAnimationAsync();
-                // todo: ガード展開
+                
+                // シールド展開メッセージ発行
+                Owner.OpenShieldPublisher.Publish(new OpenShieldMessage());
             }
             
             // ポーズマッチUI非表示

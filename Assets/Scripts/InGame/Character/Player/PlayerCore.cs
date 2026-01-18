@@ -40,6 +40,7 @@ namespace InGame.Character
         [SerializeField] private DamageCollider _damageCollider;
         [SerializeField] private HitPointPresenter _hpPresenter;
         [SerializeField] private Camera _playerCamera;
+        [SerializeField] private PlayerShield _shield;
 
         private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
@@ -66,6 +67,7 @@ namespace InGame.Character
         private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
         private IPublisher<DespawnCharacterMessage> _despawnPublisher;
         private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
+        private ISubscriber<OpenShieldMessage> _openShieldSubscriber;
         
         public CharacterId PlayerId => _playerId;
         
@@ -118,13 +120,15 @@ namespace InGame.Character
             ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber,
             ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
             IPublisher<DespawnCharacterMessage> despawnPublisher,
-            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber)
+            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber,
+            ISubscriber<OpenShieldMessage> openShieldSubscriber)
         {
             _hpView = hpViewList.PlayerHitPointView;
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
             _allPlayerDespawnSubscriber = allPlayerDespawnSubscriber;
             _despawnPublisher = despawnPublisher;
             _bossBattleStartSubscriber = bossBattleStartSubscriber;
+            _openShieldSubscriber = openShieldSubscriber;
         }
 
         private void Bind()
@@ -162,6 +166,7 @@ namespace InGame.Character
                 Destroy(gameObject);
             }).AddTo(this);
             _bossBattleStartSubscriber?.Subscribe(_ => OnBossBattleStart()).AddTo(this);
+            _openShieldSubscriber.Subscribe(_ => OpenShield()).AddTo(this);
         }
 
         public override void OnUpdate()
@@ -249,6 +254,11 @@ namespace InGame.Character
         {
             _playerCamera.gameObject.SetActive(true);
             _isMovable = true;
+        }
+
+        private void OpenShield()
+        {
+            _shield.OpenShieldAsync().Forget();
         }
         
         #endregion
