@@ -76,6 +76,7 @@ namespace InGame.System
         private async UniTask NormalBattleLoopAsync(InitGameMessage message, CancellationToken ct)
         {
             //await Hoge TODO: ゲームスタート演出待機
+            await Owner.InGameUIController.ShowAndHideBattleStartViewAsync();
             
             while (true)
             {

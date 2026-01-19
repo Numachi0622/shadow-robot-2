@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
+using UnityEditor.ShaderKeywordFilter;
 using UnityEngine;
 using VContainer;
 
@@ -11,6 +12,7 @@ namespace InGame.System.UI
 {
     public class InGameUIController : MonoBehaviour
     {
+        [SerializeField] private NormalBattleView _normalBattleView;
         [SerializeField] private BuildingPresenter _buildingPresenter;
         [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
         private HitPointPresenter _playerHpPresenter, _bossHpPresenter;
@@ -47,12 +49,18 @@ namespace InGame.System.UI
 
         public void Initialize()
         {
+            _normalBattleView.Initialize();
         }
 
         #region NormalBattleEvent
         private void OnInitGame(InitGameMessage message)
         {
             _buildingPresenter.InitializeAndShow(message.PlayerCount, _buildingCountChangeSubscriber);
+        }
+        
+        public async UniTask ShowAndHideBattleStartViewAsync()
+        {
+            await _normalBattleView.ShowAndHideBattleStartViewAsync();
         }
         
         private void OnNormalBattleEnd()
