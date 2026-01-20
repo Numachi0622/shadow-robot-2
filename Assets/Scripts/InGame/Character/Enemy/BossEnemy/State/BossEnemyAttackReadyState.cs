@@ -49,6 +49,17 @@ namespace InGame.Character
                     _subscription = bag.Build();
                     
                     Owner.PoseMatchEventStartPublisher.Publish(new PoseMatchEventStartMessage());
+                    
+                    // DeathBallは生成しておく
+                    var attackPatternParams = Owner.Params.AttackPatternParams[param.AttackIndex];
+                    var attackPattern = attackPatternParams.AttackPattern as DeathBallAttackPattern;
+                    if (attackPattern == null)
+                    {
+                        Debug.LogError("[BossEnemyAttackReady] DeathBallAttackPattern is null.");
+                        return;
+                    }
+                    attackPattern.ExecuteReadyAsync(Owner).Forget();
+                    
                     await _poseMatchEventEndSource.Task;
                 }
             }

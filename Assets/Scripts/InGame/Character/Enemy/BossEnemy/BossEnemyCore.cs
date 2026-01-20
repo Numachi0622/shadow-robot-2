@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using InGame.Message;
 using InGame.System;
@@ -24,6 +25,7 @@ namespace InGame.Character
         [SerializeField] private BossEnemyEffectComponents _effectComponents;
         [SerializeField] private AttackCollider _flameThrowAttackCollider;
         [SerializeField] private Transform _fireBallFirePoint;
+        [SerializeField] private Transform _deathBallFirePoint;
 
         private HitPointView _hpView;
         private StateMachine<BossEnemyCore> _stateMachine;
@@ -40,6 +42,8 @@ namespace InGame.Character
         public Animator Animator => _animator;
         public BossEnemyEffectComponents EffectComponents => _effectComponents;
         public Transform FireBallFirePoint => _fireBallFirePoint;
+        public Transform DeathBallFirePoint => _deathBallFirePoint;
+        public Transform TargetTransform => _characterRegistry.GetAllPlayers().FirstOrDefault()?.transform;
         public FlameThrowAttacker FlameThrowAttacker { get; private set; }
         public HitPointPresenter HpPresenter => _hpPresenter;
 

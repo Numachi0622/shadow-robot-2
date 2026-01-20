@@ -12,3 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9dfa3dc73234fe99c6155620985e8e9, type: 3}
   m_Name: DeathBall
   m_EditorClassIdentifier: 
+  _deathBallPrefab: {fileID: 3102945860423654021, guid: 469f0c1e338457441a16e680c7a5ac73, type: 3}
+  _attackPoint:
+    _minAttackPoint: 500
+    _maxAttackPoint: 500
+  _speed: 5

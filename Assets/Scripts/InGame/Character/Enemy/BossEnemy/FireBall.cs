@@ -9,7 +9,6 @@ namespace InGame.Character
         private AttackParam _attackParam;
         private bool _isFired;
         
-
         public void Fire(AttackParam attackParam)
         {
             if (_isFired) return;
