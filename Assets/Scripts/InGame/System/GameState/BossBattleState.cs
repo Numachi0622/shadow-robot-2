@@ -96,9 +96,13 @@ namespace InGame.System
             // カメラをポーズマッチ用の位置に移動
             var camera = player.PlayerCamera;
             var defaultPos = camera.transform.localPosition;
+            var defaultRot = camera.transform.localRotation;
             var targetPos = new Vector3(0, 1, 0);
             camera.transform.SetParent(null);
-            var cameraTask = camera.transform.DOMove(targetPos, 0.5f).ToUniTask();
+            var cameraTask = DOTween.Sequence()
+                .Append(camera.transform.DOMove(targetPos, 0.5f))
+                .Join(camera.transform.DORotateQuaternion(Quaternion.Euler(0, 0, 0), 0.5f))
+                .ToUniTask();
             
             // HPゲージを非表示
             var hpHideTask = Owner.InGameUIController.HideHitPointViewAsync();
@@ -129,7 +133,10 @@ namespace InGame.System
             
             // カメラを元の位置に戻す
             camera.transform.SetParent(player.transform);
-            cameraTask = camera.transform.DOLocalMove(defaultPos, 0.5f).ToUniTask();
+            cameraTask = DOTween.Sequence()
+                .Append(camera.transform.DOLocalMove(defaultPos, 0.5f))
+                .Join(camera.transform.DOLocalRotateQuaternion(defaultRot, 0.5f))
+                .ToUniTask();
             
             // HPゲージを再表示
             var hpShowTask = Owner.InGameUIController.ShowHitPointViewAsync();

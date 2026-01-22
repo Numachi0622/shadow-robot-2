@@ -13,6 +13,8 @@ namespace InGame.Character
         [SerializeField] private Collider _attackCollider;
         private AttackParam _attackParam;
 
+        public Action<Vector3> OnDealDamageAction { get; set; }
+
         private void OnTriggerEnter(Collider targetCollider) => DealDamage(targetCollider);
 
         private void DealDamage(Collider targetCollider)
@@ -21,6 +23,7 @@ namespace InGame.Character
 
             _attackParam.HitPosition = targetCollider.ClosestPoint(transform.position);
             damageCollider.TakeDamage(_attackParam);
+            OnDealDamageAction?.Invoke(_attackParam.HitPosition);
         }
 
         public void AttackImpact(AttackParam attackParam)

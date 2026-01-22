@@ -11,12 +11,11 @@ namespace InGame.Character
         [SerializeField] private float _speed = 5f;
         private DeathBall _instance;
 
-        public async UniTask ExecuteReadyAsync(CharacterCore owner)
+        public void  ExecuteReady(CharacterCore owner)
         {
             if (owner is not BossEnemyCore bossEnemy) return;
-            await UniTask.Delay(1000);
-            
             _instance = Instantiate(_deathBallPrefab, bossEnemy.DeathBallFirePoint.position, Quaternion.identity);
+            _instance.InitializeAsync().Forget();
         }
         
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)
@@ -27,7 +26,7 @@ namespace InGame.Character
 
         private async UniTask FireAsync(BossEnemyCore bossEnemy)
         {
-            await UniTask.Delay(1000);
+            await UniTask.Delay(2000);
 
             var player = bossEnemy.TargetTransform;
             if (player == null)
@@ -39,12 +38,12 @@ namespace InGame.Character
             var attackParam = new AttackParam()
             {
                 AttackPoint = _attackPoint,
-                AttackDirection = (player.position - bossEnemy.transform.position).normalized,
+                AttackDirection = (player.position - _instance.transform.position).normalized,
                 AttackVelocity = _speed,
                 AttackType = AttackType.EnemyToPlayerNormal
             };
             
-            _instance.Fire(attackParam, bossEnemy.transform, player);
+            _instance.Fire(attackParam, bossEnemy.transform);
         }
     }
 }

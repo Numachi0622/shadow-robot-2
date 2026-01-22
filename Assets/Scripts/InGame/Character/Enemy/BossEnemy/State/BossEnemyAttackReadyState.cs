@@ -58,7 +58,10 @@ namespace InGame.Character
                         Debug.LogError("[BossEnemyAttackReady] DeathBallAttackPattern is null.");
                         return;
                     }
-                    attackPattern.ExecuteReadyAsync(Owner).Forget();
+                    attackPattern.ExecuteReady(Owner);
+                    
+                    // オーラエフェクト再生
+                    Owner.EffectComponents.DeathBallAura.Play();
                     
                     await _poseMatchEventEndSource.Task;
                 }
@@ -72,8 +75,15 @@ namespace InGame.Character
         
         public override void OnExit()
         {
+            DeathBallAuraStopAsync().Forget();
             _subscription?.Dispose();
             _poseMatchEventEndSource = null;
+        }
+
+        private async UniTask DeathBallAuraStopAsync()
+        {
+            await UniTask.Delay(1000);
+            Owner.EffectComponents.DeathBallAura.Stop();
         }
     }
 }

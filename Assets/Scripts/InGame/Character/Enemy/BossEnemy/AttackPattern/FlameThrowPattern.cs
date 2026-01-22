@@ -15,24 +15,24 @@ namespace InGame.Character
         
         private async UniTask FireAsync(BossEnemyCore bossEnemy)
         {
-            var effect = bossEnemy.EffectComponents.FlameThrowEffect;
-            var attackCollider = effect?.GetComponent<AttackCollider>();
-            if (effect == null || attackCollider == null)
-            {
-                Debug.LogError("[FlameThrowPattern] Effect or AttackCollider is null");
-                return;
-            }
-
-            await UniTask.Delay(700);
-            effect.Play();
-            attackCollider.AttackImpact(new AttackParam()
-            {
-                AttackPoint = _attackPoint,
-                AttackType = AttackType.EnemyToPlayerNormal,
-            });
-            
-            await UniTask.WaitUntil(() => !effect.isPlaying);
-            attackCollider.AttackImpactEnd();
+            // var effect = bossEnemy.EffectComponents.FlameThrowEffect;
+            // var attackCollider = effect?.GetComponent<AttackCollider>();
+            // if (effect == null || attackCollider == null)
+            // {
+            //     Debug.LogError("[FlameThrowPattern] Effect or AttackCollider is null");
+            //     return;
+            // }
+            //
+            // await UniTask.Delay(700);
+            // effect.Play();
+            // attackCollider.AttackImpact(new AttackParam()
+            // {
+            //     AttackPoint = _attackPoint,
+            //     AttackType = AttackType.EnemyToPlayerNormal,
+            // });
+            //
+            // await UniTask.WaitUntil(() => !effect.isPlaying);
+            // attackCollider.AttackImpactEnd();
         }
     }
 }

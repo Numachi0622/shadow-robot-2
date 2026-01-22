@@ -14,9 +14,9 @@ namespace InGame.Character
     public class BossEnemyCore : EnemyCore
     {
         [Serializable]
-        public class BossEnemyEffectComponents 
+        public class BossEnemyEffectComponents
         {
-            public ParticleSystem FlameThrowEffect;
+            public ParticleSystem DeathBallAura;
         }
         
         [SerializeField] private Transform _bodyTransform;
