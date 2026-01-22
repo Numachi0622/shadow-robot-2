@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4074921047160827385}
   m_Layer: 0
-  m_Name: mdl_main_stage_element
+  m_Name: mdl_main_stage_element_static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +61,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2770547247045321477}
   - {fileID: 8758089846457066049}
   - {fileID: 6165690327940521998}
   m_Father: {fileID: 4074921047160827385}
@@ -248,44 +247,6 @@ Transform:
   - {fileID: 1404294732449720196}
   m_Father: {fileID: 5604247255593488907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &6766431143358251828
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2770547247045321477}
-  m_Layer: 0
-  m_Name: Buildings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2770547247045321477
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6766431143358251828}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1006796459889626362}
-  - {fileID: 5216569101535674037}
-  - {fileID: 1928694633157407901}
-  - {fileID: 3976771858215927259}
-  - {fileID: 2644145141896369405}
-  - {fileID: 7566041082076122071}
-  - {fileID: 2093529553313598426}
-  m_Father: {fileID: 5604247255593488907}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7710959415410976389
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +284,13 @@ Transform:
   - {fileID: 10395625613665101}
   - {fileID: 3621430641442231850}
   - {fileID: 9031962236449969120}
+  - {fileID: 1006796459889626362}
+  - {fileID: 5216569101535674037}
+  - {fileID: 1928694633157407901}
+  - {fileID: 3976771858215927259}
+  - {fileID: 2644145141896369405}
+  - {fileID: 7566041082076122071}
+  - {fileID: 2093529553313598426}
   m_Father: {fileID: 5604247255593488907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &25027733204128186
@@ -331,7 +299,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
     - target: {fileID: 3992650493654510689, guid: ba022019eefedd24a8523509c853bc70, type: 3}
       propertyPath: m_LocalPosition.x
@@ -373,11 +341,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8351453088936049783, guid: ba022019eefedd24a8523509c853bc70, type: 3}
       propertyPath: m_Name
       value: mdl_building_02
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2921540800848063361, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 8689522855165879342, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 7619468307154521833, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: -5251470458325273176, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1385,8 +1362,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 288540418699263370, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
       propertyPath: m_Name
       value: mdl_building_05
@@ -1431,7 +1412,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3973813565563073610, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+    - {fileID: 8708564879502231039, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+    - {fileID: 5453715414505303048, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+    - {fileID: -4151160078466212540, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+    - {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2047,16 +2033,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8351453088936049783, guid: ba022019eefedd24a8523509c853bc70, type: 3}
       propertyPath: m_Name
       value: mdl_building_02
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 2921540800848063361, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     - {fileID: 8689522855165879342, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     - {fileID: 7619468307154521833, guid: ba022019eefedd24a8523509c853bc70, type: 3}
-    - {fileID: 2921540800848063361, guid: ba022019eefedd24a8523509c853bc70, type: 3}
-    - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     - {fileID: -5251470458325273176, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2196,11 +2186,15 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
     - target: {fileID: 4765057711914042719, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
       propertyPath: m_Name
       value: mdl_building_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 5025632902983890813, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+      propertyPath: _damageCollider
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8143952405627417860, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2242,7 +2236,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3043680300033712185, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+    - {fileID: 7354866153644154442, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+    - {fileID: 8382000699092456718, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+    - {fileID: 6473593207859593292, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+    - {fileID: 5025632902983890813, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2756,6 +2755,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 288540418699263370, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
       propertyPath: m_Name
       value: mdl_building_05
@@ -2801,11 +2804,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 3973813565563073610, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     - {fileID: 8708564879502231039, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     - {fileID: 5453715414505303048, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
-    - {fileID: 3973813565563073610, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
-    - {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     - {fileID: -4151160078466212540, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+    - {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2885,6 +2888,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 288540418699263370, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
       propertyPath: m_Name
       value: mdl_building_05 (1)
@@ -2930,11 +2937,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 3973813565563073610, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     - {fileID: 8708564879502231039, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     - {fileID: 5453715414505303048, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
-    - {fileID: 3973813565563073610, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
-    - {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     - {fileID: -4151160078466212540, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
+    - {fileID: -980605994877339582, guid: 8b2a673625bea294c98350e5dbf0fbbe, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -3266,6 +3273,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: mdl_building_04
       objectReference: {fileID: 0}
+    - target: {fileID: 5025632902983890813, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8143952405627417860, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
       propertyPath: m_LocalPosition.x
       value: 60
@@ -3307,11 +3318,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 3043680300033712185, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
     - {fileID: 7354866153644154442, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
     - {fileID: 8382000699092456718, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
-    - {fileID: 3043680300033712185, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
-    - {fileID: 5025632902983890813, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
     - {fileID: 6473593207859593292, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
+    - {fileID: 5025632902983890813, guid: adb1089d179ee4a49bb4178877c90431, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -4879,6 +4890,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5220551055913208361, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 60
@@ -4924,11 +4939,11 @@ PrefabInstance:
       value: mdl_building_03
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 7463987885839932244, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     - {fileID: 9006475627627295385, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     - {fileID: 6389151603414242373, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
-    - {fileID: 7463987885839932244, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
-    - {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     - {fileID: -2672974843253127506, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+    - {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6288,16 +6303,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8351453088936049783, guid: ba022019eefedd24a8523509c853bc70, type: 3}
       propertyPath: m_Name
       value: mdl_building_02 (2)
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 2921540800848063361, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     - {fileID: 8689522855165879342, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     - {fileID: 7619468307154521833, guid: ba022019eefedd24a8523509c853bc70, type: 3}
-    - {fileID: 2921540800848063361, guid: ba022019eefedd24a8523509c853bc70, type: 3}
-    - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     - {fileID: -5251470458325273176, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -8483,8 +8502,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8781006406580883856, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
       propertyPath: m_Name
       value: mdl_building_01
@@ -8529,7 +8552,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8079631981494474803, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: 5046160723138529907, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: 4204721578227640714, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: -4919131603028785795, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -9041,8 +9069,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5220551055913208361, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -9087,7 +9119,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: mdl_building_03
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7463987885839932244, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+    - {fileID: 9006475627627295385, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+    - {fileID: 6389151603414242373, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+    - {fileID: -2672974843253127506, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+    - {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -9351,8 +9388,12 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8781006406580883856, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
       propertyPath: m_Name
       value: mdl_building_01
@@ -9397,7 +9438,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8079631981494474803, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: 5046160723138529907, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: 4204721578227640714, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: -4919131603028785795, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -9601,6 +9647,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5220551055913208361, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -60
@@ -9646,11 +9696,11 @@ PrefabInstance:
       value: mdl_building_03 (1)
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 7463987885839932244, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     - {fileID: 9006475627627295385, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     - {fileID: 6389151603414242373, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
-    - {fileID: 7463987885839932244, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
-    - {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     - {fileID: -2672974843253127506, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
+    - {fileID: 1599605172827243598, guid: 148b12cddcf6dfb48a6f6e67dbf2b06a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10288,6 +10338,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
+    - target: {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8781006406580883856, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
       propertyPath: m_Name
       value: mdl_building_01 (1)
@@ -10333,11 +10387,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
+    - {fileID: 8079631981494474803, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
     - {fileID: 5046160723138529907, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
     - {fileID: 4204721578227640714, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
-    - {fileID: 8079631981494474803, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
-    - {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
     - {fileID: -4919131603028785795, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
+    - {fileID: -4812058026688866675, guid: f13d4007eb11cac4e84990a690ba33f2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10477,7 +10531,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 2770547247045321477}
+    m_TransformParent: {fileID: 8758089846457066049}
     m_Modifications:
     - target: {fileID: 3992650493654510689, guid: ba022019eefedd24a8523509c853bc70, type: 3}
       propertyPath: m_LocalPosition.x
@@ -10519,11 +10573,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+      propertyPath: _damageCollider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8351453088936049783, guid: ba022019eefedd24a8523509c853bc70, type: 3}
       propertyPath: m_Name
       value: mdl_building_02 (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2921540800848063361, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 8689522855165879342, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 7619468307154521833, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: -5251470458325273176, guid: ba022019eefedd24a8523509c853bc70, type: 3}
+    - {fileID: 7325991902584400878, guid: ba022019eefedd24a8523509c853bc70, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
