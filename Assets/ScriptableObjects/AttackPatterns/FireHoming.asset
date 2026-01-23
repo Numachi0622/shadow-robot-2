@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bc0f6520752e4f898a3adb8995c20e97, type: 3}
-  m_Name: FlameThrow
+  m_Name: FireHoming
   m_EditorClassIdentifier: 
   _attackPoint:
     _minAttackPoint: 10

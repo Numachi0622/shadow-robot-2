@@ -41,6 +41,7 @@ namespace InGame.Character
         [SerializeField] private HitPointPresenter _hpPresenter;
         [SerializeField] private Camera _playerCamera;
         [SerializeField] private PlayerShield _shield;
+        [SerializeField] private Transform _center;
 
         private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
@@ -78,6 +79,7 @@ namespace InGame.Character
         public MovementTransforms Transforms => _movementTransforms;
         public Camera PlayerCamera => _playerCamera;
         public HitPointPresenter HpPresenter => _hpPresenter;
+        public Transform Center => _center;
 
         public override void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {

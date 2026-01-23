@@ -13,6 +13,7 @@ namespace InGame.Character
         [SerializeField] private Collider _attackCollider;
         private AttackParam _attackParam;
 
+        public AttackParam AttackParam => _attackParam;
         public Action<Vector3> OnDealDamageAction { get; set; }
 
         private void OnTriggerEnter(Collider targetCollider) => DealDamage(targetCollider);

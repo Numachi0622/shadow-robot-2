@@ -23,8 +23,9 @@ namespace InGame.Character
         [SerializeField] private Animator _animator;
         [SerializeField] private HitPointPresenter _hpPresenter;
         [SerializeField] private BossEnemyEffectComponents _effectComponents;
-        [SerializeField] private AttackCollider _flameThrowAttackCollider;
+        [SerializeField] private Transform _center;
         [SerializeField] private Transform _fireBallFirePoint;
+        [SerializeField] private Transform _fireHomingFirePoint;
         [SerializeField] private Transform _deathBallFirePoint;
 
         private HitPointView _hpView;
@@ -42,10 +43,11 @@ namespace InGame.Character
         public Animator Animator => _animator;
         public BossEnemyEffectComponents EffectComponents => _effectComponents;
         public Transform FireBallFirePoint => _fireBallFirePoint;
+        public Transform FireHomingFirePoint => _fireHomingFirePoint;
         public Transform DeathBallFirePoint => _deathBallFirePoint;
-        public Transform TargetTransform => _characterRegistry.GetAllPlayers().FirstOrDefault()?.transform;
-        public FlameThrowAttacker FlameThrowAttacker { get; private set; }
+        public Transform TargetTransform => (_characterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore)?.Center;
         public HitPointPresenter HpPresenter => _hpPresenter;
+        public Transform Center => _center;
 
         public CancellationTokenSource CancellationTokenSource
         {
@@ -97,8 +99,6 @@ namespace InGame.Character
                 transform,
                 3f,
                 _params.AttackReadyTime);
-            
-            FlameThrowAttacker = new FlameThrowAttacker(_flameThrowAttackCollider);
             
             _hpPresenter.Initialize(_hpView, _params);
             _stateMachine.SetState<BossEnemyIdleState>();
