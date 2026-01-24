@@ -15,6 +15,7 @@ namespace InGame.System
         private int _playerCount = -1;
         private int _currentKillCount = 0;
         private int _requiredKillCount;
+        private bool _isRecordComplete;
         private IDisposable _subscription;
         
         [Inject]
@@ -44,11 +45,12 @@ namespace InGame.System
 
         private void RecordKillData(EnemyDestroyedMessage message)
         {
-            if (_playerCount == -1) return;
+            if (_playerCount == -1 || _isRecordComplete) return;
 
             _currentKillCount++;
             if (_currentKillCount >= _requiredKillCount)
             {
+                _isRecordComplete = true;
                 _stateChangePublisher.Publish(new StateChangeMessage(
                     GameStateType.BossBattle, 
                     new InitBossBattleMessage(_playerCount))
