@@ -13,7 +13,7 @@ namespace InGame.Character
         {
             if (!(parameter is EnemyMoveParams param)) return;
             
-            var dest = new Vector3(param.Destination.x, Owner.transform.position.y, param.Destination.z);
+            var dest = param.Destination;
             var delta = Owner.Params.MoveSpeed * Time.deltaTime;
             var movedPos = Vector3.MoveTowards(Owner.transform.position, dest, delta);
             Owner.Mover.Move(movedPos);

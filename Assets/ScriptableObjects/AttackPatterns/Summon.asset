@@ -12,3 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5991805b72094ba6a04b840d4d1b18bd, type: 3}
   m_Name: Summon
   m_EditorClassIdentifier: 
+  _summonAreaRadius: 2

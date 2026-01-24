@@ -155,7 +155,7 @@ namespace InGame.Character
                 _attackObserver.Observe(dest);
             }
             
-            _stateMachine.OnUpdate(new EnemyMoveParams(){ Destination = dest});
+            _stateMachine.OnUpdate(new EnemyMoveParams(){ Destination = dest });
         }
 
         #region State Event
