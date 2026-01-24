@@ -13,6 +13,7 @@ namespace InGame.Character
     public class BodySourceManager : Singleton<BodySourceManager>
     {
         [SerializeField] private int _kinectId;
+        [SerializeField] private string _ipAddress = "10.94.11.12";
         [SerializeField] private DeviceSettings _deviceSettings;
         [SerializeField] private TrackingDebugView _debugView;
         [SerializeField] private ColorBodySourceView _bodySourceView;
@@ -232,7 +233,7 @@ namespace InGame.Character
 
             // 画面中央にGUIを配置
             float windowWidth = 400f;
-            float windowHeight = 250f;
+            float windowHeight = 300f;
             float windowX = (Screen.width - windowWidth) / 2f;
             float windowY = (Screen.height - windowHeight) / 2f;
 
@@ -243,8 +244,12 @@ namespace InGame.Character
 
             GUILayout.Label("Kinect IDを入力してください:");
             GUILayout.Space(10);
-
             _kinectIdInput = GUILayout.TextField(_kinectIdInput, GUILayout.Height(30));
+            GUILayout.Space(20);
+            
+            GUILayout.Label("IPアドレスを入力してください");
+            GUILayout.Space(10);
+            _ipAddress = GUILayout.TextField(_ipAddress, GUILayout.Height(30));
             GUILayout.Space(20);
 
             if (GUILayout.Button("Start", GUILayout.Height(40)))
