@@ -21,5 +21,6 @@ namespace Utility
         public const int RequiredNormalEnemyKillCount = 10;
         public static readonly CharacterId BossPlayerId = new CharacterId(4);
         public const int MaxPlayerCount = 3;
+        public const bool NoAnimationMode = false;
     }
 }
