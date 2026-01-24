@@ -3,20 +3,17 @@ using Windows.Kinect;
 using Utility.DEMAFilter;
 using SynMotion;
 using UniRx;
-using UnityEngine.Serialization;
 using Utility.Extensions;
 using JointType = Windows.Kinect.JointType;
 using Utility;
+using Cysharp.Threading.Tasks;
 
 namespace InGame.Character
 {
     public class BodySourceManager : Singleton<BodySourceManager>
     {
         [SerializeField] private int _kinectId;
-
-        [FormerlySerializedAs("_oscSettings")] [SerializeField]
-        private DeviceSettings _deviceSettings;
-
+        [SerializeField] private DeviceSettings _deviceSettings;
         [SerializeField] private TrackingDebugView _debugView;
         [SerializeField] private ColorBodySourceView _bodySourceView;
 
@@ -26,6 +23,11 @@ namespace InGame.Character
         private readonly ReactiveCollection<Body> _trackedData = new ReactiveCollection<Body>();
         private IMotionSender _motionSender;
         private DEMAFilterManager _demaFilterManager;
+        private bool _isInitialized = false;
+
+        // GUI用の変数
+        private string _kinectIdInput = "0";
+        private string _statusMessage = "";
 
         public KinectSensor Sensor => _sensor;
         public Body[] GetData() => _data;
@@ -37,14 +39,16 @@ namespace InGame.Character
 
         public IMotionSender MotionSender => _motionSender;
 
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        public override void Initialize()
+        private async void Awake()
         {
             base.Initialize();
+            await InitializeAsync();
+        }
+
+        private async UniTask InitializeAsync()
+        {
+            await UniTask.WaitUntil(() => _isInitialized);
+
             _motionSender = new MotionSender(_deviceSettings.IpAddress, _deviceSettings.Port);
             _sensor = KinectSensor.GetDefault();
             _bodySourceView.Initialize();
@@ -59,15 +63,11 @@ namespace InGame.Character
                     _sensor.Open();
                 }
             }
-
-            // _trackedData.ObserveCountChanged()
-            //     .Where(_ => _debugView != null)
-            //     .Subscribe(_debugView.UpdateTrackedCountView)
-            //     .AddTo(this);
         }
 
         private void Update()
         {
+            if (!_isInitialized) return;
             if (_reader == null) return;
 
             var frame = _reader.AcquireLatestFrame();
@@ -224,6 +224,45 @@ namespace InGame.Character
         {
             var pos = _trackedData[index].Joints[jointType].Position.ToVector3();
             return _demaFilterManager.FilterVector3(index, pos);
+        }
+
+        private void OnGUI()
+        {
+            // 初期化済みの場合は何も表示しない
+            if (_isInitialized) return;
+
+            // 画面中央にGUIを配置
+            float windowWidth = 400f;
+            float windowHeight = 250f;
+            float windowX = (Screen.width - windowWidth) / 2f;
+            float windowY = (Screen.height - windowHeight) / 2f;
+
+            GUI.Box(new Rect(windowX, windowY, windowWidth, windowHeight), "Kinect初期化");
+
+            GUILayout.BeginArea(new Rect(windowX + 20, windowY + 40, windowWidth - 40, windowHeight - 60));
+            GUILayout.BeginVertical();
+
+            GUILayout.Label("Kinect IDを入力してください:");
+            GUILayout.Space(10);
+
+            _kinectIdInput = GUILayout.TextField(_kinectIdInput, GUILayout.Height(30));
+            GUILayout.Space(20);
+
+            if (GUILayout.Button("Start", GUILayout.Height(40)))
+            {
+                _kinectId = int.Parse(_kinectIdInput);
+                _isInitialized = true;
+            }
+
+            GUILayout.Space(10);
+
+            if (!string.IsNullOrEmpty(_statusMessage))
+            {
+                GUILayout.Label(_statusMessage);
+            }
+
+            GUILayout.EndVertical();
+            GUILayout.EndArea();
         }
 
         void OnDestroy()
