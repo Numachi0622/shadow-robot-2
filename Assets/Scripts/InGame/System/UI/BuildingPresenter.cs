@@ -18,7 +18,7 @@ namespace InGame.System.UI
             int playerCount,
             ISubscriber<AreaId, BuildingCountChangeMessage> buildingCountChangeSubscriber)
         {
-            _model = new BuildingModel(playerCount);
+            _model = new BuildingModel(playerCount, 10);
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             
             _view.Initialize(playerCount);
