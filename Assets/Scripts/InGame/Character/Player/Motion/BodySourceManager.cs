@@ -95,7 +95,7 @@ namespace InGame.Character
 
             for (var i = 0; i < _data.Length; i++)
             {
-                if (_trackedData.Count > GameConst.MAX_TRACKING_COUNT) continue;
+                if (_trackedData.Count >= GameConst.MAX_TRACKING_COUNT) continue;
                 var body = _data[i];
                 if (body == null) continue;
 
