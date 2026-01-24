@@ -14,14 +14,13 @@ namespace InGame.Character
         [SerializeField] private Camera _convertCamera;
         [SerializeField] private GameObject _idTextDebugCanvas;
 
-        private Dictionary<Kinect.Body, GameObject> _bodies = new Dictionary<Kinect.Body, GameObject>();
+        private readonly Dictionary<Kinect.Body, GameObject> _bodies = new Dictionary<Kinect.Body, GameObject>();
         private Kinect.CoordinateMapper _coordinateMapper;
         private const int WIDTH = 1920;
         private const int HEIGHT = 1080;
-        private uint _currentDisplayId = 0;
 
 
-        private Dictionary<Kinect.JointType, Kinect.JointType> _boneMap =
+        private readonly Dictionary<Kinect.JointType, Kinect.JointType> _boneMap =
             new Dictionary<Kinect.JointType, Kinect.JointType>()
             {
                 { Kinect.JointType.FootLeft, Kinect.JointType.AnkleLeft },
@@ -61,8 +60,7 @@ namespace InGame.Character
                 .Where(body => !_bodies.ContainsKey(body.Value))
                 .Subscribe(body =>
                 {
-                    _currentDisplayId++;
-                    _bodies.Add(body.Value, CreateBodyObject(body.Value.TrackingId, _currentDisplayId));
+                    _bodies.Add(body.Value, CreateBodyObject(body.Value.TrackingId));
                 })
                 .AddTo(this);
 
@@ -71,7 +69,6 @@ namespace InGame.Character
                 .Where(body => _bodies.ContainsKey(body.Value))
                 .Subscribe(body =>
                 {
-                    _currentDisplayId--;
                     Destroy(_bodies[body.Value]);
                     _bodies.Remove(body.Value);
                 })
@@ -86,7 +83,7 @@ namespace InGame.Character
                 .AddTo(this);
         }
 
-        private GameObject CreateBodyObject(ulong id, uint displayId)
+        private GameObject CreateBodyObject(ulong id)
         {
             GameObject body = new GameObject("Body:" + id);
             body.layer = LayerMask.NameToLayer("Debug");
@@ -109,7 +106,7 @@ namespace InGame.Character
 
             // view id text
             var idText = Instantiate(_idTextDebugCanvas, body.transform.GetChild(3).transform);
-            idText.transform.GetChild(0).GetComponent<Text>().text = $"id: {displayId}";
+            idText.transform.GetChild(0).GetComponent<Text>().text = $"id: {id}";
 
             return body;
         }
