@@ -127,13 +127,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1366617420518282285, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: _ipAddress
+      value: 127.0.0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1366617420518282285, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: _useInputView
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2410542185320871873, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
       propertyPath: m_Name
       value: Kinect
       objectReference: {fileID: 0}
     - target: {fileID: 2410542185320871873, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4193273025034183559, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
       propertyPath: m_IsActive
@@ -2144,6 +2152,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7097631079118668404, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7131356895777186204, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2152,6 +2164,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7578061803889901336, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 7648694570176188060, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -2159,6 +2175,10 @@ PrefabInstance:
     - target: {fileID: 7885768616613008607, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002430909125513396, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8039356230384035857, guid: edc4057c37eb6f047a030761bc86c5e5, type: 3}
       propertyPath: m_IsActive
