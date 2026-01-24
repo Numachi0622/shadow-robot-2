@@ -11,6 +11,12 @@ namespace InGame.Character
         [SerializeField] private float _speed = 5f;
         [SerializeField] private int _instanceCount = 5;
         
+        private Vector3 RandomDirection => new Vector3(
+            Random.Range(-1f, 1f),
+            Random.Range(0f, 1f),
+            Random.Range(-1f, 0f)
+        );
+        
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)
         {
             if (owner is not BossEnemyCore bossEnemy) return;
@@ -28,7 +34,7 @@ namespace InGame.Character
                 var attackParam = new AttackParam()
                 {
                     AttackPoint = _attackPoint,
-                    AttackDirection = RandomDirection,
+                    AttackDirection = RandomDirection.normalized,
                     AttackVelocity = _speed,
                     AttackType = AttackType.EnemyToPlayerNormal
                 };
@@ -39,11 +45,5 @@ namespace InGame.Character
                 await UniTask.Delay(450);
             }
         }
-
-        private Vector3 RandomDirection => new Vector3(
-            Random.Range(-1f, 1f),
-            Random.Range(0f, 1f),
-            Random.Range(-1f, 0f)
-        );
     }
 }

@@ -44,12 +44,14 @@ namespace InGame.System
         {
             // await todo: ボス出現警告UI
 
+            // ビルを非表示
             var buildings = Owner.CharacterRegistry.GetAllBuildings();
             foreach (var building in buildings)
             {
                 building.gameObject.SetActive(false);
             }
             
+            // ボスの生成
             Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
                 Message.CharacterType.BossEnemy,
                 Owner.MainStageManager.BossEnemySpawnPosition,
@@ -59,7 +61,7 @@ namespace InGame.System
             ));
             
             // await todo: 敵出現タイムライン
-
+            
             if (playerCount > 1)
             {
                 Owner.AllPlayerDespawnMessage.Publish(new AllPlayerDespawnMessage());
@@ -71,13 +73,12 @@ namespace InGame.System
                     playerCount
                 ));   
             }
-            
-            var character = Owner.CharacterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore;
-            if (character == null)
+            else
             {
-                Debug.Log(Owner.CharacterRegistry.GetAllPlayers().Count);
-                Debug.LogError("Player is Null");
-                return;
+                Owner.GameStartPlayerInitPublisher.Publish(
+                    new CharacterId(0), 
+                    new GameStartPlayerInitMessage(Vector3.zero, 1)
+                );
             }
 
             // await todo: 合体演出
