@@ -94,6 +94,7 @@ namespace InGame.Character
 
             for (var i = 0; i < _data.Length; i++)
             {
+                if (_trackedData.Count > GameConst.MAX_TRACKING_COUNT) continue;
                 var body = _data[i];
                 if (body == null) continue;
 
@@ -108,19 +109,17 @@ namespace InGame.Character
                 _trackedData.Remove(body);
             }
 
-            // if (_trackedData.Count >= 2)
-            // {
-            //     var firstBody = _trackedData
-            //         .AsValueEnumerable()
-            //         .MinBy(body => body.Joints[JointType.SpineMid].Position.X);
-            //     
-            //     if (_trackedData[0] != firstBody)
-            //     {
-            //         var tmp = _trackedData[0];
-            //         _trackedData[0] = firstBody;
-            //         _trackedData[1] = tmp;
-            //     }
-            // }
+            // X座標で順序を維持（_trackedData[0]が左、_trackedData[1]が右）
+            if (_trackedData.Count >= GameConst.MAX_TRACKING_COUNT)
+            {
+                var pos0X = _trackedData[0].Joints[JointType.SpineMid].Position.X;
+                var pos1X = _trackedData[1].Joints[JointType.SpineMid].Position.X;
+
+                if (pos0X > pos1X)
+                {
+                    (_trackedData[0], _trackedData[1]) = (_trackedData[1], _trackedData[0]);
+                }
+            }
 
             _debugView?.UpdateTrackingView(_data);
         }
