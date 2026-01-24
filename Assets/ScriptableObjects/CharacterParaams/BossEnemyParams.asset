@@ -35,11 +35,11 @@ MonoBehaviour:
     AttackPattern: {fileID: 11400000, guid: 67a4fb5adb35a3945be0adc137a47021, type: 2}
   - Type: 1
     _animationClip: {fileID: 7400000, guid: e2db7097f79aee943bcd93e9b72f9ee7, type: 2}
-    OccurrenceRate: 0
+    OccurrenceRate: 1
     AttackPattern: {fileID: 11400000, guid: 7fc8ff47dde558a4c8f24c21cc58825c, type: 2}
   - Type: 1
     _animationClip: {fileID: 7400000, guid: b7bd8cc53e3474d47a2ad0e56fa5530b, type: 2}
-    OccurrenceRate: 1
+    OccurrenceRate: 0
     AttackPattern: {fileID: 11400000, guid: bc6db1598c76bc244b86b997573d78fa, type: 2}
   - Type: 1
     _animationClip: {fileID: 7400000, guid: 837dfb96c5181e146a8d25ca75ecbe24, type: 2}
