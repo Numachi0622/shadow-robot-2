@@ -36,8 +36,8 @@ MonoBehaviour:
   - Type: 0
     _animationClip: {fileID: 7400000, guid: 6db025a9cbfd89a41884400a5117d7ec, type: 2}
     OccurrenceRate: 0.35
-    AttackPattern: {fileID: 11400000, guid: 64d1c9b7e8316664c9d25950a9580b9f, type: 2}
+    AttackPattern: {fileID: 11400000, guid: 36c6615049e44d14db3d9ccbdc40bfb9, type: 2}
   - Type: 1
     _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
     OccurrenceRate: 0.3
-    AttackPattern: {fileID: 11400000, guid: bc6db1598c76bc244b86b997573d78fa, type: 2}
+    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}
