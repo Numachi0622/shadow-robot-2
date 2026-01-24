@@ -17,14 +17,14 @@ namespace InGame.System.UI
 
         public void UpdateBuildingLine(int buildingCount)
         {
+            _fadeSequence?.Kill();
+            _fadeSequence = DOTween.Sequence();
             for (var i = _buildingElements.Count - 1; i >= buildingCount; i--)
             {
                 var element = _buildingElements[i];
                 if (element == null || element.alpha <= 0f) continue;
                 
-                _fadeSequence?.Kill();
-                _fadeSequence = DOTween.Sequence()
-                    .Append(element.DOFade(0f, 0.3f));
+                _fadeSequence.Join(element.DOFade(0f, 0.3f));
             }
         }
     }

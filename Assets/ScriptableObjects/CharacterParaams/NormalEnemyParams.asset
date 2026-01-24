@@ -19,7 +19,7 @@ MonoBehaviour:
   DamagedColor: {r: 0, g: 0, b: 0, a: 0}
   MoveSpeed: 3
   SearchRange: 30
-  AttackRange: 2
+  AttackRange: 1.75
   AttackReadyTime: 0.8
   AttackCoolTime: 3
   DamageCoolTime: 1
