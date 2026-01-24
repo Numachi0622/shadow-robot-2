@@ -50,7 +50,7 @@ namespace InGame.Character
         {
             await UniTask.WaitUntil(() => _isInitialized);
 
-            _motionSender = new MotionSender(_deviceSettings.IpAddress, _deviceSettings.Port);
+            _motionSender = new MotionSender(_ipAddress, _deviceSettings.Port);
             _sensor = KinectSensor.GetDefault();
             _bodySourceView.Initialize();
             _demaFilterManager = new DEMAFilterManager(GameConst.QUATERNION_DEMA_ALPHA, GameConst.VECTOR3_DEMA_ALPHA);
