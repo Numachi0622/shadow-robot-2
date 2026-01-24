@@ -22,7 +22,8 @@ namespace InGame.Character
                 
                 Owner.AttackCancel();
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
-                Owner.EnemyEffect.KnockBack(param.AttackDirection);
+                var dir = ((param.AttackDirection + Vector3.forward) * 0.5f).normalized;
+                Owner.EnemyEffect.KnockBack(dir);
                 Owner.EnemyEffect.ShakeBody();
                 HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
                 DamageCoolTime();
