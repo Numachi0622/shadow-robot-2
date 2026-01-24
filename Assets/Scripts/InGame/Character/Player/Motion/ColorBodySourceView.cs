@@ -57,6 +57,7 @@ namespace InGame.Character
         {
             BodySourceManager.Instance.TrackedData
                 .ObserveAdd()
+                .Where(_ => BodySourceManager.Instance.UseInputView)
                 .Where(body => !_bodies.ContainsKey(body.Value))
                 .Subscribe(body =>
                 {
@@ -66,6 +67,7 @@ namespace InGame.Character
 
             BodySourceManager.Instance.TrackedData
                 .ObserveRemove()
+                .Where(_ => BodySourceManager.Instance.UseInputView)
                 .Where(body => _bodies.ContainsKey(body.Value))
                 .Subscribe(body =>
                 {

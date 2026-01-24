@@ -17,6 +17,7 @@ namespace InGame.Character
         [SerializeField] private DeviceSettings _deviceSettings;
         [SerializeField] private TrackingDebugView _debugView;
         [SerializeField] private ColorBodySourceView _bodySourceView;
+        [SerializeField] private bool _useInputView = true;
 
         private KinectSensor _sensor;
         private BodyFrameReader _reader;
@@ -39,6 +40,7 @@ namespace InGame.Character
             Quaternion.FromToRotation(new Vector3(FloorClipPlane.X, FloorClipPlane.Y, FloorClipPlane.Z), Vector3.up);
 
         public IMotionSender MotionSender => _motionSender;
+        public bool UseInputView => _useInputView;
 
         private async void Awake()
         {
@@ -48,7 +50,7 @@ namespace InGame.Character
 
         private async UniTask InitializeAsync()
         {
-            await UniTask.WaitUntil(() => _isInitialized);
+            await UniTask.WaitUntil(() => _isInitialized || !_useInputView);
 
             _motionSender = new MotionSender(_ipAddress, _deviceSettings.Port);
             _sensor = KinectSensor.GetDefault();
@@ -68,7 +70,7 @@ namespace InGame.Character
 
         private void Update()
         {
-            if (!_isInitialized) return;
+            if (!_isInitialized && _useInputView) return;
             if (_reader == null) return;
 
             var frame = _reader.AcquireLatestFrame();
@@ -228,6 +230,8 @@ namespace InGame.Character
 
         private void OnGUI()
         {
+            if (!_useInputView) return;
+            
             // 初期化済みの場合は何も表示しない
             if (_isInitialized) return;
 
