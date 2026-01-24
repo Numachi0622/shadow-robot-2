@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using InGame.System;
 using NUnit.Framework;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace InGame.Environment
         public IReadOnlyList<Vector3> EnemySpawnPositions => _enemySpawnPoints.ConvertAll(point => point.position);
         public Vector3 BossEnemySpawnPosition => _bossSpawnPoint.position;
         public Transform BuildingParent => _buildingParent;
+        public int BuildingCountPerArea => _elements.FirstOrDefault()?.BuildingPositions.Count ?? 0;
 
         public void Initialize()
         {

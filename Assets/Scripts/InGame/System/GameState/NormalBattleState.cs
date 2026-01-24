@@ -20,8 +20,6 @@ namespace InGame.System
             // プレイヤー数に応じてゲーム環境を構築する
             if (parameter is not InitGameMessage initGameMessage) return;
             
-            Owner.InitGamePublisher.Publish(initGameMessage);
-            
             foreach (var chara in Owner.CharacterRegistry.GetAllPlayers())
             {
                 var playerCore = chara as PlayerCore;
@@ -53,6 +51,11 @@ namespace InGame.System
                     ));
                 }
             }
+            
+            // ゲーム初期化完了通知
+            var buildingCountPerArea = Owner.MainStageManager.BuildingCountPerArea;
+            initGameMessage = new InitGameMessage(initGameMessage.PlayerCount, buildingCountPerArea);
+            Owner.InitGamePublisher.Publish(initGameMessage);
 
             _cts = new CancellationTokenSource();
             try

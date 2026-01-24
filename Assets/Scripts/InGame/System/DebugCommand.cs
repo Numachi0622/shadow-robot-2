@@ -54,7 +54,7 @@ namespace InGame.System
             _stateChangePublisher.Publish(new StateChangeMessage(
                 currentState, 
                 currentState == GameStateType.NormalBattle 
-                    ? new InitGameMessage(playerCount)
+                    ? new InitGameMessage(playerCount, -1)
                     : new InitBossBattleMessage(playerCount)
                 )
             );

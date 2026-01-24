@@ -16,9 +16,10 @@ namespace InGame.System.UI
 
         public void InitializeAndShow(
             int playerCount,
+            int buildingCountPerArea,
             ISubscriber<AreaId, BuildingCountChangeMessage> buildingCountChangeSubscriber)
         {
-            _model = new BuildingModel(playerCount, 10);
+            _model = new BuildingModel(playerCount, buildingCountPerArea);
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             
             _view.Initialize(playerCount);

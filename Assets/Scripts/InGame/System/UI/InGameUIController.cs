@@ -54,7 +54,11 @@ namespace InGame.System.UI
         #region NormalBattleEvent
         private void OnInitGame(InitGameMessage message)
         {
-            _buildingPresenter.InitializeAndShow(message.PlayerCount, _buildingCountChangeSubscriber);
+            _buildingPresenter.InitializeAndShow(
+                message.PlayerCount,
+                message.BuildingCoutPerArea,
+                _buildingCountChangeSubscriber
+            );
         }
         
         public async UniTask ShowAndHideBattleStartViewAsync()
