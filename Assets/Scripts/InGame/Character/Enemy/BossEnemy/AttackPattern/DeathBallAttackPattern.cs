@@ -26,7 +26,7 @@ namespace InGame.Character
 
         private async UniTask FireAsync(BossEnemyCore bossEnemy)
         {
-            await UniTask.Delay(2000);
+            await UniTask.Delay(1500);
 
             var player = bossEnemy.TargetTransform;
             if (player == null)
