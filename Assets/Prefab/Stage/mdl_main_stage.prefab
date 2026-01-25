@@ -151,8 +151,8 @@ MonoBehaviour:
   - {fileID: 3277280101747730990}
   _playerSpawnPoints:
   - {fileID: 7578061803889901336}
-  - {fileID: 7097631079118668404}
   - {fileID: 8002430909125513396}
+  - {fileID: 7097631079118668404}
   _enemySpawnPoints:
   - {fileID: 2725719839552486440}
   - {fileID: 2136548610472061915}
