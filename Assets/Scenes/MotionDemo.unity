@@ -2444,6 +2444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _view: {fileID: 1677633039}
+  _prevPoseData: {fileID: 11400000, guid: 19d906126d8faad498286ce5d523ada5, type: 2}
 --- !u!1001 &1966729676
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2452,6 +2453,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1366617420518282285, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: _ipAddress
+      value: 127.0.0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1366617420518282285, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
+      propertyPath: _useInputView
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2410542185320871873, guid: 9c54deebd51de964ea4751554b47a301, type: 3}
       propertyPath: m_Name
       value: Kinect

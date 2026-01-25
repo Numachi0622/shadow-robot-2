@@ -78,18 +78,37 @@ namespace ShadowRobotDebug
             var motionParam = new MotionParam();
             while (currentTime < recordingTime)
             {
-                motionParam.SpineMidRotation = motionParam.SpineMidRotation.Add(_transforms.FirstSpine.rotation);
-                motionParam.ElbowLeftRotation = motionParam.ElbowLeftRotation.Add(_transforms.LeftArm.rotation);
-                motionParam.WristLeftRotation = motionParam.WristLeftRotation.Add(_transforms.LeftForeArm.rotation);
-                motionParam.HandLeftRotation = motionParam.HandLeftRotation.Add(_transforms.LeftHand.rotation);
-                motionParam.ElbowRightRotation = motionParam.ElbowRightRotation.Add(_transforms.RightArm.rotation);
-                motionParam.WristRightRotation = motionParam.WristRightRotation.Add(_transforms.RightForeArm.rotation);
-                motionParam.HandRightRotation = motionParam.HandRightRotation.Add(_transforms.RightHand.rotation);
-                motionParam.KneeLeftRotation = motionParam.KneeLeftRotation.Add(_transforms.LeftUpLeg.rotation);
-                motionParam.AnkleLeftRotation = motionParam.AnkleLeftRotation.Add(_transforms.LeftLeg.rotation);
-                motionParam.KneeRightRotation = motionParam.KneeRightRotation.Add(_transforms.LeftUpLeg.rotation);
-                motionParam.AnkleRightRotation = motionParam.AnkleRightRotation.Add(_transforms.RightLeg.rotation);
-                
+                if (attemptCount == 0)
+                {
+                    // 最初のフレームは代入（初期値(0,0,0,0)を避ける）
+                    motionParam.SpineMidRotation = _transforms.FirstSpine.localRotation;
+                    motionParam.ElbowLeftRotation = _transforms.LeftArm.localRotation;
+                    motionParam.WristLeftRotation = _transforms.LeftForeArm.localRotation;
+                    motionParam.HandLeftRotation = _transforms.LeftHand.localRotation;
+                    motionParam.ElbowRightRotation = _transforms.RightArm.localRotation;
+                    motionParam.WristRightRotation = _transforms.RightForeArm.localRotation;
+                    motionParam.HandRightRotation = _transforms.RightHand.localRotation;
+                    motionParam.KneeLeftRotation = _transforms.LeftUpLeg.localRotation;
+                    motionParam.AnkleLeftRotation = _transforms.LeftLeg.localRotation;
+                    motionParam.KneeRightRotation = _transforms.RightUpLeg.localRotation;
+                    motionParam.AnkleRightRotation = _transforms.RightLeg.localRotation;
+                }
+                else
+                {
+                    // 2フレーム目以降は加算
+                    motionParam.SpineMidRotation = motionParam.SpineMidRotation.Add(_transforms.FirstSpine.localRotation);
+                    motionParam.ElbowLeftRotation = motionParam.ElbowLeftRotation.Add(_transforms.LeftArm.localRotation);
+                    motionParam.WristLeftRotation = motionParam.WristLeftRotation.Add(_transforms.LeftForeArm.localRotation);
+                    motionParam.HandLeftRotation = motionParam.HandLeftRotation.Add(_transforms.LeftHand.localRotation);
+                    motionParam.ElbowRightRotation = motionParam.ElbowRightRotation.Add(_transforms.RightArm.localRotation);
+                    motionParam.WristRightRotation = motionParam.WristRightRotation.Add(_transforms.RightForeArm.localRotation);
+                    motionParam.HandRightRotation = motionParam.HandRightRotation.Add(_transforms.RightHand.localRotation);
+                    motionParam.KneeLeftRotation = motionParam.KneeLeftRotation.Add(_transforms.LeftUpLeg.localRotation);
+                    motionParam.AnkleLeftRotation = motionParam.AnkleLeftRotation.Add(_transforms.LeftLeg.localRotation);
+                    motionParam.KneeRightRotation = motionParam.KneeRightRotation.Add(_transforms.RightUpLeg.localRotation);
+                    motionParam.AnkleRightRotation = motionParam.AnkleRightRotation.Add(_transforms.RightLeg.localRotation);
+                }
+
                 currentTime += Time.deltaTime;
                 attemptCount++;
                 await UniTask.Yield();
@@ -166,7 +185,7 @@ namespace ShadowRobotDebug
 
             // デフォルト値を設定
             poseData.MatchThreshold = 0.8f;
-            poseData.AllowedAngleDiff = 30f;
+            poseData.AllowedAngleDiff = 60f;
 
             // アセットとして保存
             var assetPath = Path.Combine(FilePath, fileName + ".asset");

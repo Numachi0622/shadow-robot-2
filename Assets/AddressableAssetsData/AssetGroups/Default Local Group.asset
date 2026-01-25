@@ -15,26 +15,8 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: eed57f996c8066b4aa51800b1dd26de2
   m_SerializeEntries:
-  - m_GUID: 426c0ec999a3fbe45932568741d74a53
-    m_Address: Assets/Data/PoseData/test4.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PoseData
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c5c4a007667b41c43a61e8353353ef2b
-    m_Address: Assets/Data/PoseData/test.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PoseData
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cf3b67317548d5d4dba361d58a33f636
-    m_Address: Assets/Data/PoseData/test3.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - PoseData
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e63478e9778f2524893d6c1ab2942121
-    m_Address: Assets/Data/PoseData/test2.asset
+  - m_GUID: 19d906126d8faad498286ce5d523ada5
+    m_Address: Assets/Data/PoseData/tpose.asset
     m_ReadOnly: 0
     m_SerializedLabels:
     - PoseData

@@ -11,6 +11,12 @@ namespace Utility.Extensions
 
         public static Quaternion Add(this Quaternion a, Quaternion b)
         {
+            // 符号を揃える（ダブルカバー対策）
+            if (Quaternion.Dot(a, b) < 0)
+            {
+                b = new Quaternion(-b.x, -b.y, -b.z, -b.w);
+            }
+
             return new Quaternion(
                 a.x + b.x,
                 a.y + b.y,

@@ -171,7 +171,7 @@ namespace InGame.Character
                 Destroy(gameObject);
             }).AddTo(this);
             _bossBattleStartSubscriber?.Subscribe(_ => OnBossBattleStart()).AddTo(this);
-            _openShieldSubscriber.Subscribe(_ => OpenShield()).AddTo(this);
+            _openShieldSubscriber?.Subscribe(_ => OpenShield()).AddTo(this);
         }
 
         public override void OnUpdate()

@@ -12,7 +12,7 @@ namespace ShadowRobotDebug
     {
         [SerializeField] private PoseRecordingView _view;
         private PoseRecorder _recorder;
-        private PoseData _prevPoseData;
+        [SerializeField] private PoseData _prevPoseData;
         private PlayerCore.MovementTransforms _transforms;
 
         public void Initialize(PlayerCore.MovementTransforms transforms)
