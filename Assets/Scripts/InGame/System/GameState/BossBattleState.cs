@@ -42,6 +42,9 @@ namespace InGame.System
 
         private async UniTask BossBattleEnterAsync(int playerCount, CancellationToken ct)
         {
+            // 雑魚敵は全て削除しておく
+            Owner.AllEnemyDespawnMessage.Publish(new AllEnemyDespawnMessage());
+            
             // await todo: ボス出現警告UI
 
             // ビルを非表示

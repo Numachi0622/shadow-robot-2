@@ -5,6 +5,7 @@ namespace InGame.System
         public override void OnEnter(IStateParameter parameter = null)
         {
             UnityEngine.Debug.Log("[GameOverState] OnEnter");
+            Owner.InGameUIController.ShowGameOverView();
         }
     }
 }

@@ -91,7 +91,6 @@ namespace InGame.System
             _cts?.Dispose();
             _subscription?.Dispose();
             
-            Owner.AllEnemyDespawnMessage.Publish(new AllEnemyDespawnMessage());
             Owner.NormalBattleEndPublisher.Publish(new NormalBattleEndMessage());
         }
 
