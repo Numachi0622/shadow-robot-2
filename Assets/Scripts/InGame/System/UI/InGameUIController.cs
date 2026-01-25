@@ -34,17 +34,19 @@ namespace InGame.System.UI
             // 購読のみ
             ISubscriber<InitGameMessage> initGameSubscriber,
             ISubscriber<NormalBattleEndMessage> normalBattleEndSubscriber,
-            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber)
+            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber,
+            ISubscriber<ShowWarningMessage> showWarningSubscriber)
         {
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
             _characterRegistry = characterRegistry;
-            
+
             var bag = DisposableBag.CreateBuilder();
             initGameSubscriber.Subscribe(OnInitGame).AddTo(bag);
             normalBattleEndSubscriber.Subscribe(_ => OnNormalBattleEnd()).AddTo(bag);
             bossBattleStartSubscriber.Subscribe(_ => OnBossBattleStart()).AddTo(bag);
-            
+            showWarningSubscriber.Subscribe(OnShowWarning).AddTo(bag);
+
             _subscription = bag.Build();
         }
 
@@ -106,9 +108,14 @@ namespace InGame.System.UI
             await UniTask.WhenAll(playerTask, bossTask);
         }
 
-        public async UniTask ShowWarningAsync(WarningType warningType)
+        public async UniTask ShowWarningAsync(WarningType warningType, int fadeCount = 3, float fadeDuration = 0.5f)
         {
-            await _bossBattlePresenter.ShowWarningAsync(warningType, 3, 0.5f);
+            await _bossBattlePresenter.ShowWarningAsync(warningType, fadeCount, fadeDuration);
+        }
+        
+        private void OnShowWarning(ShowWarningMessage message)
+        {
+            ShowWarningAsync(message.WarningType, message.FadeCount, message.FadeDuration).Forget();
         }
 
         #endregion

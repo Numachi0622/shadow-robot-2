@@ -11,7 +11,7 @@ namespace InGame.Character
         [SerializeField] private float _speed = 5f;
         private DeathBall _instance;
 
-        public void  ExecuteReady(CharacterCore owner)
+        public override void ExecuteReady(CharacterCore owner)
         {
             if (owner is not BossEnemyCore bossEnemy) return;
             _instance = Instantiate(_deathBallPrefab, bossEnemy.DeathBallFirePoint.position, Quaternion.identity);

@@ -46,6 +46,7 @@ namespace InGame.System
             builder.RegisterMessageBroker<PoseMatchEventResultMessage>(options);
             builder.RegisterMessageBroker<PoseMatchEventEndMessage>(options);
             builder.RegisterMessageBroker<OpenShieldMessage>(options);
+            builder.RegisterMessageBroker<ShowWarningMessage>(options);
 
             builder.RegisterMessageBroker<CharacterId, GameStartPlayerInitMessage>(options);
             builder.RegisterMessageBroker<AreaId, BuildingCountChangeMessage>(options);

@@ -1,5 +1,6 @@
 using InGame.Character;
 using InGame.System;
+using InGame.System.UI;
 
 namespace InGame.Message
 {
@@ -118,5 +119,21 @@ namespace InGame.Message
     /// </summary>
     public readonly struct OpenShieldMessage
     {
+    }
+    
+    /// <summary>
+    /// 警告表示メッセージ
+    /// </summary>
+    public readonly struct ShowWarningMessage
+    {
+        public readonly WarningType WarningType;
+        public readonly int FadeCount;
+        public readonly float FadeDuration;
+        public ShowWarningMessage(WarningType warningType, int fadeCount, float fadeDuration)
+        {
+            WarningType = warningType;
+            FadeCount = fadeCount;
+            FadeDuration = fadeDuration;
+        }
     }
 }

@@ -65,6 +65,7 @@ namespace InGame.Character
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnPublisher { get; private set; }
         public IPublisher<PoseMatchEventStartMessage> PoseMatchEventStartPublisher { get; private set; }
         public ISubscriber<PoseMatchEventEndMessage> PoseMatchEventEndSubscriber { get; private set; }
+        public IPublisher<ShowWarningMessage> ShowWarningPublisher { get; private set; }
         
         private bool _isForceStopped;
 
@@ -81,7 +82,8 @@ namespace InGame.Character
             ISubscriber<PoseMatchEventEndMessage> poseMatchEventEndSubscriber,
             IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
             IPublisher<StateChangeMessage> stateChangePublisher,
-            ISubscriber<AllEnemyStopMessage> allEnemyStopSubscriber)
+            ISubscriber<AllEnemyStopMessage> allEnemyStopSubscriber,
+            IPublisher<ShowWarningMessage> showWarningPublisher)
         {
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
@@ -92,6 +94,7 @@ namespace InGame.Character
             _enemyDestroyedPublisher = enemyDestroyedPublisher;
             _stateChangePublisher = stateChangePublisher;
             _allEnemyStopSubscriber = allEnemyStopSubscriber;
+            ShowWarningPublisher = showWarningPublisher;
         }
 
         public override void Initialize() 

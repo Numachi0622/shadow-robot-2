@@ -53,6 +53,10 @@ namespace InGame.Character
             
             try
             {
+                var attackPatternParams = Owner.Params.AttackPatternParams[param.AttackIndex];
+                var attackPattern = attackPatternParams.AttackPattern;
+                attackPattern.ExecuteReady(Owner);
+                
                 await Owner.Attacker.AttackReady(token, param.Direction, 0f, param.AttackReadyTime);
                 
                 if (param.AttackIndex == DeathBallIndex)
@@ -64,17 +68,8 @@ namespace InGame.Character
                     Owner.PoseMatchEventEndSubscriber.Subscribe(_ => _poseMatchEventEndSource.TrySetResult()).AddTo(bag);
                     _subscription = bag.Build();
                     
+                    // ポーズマッチイベント開始
                     Owner.PoseMatchEventStartPublisher.Publish(new PoseMatchEventStartMessage());
-                    
-                    // DeathBallは生成しておく
-                    var attackPatternParams = Owner.Params.AttackPatternParams[param.AttackIndex];
-                    var attackPattern = attackPatternParams.AttackPattern as DeathBallAttackPattern;
-                    if (attackPattern == null)
-                    {
-                        Debug.LogError("[BossEnemyAttackReady] DeathBallAttackPattern is null.");
-                        return;
-                    }
-                    attackPattern.ExecuteReady(Owner);
                     
                     // オーラエフェクト再生
                     Owner.EffectComponents.DeathBallAura.Play();

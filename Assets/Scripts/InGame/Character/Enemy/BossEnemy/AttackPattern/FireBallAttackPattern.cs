@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using InGame.Message;
+using InGame.System.UI;
 using UnityEngine;
 
 namespace InGame.Character
@@ -11,6 +13,12 @@ namespace InGame.Character
         [SerializeField] private float _fireballSpeed = 7.5f;
         [SerializeField] private AttackPoint _attackPoint;
         [SerializeField] private Vector2 _fireBallFireRange = new Vector2(-45f, 45f);
+
+        public override void ExecuteReady(CharacterCore owner)
+        {
+            if (owner is not BossEnemyCore bossEnemy) return;
+            bossEnemy.ShowWarningPublisher.Publish(new ShowWarningMessage(WarningType.FireBall, 2, 0.4f));
+        }
 
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)
         {

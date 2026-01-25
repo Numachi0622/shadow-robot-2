@@ -1,4 +1,6 @@
 using Cysharp.Threading.Tasks;
+using InGame.Message;
+using InGame.System.UI;
 using UnityEngine;
 
 namespace InGame.Character
@@ -17,6 +19,12 @@ namespace InGame.Character
             Random.Range(-1f, 0f)
         );
         
+        public override void ExecuteReady(CharacterCore owner)
+        {
+            if (owner is not BossEnemyCore bossEnemy) return;
+            bossEnemy.ShowWarningPublisher.Publish(new ShowWarningMessage(WarningType.FireHoming, 2, 0.4f));
+        }
+
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)
         {
             if (owner is not BossEnemyCore bossEnemy) return;

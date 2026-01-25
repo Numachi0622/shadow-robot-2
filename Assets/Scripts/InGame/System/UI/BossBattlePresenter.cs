@@ -17,9 +17,9 @@ namespace InGame.System.UI
 
         private readonly Dictionary<WarningType, string> _warningMessages = new()
         {
-            { WarningType.BossAppearance, "ボスしゅつげん！" },
-            { WarningType.FireBall, "ジャンプしてよけろ！！" },
-            { WarningType.FireHoming, "パンチしてはねかえせ！！" }
+            { WarningType.BossAppearance, "ボスしゅつげん!" },
+            { WarningType.FireBall, "ジャンプしてよけろ!" },
+            { WarningType.FireHoming, "パンチしてはねかえせ!" }
         };
 
         public async UniTask ShowWarningAsync(WarningType warningType, int fadeCount, float durationPerCount)
