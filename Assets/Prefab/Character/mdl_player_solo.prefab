@@ -441,7 +441,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mesh
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: b88bd98a4dc674652be15d80bf13f664, type: 3}
     m_RemovedGameObjects:
     - {fileID: -666037782682623980, guid: b88bd98a4dc674652be15d80bf13f664, type: 3}
     - {fileID: -5983632413441902263, guid: b88bd98a4dc674652be15d80bf13f664, type: 3}
