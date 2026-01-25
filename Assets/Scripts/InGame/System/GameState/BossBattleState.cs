@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InGame.Character;
 using InGame.Message;
+using InGame.System.UI;
 using UnityEngine;
 using Utility;
 using MessagePipe;
@@ -44,9 +45,13 @@ namespace InGame.System
         {
             // 雑魚敵は全て削除しておく
             Owner.AllEnemyDespawnMessage.Publish(new AllEnemyDespawnMessage());
-            
-            // await todo: ボス出現警告UI
 
+            if (!GameConst.NoAnimationMode)
+            {
+                // ボス出現警告表示
+                await Owner.InGameUIController.ShowWarningAsync(WarningType.BossAppearance);   
+            }
+            
             // ビルを非表示
             var buildings = Owner.CharacterRegistry.GetAllBuildings();
             foreach (var building in buildings)

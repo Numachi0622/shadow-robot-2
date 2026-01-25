@@ -13,6 +13,7 @@ namespace InGame.System.UI
     {
         [SerializeField] private NormalBattleView _normalBattleView;
         [SerializeField] private BuildingPresenter _buildingPresenter;
+        [SerializeField] private BossBattlePresenter _bossBattlePresenter;
         [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
         [SerializeField] private GameOverPresenter _gameOverPresenter;
         private HitPointPresenter _playerHpPresenter, _bossHpPresenter;
@@ -103,6 +104,11 @@ namespace InGame.System.UI
             var playerTask = _playerHpPresenter.HideAsync(new HitPointVisibilityContext(-HitPointViewHidePositionX));
             var bossTask = _bossHpPresenter.HideAsync(new HitPointVisibilityContext(HitPointViewHidePositionX));
             await UniTask.WhenAll(playerTask, bossTask);
+        }
+
+        public async UniTask ShowWarningAsync(WarningType warningType)
+        {
+            await _bossBattlePresenter.ShowWarningAsync(warningType, 3, 0.5f);
         }
 
         #endregion
