@@ -79,6 +79,9 @@ namespace InGame.Character
                     // オーラエフェクト再生
                     Owner.EffectComponents.DeathBallAura.Play();
                     
+                    // Summonで生成した雑魚敵は一旦削除する
+                    Owner.AllEnemyDespawnPublisher.Publish(new AllEnemyDespawnMessage());
+                    
                     await _poseMatchEventEndSource.Task;
                 }
             }

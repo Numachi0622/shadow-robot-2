@@ -62,6 +62,7 @@ namespace InGame.Character
             }
         }
         public IPublisher<SpawnCharacterMessage> SummonEnemyPublisher { get; private set; }
+        public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnPublisher { get; private set; }
         public IPublisher<PoseMatchEventStartMessage> PoseMatchEventStartPublisher { get; private set; }
         public ISubscriber<PoseMatchEventEndMessage> PoseMatchEventEndSubscriber { get; private set; }
         
@@ -75,6 +76,7 @@ namespace InGame.Character
             HitPointViewList hitPointViewList,
             CharacterRegistry characterRegistry,
             IPublisher<SpawnCharacterMessage> summonEnemyPublisher,
+            IPublisher<AllEnemyDespawnMessage> allEnemyDespawnPublisher,
             IPublisher<PoseMatchEventStartMessage> poseMatchEventStartPublisher,
             ISubscriber<PoseMatchEventEndMessage> poseMatchEventEndSubscriber,
             IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
@@ -84,6 +86,7 @@ namespace InGame.Character
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
             SummonEnemyPublisher = summonEnemyPublisher;
+            AllEnemyDespawnPublisher = allEnemyDespawnPublisher;
             PoseMatchEventStartPublisher = poseMatchEventStartPublisher;
             PoseMatchEventEndSubscriber = poseMatchEventEndSubscriber;
             _enemyDestroyedPublisher = enemyDestroyedPublisher;
