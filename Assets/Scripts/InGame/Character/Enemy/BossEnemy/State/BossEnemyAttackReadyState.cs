@@ -12,6 +12,9 @@ namespace InGame.Character
     {
         private const int ShakeCount = 2;
         private const int DeathBallIndex = 2;
+        private const int DeathBallTurnCount = 4;
+        private int _attackCount;
+        private int _prevAttackCount = -1;
         private UniTaskCompletionSource _poseMatchEventEndSource;
         private IDisposable _subscription;
         
@@ -20,11 +23,24 @@ namespace InGame.Character
             if (parameter is AttackReadyParam param)
             {
                 Debug.Log("[BossEnemyAttackReady] OnEnter");
+                _attackCount++;
 
-                var attackIndex = Owner.Params.SelectAttackPatternIndex();
+                int attackIndex;
+                if (_attackCount % DeathBallTurnCount == 0)
+                {
+                    attackIndex = DeathBallIndex;
+                }
+                else
+                {
+                    do
+                    {
+                        attackIndex = Owner.Params.SelectAttackPatternIndex();
+                    } while (attackIndex == DeathBallIndex || attackIndex == _prevAttackCount);
+                }
                 var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
                 Owner.Animator.SetTrigger(animationHash);
                 param.AttackIndex = attackIndex;
+                _prevAttackCount = attackIndex;
 
                 AttackReadyAsync(param).Forget();
             }
