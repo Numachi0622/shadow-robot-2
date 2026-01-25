@@ -1,3 +1,4 @@
+using InGame.Message;
 using UnityEngine;
 
 namespace InGame.System
@@ -7,6 +8,7 @@ namespace InGame.System
         public override void OnEnter(IStateParameter parameter = null)
         {
             Debug.Log("[ResultState] OnEnter");
+            Owner.AllEnemyDespawnMessage.Publish(new AllEnemyDespawnMessage());
         }
     }
 }
