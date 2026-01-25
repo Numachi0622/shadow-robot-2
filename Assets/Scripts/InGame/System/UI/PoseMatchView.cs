@@ -67,10 +67,10 @@ namespace InGame.System.UI
         }
         
         private Sequence PoseMatchSuccessSequence => DOTween.Sequence()
-            .Append(_matchGaugeRoot.DOScale(Vector3.one * 1.5f, 0.5f).SetLoops(2, LoopType.Yoyo))
+            .Append(_matchGaugeRoot.DOScale(Vector3.one * 1.5f, 0.4f).SetLoops(2, LoopType.Yoyo))
             .AppendInterval(0.5f)
-            .Append(_matchGaugeRoot.DOScale(Vector3.zero, 1f))
-            .Join(_matchGaugeRoot.DORotate(new Vector3(0, 0, 360), 1f, RotateMode.FastBeyond360));
+            .Append(_matchGaugeRoot.DOScale(Vector3.zero, 0.75f))
+            .Join(_matchGaugeRoot.DORotate(new Vector3(0, 0, 360), 0.8f, RotateMode.FastBeyond360));
 
         private void Refresh()
         {

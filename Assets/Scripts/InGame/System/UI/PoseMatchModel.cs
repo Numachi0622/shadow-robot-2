@@ -66,6 +66,8 @@ namespace InGame.System.UI
         public void Reset()
         {
             _currentTime = _limitTime;
+            _poseMatchRate.Value = 0f;
+            _poseMatchLimitTimeRate.Value = 1f;
             _isMatched = false;
         }
     }
