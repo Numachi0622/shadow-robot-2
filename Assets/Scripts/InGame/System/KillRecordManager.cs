@@ -12,6 +12,7 @@ namespace InGame.System
         private readonly ISubscriber<EnemyDestroyedMessage> _enemyDestroyedSubscriber;
         private readonly ISubscriber<InitGameMessage> _initGameSubscriber;
         private readonly IPublisher<StateChangeMessage> _stateChangePublisher;
+        private readonly IPublisher<UpdateKillCountMessage> _updateKillCountPublisher;
         private int _playerCount = -1;
         private int _currentKillCount = 0;
         private int _requiredKillCount;
@@ -22,11 +23,13 @@ namespace InGame.System
         public KillRecordManager(
             ISubscriber<EnemyDestroyedMessage> enemyDestroyedSubscriber,
             ISubscriber<InitGameMessage> initGameSubscriber,
-            IPublisher<StateChangeMessage> stateChangePublisher)
+            IPublisher<StateChangeMessage> stateChangePublisher,
+            IPublisher<UpdateKillCountMessage> updateKillCountPublisher)
         {
             _enemyDestroyedSubscriber = enemyDestroyedSubscriber;
             _initGameSubscriber = initGameSubscriber;
             _stateChangePublisher = stateChangePublisher;
+            _updateKillCountPublisher = updateKillCountPublisher;
         }
         
         public void Initialize()
@@ -48,6 +51,8 @@ namespace InGame.System
             if (_playerCount == -1 || _isRecordComplete) return;
 
             _currentKillCount++;
+            _updateKillCountPublisher.Publish(new UpdateKillCountMessage(_currentKillCount, _requiredKillCount));
+
             if (_currentKillCount >= _requiredKillCount)
             {
                 _isRecordComplete = true;

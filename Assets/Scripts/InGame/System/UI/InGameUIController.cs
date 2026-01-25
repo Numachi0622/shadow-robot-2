@@ -5,13 +5,15 @@ using InGame.Character;
 using InGame.Message;
 using MessagePipe;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Utility;
 using VContainer;
 
 namespace InGame.System.UI
 {
     public class InGameUIController : MonoBehaviour
     {
-        [SerializeField] private NormalBattleView _normalBattleView;
+        [SerializeField] private NormalBattlePresenter _normalBattlePresenter;
         [SerializeField] private BuildingPresenter _buildingPresenter;
         [SerializeField] private BossBattlePresenter _bossBattlePresenter;
         [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
@@ -35,7 +37,8 @@ namespace InGame.System.UI
             ISubscriber<InitGameMessage> initGameSubscriber,
             ISubscriber<NormalBattleEndMessage> normalBattleEndSubscriber,
             ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber,
-            ISubscriber<ShowWarningMessage> showWarningSubscriber)
+            ISubscriber<ShowWarningMessage> showWarningSubscriber,
+            ISubscriber<UpdateKillCountMessage> updateKillCountSubscriber)
         {
             _buildingCountChangeSubscriber = buildingCountChangeSubscriber;
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
@@ -46,34 +49,43 @@ namespace InGame.System.UI
             normalBattleEndSubscriber.Subscribe(_ => OnNormalBattleEnd()).AddTo(bag);
             bossBattleStartSubscriber.Subscribe(_ => OnBossBattleStart()).AddTo(bag);
             showWarningSubscriber.Subscribe(OnShowWarning).AddTo(bag);
+            updateKillCountSubscriber.Subscribe(OnUpdateKillCount).AddTo(bag);
 
             _subscription = bag.Build();
         }
 
         public void Initialize()
         {
-            _normalBattleView.Initialize();
+            _normalBattlePresenter.Initialize();
             _gameOverPresenter.Initialize();
         }
 
         #region NormalBattleEvent
-        private void OnInitGame(InitGameMessage message)
+        private async void OnInitGame(InitGameMessage message)
         {
             _buildingPresenter.InitializeAndShow(
                 message.PlayerCount,
                 message.BuildingCoutPerArea,
                 _buildingCountChangeSubscriber
             );
+
+            await _normalBattlePresenter.ShowAndHideRemainingEnemiesCountViewAsync(message.PlayerCount * GameConst.RequiredNormalEnemyKillCount);
         }
         
         public async UniTask ShowAndHideBattleStartViewAsync()
         {
-            await _normalBattleView.ShowAndHideBattleStartViewAsync();
+            await _normalBattlePresenter.ShowAndHideBattleStartViewAsync();
         }
         
         private void OnNormalBattleEnd()
         {
             _buildingPresenter.Hide();
+            _normalBattlePresenter.EndNormalBattle();
+        }
+
+        private void OnUpdateKillCount(UpdateKillCountMessage message)
+        {
+            _normalBattlePresenter.SetRemainingEnemiesCount(message);
         }
         #endregion
 

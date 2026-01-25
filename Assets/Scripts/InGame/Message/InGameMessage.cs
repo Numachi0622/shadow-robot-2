@@ -39,6 +39,20 @@ namespace InGame.Message
             PlayerId = playerId;
         }
     }
+
+    /// <summary>
+    /// 雑魚敵のキル数更新メッセージ
+    /// </summary>
+    public readonly struct UpdateKillCountMessage
+    {
+        public readonly int CurrentKillCount;
+        public readonly int TargetKillCount;
+        public UpdateKillCountMessage(int current, int target)
+        {
+            CurrentKillCount = current;
+            TargetKillCount = target;
+        }
+    }
     
     /// <summary>
     /// 敵を強制敵に消すメッセージ
