@@ -47,6 +47,13 @@ namespace InGame.Message
     }
 
     /// <summary>
+    /// 敵を強制的に停止させるメッセージ
+    /// </summary>
+    public readonly struct AllEnemyStopMessage
+    {
+    }
+
+    /// <summary>
     /// プレイヤーを強制的に消すメッセージ
     /// </summary>
     public readonly struct AllPlayerDespawnMessage

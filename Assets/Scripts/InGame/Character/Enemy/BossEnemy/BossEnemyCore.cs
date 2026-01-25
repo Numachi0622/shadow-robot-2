@@ -37,6 +37,7 @@ namespace InGame.Character
         private CharacterRegistry _characterRegistry;
         private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
         private IPublisher<StateChangeMessage> _stateChangePublisher;
+        private ISubscriber<AllEnemyStopMessage> _allEnemyStopSubscriber;
         
         public EnemyParams Params => _params;
         public EnemyEffect EnemyEffect => _enemyEffect;
@@ -64,6 +65,8 @@ namespace InGame.Character
         public IPublisher<PoseMatchEventStartMessage> PoseMatchEventStartPublisher { get; private set; }
         public ISubscriber<PoseMatchEventEndMessage> PoseMatchEventEndSubscriber { get; private set; }
         
+        private bool _isForceStopped;
+
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
         
@@ -75,7 +78,8 @@ namespace InGame.Character
             IPublisher<PoseMatchEventStartMessage> poseMatchEventStartPublisher,
             ISubscriber<PoseMatchEventEndMessage> poseMatchEventEndSubscriber,
             IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
-            IPublisher<StateChangeMessage> stateChangePublisher)
+            IPublisher<StateChangeMessage> stateChangePublisher,
+            ISubscriber<AllEnemyStopMessage> allEnemyStopSubscriber)
         {
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
@@ -84,6 +88,7 @@ namespace InGame.Character
             PoseMatchEventEndSubscriber = poseMatchEventEndSubscriber;
             _enemyDestroyedPublisher = enemyDestroyedPublisher;
             _stateChangePublisher = stateChangePublisher;
+            _allEnemyStopSubscriber = allEnemyStopSubscriber;
         }
 
         public override void Initialize() 
@@ -119,10 +124,15 @@ namespace InGame.Character
             _damageObserver.OnTakeDamage
                 .Subscribe(OnDamageStart)
                 .AddTo(this);
+            
+            // 外部から強制的に停止させる
+            _allEnemyStopSubscriber.Subscribe(_ => ForceStop()).AddTo(this);
         }
         
         public override void OnUpdate()
         {
+            if (_isForceStopped) return;
+
             _targetTransform = _characterRegistry.GetNearestPlayer(transform.position)?.transform;
             if (_targetTransform == null) return;
 
@@ -131,7 +141,7 @@ namespace InGame.Character
             {
                 _attackObserver.Observe(dest);
             }
-            
+
             _stateMachine.OnUpdate();
         }
 
@@ -175,6 +185,12 @@ namespace InGame.Character
 
         public void AnimationEventTemp()
         {
+        }
+        
+        protected override void ForceStop()
+        {
+            _isForceStopped = true;
+            _stateMachine.SetState<BossEnemyIdleState>();
         }
     }
 }

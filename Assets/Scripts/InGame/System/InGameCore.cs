@@ -26,6 +26,7 @@ namespace InGame.System
         public IPublisher<CharacterId, GameStartPlayerInitMessage> GameStartPlayerInitPublisher { get; private set; }
         public IPublisher<NormalBattleEndMessage> NormalBattleEndPublisher { get; private set; }
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnMessage { get; private set; }
+        public IPublisher<AllEnemyStopMessage> AllEnemyStopMessage { get; private set; }
         public IPublisher<AllPlayerDespawnMessage> AllPlayerDespawnMessage { get; private set; }
         public IPublisher<BossBattleStartMessage> BossBattleStartPublisher { get; private set; }
         public ISubscriber<ConnectionRecoverMessage> ConnectionRecoverSubscriber { get; private set; }
@@ -54,6 +55,7 @@ namespace InGame.System
             IPublisher<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitPublisher,
             IPublisher<NormalBattleEndMessage> normalBattleEndPublisher,
             IPublisher<AllEnemyDespawnMessage> allEnemyDespawnMessage,
+            IPublisher<AllEnemyStopMessage> allEnemyStopMessage,
             IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage,
             IPublisher<BossBattleStartMessage> bossBattleStartPublisher,
             ISubscriber<ConnectionRecoverMessage> connectionRecoverSubscriber,
@@ -75,6 +77,7 @@ namespace InGame.System
             GameStartPlayerInitPublisher = gameStartPlayerInitPublisher;
             NormalBattleEndPublisher = normalBattleEndPublisher;
             AllEnemyDespawnMessage = allEnemyDespawnMessage;
+            AllEnemyStopMessage = allEnemyStopMessage;
             AllPlayerDespawnMessage = allPlayerDespawnMessage;
             BossBattleStartPublisher = bossBattleStartPublisher;
             ConnectionRecoverSubscriber = connectionRecoverSubscriber;

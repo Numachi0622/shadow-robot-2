@@ -38,6 +38,7 @@ namespace InGame.System
             builder.RegisterMessageBroker<BuildingDestroyedMessage>(options);
             builder.RegisterMessageBroker<EnemyDestroyedMessage>(options);
             builder.RegisterMessageBroker<AllEnemyDespawnMessage>(options);
+            builder.RegisterMessageBroker<AllEnemyStopMessage>(options);
             builder.RegisterMessageBroker<AllPlayerDespawnMessage>(options);
             builder.RegisterMessageBroker<BossBattleStartMessage>(options);
             builder.RegisterMessageBroker<PoseMatchEventStartMessage>(options);

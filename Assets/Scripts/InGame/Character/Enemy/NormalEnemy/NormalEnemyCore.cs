@@ -33,8 +33,10 @@ namespace InGame.Character
         private CharacterRegistry _characterRegistry;
         private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
         private ISubscriber<AllEnemyDespawnMessage> _allEnemyDespawnSubscriber;
+        private ISubscriber<AllEnemyStopMessage> _allEnemyStopSubscriber;
         private AreaId _areaId;
         private TargetType _targetType;
+        private bool _isForceStopped;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
@@ -62,11 +64,13 @@ namespace InGame.Character
         public void Construct(
             CharacterRegistry characterRegistry,
             IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
-            ISubscriber<AllEnemyDespawnMessage> allEnemyDespawnSubscriber)
+            ISubscriber<AllEnemyDespawnMessage> allEnemyDespawnSubscriber,
+            ISubscriber<AllEnemyStopMessage> allEnemyStopSubscriber)
         {
             _characterRegistry = characterRegistry;
             _enemyDestroyedPublisher = enemyDestroyedPublisher;
             _allEnemyDespawnSubscriber = allEnemyDespawnSubscriber;
+            _allEnemyStopSubscriber = allEnemyStopSubscriber;
         }
 
         public override void Initialize()
@@ -135,11 +139,16 @@ namespace InGame.Character
                 _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(_areaId, this));
                 Destroy(gameObject);
             }).AddTo(this);
+
+            // 外部から強制的に停止（ゲームオーバーなど）
+            _allEnemyStopSubscriber.Subscribe(_ => ForceStop()).AddTo(this);
         }
 
         public override void OnUpdate()
         {
-            _targetTransform = _targetType == TargetType.Building 
+            if (_isForceStopped) return;
+
+            _targetTransform = _targetType == TargetType.Building
                 ? _characterRegistry.GetNearestBuilding(_areaId, transform.position)?.transform
                 : _characterRegistry.GetAllPlayers().FirstOrDefault()?.transform;
             if (_targetTransform == null) return;
@@ -204,6 +213,12 @@ namespace InGame.Character
 
         public void AnimationEventTemp()
         {
+        }
+
+        protected override void ForceStop()
+        {
+            _isForceStopped = true;
+            _stateMachine.SetState<NormalEnemyIdleState>();
         }
     }
 }

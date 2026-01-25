@@ -24,5 +24,9 @@ namespace InGame.Character
         public override void OnUpdate()
         {
         }
+
+        protected virtual void ForceStop()
+        {
+        }
     }
 }

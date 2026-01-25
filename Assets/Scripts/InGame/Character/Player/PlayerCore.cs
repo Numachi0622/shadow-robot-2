@@ -124,7 +124,8 @@ namespace InGame.Character
             ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
             IPublisher<DespawnCharacterMessage> despawnPublisher,
             ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber,
-            ISubscriber<OpenShieldMessage> openShieldSubscriber)
+            ISubscriber<OpenShieldMessage> openShieldSubscriber,
+            IPublisher<StateChangeMessage> stateChangePublisher)
         {
             _hpView = hpViewList.PlayerHitPointView;
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
@@ -132,6 +133,7 @@ namespace InGame.Character
             _despawnPublisher = despawnPublisher;
             _bossBattleStartSubscriber = bossBattleStartSubscriber;
             _openShieldSubscriber = openShieldSubscriber;
+            _stateChangePublisher = stateChangePublisher;
         }
 
         private void Bind()
