@@ -1,7 +1,5 @@
 using System;
 using Windows.Kinect;
-using InGame.Message;
-using MessagePipe;
 using OscCore;
 using SynMotion;
 using UnityEngine;
@@ -19,28 +17,22 @@ namespace InGame.Character
         private readonly bool[] _connectedFlags;
         private readonly int _maxDeviceCount;
         private readonly int _maxTrackingCount;
-        private readonly IPublisher<SpawnCharacterMessage> _spawnPublisher;
-        private readonly IPublisher<DespawnCharacterMessage> _despawnPublisher;
+        private readonly MotionRegistry _motionRegistry;
 
         [Inject]
         public MotionReceiver(
             DeviceSettings settings, 
             SynMotionSystem synMotion,
-            PlayerSpawnSettings playerSpawnSettings,
-            IPublisher<SpawnCharacterMessage> spawnPublisher,
-            IPublisher<DespawnCharacterMessage> despawnPublisher)
+            MotionRegistry motionRegistry)
         {
             _receiver = new OscServer(settings.Port);
             _synMotion = synMotion;
+            _motionRegistry = motionRegistry;
             _maxDeviceCount = settings.MaxDeviceCount;
             _maxTrackingCount = settings.MaxTrackingCountPerDevice;
-            _playerSpawnSettings = playerSpawnSettings;
             
             _motionParam = new MotionParam[_maxDeviceCount * _maxTrackingCount];
             _connectedFlags = new bool[_maxDeviceCount * _maxTrackingCount];
-            
-            _spawnPublisher = spawnPublisher;
-            _despawnPublisher = despawnPublisher;
         }
         
         public void Initialize()
@@ -169,21 +161,13 @@ namespace InGame.Character
                 {
                     // 未接続 -> 接続
                     _connectedFlags[i] = _motionParam[i].IsTracked;
-
-                    if (_playerSpawnSettings == null) continue;
-                    var pos = _playerSpawnSettings.SpawnPositions[i];
-                    _spawnPublisher?.Publish(new SpawnCharacterMessage(
-                        new CharacterId(i),
-                        CharacterType.Player,
-                        pos,
-                        Quaternion.identity
-                    ));
+                    _motionRegistry.TryAdd(i);
                 }
                 else if (_connectedFlags[i] && !_motionParam[i].IsTracked)
                 {
                     // 接続 -> 未接続
                     _connectedFlags[i] = _motionParam[i].IsTracked;
-                    _despawnPublisher?.Publish(new DespawnCharacterMessage(new CharacterId(i)));
+                    _motionRegistry.Remove(i);
                 }
             }
         }

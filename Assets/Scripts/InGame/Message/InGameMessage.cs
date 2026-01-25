@@ -26,6 +26,18 @@ namespace InGame.Message
             Enemy = enemy;
         }
     }
+
+    /// <summary>
+    /// 接続復旧時のメッセージ
+    /// </summary>
+    public readonly struct ConnectionRecoverMessage
+    {
+        public readonly CharacterId PlayerId;
+        public ConnectionRecoverMessage(CharacterId playerId)
+        {
+            PlayerId = playerId;
+        }
+    }
     
     /// <summary>
     /// 敵を強制敵に消すメッセージ

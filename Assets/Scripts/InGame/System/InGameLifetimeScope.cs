@@ -33,6 +33,7 @@ namespace InGame.System
             builder.RegisterMessageBroker<SpawnCharacterMessage>(options);
             builder.RegisterMessageBroker<DespawnCharacterMessage>(options);
             builder.RegisterMessageBroker<InitGameMessage>(options);
+            builder.RegisterMessageBroker<ConnectionRecoverMessage>(options);
             builder.RegisterMessageBroker<NormalBattleEndMessage>(options);
             builder.RegisterMessageBroker<BuildingDestroyedMessage>(options);
             builder.RegisterMessageBroker<EnemyDestroyedMessage>(options);
@@ -68,6 +69,7 @@ namespace InGame.System
             // プレイヤー生成
             builder.RegisterInstance(_deviceSettings);
             builder.RegisterEntryPoint<MotionReceiver>().AsSelf();
+            builder.RegisterEntryPoint<MotionRegistry>().AsSelf();
             builder.Register<SynMotionSystem>(Lifetime.Singleton).AsSelf();
 
             // キャラクター生成

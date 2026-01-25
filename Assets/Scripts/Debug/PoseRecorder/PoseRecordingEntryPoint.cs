@@ -16,7 +16,7 @@ namespace ShadowRobotDebug
         private void Start()
         {
             _synMotion = new SynMotionSystem();
-            _receiver = new MotionReceiver(_deviceSettings, _synMotion, null, null, null);
+            _receiver = new MotionReceiver(_deviceSettings, _synMotion, null);
             _receiver.Initialize();
             _playerCore.Initialize(new CharacterId(0), _synMotion);
             _presenter.Initialize(_playerCore.Transforms);
