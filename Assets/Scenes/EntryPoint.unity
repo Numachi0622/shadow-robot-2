@@ -519,6 +519,9 @@ MonoBehaviour:
   _hitPointViewList:
     _playerHitPointView: {fileID: 3192624827931695669}
     _bossHitPointView: {fileID: 392787250261452903}
+  _combinePlayerReference:
+    _doublePlayerCombinePrefab: {fileID: 6356611943295312602, guid: f9939d0d99a89684d994fa8f9b9faee4, type: 3}
+    _triplePlayerCombinePrefab: {fileID: 5891316897496107153, guid: b9bf603c9473732479bb7d6b59cc4b4c, type: 3}
   _debugCommand: {fileID: 613532413}
 --- !u!114 &613532413
 MonoBehaviour:

@@ -21,6 +21,7 @@ namespace InGame.System
         [SerializeField] private MainStageManager _mainStageManager;
         [SerializeField] private InGameUIController _inGameUIController;
         [SerializeField] private HitPointViewList _hitPointViewList;
+        [SerializeField] private CombinePlayerReference _combinePlayerReference;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -58,6 +59,7 @@ namespace InGame.System
             builder.RegisterInstance(_characterPrefabs.PlayerPrefab);
             builder.RegisterInstance(_characterPrefabs.NormalEnemyPrefab);
             builder.RegisterInstance(_characterPrefabs.BossEnemyPrefab);
+            builder.RegisterInstance(_combinePlayerReference);
             
             // ステージ等のPrefabを登録
             builder.RegisterInstance(_stageReferences);
@@ -93,5 +95,14 @@ namespace InGame.System
         [SerializeField] private HitPointView _bossHitPointView;
         public HitPointView PlayerHitPointView => _playerHitPointView;
         public HitPointView BossHitPointView => _bossHitPointView;
+    }
+
+    [Serializable]
+    public class CombinePlayerReference
+    {
+        [SerializeField] private CharacterCore _doublePlayerCombinePrefab;
+        [SerializeField] private CharacterCore _triplePlayerCombinePrefab;
+        public CharacterCore DoublePlayerCombinePrefab => _doublePlayerCombinePrefab;
+        public CharacterCore TriplePlayerCombinePrefab => _triplePlayerCombinePrefab;
     }
 }

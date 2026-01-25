@@ -18,6 +18,7 @@ namespace InGame.System
         private readonly CharacterFactory _factory;
         private readonly CharacterRegistry _registry;
         private readonly SynMotionSystem _synMotion;
+        private readonly CombinePlayerReference _combinePlayerReference;
         private readonly ISubscriber<SpawnCharacterMessage> _spawnSubscriber;
         private readonly ISubscriber<CreateBuildingMessage> _createBuildingSubscriber;
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
@@ -32,6 +33,7 @@ namespace InGame.System
             CharacterFactory factory,
             CharacterRegistry registry,
             SynMotionSystem synMotion,
+            CombinePlayerReference combinePlayerReference,
             ISubscriber<SpawnCharacterMessage> spawnSubscriber,
             ISubscriber<CreateBuildingMessage> createBuildingSubscriber,
             ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber,
@@ -43,6 +45,7 @@ namespace InGame.System
             _factory = factory;
             _registry = registry;
             _synMotion = synMotion;
+            _combinePlayerReference = combinePlayerReference;
             _spawnSubscriber = spawnSubscriber;
             _createBuildingSubscriber = createBuildingSubscriber;
             _despawnSubscriber = playerDespawnSubscriber;
@@ -86,8 +89,21 @@ namespace InGame.System
 
         private void SpawnPlayer(SpawnCharacterMessage message)
         {
-            var character = _factory.Create<PlayerCore>(message.Position, message.Rotation);
-            if (character is not PlayerCore player) return;
+            CharacterCore character;
+            if (message.CharacterType == CharacterType.Player)
+            {
+                character = _factory.Create<PlayerCore>(message.Position, message.Rotation);
+            }
+            else
+            {
+                character = message.TotalPlayerCount switch 
+                {
+                    2 => _factory.Create(_combinePlayerReference.DoublePlayerCombinePrefab, message.Position, message.Rotation),
+                    3 => _factory.Create(_combinePlayerReference.TriplePlayerCombinePrefab, message.Position, message.Rotation),
+                    _ => null,
+                };
+            }
+            if (character == null || character is not PlayerCore player) return;
             
             player.Initialize(message.CharacterId, _synMotion, message.TotalPlayerCount);
             _registry.Register(player);

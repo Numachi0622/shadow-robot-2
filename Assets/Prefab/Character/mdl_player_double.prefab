@@ -5084,7 +5084,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09f6937f5e14b098ea8e5f126a8d76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackCollider: {fileID: 0}
+  _attackCollider: {fileID: 4104365075074991963}
 --- !u!1 &1449981187153951793
 GameObject:
   m_ObjectHideFlags: 0
@@ -11048,17 +11048,17 @@ MonoBehaviour:
   _params: {fileID: 11400000, guid: 2aa315456cc0ea4408e8b50fcc20d7b8, type: 2}
   _movementTransforms:
     Reference: {fileID: 9134317330010222073}
-    LeftUpLeg: {fileID: 0}
-    LeftLeg: {fileID: 0}
-    RightUpLeg: {fileID: 0}
-    RightLeg: {fileID: 0}
-    FirstSpine: {fileID: 0}
-    LeftArm: {fileID: 0}
-    LeftForeArm: {fileID: 0}
-    LeftHand: {fileID: 0}
-    RightArm: {fileID: 0}
-    RightForeArm: {fileID: 0}
-    RightHand: {fileID: 0}
+    LeftUpLeg: {fileID: 1134606284119583580}
+    LeftLeg: {fileID: 1632821943297912362}
+    RightUpLeg: {fileID: 3500700764189407470}
+    RightLeg: {fileID: 1709866252617434525}
+    FirstSpine: {fileID: 5739024241948670934}
+    LeftArm: {fileID: 7852541146902517032}
+    LeftForeArm: {fileID: 1459499203712303998}
+    LeftHand: {fileID: 3930392674968374732}
+    RightArm: {fileID: 4000245687554837980}
+    RightForeArm: {fileID: 700238841975886595}
+    RightHand: {fileID: 7477572050908447897}
   _leftHandCollider: {fileID: 4935929248063366097}
   _rightHandCollider: {fileID: 8228921619150978830}
   _damageCollider: {fileID: 5521570726725367974}
@@ -21073,7 +21073,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09f6937f5e14b098ea8e5f126a8d76e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _attackCollider: {fileID: 0}
+  _attackCollider: {fileID: 809791968197741292}
 --- !u!1 &8141983929242359790
 GameObject:
   m_ObjectHideFlags: 0
