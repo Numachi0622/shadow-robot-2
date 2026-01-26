@@ -21,7 +21,7 @@ MonoBehaviour:
   SearchRange: 30
   AttackRange: 0
   AttackReadyTime: 1
-  AttackCoolTime: 1
+  AttackCoolTime: 3
   DamageCoolTime: 1
   AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
   EffectParams:

@@ -61,8 +61,8 @@ namespace InGame.Character
         private bool _isJumping;
         private bool _isCombine;
         private int _totalPlayerCount = -1;
-        private readonly float _jumpThresholdOffset = 0.2f;
-        private readonly float _jumpWeight = 2f;
+        private readonly float _jumpThresholdOffset = 0.05f;
+        private readonly float _jumpWeight = 6f;
         
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
@@ -190,6 +190,7 @@ namespace InGame.Character
 
             if (!_isMovable || !_isCalibrated) return; 
             var moveValue = motionParam.SpineMidPosition * _params.MoveWeight - _baseTrackingPosition;
+            moveValue.y = motionParam.SpineMidPosition.y;
             var movedPos = _baseWorldPosition + moveValue;
             
             var jumpThreshold = _calibratedGroundHeight + _jumpThresholdOffset;

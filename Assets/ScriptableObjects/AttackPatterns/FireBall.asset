@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: FireBall
   m_EditorClassIdentifier: 
   _fireBallPrefab: {fileID: 7612469532117511486, guid: 5d69b065aaf78ca469e6888d2c9fab92, type: 3}
-  _instanceCount: 15
-  _fireballSpeed: 10
+  _instanceCount: 50
+  _fireballSpeed: 70
   _attackPoint:
     _minAttackPoint: 10
     _maxAttackPoint: 20

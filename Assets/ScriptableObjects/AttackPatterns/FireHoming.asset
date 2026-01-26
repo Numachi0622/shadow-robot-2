@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _fireHomingPrefab: {fileID: 7644637383848393518, guid: 750a9ed589792f54097c6435dc57bff2, type: 3}
   _attackPoint:
-    _minAttackPoint: 10
-    _maxAttackPoint: 20
+    _minAttackPoint: 80
+    _maxAttackPoint: 100
   _speed: 5
   _instanceCount: 5

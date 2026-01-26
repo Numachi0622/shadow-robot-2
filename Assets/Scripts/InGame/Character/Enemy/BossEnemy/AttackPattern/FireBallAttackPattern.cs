@@ -34,25 +34,25 @@ namespace InGame.Character
             var angleStep = _instanceCount > 1 ? angleRange / (_instanceCount - 1) : 0;
             var startAngle = _fireBallFireRange.y;
 
-            await UniTask.Delay(300);
+            // await UniTask.Delay(300);
+            //
+            // for (var i = 0; i < _instanceCount; i++)
+            // {
+            //     var angle = startAngle - angleStep * i;
+            //     var rot = Quaternion.Euler(0, angle, 0);
+            //     var dir = rot * bossForward;
+            //     
+            //     var fireBall = Instantiate(_fireBallPrefab, bossEnemy.FireBallFirePoint.position, Quaternion.identity);
+            //     fireBall.Fire(new AttackParam()
+            //     {
+            //         AttackPoint = _attackPoint,
+            //         AttackDirection = dir,
+            //         AttackVelocity = _fireballSpeed,
+            //         AttackType = AttackType.EnemyToPlayerNormal,
+            //     });
+            // }
 
-            for (var i = 0; i < _instanceCount; i++)
-            {
-                var angle = startAngle - angleStep * i;
-                var rot = Quaternion.Euler(0, angle, 0);
-                var dir = rot * bossForward;
-                
-                var fireBall = Instantiate(_fireBallPrefab, bossEnemy.FireBallFirePoint.position, Quaternion.identity);
-                fireBall.Fire(new AttackParam()
-                {
-                    AttackPoint = _attackPoint,
-                    AttackDirection = dir,
-                    AttackVelocity = _fireballSpeed,
-                    AttackType = AttackType.EnemyToPlayerNormal,
-                });
-            }
-
-            await UniTask.Delay(300);
+            await UniTask.Delay(500);
             for (var i = 0; i < _instanceCount; i++)
             {
                 var angle = startAngle - angleStep * i;
