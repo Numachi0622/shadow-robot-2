@@ -28,6 +28,7 @@ namespace InGame.System
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnMessage { get; private set; }
         public IPublisher<AllEnemyStopMessage> AllEnemyStopMessage { get; private set; }
         public IPublisher<AllPlayerDespawnMessage> AllPlayerDespawnMessage { get; private set; }
+        public IPublisher<CombineCompleteMessage> CombineCompletePublisher { get; private set; }
         public IPublisher<BossBattleStartMessage> BossBattleStartPublisher { get; private set; }
         public ISubscriber<ConnectionRecoverMessage> ConnectionRecoverSubscriber { get; private set; }
         public ISubscriber<PoseMatchEventStartMessage> PoseMatchEventStartSubscriber { get; private set; }
@@ -57,6 +58,7 @@ namespace InGame.System
             IPublisher<AllEnemyDespawnMessage> allEnemyDespawnMessage,
             IPublisher<AllEnemyStopMessage> allEnemyStopMessage,
             IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage,
+            IPublisher<CombineCompleteMessage> combineCompletePublisher,
             IPublisher<BossBattleStartMessage> bossBattleStartPublisher,
             ISubscriber<ConnectionRecoverMessage> connectionRecoverSubscriber,
             ISubscriber<PoseMatchEventStartMessage> poseMatchEventStartSubscriber,
@@ -79,6 +81,7 @@ namespace InGame.System
             AllEnemyDespawnMessage = allEnemyDespawnMessage;
             AllEnemyStopMessage = allEnemyStopMessage;
             AllPlayerDespawnMessage = allPlayerDespawnMessage;
+            CombineCompletePublisher = combineCompletePublisher;
             BossBattleStartPublisher = bossBattleStartPublisher;
             ConnectionRecoverSubscriber = connectionRecoverSubscriber;
             PoseMatchEventStartSubscriber = poseMatchEventStartSubscriber;

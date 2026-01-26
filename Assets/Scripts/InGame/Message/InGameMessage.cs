@@ -95,6 +95,13 @@ namespace InGame.Message
     }
     
     /// <summary>
+    /// 合体成功メッセージ
+    /// </summary>
+    public readonly struct CombineCompleteMessage
+    {
+    }
+    
+    /// <summary>
     /// ボスバトル開始のメッセージ
     /// 初期化、演出が完全に終了した後に送信される
     /// </summary>

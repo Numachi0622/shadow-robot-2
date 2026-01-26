@@ -88,11 +88,12 @@ namespace InGame.System
                     new GameStartPlayerInitMessage(Vector3.zero, 1)
                 );
             }
-
-            // await todo: 合体演出
             
             if (playerCount > 1 && playerCount <= GameConst.MaxPlayerCount)
             {
+                // await todo: 合体演出
+
+                Owner.CombineCompletePublisher.Publish(new CombineCompleteMessage());
                 
                 // 部位分担説明UI表示
                 await Owner.InGameUIController.ShowAndHidePartsDescriptionAsync(playerCount);

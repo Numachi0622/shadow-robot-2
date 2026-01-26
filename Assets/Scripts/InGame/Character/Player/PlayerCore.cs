@@ -67,6 +67,7 @@ namespace InGame.Character
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
         private IPublisher<DespawnCharacterMessage> _despawnPublisher;
+        private ISubscriber<CombineCompleteMessage> _combineCompleteSubscriber;
         private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
         private ISubscriber<OpenShieldMessage> _openShieldSubscriber;
         private IPublisher<StateChangeMessage> _stateChangePublisher;
@@ -123,6 +124,7 @@ namespace InGame.Character
             ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber,
             ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
             IPublisher<DespawnCharacterMessage> despawnPublisher,
+            ISubscriber<CombineCompleteMessage> combineCompleteSubscriber,
             ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber,
             ISubscriber<OpenShieldMessage> openShieldSubscriber,
             IPublisher<StateChangeMessage> stateChangePublisher)
@@ -131,6 +133,7 @@ namespace InGame.Character
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
             _allPlayerDespawnSubscriber = allPlayerDespawnSubscriber;
             _despawnPublisher = despawnPublisher;
+            _combineCompleteSubscriber = combineCompleteSubscriber;
             _bossBattleStartSubscriber = bossBattleStartSubscriber;
             _openShieldSubscriber = openShieldSubscriber;
             _stateChangePublisher = stateChangePublisher;
@@ -170,6 +173,7 @@ namespace InGame.Character
                 _despawnPublisher.Publish(new DespawnCharacterMessage(_playerId));
                 Destroy(gameObject);
             }).AddTo(this);
+            _combineCompleteSubscriber?.Subscribe(_ => OnCombineComplete()).AddTo(this);
             _bossBattleStartSubscriber?.Subscribe(_ => OnBossBattleStart()).AddTo(this);
             _openShieldSubscriber?.Subscribe(_ => OpenShield()).AddTo(this);
         }
@@ -255,10 +259,14 @@ namespace InGame.Character
             SetMovable(true);
             SetCamera(true, message.TotalPlayerCount);
         }
+        
+        private void OnCombineComplete()
+        {
+            _playerCamera.gameObject.SetActive(true);
+        }
 
         private void OnBossBattleStart()
         {
-            _playerCamera.gameObject.SetActive(true);
             _isMovable = true;
         }
 
