@@ -69,8 +69,9 @@ namespace InGame.Character
                 .Where(_ => BodySourceManager.Instance.UseInputView)
                 .Subscribe(body =>
                 {
+                    var bone = _bodies[body.Value];
                     _bodies.Remove(body.Value);
-                    Destroy(_bodies[body.Value]);
+                    Destroy(bone);
                 })
                 .AddTo(this);
 
