@@ -38,6 +38,7 @@ namespace InGame.Character
         private IPublisher<EnemyDestroyedMessage> _enemyDestroyedPublisher;
         private IPublisher<StateChangeMessage> _stateChangePublisher;
         private ISubscriber<AllEnemyStopMessage> _allEnemyStopSubscriber;
+        private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
         
         public EnemyParams Params => _params;
         public EnemyEffect EnemyEffect => _enemyEffect;
@@ -68,6 +69,7 @@ namespace InGame.Character
         public IPublisher<ShowWarningMessage> ShowWarningPublisher { get; private set; }
         
         private bool _isForceStopped;
+        private bool _isInitialized;
 
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
@@ -83,7 +85,8 @@ namespace InGame.Character
             IPublisher<EnemyDestroyedMessage> enemyDestroyedPublisher,
             IPublisher<StateChangeMessage> stateChangePublisher,
             ISubscriber<AllEnemyStopMessage> allEnemyStopSubscriber,
-            IPublisher<ShowWarningMessage> showWarningPublisher)
+            IPublisher<ShowWarningMessage> showWarningPublisher,
+            ISubscriber<BossBattleStartMessage> bossBattleStartSubscriber)
         {
             _hpView = hitPointViewList.BossHitPointView;
             _characterRegistry = characterRegistry;
@@ -95,6 +98,7 @@ namespace InGame.Character
             _stateChangePublisher = stateChangePublisher;
             _allEnemyStopSubscriber = allEnemyStopSubscriber;
             ShowWarningPublisher = showWarningPublisher;
+            _bossBattleStartSubscriber = bossBattleStartSubscriber;
         }
 
         public override void Initialize() 
@@ -133,11 +137,14 @@ namespace InGame.Character
             
             // 外部から強制的に停止させる
             _allEnemyStopSubscriber.Subscribe(_ => ForceStop()).AddTo(this);
+
+            _bossBattleStartSubscriber.Subscribe(_ => _isInitialized = true).AddTo(this);
         }
         
         public override void OnUpdate()
         {
             if (_isForceStopped) return;
+            if (!_isInitialized) return;
 
             _targetTransform = _characterRegistry.GetNearestPlayer(transform.position)?.transform;
             if (_targetTransform == null) return;
