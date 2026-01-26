@@ -9,6 +9,7 @@ using UnityEngine;
 using NaughtyAttributes;
 using OscCore;
 using SynMotion;
+using UnityEngine.SceneManagement;
 using Utility;
 using VContainer;
 
@@ -124,6 +125,15 @@ namespace InGame.System
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                ChangeStateCommand();
+            }
+            else if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("EntryPoint");
+            }
+            
             for (var i = 0; i < _isTestConnected.Length; i++)
             {
                 var deviceId = (i == 0 || i == 1) ? 0 : 1;

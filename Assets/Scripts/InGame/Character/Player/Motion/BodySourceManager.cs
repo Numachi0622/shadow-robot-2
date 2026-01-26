@@ -7,6 +7,7 @@ using Utility.Extensions;
 using JointType = Windows.Kinect.JointType;
 using Utility;
 using Cysharp.Threading.Tasks;
+using UnityEngine.SceneManagement;
 
 namespace InGame.Character
 {
@@ -72,6 +73,11 @@ namespace InGame.Character
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                SceneManager.LoadScene("KinectClient");
+            }
+            
             if (!_isInitialized && _useInputView) return;
             if (_reader == null) return;
 
