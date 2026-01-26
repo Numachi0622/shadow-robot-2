@@ -136,6 +136,11 @@ namespace InGame.System.UI
         {
             await _bossBattlePresenter.ShowAndHideMissionPopupAsync();
         }
+        
+        public async UniTask ShowAndHidePartsDescriptionAsync(int playerCount)
+        {
+            await _bossBattlePresenter.ShowAndHidePartsDescriptionAsync(playerCount);
+        }
 
         #endregion
 

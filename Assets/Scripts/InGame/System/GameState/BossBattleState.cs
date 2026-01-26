@@ -91,6 +91,13 @@ namespace InGame.System
 
             // await todo: 合体演出
             
+            if (playerCount > 1 && playerCount <= GameConst.MaxPlayerCount)
+            {
+                
+                // 部位分担説明UI表示
+                await Owner.InGameUIController.ShowAndHidePartsDescriptionAsync(playerCount);
+            }
+            
             // MissionPopup表示
             await Owner.InGameUIController.ShowAndHideMissionPopupAsync();
             
