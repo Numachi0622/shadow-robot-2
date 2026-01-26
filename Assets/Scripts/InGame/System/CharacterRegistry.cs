@@ -95,6 +95,8 @@ namespace InGame.System
         public IReadOnlyList<CharacterCore> GetAllEnemies() => _enemyCores.Values.SelectMany(list => list).ToList();
         public IReadOnlyList<CharacterCore> GetAllBuildings() => _buildingCores.Values.SelectMany(list => list).ToList();
 
+        public IReadOnlyDictionary<AreaId, List<CharacterCore>> Buildings => _enemyCores;
+
         public CharacterCore GetNearestPlayer(Vector3 position)
         {
             return _playerCores.Where(p => p != null)

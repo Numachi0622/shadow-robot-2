@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
@@ -26,6 +27,7 @@ namespace InGame.System
         private readonly ISubscriber<EnemyDestroyedMessage> _enemyDestroyedSubscriber;
         private readonly IPublisher<AreaId, BuildingCountChangeMessage> _buildingCountChangePublisher;
         private readonly IPublisher<StateChangeMessage> _stateChangePublisher;
+        private readonly HashSet<AreaId> _allBuildingDestroyedAreas = new();
         private IDisposable _subscription;
 
         [Inject]
@@ -158,7 +160,11 @@ namespace InGame.System
 
             if (remainingCount == 0)
             {
-                _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.GameOver));
+                _allBuildingDestroyedAreas.Add(message.AreaId);
+                if (_allBuildingDestroyedAreas.Count >= _registry.Buildings.Count)
+                {
+                    _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.GameOver));   
+                }
             }
         }
 
