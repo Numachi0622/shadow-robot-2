@@ -58,21 +58,19 @@ namespace InGame.Character
             BodySourceManager.Instance.TrackedData
                 .ObserveAdd()
                 .Where(_ => BodySourceManager.Instance.UseInputView)
-                .Where(body => !_bodies.ContainsKey(body.Value))
                 .Subscribe(body =>
                 {
-                    _bodies.Add(body.Value, CreateBodyObject(body.Value.TrackingId));
+                    _bodies.TryAdd(body.Value, CreateBodyObject(body.Value.TrackingId));
                 })
                 .AddTo(this);
 
             BodySourceManager.Instance.TrackedData
                 .ObserveRemove()
                 .Where(_ => BodySourceManager.Instance.UseInputView)
-                .Where(body => _bodies.ContainsKey(body.Value))
                 .Subscribe(body =>
                 {
-                    Destroy(_bodies[body.Value]);
                     _bodies.Remove(body.Value);
+                    Destroy(_bodies[body.Value]);
                 })
                 .AddTo(this);
 
