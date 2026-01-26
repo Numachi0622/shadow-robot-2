@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Windows.Kinect;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,7 @@ namespace InGame.Character
         [SerializeField] private Color _trackedColor;
         [SerializeField] private Color _untrackedColor;
 
-        public void UpdateTrackingView(Body[] bodies)
+        public void UpdateTrackingView(IReadOnlyList<Body> bodies)
         {
             if (!gameObject.activeSelf) return;
             if (bodies == null) return;
