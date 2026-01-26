@@ -22,10 +22,20 @@ namespace InGame.System.UI
             { WarningType.FireHoming, "パンチしてはねかえせ!" }
         };
 
+        public void Initialize()
+        {
+            _view.Initialize();
+        }
+
         public async UniTask ShowWarningAsync(WarningType warningType, int fadeCount, float durationPerCount)
         {
             if (!_warningMessages.TryGetValue(warningType, out var message)) return;
             await _view.ShowWarningAsync(message, fadeCount, durationPerCount);
         }
+        
+        public async UniTask ShowAndHideMissionPopupAsync()
+        {
+            await _view.ShowAndHidePopupAsync(2f);
+        } 
     }
 }

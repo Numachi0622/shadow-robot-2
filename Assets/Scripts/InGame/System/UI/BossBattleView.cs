@@ -9,6 +9,12 @@ namespace InGame.System.UI
     {
         [SerializeField] private CanvasGroup _warningCanvasGroup;
         [SerializeField] private TextMeshProUGUI _warningText;
+        [SerializeField] private PopupView _popupView;
+        
+        public void Initialize()
+        {
+            _popupView.InitializeAndHide();
+        }
 
         public async UniTask ShowWarningAsync(string message, int fadeCount, float durationPerCount)
         {
@@ -16,6 +22,11 @@ namespace InGame.System.UI
             await DOTween.Sequence()
                 .Append(_warningCanvasGroup.DOFade(1f, durationPerCount).SetLoops(2 * fadeCount, LoopType.Yoyo))
                 .ToUniTask();
+        }
+        
+        public async UniTask ShowAndHidePopupAsync(float displayTime)
+        {
+            await _popupView.ShowAndHideAsync(displayTime);
         }
     }
 }

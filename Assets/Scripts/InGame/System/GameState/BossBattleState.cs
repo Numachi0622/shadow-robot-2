@@ -91,6 +91,9 @@ namespace InGame.System
 
             // await todo: 合体演出
             
+            // MissionPopup表示
+            await Owner.InGameUIController.ShowAndHideMissionPopupAsync();
+            
             // 演出が全て終了した後にバトル開始メッセージを送信
             Owner.BossBattleStartPublisher.Publish(new BossBattleStartMessage());
         }

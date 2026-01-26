@@ -131,6 +131,11 @@ namespace InGame.System.UI
         {
             ShowWarningAsync(message.WarningType, message.FadeCount, message.FadeDuration).Forget();
         }
+        
+        public async UniTask ShowAndHideMissionPopupAsync()
+        {
+            await _bossBattlePresenter.ShowAndHideMissionPopupAsync();
+        }
 
         #endregion
 
