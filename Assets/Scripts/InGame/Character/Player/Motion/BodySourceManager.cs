@@ -124,7 +124,7 @@ namespace InGame.Character
                 }
             }
 
-            _debugView?.UpdateTrackingView(_trackedData);
+            _debugView?.UpdateTrackingView(_data);
         }
 
         private void SendMotion()

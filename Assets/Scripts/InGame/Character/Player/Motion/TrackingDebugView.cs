@@ -13,7 +13,7 @@ namespace InGame.Character
         [SerializeField] private Color _trackedColor;
         [SerializeField] private Color _untrackedColor;
 
-        public void UpdateTrackingView(IReadOnlyList<Body> bodies)
+        public void UpdateTrackingView(Body[] bodies)
         {
             if (!gameObject.activeSelf) return;
             if (bodies == null) return;
