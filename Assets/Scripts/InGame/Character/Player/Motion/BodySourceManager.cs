@@ -45,6 +45,8 @@ namespace InGame.Character
         private async void Awake()
         {
             base.Initialize();
+            _ipAddress = PlayerPrefs.GetString("IPAddress", _ipAddress);
+            
             await InitializeAsync();
         }
 
@@ -260,6 +262,7 @@ namespace InGame.Character
             {
                 _kinectId = int.Parse(_kinectIdInput);
                 _isInitialized = true;
+                PlayerPrefs.SetString("IPAddress", _ipAddress);
             }
 
             GUILayout.Space(10);
