@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using NotImplementedException = System.NotImplementedException;
 
 namespace InGame.System.UI
 {
     public class BuildingView : MonoBehaviour, IVisibilityController
     {
         [SerializeField] private List<BuildingLineView> _buildingLines;
+        [SerializeField] private List<PopupView> _allDestroyedPopups;
         
         private readonly Vector2[,] _displayPosition = new Vector2[,]
         {
@@ -56,6 +55,11 @@ namespace InGame.System.UI
         {
             Hide();
             return UniTask.CompletedTask;
+        }
+
+        public void ShowAllDestroyedPopupAsync(AreaId areaId)
+        {
+            _allDestroyedPopups[areaId.Value].ShowAsync().Forget();
         }
     }
 }

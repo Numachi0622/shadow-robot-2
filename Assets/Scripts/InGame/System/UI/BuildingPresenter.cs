@@ -45,6 +45,7 @@ namespace InGame.System.UI
                 // model => view
                 _model.BuildingCount(areaId).Subscribe(count => OnBuildingCountChanged(areaId, count)).AddTo(this);
             }
+            _model.OnAllDestroyedPerArea.Subscribe(areaId => _view.ShowAllDestroyedPopupAsync(areaId));
         }
 
         private void OnBuildingCountChanged(AreaId areaId, int currentCount)
