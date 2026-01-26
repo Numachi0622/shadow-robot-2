@@ -18,6 +18,7 @@ namespace InGame.System.UI
         [SerializeField] private BossBattlePresenter _bossBattlePresenter;
         [SerializeField] private PoseMatchPresenter _poseMatchPresenter;
         [SerializeField] private GameOverPresenter _gameOverPresenter;
+        [SerializeField] private ResultPresenter _resultPresenter;
         private HitPointPresenter _playerHpPresenter, _bossHpPresenter;
         
         private ISubscriber<AreaId, BuildingCountChangeMessage> _buildingCountChangeSubscriber;
@@ -58,6 +59,7 @@ namespace InGame.System.UI
         {
             _normalBattlePresenter.Initialize();
             _gameOverPresenter.Initialize();
+            _resultPresenter.Initialize();
         }
 
         #region NormalBattleEvent
@@ -164,6 +166,11 @@ namespace InGame.System.UI
         public void ShowGameOverView()
         {
             _gameOverPresenter.ShowGameOverView();
+        }
+        
+        public async UniTask PlayResultSequenceAsync(int buildingCount)
+        {
+            await _resultPresenter.PlayResultSequenceAsync(buildingCount);
         }
 
         private void OnDestroy()

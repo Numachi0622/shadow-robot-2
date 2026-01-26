@@ -150,4 +150,16 @@ namespace InGame.Message
             FadeDuration = fadeDuration;
         }
     }
+
+    /// <summary>
+    /// リザルトステートへ渡すコンテキストメッセージ
+    /// </summary>
+    public readonly struct ResultContextMessage : IStateParameter
+    {
+        public readonly int TotalBuildingCount;
+        public ResultContextMessage(int totalBuildingCount)
+        {
+            TotalBuildingCount = totalBuildingCount;
+        }
+    }
 }

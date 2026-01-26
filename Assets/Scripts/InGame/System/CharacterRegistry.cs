@@ -94,8 +94,8 @@ namespace InGame.System
         public IReadOnlyList<CharacterCore> GetAllPlayers() => _playerCores;
         public IReadOnlyList<CharacterCore> GetAllEnemies() => _enemyCores.Values.SelectMany(list => list).ToList();
         public IReadOnlyList<CharacterCore> GetAllBuildings() => _buildingCores.Values.SelectMany(list => list).ToList();
-
         public IReadOnlyDictionary<AreaId, List<CharacterCore>> Buildings => _enemyCores;
+        public int TotalBuildingCount => _buildingCores.Values.Sum(list => list.Count);
 
         public CharacterCore GetNearestPlayer(Vector3 position)
         {

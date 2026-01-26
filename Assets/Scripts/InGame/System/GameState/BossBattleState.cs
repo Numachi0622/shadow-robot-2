@@ -169,6 +169,8 @@ namespace InGame.System
             _subscription = null;
             _poseDataService?.Dispose();
             _poseDataService = null;
+            
+            Owner.InGameUIController.HideHitPointViewAsync().Forget();
         }
     }
 }

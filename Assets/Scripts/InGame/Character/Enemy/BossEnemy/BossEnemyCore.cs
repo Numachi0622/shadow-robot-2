@@ -177,7 +177,9 @@ namespace InGame.Character
         {
             _stateMachine.SetState<BossEnemyDeadState>();
             _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(new AreaId(-1), this));
-            _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.Result));
+
+            var resultContext = new ResultContextMessage(_characterRegistry.TotalBuildingCount);
+            _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.Result, resultContext));
             Destroy(gameObject, 3f);
         }
         #endregion
