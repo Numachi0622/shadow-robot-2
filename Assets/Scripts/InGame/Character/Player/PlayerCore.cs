@@ -107,6 +107,12 @@ namespace InGame.Character
 
             Bind();
 
+            if (_isCombine)
+            {
+                _baseTrackingPosition = Vector3.zero;
+                transform.position = _baseWorldPosition;
+            }
+
             // キャリブレーション開始
             _calibrationSystem = new JumpCalibrationSystem(_synMotion, _footPlayerId);
             CalibrateAsync().Forget();
@@ -269,6 +275,14 @@ namespace InGame.Character
         private void OnBossBattleStart()
         {
             _isMovable = true;
+
+            // 合体時は現在のトラッキング位置を基準位置に設定
+            if (_isCombine)
+            {
+                var trackingPos = _synMotion.GetCombineMotionParam(_totalPlayerCount).SpineMidPosition * _params.MoveWeight;
+                _baseTrackingPosition = trackingPos;
+                transform.position = _baseWorldPosition;
+            }
         }
 
         private void OpenShield()

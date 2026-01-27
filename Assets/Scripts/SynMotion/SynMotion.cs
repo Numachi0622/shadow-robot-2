@@ -54,7 +54,13 @@ namespace SynMotion
             if (playerCount <= 0 || playerCount > GameConst.MaxPlayerCount) return default;
 
             int leftPlayerId = 0;
-            int rightPlayerId = playerCount == 1 ? 0 : 1;
+            int rightPlayerId = playerCount switch
+            {
+                1 => 0,
+                2 => 0,
+                3 => 1,
+                _ => throw new ArgumentOutOfRangeException(nameof(playerCount), playerCount, null)
+            };
             int lowerPlayerId = playerCount switch
             {
                 1 => 0, 
