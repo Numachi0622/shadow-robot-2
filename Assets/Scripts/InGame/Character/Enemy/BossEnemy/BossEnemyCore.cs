@@ -27,7 +27,7 @@ namespace InGame.Character
         [SerializeField] private Transform _fireBallFirePoint;
         [SerializeField] private Transform _fireHomingFirePoint;
         [SerializeField] private Transform _deathBallFirePoint;
-
+        
         private HitPointView _hpView;
         private StateMachine<BossEnemyCore> _stateMachine;
         private BossEnemyAttackObserver _attackObserver;
@@ -41,6 +41,7 @@ namespace InGame.Character
         private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
         
         public EnemyParams Params => _params;
+        public int CurrentHp => _hpPresenter.CurrentHp;
         public EnemyEffect EnemyEffect => _enemyEffect;
         public Animator Animator => _animator;
         public BossEnemyEffectComponents EffectComponents => _effectComponents;

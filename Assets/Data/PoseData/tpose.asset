@@ -26,4 +26,4 @@ MonoBehaviour:
   KneeRightRotation: {x: 0.042122744, y: 0.0014532647, z: 0.013464291, w: 0.9990207}
   AnkleRightRotation: {x: -0.09999472, y: 0.008885104, z: 0.01541528, w: -0.9948289}
   MatchThreshold: 0.8
-  AllowedAngleDiff: 60
+  AllowedAngleDiff: 90

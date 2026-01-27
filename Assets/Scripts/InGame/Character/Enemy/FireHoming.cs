@@ -7,6 +7,7 @@ namespace InGame.Character
     {
         [SerializeField] private AttackCollider _attackCollider;
         [SerializeField] private ParticleSystem _explosionParticle;
+        [SerializeField] private float _counterWeight = 1.5f;
 
         private Transform _owner;
         private LongRangeAttacker _attacker;
@@ -47,6 +48,7 @@ namespace InGame.Character
         {
             if (!other.TryGetComponent<AttackCollider>(out var hitAttackCollider)) return;
 
+            _attackParam.AttackPoint.SetWeight(_counterWeight);
             _attackParam.AttackType = AttackType.PlayerToEnemyNormal;
             _attackParam.AttackDirection = hitAttackCollider.AttackParam.AttackDirection;
             _target = _owner;

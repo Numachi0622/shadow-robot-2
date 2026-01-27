@@ -16,6 +16,6 @@ MonoBehaviour:
   _instanceCount: 15
   _fireballSpeed: 10
   _attackPoint:
-    _minAttackPoint: 10
-    _maxAttackPoint: 20
+    _minAttackPoint: 50
+    _maxAttackPoint: 70
   _fireBallFireRange: {x: -45, y: 45}

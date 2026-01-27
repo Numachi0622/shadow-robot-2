@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 50
   AttackPoint:
-    _minAttackPoint: 10
-    _maxAttackPoint: 20
+    _minAttackPoint: 30
+    _maxAttackPoint: 50
   DamagedColor: {r: 0, g: 0, b: 0, a: 0}
   MoveSpeed: 3
   SearchRange: 30

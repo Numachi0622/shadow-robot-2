@@ -17,8 +17,14 @@ namespace InGame.Character
     {
         [SerializeField] private int _minAttackPoint;
         [SerializeField] private int _maxAttackPoint;
+
         public int MinAttackPoint => _minAttackPoint;
         public int MaxAttackPoint => _maxAttackPoint;
         public int RandomValue => Random.Range(_minAttackPoint, _maxAttackPoint + 1);
+        public void SetWeight(float weight)
+        {
+            _minAttackPoint = (int)(_minAttackPoint * weight);
+            _maxAttackPoint = (int)(_maxAttackPoint * weight);
+        }
     }
 }

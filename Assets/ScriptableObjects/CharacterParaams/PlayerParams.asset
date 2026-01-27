@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHp: 500
   AttackPoint:
-    _minAttackPoint: 1
-    _maxAttackPoint: 50
+    _minAttackPoint: 40
+    _maxAttackPoint: 60
   DamagedColor: {r: 1, g: 0.42352942, b: 0.42352942, a: 1}
   AttackableVelocity: 5
   RocketPunchDirThreshold: 0.5
   RocketPunchDistThreshold: 0.45
   MaxRocketPunchReadyTime: 0.3
   RocketPunchChargeDistanceThreshold: 0.08
-  MoveWeight: 3
+  MoveWeight: 5
