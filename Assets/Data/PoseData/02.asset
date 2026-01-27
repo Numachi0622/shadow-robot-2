@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d281758d439fca40afbee27f0f3c49b, type: 3}
+  m_Name: 02
+  m_EditorClassIdentifier: 
+  PoseName: 02
+  PoseIcon: {fileID: 0}
+  SpineMidRotation: {x: -0.13159937, y: 0.008148879, z: 0.0059209606, w: -0.9912518}
+  ElbowLeftRotation: {x: -0.97528476, y: 0.09539464, z: 0.15550566, w: 0.1246498}
+  WristLeftRotation: {x: -0.35180658, y: -0.36092588, z: -0.61824244, w: -0.6031094}
+  HandLeftRotation: {x: -0.14461416, y: -0.17776826, z: -0.5188471, w: -0.8235793}
+  ElbowRightRotation: {x: 0.026324444, y: -0.0913429, z: 0.09365421, w: 0.9910562}
+  WristRightRotation: {x: -0.2803106, y: -0.23612866, z: -0.5972551, w: -0.7134112}
+  HandRightRotation: {x: -0.1893076, y: 0.38324898, z: -0.5158169, w: 0.74243915}
+  KneeLeftRotation: {x: 0.5575788, y: 0.37479794, z: 0.3322159, w: -0.6620159}
+  AnkleLeftRotation: {x: -0.622626, y: -0.24102701, z: -0.20987907, w: -0.71427834}
+  KneeRightRotation: {x: -0.57908815, y: 0.3548039, z: 0.32215974, w: 0.6595334}
+  AnkleRightRotation: {x: -0.6550129, y: 0.14395198, z: 0.12906083, w: -0.73046505}
+  MatchThreshold: 0.8
+  AllowedAngleDiff: 90

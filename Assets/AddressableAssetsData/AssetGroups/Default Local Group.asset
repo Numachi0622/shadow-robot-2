@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - PoseData
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 728eeaf53aa8e084da7afc01f0e406c4
+    m_Address: Assets/Data/PoseData/02.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - PoseData
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 25a660e3233c1f14a8c458f6e4c7dea5, type: 2}
   m_SchemaSet:
