@@ -46,8 +46,11 @@ namespace InGame.Character
         private async void Awake()
         {
             base.Initialize();
-            _ipAddress = PlayerPrefs.GetString("IPAddress", _ipAddress);
-            
+            if (_useInputView)
+            {
+                _ipAddress = PlayerPrefs.GetString("IPAddress", _ipAddress);
+            }
+
             await InitializeAsync();
         }
 
