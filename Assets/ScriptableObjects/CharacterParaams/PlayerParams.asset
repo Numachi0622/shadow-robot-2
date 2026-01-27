@@ -22,4 +22,4 @@ MonoBehaviour:
   RocketPunchDistThreshold: 0.45
   MaxRocketPunchReadyTime: 0.3
   RocketPunchChargeDistanceThreshold: 0.08
-  MoveWeight: 4
+  MoveWeight: 5

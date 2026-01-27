@@ -16,7 +16,7 @@ namespace Utility
         public const float PUNCH_POINT_RESET_TIME = 2f;
         public const int MAX_ROCKET_PUNCH_CHARGE = 100;
         public const int BOSS_GENERATION_KNOCK_DOWN_COUNT = 10;
-        public const int NormalEnemyGenerateInterval = 5;
+        public const int NormalEnemyGenerateInterval = 4;
         public const int NormalEnemyMaxCountPerArea = 1;
         public const int RequiredNormalEnemyKillCount = 5;
         public static readonly CharacterId BossPlayerId = new CharacterId(4);
