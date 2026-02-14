@@ -16,22 +16,16 @@ namespace InGame.Character
             {
                 Debug.Log($"<color=red>[BossEnemyDamageState] OnEnter : {param.AttackPoint.RandomValue}</color>");
                 
-                HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
-                
                 var damageValue = param.AttackPoint.RandomValue;
-                if (Owner.CurrentHp - damageValue > 0 && damageValue < 300)
-                {
-                    Owner.Damager.Damage(damageValue);
-                    Owner.OnIdleStart(Unit.Default);
-                    return;
-                }
+                Owner.Damager.Damage(damageValue);
                 
                 // 既にトリガーされていたアニメーションをキャンセルしてからダメージアニメーションを再生する
                 Owner.Animator.ResetAllTriggers();
                 Owner.Animator.SetTrigger(AnimationUtility.DamageHash);
-                Owner.Damager.Damage(damageValue);
                 Owner.AttackCancel();
                 Owner.EnemyEffect.ShakeBody();
+                HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
+                
                 DamageCoolTime();
             }        
         }

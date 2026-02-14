@@ -61,6 +61,9 @@ namespace InGame.Character
                 
                 if (param.AttackIndex == DeathBallIndex)
                 {
+                    // Coreのイベントフラグを有効にする
+                    Owner.SetProgressingEvent(true);
+                    
                     _poseMatchEventEndSource = new UniTaskCompletionSource();
             
                     // 購読対象を新規登録
@@ -78,6 +81,9 @@ namespace InGame.Character
                     Owner.AllEnemyDespawnPublisher.Publish(new AllEnemyDespawnMessage());
                     
                     await _poseMatchEventEndSource.Task;
+                    
+                    // Coreのイベントフラグを無効にする
+                    Owner.SetProgressingEvent(false);
                 }
             }
             catch (OperationCanceledException e)

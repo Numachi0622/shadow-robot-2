@@ -71,6 +71,7 @@ namespace InGame.Character
         
         private bool _isForceStopped;
         private bool _isInitialized;
+        private bool _isProgressingEvent;
 
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
@@ -179,6 +180,8 @@ namespace InGame.Character
         }
         private void OnDamageStart(AttackParam param)
         {
+            // ポーズマッチイベント中はダメージ状態に遷移させない
+            if (_isProgressingEvent) return;
             _stateMachine.SetState<BossEnemyDamageState>(param);
         }
         private void OnDeadStart(Unit unit)
@@ -207,6 +210,11 @@ namespace InGame.Character
         {
             _isForceStopped = true;
             _stateMachine.SetState<BossEnemyIdleState>();
+        }
+        
+        public void SetProgressingEvent(bool isProgressing)
+        {
+            _isProgressingEvent = isProgressing;
         }
     }
 }
