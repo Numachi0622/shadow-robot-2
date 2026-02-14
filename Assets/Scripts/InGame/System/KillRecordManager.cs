@@ -56,10 +56,7 @@ namespace InGame.System
             if (_currentKillCount >= _requiredKillCount)
             {
                 _isRecordComplete = true;
-                _stateChangePublisher.Publish(new StateChangeMessage(
-                    GameStateType.BossBattle, 
-                    new InitBossBattleMessage(_playerCount))
-                );
+                _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.BossBattle));
             }
         }
 

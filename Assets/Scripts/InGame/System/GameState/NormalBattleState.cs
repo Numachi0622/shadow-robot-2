@@ -12,7 +12,6 @@ namespace InGame.System
 {
     public class NormalBattleState : StateMachine<InGameCore>.State
     {
-        private int _playerCount;
         private CancellationTokenSource _cts;
         private IDisposable _subscription;
 
@@ -30,7 +29,8 @@ namespace InGame.System
             
             // プレイヤー数に応じてゲーム環境を構築する
             if (parameter is not InitGameMessage initGameMessage) return;
-            _playerCount = initGameMessage.PlayerCount;
+            var context = new InGameContext(initGameMessage.PlayerCount);
+            Owner.SetContext(context);
             
             // プレイヤーをゲームが開始できる状態に初期化
             foreach (var chara in Owner.CharacterRegistry.GetAllPlayers())
@@ -39,21 +39,21 @@ namespace InGame.System
                 if (playerCore == null) continue;
 
                 var characterId = playerCore.PlayerId;
-                GameStartPlayerInitialize(characterId, _playerCount);
+                GameStartPlayerInitialize(characterId, context.PlayerCount);
             }
             
             // 接続復旧時のプレイヤー初期化購読も登録しておく
             var bag = DisposableBag.CreateBuilder();
             Owner.ConnectionRecoverSubscriber.Subscribe(msg =>
             {
-                GameStartPlayerInitialize(msg.PlayerId, _playerCount);
+                GameStartPlayerInitialize(msg.PlayerId, context.PlayerCount);
             }).AddTo(bag);
             _subscription = bag.Build();
             
             Owner.StageReferences.MainStage.SetActive(true);
             
             // ビルの生成
-            var areaCount = Mathf.Min(_playerCount, Owner.MainStageManager.AreaCount);
+            var areaCount = Mathf.Min(context.PlayerCount, Owner.MainStageManager.AreaCount);
             for (var i = 0; i < areaCount; i++)
             {
                 var buildingPositions = Owner.MainStageManager.BuildingPositionsByArea(new AreaId(i));
@@ -72,7 +72,7 @@ namespace InGame.System
             
             // ゲーム初期化完了通知
             var buildingCountPerArea = Owner.MainStageManager.BuildingCountPerArea;
-            initGameMessage = new InitGameMessage(_playerCount, buildingCountPerArea);
+            initGameMessage = new InitGameMessage(context.PlayerCount, buildingCountPerArea);
             Owner.InitGamePublisher.Publish(initGameMessage);
 
             _cts = new CancellationTokenSource();

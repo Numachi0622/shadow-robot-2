@@ -22,8 +22,13 @@ namespace InGame.System
         {
             Debug.Log("[BossBattleState] OnEnter");
 
-            if (parameter is not InitBossBattleMessage message) return;
-
+            var context = Owner.Context;
+            if (context == null)
+            {
+                Debug.LogError("[BossBattleState] Context is null");
+                return;
+            }
+            
             // PoseDataServiceの初期化とプリロード
             _poseDataService = new PoseDataService();
             await _poseDataService.PreloadAsync();
@@ -34,7 +39,7 @@ namespace InGame.System
             _cts = new CancellationTokenSource();
             try
             {
-                await BossBattleEnterAsync(message.PlayerCount, _cts.Token);
+                await BossBattleEnterAsync(context.PlayerCount, _cts.Token);
             }
             catch (OperationCanceledException)
             {

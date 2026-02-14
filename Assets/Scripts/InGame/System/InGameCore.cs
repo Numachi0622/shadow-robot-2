@@ -11,14 +11,25 @@ using InGame.System.UI;
 
 namespace InGame.System
 {
+    public class InGameContext
+    {
+        public int PlayerCount { get; private set; }
+        public InGameContext(int playerCount)
+        {
+            PlayerCount = playerCount;
+        }
+    }
+    
     public class InGameCore : ITickable, IInitializable, IDisposable
     {
         private readonly ISubscriber<StateChangeMessage> _stateChangeSubscriber;
         private readonly MainStageManager _mainStageManager;
         
         private StateMachine<InGameCore> _stateMachine;
+        private InGameContext _context;
         private IDisposable _stateChangeSubscription;
         
+        public InGameContext Context => _context;
         public IObjectResolver Container { get; private set; }
         public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher { get; private set; }
         public IPublisher<CreateBuildingMessage> CreateBuildingPublisher { get; private set; }
@@ -105,6 +116,12 @@ namespace InGame.System
             InGameUIController.Initialize();
         }
         
+        public void SetContext(InGameContext context)
+        {
+            if (_context != null) return;
+            _context = context;
+        }
+        
         public void Tick()
         {
             _stateMachine.OnUpdate();
@@ -154,7 +171,7 @@ namespace InGame.System
             _stateMachine.SetState<ResultState>(message.Parameter);
         }
         #endregion
-
+        
         public void Dispose()
         {
             _stateChangeSubscription?.Dispose();

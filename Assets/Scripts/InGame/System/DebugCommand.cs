@@ -57,7 +57,7 @@ namespace InGame.System
                 currentState, 
                 currentState == GameStateType.NormalBattle 
                     ? new InitGameMessage(playerCount, -1)
-                    : new InitBossBattleMessage(playerCount)
+                    : null
                 )
             );
         }

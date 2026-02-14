@@ -81,18 +81,6 @@ namespace InGame.Message
     public readonly struct NormalBattleEndMessage
     {
     }
-
-    /// <summary>
-    /// ボス戦突入直後の初期化メッセージ
-    /// </summary>
-    public readonly struct InitBossBattleMessage : IStateParameter
-    {
-        public readonly int PlayerCount;
-        public InitBossBattleMessage(int playerCount)
-        {
-            PlayerCount = playerCount;
-        }
-    }
     
     /// <summary>
     /// 合体成功メッセージ
