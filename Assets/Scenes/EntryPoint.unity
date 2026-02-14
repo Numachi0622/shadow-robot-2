@@ -667,6 +667,9 @@ MonoBehaviour:
   _saijakuAttackParam:
     _minAttackPoint: 1
     _maxAttackPoint: 1
+  _attackPoint:
+    _minAttackPoint: 10
+    _maxAttackPoint: 10
   currentState: 0
 --- !u!224 &615883404 stripped
 RectTransform:

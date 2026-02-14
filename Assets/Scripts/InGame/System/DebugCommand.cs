@@ -22,6 +22,7 @@ namespace InGame.System
         [SerializeField] private AttackCollider _attackCollider;
         [SerializeField] private AttackPoint _saikyoAttackParam;
         [SerializeField] private AttackPoint _saijakuAttackParam;
+        [SerializeField] private AttackPoint _attackPoint;
         [SerializeField, ReadOnly] private GameStateType currentState = GameStateType.Title;
 
         private IPublisher<StateChangeMessage> _stateChangePublisher;
@@ -80,6 +81,19 @@ namespace InGame.System
             var attackParam = new AttackParam()
             {
                 AttackPoint = _saijakuAttackParam,
+                AttackDirection = Vector3.forward,
+                AttackVelocity = 0f,
+                AttackType = AttackType.PlayerToEnemyNormal
+            };
+            _attackCollider.AttackImpactAsync(attackParam).Forget();
+        }
+
+        [Button]
+        public void DebugAttack()
+        {
+            var attackParam = new AttackParam()
+            {
+                AttackPoint = _attackPoint,
                 AttackDirection = Vector3.forward,
                 AttackVelocity = 0f,
                 AttackType = AttackType.PlayerToEnemyNormal
