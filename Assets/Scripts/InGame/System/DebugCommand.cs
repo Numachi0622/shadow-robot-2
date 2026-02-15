@@ -159,10 +159,6 @@ namespace InGame.System
                 }
                 else
                 {
-                    if (BodySourceManager.Instance == null) return;
-                    if (BodySourceManager.Instance.Sensor == null) return;
-                    if (BodySourceManager.Instance.Sensor.IsOpen) return;
-                    
                     _motionSender.SendFlag(OscAddress.GetFlagAddress(deviceId, playerId), 0);
                 }
             }
