@@ -32,6 +32,7 @@ namespace InGame.System
         public InGameContext Context => _context;
         public IObjectResolver Container { get; private set; }
         public IPublisher<SpawnCharacterMessage> SpawnCharacterPublisher { get; private set; }
+        public IPublisher<DespawnCharacterMessage> DespawnCharacterPublisher { get; private set; }
         public IPublisher<CreateBuildingMessage> CreateBuildingPublisher { get; private set; }
         public IPublisher<InitGameMessage> InitGamePublisher { get; private set; }
         public IPublisher<CharacterId, GameStartPlayerInitMessage> GameStartPlayerInitPublisher { get; private set; }
@@ -41,6 +42,8 @@ namespace InGame.System
         public IPublisher<AllPlayerDespawnMessage> AllPlayerDespawnMessage { get; private set; }
         public IPublisher<CombineCompleteMessage> CombineCompletePublisher { get; private set; }
         public IPublisher<BossBattleStartMessage> BossBattleStartPublisher { get; private set; }
+        public ISubscriber<CharacterSpawnRequestMessage> CharacterSpawnRequestSubscriber { get; private set; }
+        public ISubscriber<CharacterDespawnRequestMessage> CharacterDespawnRequestSubscriber { get; private set; }
         public ISubscriber<ConnectionRecoverMessage> ConnectionRecoverSubscriber { get; private set; }
         public ISubscriber<PoseMatchEventStartMessage> PoseMatchEventStartSubscriber { get; private set; }
         public ISubscriber<PoseMatchEventResultMessage> PoseMatchEventResultSubscriber { get; private set; }
@@ -62,6 +65,7 @@ namespace InGame.System
             InGameUIController inGameUIController,
             ISubscriber<StateChangeMessage> stateChangeSubscriber,
             IPublisher<SpawnCharacterMessage> spawnCharacterPublisher,
+            IPublisher<DespawnCharacterMessage> despawnCharacterPublisher,
             IPublisher<CreateBuildingMessage> createBuildingPublisher,
             IPublisher<InitGameMessage> initGamePublisher,
             IPublisher<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitPublisher,
@@ -71,6 +75,8 @@ namespace InGame.System
             IPublisher<AllPlayerDespawnMessage> allPlayerDespawnMessage,
             IPublisher<CombineCompleteMessage> combineCompletePublisher,
             IPublisher<BossBattleStartMessage> bossBattleStartPublisher,
+            ISubscriber<CharacterSpawnRequestMessage> characterSpawnRequestSubscriber,
+            ISubscriber<CharacterDespawnRequestMessage> characterDespawnRequestSubscriber,
             ISubscriber<ConnectionRecoverMessage> connectionRecoverSubscriber,
             ISubscriber<PoseMatchEventStartMessage> poseMatchEventStartSubscriber,
             ISubscriber<PoseMatchEventResultMessage> poseMatchEventResultSubscriber,
@@ -85,6 +91,7 @@ namespace InGame.System
             InGameUIController = inGameUIController;
             _stateChangeSubscriber = stateChangeSubscriber;
             SpawnCharacterPublisher = spawnCharacterPublisher;
+            DespawnCharacterPublisher = despawnCharacterPublisher;
             CreateBuildingPublisher = createBuildingPublisher;
             InitGamePublisher = initGamePublisher;
             GameStartPlayerInitPublisher = gameStartPlayerInitPublisher;
@@ -94,6 +101,8 @@ namespace InGame.System
             AllPlayerDespawnMessage = allPlayerDespawnMessage;
             CombineCompletePublisher = combineCompletePublisher;
             BossBattleStartPublisher = bossBattleStartPublisher;
+            CharacterSpawnRequestSubscriber = characterSpawnRequestSubscriber;
+            CharacterDespawnRequestSubscriber = characterDespawnRequestSubscriber;
             ConnectionRecoverSubscriber = connectionRecoverSubscriber;
             PoseMatchEventStartSubscriber = poseMatchEventStartSubscriber;
             PoseMatchEventResultSubscriber = poseMatchEventResultSubscriber;

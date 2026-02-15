@@ -4,6 +4,38 @@ using InGame.System.UI;
 
 namespace InGame.Message
 {
+    /// <summary>
+    /// キャラクターの生成リクエスト送信メッセージ
+    /// MotionRegistry - InGameState間の疎結合化に活用
+    /// リクエストなのでStateによってはブロックされることも考慮
+    /// </summary>
+    public readonly struct CharacterSpawnRequestMessage
+    {
+        public readonly SpawnCharacterMessage SpawnCharacterMessage;
+        public CharacterSpawnRequestMessage(SpawnCharacterMessage spawnCharacterMessage)
+        {
+            SpawnCharacterMessage = spawnCharacterMessage;
+        }
+
+        public bool TryRequestProcess(int playerCount)
+        {
+            var characterId = SpawnCharacterMessage.CharacterId;
+            return characterId.Value < playerCount;
+        }
+    }
+
+    /// <summary>
+    /// キャラクターの削除リクエスト送信メッセージ
+    /// </summary>
+    public readonly struct CharacterDespawnRequestMessage
+    {
+        public readonly DespawnCharacterMessage DespawnCharacterMessage;
+        public CharacterDespawnRequestMessage(DespawnCharacterMessage despawnCharacterMessage)
+        {
+            DespawnCharacterMessage = despawnCharacterMessage;
+        }
+    }
+    
     public readonly struct BuildingDestroyedMessage
     {
         public readonly AreaId AreaId;

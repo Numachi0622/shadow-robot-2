@@ -22,6 +22,37 @@ namespace InGame.System
                 playerCount
             ));
         }
+
+        private void SubscriptionBind(InGameContext context)
+        {
+            var bag = DisposableBag.CreateBuilder();
+            
+            // 接続復旧時のプレイヤー初期化購読も登録しておく
+            Owner.ConnectionRecoverSubscriber.Subscribe(msg =>
+            {
+                GameStartPlayerInitialize(msg.PlayerId, context.PlayerCount);
+            }).AddTo(bag);
+            
+            // Character生成リクエスト購読
+            Owner.CharacterSpawnRequestSubscriber.Subscribe(request =>
+            {
+                var totalPlayerCount = Owner.Context.PlayerCount;
+                
+                // プレイヤー数を超えるCharacterIdの生成リクエストは無視する
+                if (request.TryRequestProcess(totalPlayerCount))
+                {
+                    Owner.SpawnCharacterPublisher.Publish(request.SpawnCharacterMessage);
+                }
+            }).AddTo(bag);
+            
+            // Character消滅リクエスト購読
+            Owner.CharacterDespawnRequestSubscriber.Subscribe(request =>
+            {
+                Owner.DespawnCharacterPublisher.Publish(request.DespawnCharacterMessage);
+            }).AddTo(bag);
+            
+            _subscription = bag.Build();
+        }
         
         public override async void OnEnter(IStateParameter parameter = null)
         {
@@ -42,13 +73,7 @@ namespace InGame.System
                 GameStartPlayerInitialize(characterId, context.PlayerCount);
             }
             
-            // 接続復旧時のプレイヤー初期化購読も登録しておく
-            var bag = DisposableBag.CreateBuilder();
-            Owner.ConnectionRecoverSubscriber.Subscribe(msg =>
-            {
-                GameStartPlayerInitialize(msg.PlayerId, context.PlayerCount);
-            }).AddTo(bag);
-            _subscription = bag.Build();
+            SubscriptionBind(context);
             
             Owner.StageReferences.MainStage.SetActive(true);
             

@@ -33,6 +33,8 @@ namespace InGame.System
             builder.RegisterMessageBroker<StateChangeMessage>(options);
             builder.RegisterMessageBroker<SpawnCharacterMessage>(options);
             builder.RegisterMessageBroker<DespawnCharacterMessage>(options);
+            builder.RegisterMessageBroker<CharacterSpawnRequestMessage>(options);
+            builder.RegisterMessageBroker<CharacterDespawnRequestMessage>(options);
             builder.RegisterMessageBroker<InitGameMessage>(options);
             builder.RegisterMessageBroker<ConnectionRecoverMessage>(options);
             builder.RegisterMessageBroker<NormalBattleEndMessage>(options);

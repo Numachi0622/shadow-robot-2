@@ -13,8 +13,8 @@ namespace InGame.Character
     {
         private readonly ReactiveCollection<int> _connectedPlayerIds = new();
         private readonly PlayerSpawnSettings _spawnSettings;
-        private readonly IPublisher<SpawnCharacterMessage> _spawnPublisher;
-        private readonly IPublisher<DespawnCharacterMessage> _despawnPublisher;
+        private readonly IPublisher<CharacterSpawnRequestMessage> _spawnRequestPublisher;
+        private readonly IPublisher<CharacterDespawnRequestMessage> _despawnRequestPublisher;
         private readonly IPublisher<ConnectionRecoverMessage> _connectionRecoverPublisher;
         private readonly CompositeDisposable _subscriptions;
         
@@ -22,14 +22,14 @@ namespace InGame.Character
 
         public MotionRegistry(
             PlayerSpawnSettings spawnSettings,
-            IPublisher<SpawnCharacterMessage> spawnPublisher,
-            IPublisher<DespawnCharacterMessage> despawnPublisher,
+            IPublisher<CharacterSpawnRequestMessage> spawnRequestPublisher,
+            IPublisher<CharacterDespawnRequestMessage> despawnRequestPublisher,
             IPublisher<ConnectionRecoverMessage> connectionRecoverPublisher)
         {
             _subscriptions = new CompositeDisposable();
             _spawnSettings = spawnSettings;
-            _spawnPublisher = spawnPublisher;
-            _despawnPublisher = despawnPublisher;
+            _spawnRequestPublisher = spawnRequestPublisher;
+            _despawnRequestPublisher = despawnRequestPublisher;
             _connectionRecoverPublisher = connectionRecoverPublisher;
         }
         
@@ -57,12 +57,13 @@ namespace InGame.Character
             
             var playerId = new CharacterId(addEvent.Value);
             var pos = _spawnSettings.SpawnPositions[playerId.Value];
-            _spawnPublisher?.Publish(new SpawnCharacterMessage(
+            var spawnMessage = new SpawnCharacterMessage(
                 playerId,
                 CharacterType.Player,
                 pos,
                 Quaternion.identity
-            ));
+            );
+            _spawnRequestPublisher?.Publish(new CharacterSpawnRequestMessage(spawnMessage));
             
             _connectionRecoverPublisher.Publish(new ConnectionRecoverMessage(playerId));
         }
@@ -70,7 +71,8 @@ namespace InGame.Character
         private void OnRemoved(CollectionRemoveEvent<int> removeEvent)
         {
             var playerId = removeEvent.Value;
-            _despawnPublisher?.Publish(new DespawnCharacterMessage(new CharacterId(playerId)));
+            var despawnMessage = new DespawnCharacterMessage(new CharacterId(playerId));
+            _despawnRequestPublisher?.Publish(new CharacterDespawnRequestMessage(despawnMessage));
         }
 
         public void Dispose()
