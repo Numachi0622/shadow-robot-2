@@ -22,8 +22,10 @@ namespace Rendering
         {
             if (!_context.Material) return;
 
-            var pass = new FocusLineBackgroundRenderPass(_context);
-            renderer.EnqueuePass(pass);
+            var cameraData = renderingData.cameraData;
+            if (cameraData.isSceneViewCamera || cameraData.isPreviewCamera) return;
+
+            renderer.EnqueuePass(new FocusLineBackgroundRenderPass(_context));
         }
     }
 }

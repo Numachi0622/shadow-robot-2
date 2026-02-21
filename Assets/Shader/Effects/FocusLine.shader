@@ -8,7 +8,7 @@ Shader "Effect/FocusLine"
         {
             Blend Off
             ZWrite Off
-            ZTest GEqual
+            ZTest LEqual
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -30,7 +30,7 @@ Shader "Effect/FocusLine"
                 Varyings output;
                 // SV_VertexID (0,1,2) からフルスクリーン三角形を生成
                 float2 uv = float2((input.vertexID << 1) & 2, input.vertexID & 2);
-                output.positionCS = float4(uv * 2.0 - 1.0, 0.0, 1.0);
+                output.positionCS = float4(uv * 2.0 - 1.0, 1.0, 1.0);
                 output.uv = uv;
                 #if UNITY_UV_STARTS_AT_TOP
                 output.uv.y = 1.0 - output.uv.y;

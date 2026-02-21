@@ -1,26 +1,25 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.RenderGraphModule;
-using UnityEngine.Rendering.RenderGraphModule.Util;
 using UnityEngine.Rendering.Universal;
 
 namespace Rendering
 {
     public class FocusLineBackgroundRenderPass : ScriptableRenderPass
     {
+        private static readonly int LineIntensityId = Shader.PropertyToID("_LineIntensity");
+
         private class PassData
         {
             public Material Material;
-            public float Intensity;
         }
-        
-        private FocusLinesBackgroundRendererFeature.Context _context;
-        
+
+        private readonly FocusLinesBackgroundRendererFeature.Context _context;
+
         public FocusLineBackgroundRenderPass(FocusLinesBackgroundRendererFeature.Context context)
         {
             _context = context;
-            renderPassEvent = RenderPassEvent.BeforeRenderingOpaques;
+            renderPassEvent = RenderPassEvent.BeforeRenderingPrePasses;
         }
 
         public override void RecordRenderGraph(RenderGraph renderGraph, ContextContainer frameData)
@@ -28,16 +27,14 @@ namespace Rendering
             var resourceData = frameData.Get<UniversalResourceData>();
             var colorTarget = resourceData.activeColorTexture;
 
-            if (!_context.Material || !colorTarget.IsValid())
-            {
-                Debug.LogError("[FocusLineBackgroundRenderPass] Material or color target is not set.");
-                return;
-            }
+            if (!colorTarget.IsValid()) return;
+
+            // マテリアルプロパティをメインスレッドで設定
+            _context.Material.SetFloat(LineIntensityId, _context.LineIntensity);
 
             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Focus Line Background Pass", out var passData))
             {
                 passData.Material = _context.Material;
-                passData.Intensity = _context.LineIntensity;
 
                 builder.SetRenderAttachment(colorTarget, 0);
                 builder.SetRenderFunc((PassData data, RasterGraphContext context) =>
