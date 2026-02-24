@@ -93,7 +93,11 @@ namespace InGame.System
             
             // カットシーン
             builder.RegisterInstance(_playableDirectorReferences);
-
+            
+            // テクスチャシステム
+            builder.Register<TextureRegistry>(Lifetime.Singleton).AsSelf();
+            
+            // デバコマ
             builder.RegisterComponent(_debugCommand);
         }
     }

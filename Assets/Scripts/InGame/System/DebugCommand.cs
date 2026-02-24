@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Threading;
 using Windows.Kinect;
 using Cysharp.Threading.Tasks;
 using InGame.Character;
@@ -30,16 +31,19 @@ namespace InGame.System
         private readonly bool[] _isTestConnected = new bool[3];
         private IMotionSender _motionSender;
         private CharacterRegistry _characterRegistry;
+        private TextureRegistry _textureRegistry;
 
         [Inject]
         public void Construct(
             IPublisher<StateChangeMessage> stateChangePublisher,
             IPublisher<PoseMatchEventResultMessage> poseMatchEventResultPublisher,
-            CharacterRegistry characterRegistry)
+            CharacterRegistry characterRegistry,
+            TextureRegistry textureRegistry)
         {
             _stateChangePublisher = stateChangePublisher;
             _poseMatchEventResultPublisher = poseMatchEventResultPublisher;
             _characterRegistry = characterRegistry;
+            _textureRegistry = textureRegistry;
         }
 
         private void Start()
@@ -135,6 +139,26 @@ namespace InGame.System
         public void PoseMatchFailure()
         {
             _poseMatchEventResultPublisher.Publish(new PoseMatchEventResultMessage(false));
+        }
+
+        [SerializeField] private string _textureFileName = String.Empty;
+        [SerializeField, ReadOnly, ShowAssetPreview] private Texture2D _previewTexture;
+
+        [Button]
+        public async void RegisterTexture()
+        {
+            try
+            {
+                var texture = await TextureFileLoader.LoadAsync("Assets/Texture/Player", _textureFileName, CancellationToken.None);
+                if (texture == null) return;
+                
+                _textureRegistry.Register(_textureFileName, texture);
+                _previewTexture = texture;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
         }
 
         private void Update()
