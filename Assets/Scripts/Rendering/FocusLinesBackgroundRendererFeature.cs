@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace Rendering
 {
@@ -9,13 +10,18 @@ namespace Rendering
         public class Context
         {
             public Material Material;
-            [Range(0, 10)] public float LineIntensity = 1f;
+            [FormerlySerializedAs("RotateValue")] public float Rotation = 0f;
         }
 
         [SerializeField] private Context _context;
+
+        private const float MaxRotateRate = 2f;
+        
+        public static FocusLinesBackgroundRendererFeature Instance { get; private set; }
         
         public override void Create()
         {
+            Instance = this;
         }
 
         public override void AddRenderPasses(ScriptableRenderer renderer, ref RenderingData renderingData)
@@ -26,6 +32,16 @@ namespace Rendering
             if (cameraData.isSceneViewCamera || cameraData.isPreviewCamera) return;
 
             renderer.EnqueuePass(new FocusLineBackgroundRenderPass(_context));
+        }
+
+        public void SetRotation(float value)
+        {
+            if (_context == null)
+            {
+                Debug.LogError("[FocusLinesBackgroundRendererFeature] Context is null");
+                return;
+            }
+            _context.Rotation = Mathf.Clamp(value, 0f, Mathf.PI * MaxRotateRate);
         }
     }
 }
