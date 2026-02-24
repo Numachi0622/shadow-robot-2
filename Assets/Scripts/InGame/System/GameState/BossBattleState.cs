@@ -4,6 +4,7 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using InGame.Character;
+using InGame.Event;
 using InGame.Message;
 using InGame.System.UI;
 using UnityEngine;
@@ -96,7 +97,12 @@ namespace InGame.System
             
             if (playerCount > 1 && playerCount <= GameConst.MaxPlayerCount)
             {
-                // await todo: 合体演出
+                // 合体カットシーン
+                var combineSceneContext = new CombineCutSceneContext()
+                {
+                    Director = Owner.PlayableDirectorReferences.CombineCutSceneDirector
+                };
+                await CutSceneManager.LoadAndPlayAsync<CombineCutScene>(combineSceneContext, ct);
 
                 Owner.CombineCompletePublisher.Publish(new CombineCompleteMessage());
                 

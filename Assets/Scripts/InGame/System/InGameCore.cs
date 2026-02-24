@@ -54,6 +54,7 @@ namespace InGame.System
         public MainStageManager MainStageManager => _mainStageManager;
         public List<BuildingCore> BuildingPrefabs { get; private set; }
         public InGameUIController InGameUIController { get; set; }
+        public PlayableDirectorReferences PlayableDirectorReferences { get; set; }
 
         [Inject]
         public InGameCore(
@@ -63,6 +64,7 @@ namespace InGame.System
             MainStageManager mainStageManager,
             CharacterPrefabs characterPrefabs,
             InGameUIController inGameUIController,
+            PlayableDirectorReferences playableDirectorReferences,
             ISubscriber<StateChangeMessage> stateChangeSubscriber,
             IPublisher<SpawnCharacterMessage> spawnCharacterPublisher,
             IPublisher<DespawnCharacterMessage> despawnCharacterPublisher,
@@ -89,6 +91,7 @@ namespace InGame.System
             _mainStageManager = mainStageManager;
             BuildingPrefabs = characterPrefabs.BuildingPrefabs;
             InGameUIController = inGameUIController;
+            PlayableDirectorReferences = playableDirectorReferences;
             _stateChangeSubscriber = stateChangeSubscriber;
             SpawnCharacterPublisher = spawnCharacterPublisher;
             DespawnCharacterPublisher = despawnCharacterPublisher;

@@ -6,6 +6,7 @@ using InGame.System.UI;
 using MessagePipe;
 using SynMotion;
 using UnityEngine;
+using UnityEngine.Playables;
 using VContainer;
 using VContainer.Unity;
 
@@ -22,6 +23,7 @@ namespace InGame.System
         [SerializeField] private InGameUIController _inGameUIController;
         [SerializeField] private HitPointViewList _hitPointViewList;
         [SerializeField] private CombinePlayerReference _combinePlayerReference;
+        [SerializeField] private PlayableDirectorReferences _playableDirectorReferences;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -88,6 +90,9 @@ namespace InGame.System
             // UIコンポーネント
             builder.RegisterComponent(_inGameUIController);
             builder.RegisterInstance(_hitPointViewList);
+            
+            // カットシーン
+            builder.RegisterInstance(_playableDirectorReferences);
 
             builder.RegisterComponent(_debugCommand);
         }
@@ -109,5 +114,14 @@ namespace InGame.System
         [SerializeField] private CharacterCore _triplePlayerCombinePrefab;
         public CharacterCore DoublePlayerCombinePrefab => _doublePlayerCombinePrefab;
         public CharacterCore TriplePlayerCombinePrefab => _triplePlayerCombinePrefab;
+    }
+    
+    [Serializable]
+    public class PlayableDirectorReferences
+    {
+        [SerializeField] private PlayableDirector _combineCutSceneDirector;
+        [SerializeField] private PlayableDirector _bossBattleStartCutSceneDirector;
+        public PlayableDirector CombineCutSceneDirector => _combineCutSceneDirector;
+        public PlayableDirector BossBattleStartCutSceneDirector => _bossBattleStartCutSceneDirector;
     }
 }
