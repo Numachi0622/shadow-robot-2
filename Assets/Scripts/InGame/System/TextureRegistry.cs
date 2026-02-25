@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using InGame.Character;
 using UniRx;
 using UnityEngine;
@@ -82,6 +81,34 @@ namespace InGame.System
 
                 return (playerId, context);
             });
+
+        /// <summary>
+        /// 2人のプレイヤーのテクスチャペアを入れ替える
+        /// </summary>
+        public void SwapPlayerTextures(int playerIdA, int playerIdB)
+        {
+            var indexA1 = playerIdA * 2;
+            var indexA2 = playerIdA * 2 + 1;
+            var indexB1 = playerIdB * 2;
+            var indexB2 = playerIdB * 2 + 1;
+
+            // 範囲外の場合は拡張
+            var maxIndex = Mathf.Max(indexA1, indexA2, indexB1, indexB2);
+            while (_textures.Count <= maxIndex)
+            {
+                _textures.Add(null);
+            }
+
+            // 一時変数に保存
+            var tempA1 = _textures[indexA1];
+            var tempA2 = _textures[indexA2];
+
+            // 明示的に再代入してObserveReplaceを発火させる
+            _textures[indexA1] = _textures[indexB1];
+            _textures[indexA2] = _textures[indexB2];
+            _textures[indexB1] = tempA1;
+            _textures[indexB2] = tempA2;
+        }
 
         /// <summary>
         /// テクスチャをインデックスで登録する。インデックスが範囲外の場合は自動的に拡張する。

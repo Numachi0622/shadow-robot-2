@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using InGame.Character;
 using InGame.Message;
 using MessagePipe;
 using SynMotion;
+using UniRx;
 using UnityEngine;
 using VContainer;
 using VContainer.Unity;
@@ -68,6 +70,9 @@ namespace InGame.System
             bag.Add(_createBuildingSubscriber.Subscribe(CreateBuilding));
             bag.Add(_buildingDestroyedSubscriber.Subscribe(OnBuildingDestroyed));
             bag.Add(_enemyDestroyedSubscriber.Subscribe(OnEnemyDestroyed));
+
+            // テクスチャ変更時にPlayerCoreに反映
+            bag.Add(_textureRegistry.OnPlayerTextureChanged.Subscribe(x => ApplyTextureToPlayer(x.playerId, x.context)));
 
             _subscription = bag.Build();
         }
@@ -179,6 +184,18 @@ namespace InGame.System
         private void OnEnemyDestroyed(EnemyDestroyedMessage message)
         {
             _registry.Remove(message.Enemy, message.AreaId);
+        }
+
+        private void ApplyTextureToPlayer(int playerId, PlayerTextureContext context)
+        {
+            var players = _registry.GetAllPlayers();
+            var playerCore = players
+                .OfType<PlayerCore>()
+                .FirstOrDefault(p => p.PlayerId.Value == playerId);
+
+            if (playerCore == null) return;
+            
+            playerCore.SetTexture(context);
         }
 
         public void Dispose()

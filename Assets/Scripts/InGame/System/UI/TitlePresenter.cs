@@ -45,10 +45,12 @@ namespace InGame.System.UI
             _view.OnClickRegisterButton.Subscribe(OnRegisterTexture).AddTo(this);
 
             _view.OnClickSelectTextureButton.Subscribe(idx => _selectTextureIndex.Value = idx).AddTo(this);
-            
+
+            _view.OnClickReplaceButton.Subscribe(OnReplaceTextures).AddTo(this);
+
             // Presenter => View
             _selectTextureIndex.Subscribe(_view.UpdateSelectState).AddTo(this);
-            
+
             // TextureRegistry => View
             _textureRegistry.OnPlayerTextureChanged
                 .Subscribe(x => _view.UpdateTextureName(x.playerId, x.context))
@@ -80,7 +82,7 @@ namespace InGame.System.UI
                 if (texture == null) return;
 
                 _textureRegistry.Register(_selectTextureIndex.Value, texture);
-                
+
                 // インデックス更新
                 _selectTextureIndex.Value = (_selectTextureIndex.Value + 1) % GameConst.MaxTextureCount;
             }
@@ -90,5 +92,23 @@ namespace InGame.System.UI
             }
         }
 
+        private void OnReplaceTextures(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    // ペア0とペア1を入れ替え
+                    _textureRegistry.SwapPlayerTextures(0, 1);
+                    break;
+                case 1:
+                    // ペア1とペア2を入れ替え
+                    _textureRegistry.SwapPlayerTextures(1, 2);
+                    break;
+                case 2:
+                    // ペア2とペア0を入れ替え
+                    _textureRegistry.SwapPlayerTextures(2, 0);
+                    break;
+            }
+        }
     }
 }

@@ -11,7 +11,8 @@ namespace InGame.System.UI
     {
         [SerializeField] private InputField _fileInputField;
         [SerializeField] private Button _registerButton;
-        [SerializeField] private Button[] _selectTextureButton;
+        [SerializeField] private Button[] _selectTextureButtons;
+        [SerializeField] private Button[] _replaceButtons;
 
         private Graphic _currentSelectButton;
 
@@ -19,9 +20,13 @@ namespace InGame.System.UI
             .OnClickAsObservable()
             .Select(_ => _fileInputField.text);
 
-        public IObservable<int> OnClickSelectTextureButton => _selectTextureButton
+        public IObservable<int> OnClickSelectTextureButton => _selectTextureButtons
                 .Select((button, index) => button.OnClickAsObservable().Select(_ => index))
                 .Merge();
+
+        public IObservable<int> OnClickReplaceButton => _replaceButtons
+            .Select((button, index) => button.OnClickAsObservable().Select(_ => index))
+            .Merge();
 
         public void UpdateSelectState(int idx)
         {
@@ -29,7 +34,7 @@ namespace InGame.System.UI
             {
                 _currentSelectButton.color = Color.white;
             }
-            _currentSelectButton = _selectTextureButton[idx].image;
+            _currentSelectButton = _selectTextureButtons[idx].image;
             _currentSelectButton.color = Color.yellow;
         }
 
@@ -38,18 +43,18 @@ namespace InGame.System.UI
             var texture1Index = playerId * 2;
             var texture2Index = playerId * 2 + 1;
 
-            if (texture1Index < _selectTextureButton.Length)
+            if (texture1Index < _selectTextureButtons.Length)
             {
-                var text = _selectTextureButton[texture1Index].GetComponentInChildren<TMP_Text>();
+                var text = _selectTextureButtons[texture1Index].GetComponentInChildren<TMP_Text>();
                 if (text != null)
                 {
                     text.text = context.Texture1 != null ? context.Texture1.name : "Empty";
                 }
             }
 
-            if (texture2Index < _selectTextureButton.Length)
+            if (texture2Index < _selectTextureButtons.Length)
             {
-                var text = _selectTextureButton[texture2Index].GetComponentInChildren<TMP_Text>();
+                var text = _selectTextureButtons[texture2Index].GetComponentInChildren<TMP_Text>();
                 if (text != null)
                 {
                     text.text = context.Texture2 != null ? context.Texture2.name : "Empty";

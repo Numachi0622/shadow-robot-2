@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UniRx;
 using UnityEngine;
 using VContainer.Unity;
 using InGame.Character;
@@ -14,7 +15,7 @@ namespace InGame.System
         private readonly List<CharacterCore> _playerCores = new();
         private readonly Dictionary<AreaId, List<CharacterCore>> _enemyCores = new();
         private readonly Dictionary<AreaId, List<CharacterCore>> _buildingCores = new();
-        
+
         public void Tick()
         {
             foreach (var character in _allCharacters)
