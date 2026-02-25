@@ -131,8 +131,6 @@ namespace InGame.Character
                 Debug.LogError("[PlayerCore] Materials are not initialized.");
                 return;
             }
-            Debug.Log(_material1);
-            Debug.Log(_material2);
             
             _material1.SetTexture("_MainTexture1", context.Texture1);
             _material2.SetTexture("_MainTexture2", context.Texture2);

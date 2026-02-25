@@ -13,13 +13,31 @@ namespace InGame.System.UI
         private TextureRegistry _textureRegistry;
         private readonly IntReactiveProperty _selectTextureIndex = new();
 
+        private readonly string[] InitLoadTextures = 
+        {
+            "tex_sample_red_01",
+            "tex_sample_red_02",
+            "tex_sample_blue_01",
+            "tex_sample_blue_02",
+            "tex_sample_green_01",
+            "tex_sample_green_02",
+        };
+        
+        private const string Path = "Assets/Texture/Player";
+
         [Inject]
         public void Construct(TextureRegistry textureRegistry)
         {
             _textureRegistry = textureRegistry;
         }
 
-        private void Start() => Bind();
+        private void Start()
+        {
+            Bind();
+            
+            // テクスチャの初期ロード
+            InitLoad();
+        }
 
         private void Bind()
         {
@@ -37,11 +55,28 @@ namespace InGame.System.UI
                 .AddTo(this);
         }
 
+        private async void InitLoad()
+        {
+            try
+            {
+                for (var i = 0; i < InitLoadTextures.Length; i++)
+                {
+                    var texture = await TextureFileLoader.LoadAsync(Path, InitLoadTextures[i], CancellationToken.None);
+                    if (texture == null) continue;
+                    _textureRegistry.Register(i, texture);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogError(e);
+            }
+        }
+
         private async void OnRegisterTexture(string fileName)
         {
             try
             {
-                var texture = await TextureFileLoader.LoadAsync("Assets/Texture/Player", fileName, CancellationToken.None);
+                var texture = await TextureFileLoader.LoadAsync(Path, fileName, CancellationToken.None);
                 if (texture == null) return;
 
                 _textureRegistry.Register(_selectTextureIndex.Value, texture);
