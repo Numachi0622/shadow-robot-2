@@ -118,7 +118,7 @@ namespace InGame.System
             player.Initialize(message.CharacterId, _synMotion, message.TotalPlayerCount);
 
             // テクスチャ反映
-            var context = _textureRegistry.TextureContext(message.CharacterId); 
+            var context = _textureRegistry.GetTextureContext(message.CharacterId); 
             player.SetTexture(context);
             
             _registry.Register(player);
@@ -186,7 +186,7 @@ namespace InGame.System
             _registry.Remove(message.Enemy, message.AreaId);
         }
 
-        private void ApplyTextureToPlayer(int playerId, PlayerTextureContext context)
+        private void ApplyTextureToPlayer(int playerId, ITextureContext context)
         {
             var players = _registry.GetAllPlayers();
             var playerCore = players

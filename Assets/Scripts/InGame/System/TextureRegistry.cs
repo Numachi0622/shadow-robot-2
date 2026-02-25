@@ -8,10 +8,19 @@ using Object = UnityEngine.Object;
 
 namespace InGame.System
 {
-    public struct PlayerTextureContext
+    public struct PlayerTextureContext : ITextureContext
     {
         public Texture2D Texture1 { get; set; }
         public Texture2D Texture2 { get; set; }
+    }
+
+    public struct CombineTextureContext : ITextureContext
+    {
+        public Texture2D Texture1 { get; set; }
+        public Texture2D Texture2 { get; set; }
+        public Texture2D LeftArmTexture { get; set; }
+        public Texture2D RightArmTexture { get; set; }
+        public Texture2D FootPartsTexture { get; set; }
     }
 
     public class TextureRegistry
@@ -20,7 +29,7 @@ namespace InGame.System
 
         public IReadOnlyReactiveCollection<Texture2D> Textures => _textures;
 
-        public PlayerTextureContext TextureContext(CharacterId id)
+        public ITextureContext GetTextureContext(CharacterId id)
         {
             var playerId = id.Value;
             var texture1Index = playerId * 2;
@@ -36,34 +45,37 @@ namespace InGame.System
             };
         }
 
-        public IReadOnlyList<PlayerTextureContext> GetAllTextureContexts()
+        public ITextureContext GetCombineTextureContext(CharacterId baseId, int totalPlayerCount)
         {
-            var contexts = new List<PlayerTextureContext>();
-
-            for (int playerId = 0; playerId < GameConst.MaxPlayerCount; playerId++)
+            if (totalPlayerCount < 2 || totalPlayerCount > GameConst.MaxPlayerCount)
             {
-                var texture1Index = playerId * 2;
-                var texture2Index = playerId * 2 + 1;
-
-                var texture1 = texture1Index < _textures.Count ? _textures[texture1Index] : null;
-                var texture2 = texture2Index < _textures.Count ? _textures[texture2Index] : null;
-
-                contexts.Add(new PlayerTextureContext
-                {
-                    Texture1 = texture1,
-                    Texture2 = texture2
-                });
+                return new CombineTextureContext();
             }
 
-            return contexts;
+            var baseTextureContext = GetTextureContext(baseId);
+            var leftArmTexture = GetTextureContext(new CharacterId(0)).Texture1;
+            var rightArmTexture = totalPlayerCount == GameConst.MaxPlayerCount 
+                ? GetTextureContext(new CharacterId(1)).Texture1 
+                : GetTextureContext(new CharacterId(0)).Texture1;
+            var footPartsTexture = totalPlayerCount == GameConst.MaxPlayerCount
+                ? GetTextureContext(new CharacterId(2)).Texture2
+                : GetTextureContext(new CharacterId(1)).Texture2;
+
+            return new CombineTextureContext()
+            {
+                Texture1 = baseTextureContext.Texture1,
+                Texture2 = baseTextureContext.Texture2,
+                LeftArmTexture = leftArmTexture,
+                RightArmTexture = rightArmTexture,
+                FootPartsTexture = footPartsTexture
+            };
         }
         
         /// <summary>
         /// テクスチャが変更されたときに、そのテクスチャが属するplayerIdとペアのテクスチャを発行する
         /// </summary>
         public IObservable<(int playerId, PlayerTextureContext context)> OnPlayerTextureChanged =>
-            _textures.ObserveReplace().Select(x => x.Index).Merge(_textures.ObserveAdd().Select(x => x.Index)
-            )
+            _textures.ObserveReplace().Select(x => x.Index).Merge(_textures.ObserveAdd().Select(x => x.Index))
             .Select(index =>
             {
                 var playerId = index / 2;

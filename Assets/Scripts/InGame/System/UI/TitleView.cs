@@ -38,7 +38,7 @@ namespace InGame.System.UI
             _currentSelectButton.color = Color.yellow;
         }
 
-        public void UpdateTextureName(int playerId, PlayerTextureContext context)
+        public void UpdateTextureName(int playerId, ITextureContext context)
         {
             var texture1Index = playerId * 2;
             var texture2Index = playerId * 2 + 1;

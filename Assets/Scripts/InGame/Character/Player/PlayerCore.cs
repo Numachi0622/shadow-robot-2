@@ -1,6 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using InGame.Character;
 using InGame.Message;
 using InGame.System;
 using InGame.System.UI;
@@ -43,6 +42,12 @@ namespace InGame.Character
         [SerializeField] private PlayerShield _shield;
         [SerializeField] private Transform _center;
         [SerializeField] private Renderer _bodyRenderer;
+        [SerializeField] private Renderer _leftArmRenderer;
+        [SerializeField] private Renderer _rightArmRenderer;
+        [SerializeField] private Renderer _footPartsRenderer;
+        [SerializeField] private Texture2D _leftHandMaskTexture;
+        [SerializeField] private Texture2D _rightHandMaskTexture;
+        [SerializeField] private Texture2D _footMaskTexture;
 
         private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
@@ -66,6 +71,9 @@ namespace InGame.Character
         private readonly float _jumpWeight = 6f;
         private Material _material1;
         private Material _material2;
+        private Material _leftArmMaterial;
+        private Material _rightArmMaterial;
+        private Material _footPartsMaterial;
         
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
@@ -122,9 +130,12 @@ namespace InGame.Character
 
             _material2 = _bodyRenderer.materials[0];
             _material1 = _bodyRenderer.materials[1];
+            if (_leftArmRenderer) _leftArmMaterial = _leftArmRenderer.material;
+            if (_rightArmRenderer) _rightArmMaterial = _rightArmRenderer.material;
+            if (_footPartsRenderer) _footPartsMaterial = _footPartsRenderer.material;
         }
 
-        public void SetTexture(PlayerTextureContext context)
+        public void SetTexture(ITextureContext context)
         {
             if (_material1 == null || _material2 == null)
             {
@@ -134,6 +145,17 @@ namespace InGame.Character
             
             _material1.SetTexture("_MainTexture1", context.Texture1);
             _material2.SetTexture("_MainTexture2", context.Texture2);
+
+            // ここからは合体用のテクスチャ割り当て
+            if (!_leftArmMaterial || !_rightArmMaterial || !_footPartsMaterial) return;
+            if (context is not CombineTextureContext combineContext) return;
+            
+            _material1.SetTexture("_LeftHandTexture", combineContext.LeftArmTexture);
+            _material1.SetTexture("_LeftHandMaskTexture", _leftHandMaskTexture);
+            _material1.SetTexture("_RightHandTexture", combineContext.RightArmTexture);
+            _material1.SetTexture("_RightHandMaskTexture", _rightHandMaskTexture);
+            _material2.SetTexture("_FootTexture", combineContext.FootPartsTexture);
+            _material2.SetTexture("_FootMaskTexture", _footMaskTexture);
         }
 
         private async UniTaskVoid CalibrateAsync()
