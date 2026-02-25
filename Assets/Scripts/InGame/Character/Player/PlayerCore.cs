@@ -150,22 +150,33 @@ namespace InGame.Character
             }
 
             _material1.SetTexture("_MainTexture1", context.Texture1);
+            _material1.EnableKeyword("_MAIN_TEXTURE1_ON");
             _material2.SetTexture("_MainTexture2", context.Texture2);
+            _material2.EnableKeyword("_MAIN_TEXTURE2_ON");
 
             // ここからは合体用のテクスチャ割り当て
             if (!_leftArmMaterial || !_rightArmMaterial || !_footPartsMaterial) return;
             if (context.LeftArmTexture == null) return;
 
             _material1.SetTexture("_LeftHandTexture", context.LeftArmTexture);
+            _material1.EnableKeyword("_LEFT_HAND_TEXTURE_ON");
             _material1.SetTexture("_LeftHandMaskTexture", _maskTextures.LeftHandMaskTexture);
+            _material1.EnableKeyword("_LEFT_HAND_MASK_TEXTURE_ON");
             _material1.SetTexture("_RightHandTexture", context.RightArmTexture);
+            _material1.EnableKeyword("_RIGHT_HAND_TEXTURE_ON");
             _material1.SetTexture("_RightHandMaskTexture", _maskTextures.RightHandMaskTexture);
+            _material1.EnableKeyword("_RIGHT_HAND_MASK_TEXTURE_ON");
             _material2.SetTexture("_FootTexture", context.FootPartsTexture);
+            _material2.EnableKeyword("_FOOT_TEXTURE_ON");
             _material2.SetTexture("_FootMaskTexture", _maskTextures.FootMaskTexture);
-            
+            _material2.EnableKeyword("_FOOT_MASK_TEXTURE_ON");
+
             _leftArmMaterial.SetTexture("_MainTexture1", context.Texture1);
+            _leftArmMaterial.EnableKeyword("_MAIN_TEXTURE1_ON");
             _rightArmMaterial.SetTexture("_MainTexture1", context.Texture1);
+            _rightArmMaterial.EnableKeyword("_MAIN_TEXTURE1_ON");
             _footPartsMaterial.SetTexture("_MainTexture2", context.Texture2);
+            _footPartsMaterial.EnableKeyword("_MAIN_TEXTURE2_ON");
         }
 
         private async UniTaskVoid CalibrateAsync()
