@@ -12,6 +12,9 @@ namespace InGame.System
     {
         public Texture2D Texture1 { get; set; }
         public Texture2D Texture2 { get; set; }
+        public Texture2D LeftArmTexture => null;
+        public Texture2D RightArmTexture => null;
+        public Texture2D FootPartsTexture => null;
     }
 
     public struct CombineTextureContext : ITextureContext

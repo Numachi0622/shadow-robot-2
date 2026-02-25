@@ -21,8 +21,8 @@ namespace InGame.System
         private readonly CharacterFactory _factory;
         private readonly CharacterRegistry _registry;
         private readonly SynMotionSystem _synMotion;
-        private readonly CombinePlayerReference _combinePlayerReference;
         private readonly TextureRegistry _textureRegistry;
+        private readonly CharacterPrefabs _characterPrefabs;
         private readonly ISubscriber<SpawnCharacterMessage> _spawnSubscriber;
         private readonly ISubscriber<CreateBuildingMessage> _createBuildingSubscriber;
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
@@ -38,8 +38,8 @@ namespace InGame.System
             CharacterFactory factory,
             CharacterRegistry registry,
             SynMotionSystem synMotion,
-            CombinePlayerReference combinePlayerReference,
             TextureRegistry textureRegistry,
+            CharacterPrefabs characterPrefabs,
             ISubscriber<SpawnCharacterMessage> spawnSubscriber,
             ISubscriber<CreateBuildingMessage> createBuildingSubscriber,
             ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber,
@@ -51,9 +51,9 @@ namespace InGame.System
             _factory = factory;
             _registry = registry;
             _synMotion = synMotion;
-            _combinePlayerReference = combinePlayerReference;
             _textureRegistry = textureRegistry;
             _spawnSubscriber = spawnSubscriber;
+            _characterPrefabs = characterPrefabs;
             _createBuildingSubscriber = createBuildingSubscriber;
             _despawnSubscriber = playerDespawnSubscriber;
             _buildingDestroyedSubscriber = buildingDestroyedSubscriber;
@@ -106,19 +106,17 @@ namespace InGame.System
             }
             else
             {
-                character = message.TotalPlayerCount switch 
-                {
-                    2 => _factory.Create(_combinePlayerReference.DoublePlayerCombinePrefab, message.Position, message.Rotation),
-                    3 => _factory.Create(_combinePlayerReference.TriplePlayerCombinePrefab, message.Position, message.Rotation),
-                    _ => null,
-                };
+                character = _factory.Create(_characterPrefabs.CombinePlayerPrefab, message.Position, message.Rotation);
             }
             if (character == null || character is not PlayerCore player) return;
             
             player.Initialize(message.CharacterId, _synMotion, message.TotalPlayerCount);
 
             // テクスチャ反映
-            var context = _textureRegistry.GetTextureContext(message.CharacterId); 
+            // todo: NormalBattleで倒した敵の数が多いプレイヤーIDを取得する
+            var context = message.CharacterType == CharacterType.CombinePlayer
+                ? _textureRegistry.GetCombineTextureContext(new CharacterId(0), message.TotalPlayerCount)
+                : _textureRegistry.GetTextureContext(message.CharacterId);
             player.SetTexture(context);
             
             _registry.Register(player);

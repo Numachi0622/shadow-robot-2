@@ -31,6 +31,14 @@ namespace InGame.Character
             public Transform RightForeArm;
             public Transform RightHand;
         }
+        
+        [Serializable]
+        public class MaskTextures
+        {
+            public Texture2D LeftHandMaskTexture;
+            public Texture2D RightHandMaskTexture;
+            public Texture2D FootMaskTexture;
+        }
 
         [SerializeField] private MovementTransforms _movementTransforms;
 
@@ -45,9 +53,7 @@ namespace InGame.Character
         [SerializeField] private Renderer _leftArmRenderer;
         [SerializeField] private Renderer _rightArmRenderer;
         [SerializeField] private Renderer _footPartsRenderer;
-        [SerializeField] private Texture2D _leftHandMaskTexture;
-        [SerializeField] private Texture2D _rightHandMaskTexture;
-        [SerializeField] private Texture2D _footMaskTexture;
+        [SerializeField] private MaskTextures _maskTextures; 
 
         private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
@@ -142,20 +148,24 @@ namespace InGame.Character
                 Debug.LogError("[PlayerCore] Materials are not initialized.");
                 return;
             }
-            
+
             _material1.SetTexture("_MainTexture1", context.Texture1);
             _material2.SetTexture("_MainTexture2", context.Texture2);
 
             // ここからは合体用のテクスチャ割り当て
             if (!_leftArmMaterial || !_rightArmMaterial || !_footPartsMaterial) return;
-            if (context is not CombineTextureContext combineContext) return;
+            if (context.LeftArmTexture == null) return;
+
+            _material1.SetTexture("_LeftHandTexture", context.LeftArmTexture);
+            _material1.SetTexture("_LeftHandMaskTexture", _maskTextures.LeftHandMaskTexture);
+            _material1.SetTexture("_RightHandTexture", context.RightArmTexture);
+            _material1.SetTexture("_RightHandMaskTexture", _maskTextures.RightHandMaskTexture);
+            _material2.SetTexture("_FootTexture", context.FootPartsTexture);
+            _material2.SetTexture("_FootMaskTexture", _maskTextures.FootMaskTexture);
             
-            _material1.SetTexture("_LeftHandTexture", combineContext.LeftArmTexture);
-            _material1.SetTexture("_LeftHandMaskTexture", _leftHandMaskTexture);
-            _material1.SetTexture("_RightHandTexture", combineContext.RightArmTexture);
-            _material1.SetTexture("_RightHandMaskTexture", _rightHandMaskTexture);
-            _material2.SetTexture("_FootTexture", combineContext.FootPartsTexture);
-            _material2.SetTexture("_FootMaskTexture", _footMaskTexture);
+            _leftArmMaterial.SetTexture("_MainTexture1", context.Texture1);
+            _rightArmMaterial.SetTexture("_MainTexture1", context.Texture1);
+            _footPartsMaterial.SetTexture("_MainTexture2", context.Texture2);
         }
 
         private async UniTaskVoid CalibrateAsync()

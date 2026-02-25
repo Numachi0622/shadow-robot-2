@@ -7,6 +7,7 @@ namespace InGame.Character
     public class CharacterPrefabs : ScriptableObject
     {
         public PlayerCore PlayerPrefab;
+        public PlayerCore CombinePlayerPrefab;
         public NormalEnemyCore NormalEnemyPrefab;
         public BossEnemyCore BossEnemyPrefab;
         public List<BuildingCore> BuildingPrefabs;
