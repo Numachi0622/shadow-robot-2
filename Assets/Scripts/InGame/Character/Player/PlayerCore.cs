@@ -42,6 +42,7 @@ namespace InGame.Character
         [SerializeField] private Camera _playerCamera;
         [SerializeField] private PlayerShield _shield;
         [SerializeField] private Transform _center;
+        [SerializeField] private Renderer _bodyRenderer;
 
         private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
@@ -63,6 +64,8 @@ namespace InGame.Character
         private int _totalPlayerCount = -1;
         private readonly float _jumpThresholdOffset = 0.05f;
         private readonly float _jumpWeight = 6f;
+        private Material _material1;
+        private Material _material2;
         
         private ISubscriber<CharacterId, GameStartPlayerInitMessage> _gameStartPlayerInitSubscriber;
         private ISubscriber<AllPlayerDespawnMessage> _allPlayerDespawnSubscriber;
@@ -116,6 +119,23 @@ namespace InGame.Character
             // キャリブレーション開始
             _calibrationSystem = new JumpCalibrationSystem(_synMotion, _footPlayerId);
             CalibrateAsync().Forget();
+
+            _material2 = _bodyRenderer.materials[0];
+            _material1 = _bodyRenderer.materials[1];
+        }
+
+        public void SetTexture(PlayerTextureContext context)
+        {
+            if (_material1 == null || _material2 == null)
+            {
+                Debug.LogError("[PlayerCore] Materials are not initialized.");
+                return;
+            }
+            Debug.Log(_material1);
+            Debug.Log(_material2);
+            
+            _material1.SetTexture("_MainTexture1", context.Texture1);
+            _material2.SetTexture("_MainTexture2", context.Texture2);
         }
 
         private async UniTaskVoid CalibrateAsync()

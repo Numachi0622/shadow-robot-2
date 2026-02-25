@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using InGame.Character;
 using UniRx;
 using UnityEngine;
 using Utility;
@@ -18,6 +21,44 @@ namespace InGame.System
 
         public IReadOnlyReactiveCollection<Texture2D> Textures => _textures;
 
+        public PlayerTextureContext TextureContext(CharacterId id)
+        {
+            var playerId = id.Value;
+            var texture1Index = playerId * 2;
+            var texture2Index = playerId * 2 + 1;
+
+            var texture1 = texture1Index < _textures.Count ? _textures[texture1Index] : null;
+            var texture2 = texture2Index < _textures.Count ? _textures[texture2Index] : null;
+
+            return new PlayerTextureContext
+            {
+                Texture1 = texture1,
+                Texture2 = texture2
+            };
+        }
+
+        public IReadOnlyList<PlayerTextureContext> GetAllTextureContexts()
+        {
+            var contexts = new List<PlayerTextureContext>();
+
+            for (int playerId = 0; playerId < GameConst.MaxPlayerCount; playerId++)
+            {
+                var texture1Index = playerId * 2;
+                var texture2Index = playerId * 2 + 1;
+
+                var texture1 = texture1Index < _textures.Count ? _textures[texture1Index] : null;
+                var texture2 = texture2Index < _textures.Count ? _textures[texture2Index] : null;
+
+                contexts.Add(new PlayerTextureContext
+                {
+                    Texture1 = texture1,
+                    Texture2 = texture2
+                });
+            }
+
+            return contexts;
+        }
+        
         /// <summary>
         /// テクスチャが変更されたときに、そのテクスチャが属するplayerIdとペアのテクスチャを発行する
         /// </summary>

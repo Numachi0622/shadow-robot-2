@@ -20,6 +20,7 @@ namespace InGame.System
         private readonly CharacterRegistry _registry;
         private readonly SynMotionSystem _synMotion;
         private readonly CombinePlayerReference _combinePlayerReference;
+        private readonly TextureRegistry _textureRegistry;
         private readonly ISubscriber<SpawnCharacterMessage> _spawnSubscriber;
         private readonly ISubscriber<CreateBuildingMessage> _createBuildingSubscriber;
         private readonly ISubscriber<DespawnCharacterMessage> _despawnSubscriber;
@@ -36,6 +37,7 @@ namespace InGame.System
             CharacterRegistry registry,
             SynMotionSystem synMotion,
             CombinePlayerReference combinePlayerReference,
+            TextureRegistry textureRegistry,
             ISubscriber<SpawnCharacterMessage> spawnSubscriber,
             ISubscriber<CreateBuildingMessage> createBuildingSubscriber,
             ISubscriber<DespawnCharacterMessage> playerDespawnSubscriber,
@@ -48,6 +50,7 @@ namespace InGame.System
             _registry = registry;
             _synMotion = synMotion;
             _combinePlayerReference = combinePlayerReference;
+            _textureRegistry = textureRegistry;
             _spawnSubscriber = spawnSubscriber;
             _createBuildingSubscriber = createBuildingSubscriber;
             _despawnSubscriber = playerDespawnSubscriber;
@@ -108,6 +111,11 @@ namespace InGame.System
             if (character == null || character is not PlayerCore player) return;
             
             player.Initialize(message.CharacterId, _synMotion, message.TotalPlayerCount);
+
+            // テクスチャ反映
+            var context = _textureRegistry.TextureContext(message.CharacterId); 
+            player.SetTexture(context);
+            
             _registry.Register(player);
         }
 
