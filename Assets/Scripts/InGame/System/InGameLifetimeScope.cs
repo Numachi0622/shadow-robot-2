@@ -24,6 +24,7 @@ namespace InGame.System
         [SerializeField] private HitPointViewList _hitPointViewList;
         [SerializeField] private CombinePlayerReference _combinePlayerReference;
         [SerializeField] private PlayableDirectorReferences _playableDirectorReferences;
+        [SerializeField] private TitlePresenter _titlePresenter;
         
         [SerializeField] private DebugCommand _debugCommand;
         
@@ -96,6 +97,7 @@ namespace InGame.System
             
             // テクスチャシステム
             builder.Register<TextureRegistry>(Lifetime.Singleton).AsSelf();
+            builder.RegisterComponent(_titlePresenter);
             
             // デバコマ
             builder.RegisterComponent(_debugCommand);

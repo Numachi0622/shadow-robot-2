@@ -24,5 +24,6 @@ namespace Utility
         public const bool NoAnimationMode = false;
         public const int DisplayWidth = 1920;
         public const int DisplayHeight = 1080;
+        public const int MaxTextureCount = 6;
     }
 }

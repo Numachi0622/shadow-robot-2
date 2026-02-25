@@ -1,32 +1,63 @@
-using System.Collections.Generic;
+using System;
+using UniRx;
 using UnityEngine;
+using Utility;
+using Object = UnityEngine.Object;
 
 namespace InGame.System
 {
+    public struct PlayerTextureContext
+    {
+        public Texture2D Texture1 { get; set; }
+        public Texture2D Texture2 { get; set; }
+    }
+
     public class TextureRegistry
     {
-        private readonly Dictionary<string, Texture2D> _textures = new();
+        private readonly ReactiveCollection<Texture2D> _textures = new();
+
+        public IReadOnlyReactiveCollection<Texture2D> Textures => _textures;
 
         /// <summary>
-        /// テクスチャを名前で登録する。同名が既に存在する場合は上書きして古いテクスチャを破棄する。
+        /// テクスチャが変更されたときに、そのテクスチャが属するplayerIdとペアのテクスチャを発行する
         /// </summary>
-        public void Register(string id, Texture2D texture)
-        {
-            if (_textures.TryGetValue(id, out var existing))
+        public IObservable<(int playerId, PlayerTextureContext context)> OnPlayerTextureChanged =>
+            _textures.ObserveReplace().Select(x => x.Index).Merge(_textures.ObserveAdd().Select(x => x.Index)
+            )
+            .Select(index =>
             {
-                Object.Destroy(existing);
-            }
-            _textures[id] = texture;
-            
-            Debug.Log(_textures.Count);
-        }
+                var playerId = index / 2;
+                var texture1Index = playerId * 2;
+                var texture2Index = playerId * 2 + 1;
+
+                var texture1 = texture1Index < _textures.Count ? _textures[texture1Index] : null;
+                var texture2 = texture2Index < _textures.Count ? _textures[texture2Index] : null;
+
+                var context = new PlayerTextureContext
+                {
+                    Texture1 = texture1,
+                    Texture2 = texture2
+                };
+
+                return (playerId, context);
+            });
 
         /// <summary>
-        /// 名前でテクスチャを取得する。見つからない場合は false を返す。
+        /// テクスチャをインデックスで登録する。インデックスが範囲外の場合は自動的に拡張する。
         /// </summary>
-        public bool TryGet(string id, out Texture2D texture)
+        public void Register(int idx, Texture2D texture)
         {
-            return _textures.TryGetValue(id, out texture);
+            if (idx >= GameConst.MaxTextureCount) return;
+            
+            // インデックスが範囲外の場合は拡張
+            while (_textures.Count <= idx)
+            {
+                _textures.Add(null);
+            }
+
+            _textures[idx] = texture;
+            
+            Debug.Log("[TextureRegistry] Registered texture at index " + idx + ": " + texture.name);
         }
 
         /// <summary>
@@ -34,9 +65,12 @@ namespace InGame.System
         /// </summary>
         public void Clear()
         {
-            foreach (var texture in _textures.Values)
+            foreach (var texture in _textures)
             {
-                Object.Destroy(texture);
+                if (texture != null)
+                {
+                    Object.Destroy(texture);
+                }
             }
             _textures.Clear();
         }

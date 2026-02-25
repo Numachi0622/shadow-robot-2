@@ -142,6 +142,7 @@ namespace InGame.System
         }
 
         [SerializeField] private string _textureFileName = String.Empty;
+        [SerializeField] private int _textureIndex = 0;
         [SerializeField, ReadOnly, ShowAssetPreview] private Texture2D _previewTexture;
 
         [Button]
@@ -151,8 +152,8 @@ namespace InGame.System
             {
                 var texture = await TextureFileLoader.LoadAsync("Assets/Texture/Player", _textureFileName, CancellationToken.None);
                 if (texture == null) return;
-                
-                _textureRegistry.Register(_textureFileName, texture);
+
+                _textureRegistry.Register(_textureIndex, texture);
                 _previewTexture = texture;
             }
             catch (Exception e)
@@ -169,7 +170,7 @@ namespace InGame.System
             }
             else if (Input.GetKeyDown(KeyCode.R))
             {
-                SceneManager.LoadScene("EntryPoint");
+                //SceneManager.LoadScene("EntryPoint");
             }
             
             for (var i = 0; i < _isTestConnected.Length; i++)
