@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: CharacterPrefabs
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 2580647560496031150, guid: 057cad60f98161749a95444f7dcefde7, type: 3}
+  CombinePlayerPrefab: {fileID: 9015524774143772373, guid: e4f93b926354c43dcb15ae58b7b41aca, type: 3}
   NormalEnemyPrefab: {fileID: 1557136414831129136, guid: 0f33b2c16e9d8eb49bf20dfd123ebed4, type: 3}
   BossEnemyPrefab: {fileID: 2789152242694410966, guid: b23a9bcece7501045a86ade96925db85, type: 3}
   BuildingPrefabs:
