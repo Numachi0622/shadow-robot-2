@@ -81,7 +81,8 @@ namespace InGame.System
                 Owner.MainStageManager.BossEnemySpawnPosition,
                 Quaternion.Euler(0, 180, 0),
                 new AreaId(-1),
-                TargetType.Player
+                TargetType.Player,
+                playerCount
             ));
             
             // 敵出現カットシーン

@@ -63,6 +63,7 @@ namespace InGame.Character
                 return _cancellationTokenSource;
             }
         }
+        public int TotalPlayerCount { get; private set; }
         public IPublisher<SpawnCharacterMessage> SummonEnemyPublisher { get; private set; }
         public IPublisher<AllEnemyDespawnMessage> AllEnemyDespawnPublisher { get; private set; }
         public IPublisher<PoseMatchEventStartMessage> PoseMatchEventStartPublisher { get; private set; }
@@ -103,7 +104,12 @@ namespace InGame.Character
             _bossBattleStartSubscriber = bossBattleStartSubscriber;
         }
 
-        public override void Initialize() 
+        public void SetTotalPlayerCount(int count)
+        {
+            TotalPlayerCount = count;
+        }
+
+        public override void Initialize()
         {
             base.Initialize();
 

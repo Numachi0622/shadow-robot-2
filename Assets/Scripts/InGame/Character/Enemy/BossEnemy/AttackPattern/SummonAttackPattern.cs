@@ -2,7 +2,6 @@ using System;
 using Cysharp.Threading.Tasks;
 using InGame.Message;
 using InGame.System;
-using Unity.Properties;
 using UnityEngine;
 
 namespace InGame.Character
@@ -12,6 +11,12 @@ namespace InGame.Character
     {
         [SerializeField] private int _summonCount = 2;
         [SerializeField] private float _summonAreaRadius = 3f;
+
+        private static readonly Vector3[] MultiPlaySummonPositions = new[]
+        {
+            new Vector3(-5, 0, 9), new Vector3(5, 0, 9),
+        };
+
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)
         {
             if (owner is not BossEnemyCore bossEnemy) return;
@@ -21,6 +26,23 @@ namespace InGame.Character
 
         private async void Summon(BossEnemyCore owner)
         {
+            if (owner.TotalPlayerCount != 1)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
+                foreach (var pos in MultiPlaySummonPositions)
+                {
+                    owner.SummonEnemyPublisher.Publish(new SpawnCharacterMessage(
+                        CharacterType.NormalEnemy,
+                        pos,
+                        Quaternion.identity,
+                        new AreaId(-1),
+                        TargetType.Player,
+                        owner.TotalPlayerCount
+                    ));
+                }
+                return;
+            }
+            
             for (var i = 0; i < _summonCount; i++)
             {
                 await UniTask.Delay(TimeSpan.FromSeconds(0.5f * i));
@@ -29,7 +51,8 @@ namespace InGame.Character
                     owner.transform.position + UnityEngine.Random.insideUnitSphere * _summonAreaRadius,
                     Quaternion.identity,
                     new AreaId(-1),
-                    TargetType.Player
+                    TargetType.Player,
+                    owner.TotalPlayerCount
                 ));
             }
         }

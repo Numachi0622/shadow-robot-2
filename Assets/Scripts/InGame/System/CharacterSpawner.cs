@@ -132,6 +132,7 @@ namespace InGame.System
                 {
                     normalEnemy.SetAreaId(message.AreaId);
                     normalEnemy.SetTarget(message.TargetType);
+                    normalEnemy.SetPlayType(message.TotalPlayerCount == 1 ? PlayType.Solo : PlayType.Multi);
                 }
                 _registry.Register(character, message.AreaId);
             }
@@ -139,6 +140,10 @@ namespace InGame.System
             {
                 var character = _factory.Create<BossEnemyCore>(message.Position, message.Rotation);
                 character.Initialize();
+                if (character is BossEnemyCore bossEnemy)
+                {
+                    bossEnemy.SetTotalPlayerCount(message.TotalPlayerCount);
+                }
                 _registry.Register(character, message.AreaId);
             }
         }

@@ -37,12 +37,14 @@ namespace InGame.Character
         private AreaId _areaId;
         private TargetType _targetType;
         private bool _isForceStopped;
+        private PlayType _playType;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
         public NormalEnemyEffectComponents Effect => _effectComponents;
         public EnemyEffect EnemyEffect => _enemyEffect;
         public Animator Animator => _animator;
+        public PlayType PlayType => _playType;
 
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;
@@ -108,6 +110,11 @@ namespace InGame.Character
         {
             _targetType = targetType;
         }
+        
+        public void SetPlayType(PlayType playType)
+        {
+            _playType = playType;
+        }
 
         private void Bind()
         {
@@ -154,14 +161,20 @@ namespace InGame.Character
             if (_targetTransform == null) return;
             
             var dest = _targetTransform.position;
-            if (IsIdle || IsMoving)
+            if ((IsIdle || IsMoving) && _playType == PlayType.Solo)
             {
                 _moveObserver.Observe(dest);
             }
             
             if (IsIdle)
             {
-                _attackObserver.Observe(dest);
+                _attackObserver.Observe(dest, _playType);
+            }
+
+            if (_playType == PlayType.Multi)
+            {
+                var dir = (dest - transform.position).normalized;
+                Mover.Rotate(dir);
             }
             
             _stateMachine.OnUpdate(new EnemyMoveParams(){ Destination = dest });

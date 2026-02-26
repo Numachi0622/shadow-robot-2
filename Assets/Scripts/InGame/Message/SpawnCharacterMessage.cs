@@ -17,14 +17,14 @@ namespace InGame.Message
         public readonly int TotalPlayerCount;
         public readonly TargetType TargetType;
 
-        public SpawnCharacterMessage(CharacterType characterType, Vector3 position, Quaternion rotation, AreaId areaId, TargetType targetType)
+        public SpawnCharacterMessage(CharacterType characterType, Vector3 position, Quaternion rotation, AreaId areaId, TargetType targetType, int totalPlayerCount = -1)
         {
             CharacterId = new CharacterId(-1);
             CharacterType = characterType;
             Position = position;
             Rotation = rotation;
             AreaId = areaId;
-            TotalPlayerCount = -1;
+            TotalPlayerCount = totalPlayerCount;
             TargetType = targetType;
         }
         

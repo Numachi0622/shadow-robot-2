@@ -143,7 +143,8 @@ namespace InGame.System
                         pos,
                         Quaternion.identity, 
                         areaId,
-                        TargetType.Building
+                        TargetType.Building,
+                        1
                     ));
                 }
 

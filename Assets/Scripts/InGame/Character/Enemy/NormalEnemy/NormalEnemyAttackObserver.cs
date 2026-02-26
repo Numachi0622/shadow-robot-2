@@ -1,4 +1,5 @@
 using System;
+using InGame.System;
 using UniRx;
 using UnityEngine;
 
@@ -20,10 +21,10 @@ namespace InGame.Character
             _readyTime = readyTime;
         }
         
-        public void Observe(Vector3 destination)
+        public void Observe(Vector3 destination, PlayType playType)
         {
             var dist = Vector3.Distance(_transform.position, destination);
-            if (dist < _attackRange)
+            if (dist < _attackRange || playType == PlayType.Multi)
             {
                 var dir = (destination - _transform.position).normalized;
                 var param = new AttackReadyParam()
