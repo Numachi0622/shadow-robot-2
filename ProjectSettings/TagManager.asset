@@ -19,8 +19,8 @@ TagManager:
   - PlayerAttack
   - Environment
   - FireHoming
-  - 
-  - 
+  - BossEnterCutScene
+  - CombineCutScene
   - 
   - 
   - 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6681940726705233299}
   - component: {fileID: 3556814058829107824}
   - component: {fileID: 2886196952624780225}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LeftBigHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5523738325455851290}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightHand_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 817578673569632246}
   - component: {fileID: 7533137342656116121}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MainBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7734743234136087573}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3855428257204245234}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +314,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9125146705342141137}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftFoot_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -345,7 +345,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3623526961657851964}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightKnee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -379,7 +379,7 @@ GameObject:
   - component: {fileID: 4924452393305766121}
   - component: {fileID: 2152617069690769805}
   - component: {fileID: 2102208033399218413}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: timeline_combine_double
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -486,7 +486,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4644840414356260314}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftHand_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +518,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6591972783566261118}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -550,7 +550,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 592815658230072007}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_haed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -582,7 +582,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9178341657208515321}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4596649175480431536}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightElbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,7 +646,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7302137689308733744}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftFoot_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -678,7 +678,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6134848718685308192}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftElbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -710,7 +710,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5519672315867263367}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightElbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -743,7 +743,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5883670472428618752}
   - component: {fileID: 5743645001392672609}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: JetParts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,7 +860,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4860306138332113138}
   - component: {fileID: 8923477743686451320}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: mdl_character_shador-robo_combine_timeline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -915,7 +915,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1978511352346669308}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -947,7 +947,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1056274873643912229}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightFoot_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -979,7 +979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4058278803856311412}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftKnee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1011,7 +1011,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5961473638544949474}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightHand_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1043,7 +1043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5762180797210432117}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1075,7 +1075,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6492813820968774973}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_haed_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1106,7 +1106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4306624419518285958}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1138,7 +1138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 695062750452019907}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftHand_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7349345673243125728}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_haed_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6509500536315956344}
   - component: {fileID: 7492518079330969}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: MainBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1318,7 +1318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8662741757894193815}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftElbow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1350,7 +1350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 385024518107751638}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftKnee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1382,7 +1382,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7890524527784269521}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftFoot_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1413,7 +1413,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2286092281384064711}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1448,7 +1448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7104339490469323390}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_haed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2087971977870578885}
   - component: {fileID: 2237175252199221325}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LeftBigHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1597,7 +1597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 327869364470326317}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightFoot_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1628,7 +1628,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9094577164124103133}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1660,7 +1660,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7816318752125093121}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_breast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1694,7 +1694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6747692030696963037}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftHand_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1729,7 +1729,7 @@ GameObject:
   - component: {fileID: 7208376196759934444}
   - component: {fileID: 1461157667489075201}
   - component: {fileID: 2161414904929172353}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1790,7 +1790,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16384
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1887,7 +1887,7 @@ GameObject:
   - component: {fileID: 8503827126354567533}
   - component: {fileID: 4211177251357377043}
   - component: {fileID: 1331238781123404597}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightBigHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1975,7 +1975,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8751246575631352983}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2007,7 +2007,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1584791343866289370}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2039,7 +2039,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2300630000942303647}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2071,7 +2071,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 414939454695711764}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2103,7 +2103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5882530533575576229}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2135,7 +2135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6180888441455054031}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_haed_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2167,7 +2167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3677350363534752202}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2199,7 +2199,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1576721941446430678}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightHand_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2230,7 +2230,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5813333571227503800}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2264,7 +2264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8815569755279660366}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2296,7 +2296,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 447459379096170478}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightKnee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2328,7 +2328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1678641082060184451}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightFoot_end_end
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2359,7 +2359,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8236106978861829428}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Effects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2403,7 +2403,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3943520110299966804}
   - component: {fileID: 1331140857047152901}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: RightBigHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2519,7 +2519,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1914529291600781913}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_breast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2553,7 +2553,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4166368754120241652}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2588,7 +2588,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9145495225620253280}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2621,7 +2621,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3993910766108944765}
   - component: {fileID: 4723575035436492125}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: mdl_character_shador-robo_combine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2678,7 +2678,7 @@ GameObject:
   - component: {fileID: 7249929666307149353}
   - component: {fileID: 5512471019201609896}
   - component: {fileID: 386804818249387754}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2766,7 +2766,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7133896091619430941}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ShowdowRobo_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2800,6 +2800,10 @@ PrefabInstance:
     - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_Name
       value: eff_combine_bolt
+      objectReference: {fileID: 0}
+    - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2840,6 +2844,10 @@ PrefabInstance:
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866340256704511525, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2928,9 +2936,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2081698408336584660, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: m_Name
       value: eff_hit_to_enemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646487531195122515, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: stopAction
@@ -2947,6 +2967,14 @@ PrefabInstance:
     - target: {fileID: 5463420920212882440, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740791384859665614, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846329442708547555, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2974,6 +3002,10 @@ PrefabInstance:
     - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_Name
       value: eff_combine_bolt (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 1225644698562819736, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LengthScale
@@ -3018,6 +3050,10 @@ PrefabInstance:
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866340256704511525, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9055982845200920957, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3134,9 +3170,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2081698408336584660, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: m_Name
       value: eff_hit_to_enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646487531195122515, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: stopAction
@@ -3153,6 +3201,14 @@ PrefabInstance:
     - target: {fileID: 5463420920212882440, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740791384859665614, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846329442708547555, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3241,9 +3297,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2081698408336584660, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: m_Name
       value: eff_hit_to_enemy (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646487531195122515, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: stopAction
@@ -3260,6 +3328,14 @@ PrefabInstance:
     - target: {fileID: 5463420920212882440, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740791384859665614, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846329442708547555, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3287,6 +3363,10 @@ PrefabInstance:
     - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_Name
       value: eff_combine_bolt (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3327,6 +3407,10 @@ PrefabInstance:
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866340256704511525, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9055982845200920957, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3371,6 +3455,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: eff_combine_bolt (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 1225644698562819736, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LengthScale
       value: 0.55
@@ -3414,6 +3502,10 @@ PrefabInstance:
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866340256704511525, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9055982845200920957, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3530,9 +3622,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2081698408336584660, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: m_Name
       value: eff_hit_to_enemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646487531195122515, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: stopAction
@@ -3549,6 +3653,14 @@ PrefabInstance:
     - target: {fileID: 5463420920212882440, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740791384859665614, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846329442708547555, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3576,6 +3688,10 @@ PrefabInstance:
     - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_Name
       value: eff_combine_bolt (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3616,6 +3732,10 @@ PrefabInstance:
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866340256704511525, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9055982845200920957, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3661,6 +3781,10 @@ PrefabInstance:
       value: eff_combine_bolt (2)
       objectReference: {fileID: 0}
     - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 606474312542023743, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -3703,6 +3827,10 @@ PrefabInstance:
     - target: {fileID: 3463705393690830695, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4866340256704511525, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9055982845200920957, guid: 4a1bf1c86f2edc54bbced0dcaec896e4, type: 3}
       propertyPath: m_LocalRotation.z
@@ -3799,9 +3927,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2081698408336584660, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: m_Name
       value: eff_hit_to_enemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646487531195122515, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: stopAction
@@ -3818,6 +3958,14 @@ PrefabInstance:
     - target: {fileID: 5463420920212882440, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740791384859665614, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846329442708547555, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3906,9 +4054,21 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2081698408336584660, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
     - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: m_Name
       value: eff_hit_to_enemy (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944396702758532163, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3646487531195122515, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3891973445508218817, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: stopAction
@@ -3925,6 +4085,14 @@ PrefabInstance:
     - target: {fileID: 5463420920212882440, guid: 71bad314dac782943a770790048a6963, type: 3}
       propertyPath: playOnAwake
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8740791384859665614, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8846329442708547555, guid: 71bad314dac782943a770790048a6963, type: 3}
+      propertyPath: m_Layer
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
