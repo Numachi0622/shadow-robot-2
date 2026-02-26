@@ -24,6 +24,7 @@ namespace InGame.System
         [SerializeField] private AttackPoint _saikyoAttackParam;
         [SerializeField] private AttackPoint _saijakuAttackParam;
         [SerializeField] private AttackPoint _attackPoint;
+        [SerializeField] private int _skipPlayerCount = 3;
         [SerializeField, ReadOnly] private GameStateType currentState = GameStateType.Title;
 
         private IPublisher<StateChangeMessage> _stateChangePublisher;
@@ -64,6 +65,19 @@ namespace InGame.System
                     : null
                 )
             );
+        }
+        
+        [Button]
+        public void SkipToBossBattle()
+        {
+            for (var i = 0; i < _skipPlayerCount; i++)
+            {
+                _isTestConnected[i] = !_isTestConnected[i];
+            }
+            _stateChangePublisher.Publish(new StateChangeMessage(
+                GameStateType.BossBattle,
+                new InitGameMessage(_skipPlayerCount, -1)
+            ));
         }
 
         [Button]

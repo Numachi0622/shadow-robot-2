@@ -26,6 +26,16 @@ namespace InGame.System
             var context = Owner.Context;
             if (context == null)
             {
+                // デバコマでスキップ時はInitGameMessageが渡される
+                if (parameter is InitGameMessage initMsg)
+                {
+                    Owner.SetContext(new InGameContext(initMsg.PlayerCount));
+                    context = Owner.Context;
+                }
+            }
+
+            if (context == null)
+            {
                 Debug.LogError("[BossBattleState] Context is null");
                 return;
             }
