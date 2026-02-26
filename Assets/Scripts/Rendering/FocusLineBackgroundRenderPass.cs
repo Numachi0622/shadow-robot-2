@@ -8,6 +8,8 @@ namespace Rendering
     public class FocusLineBackgroundRenderPass : ScriptableRenderPass
     {
         private static readonly int RotationId = Shader.PropertyToID("_Rotation");
+        private static readonly int ChangeThreshold = Shader.PropertyToID("_ChangeThreshold");
+        private static readonly int LineSpeed = Shader.PropertyToID("_LineSpeed");
 
         private class PassData
         {
@@ -31,6 +33,8 @@ namespace Rendering
 
             // マテリアルプロパティをメインスレッドで設定
             _context.Material.SetFloat(RotationId, _context.Rotation);
+            _context.Material.SetFloat(ChangeThreshold, _context.ChangeThreshold);
+            _context.Material.SetFloat(LineSpeed, _context.LineSpeed);
 
             using (var builder = renderGraph.AddRasterRenderPass<PassData>("Focus Line Background Pass", out var passData))
             {

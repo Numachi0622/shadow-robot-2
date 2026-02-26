@@ -10,8 +10,9 @@ Shader "ShadowRobot2/Character-Player"
         _RightHandMaskTexture("Right Hand Mask Texture(右手以外を黒で覆うようなマスクテクスチャ)", 2D) = "white" {}
         _FootTexture("Foot Texture", 2D) = "white" {}
         _FootMaskTexture("Foot Mask Texture(足以外を黒で覆うようなマスクテクスチャ)", 2D) = "white" {}
-        _OutlineWidth("Outline Width", Float) = 2.0
-        _OutlineColor("Outline Color", Color) = (0, 0, 0, 1)
+        _EyeEmissionMaskTexture("Eye Emission Mask Texture", 2D) = "black" {}
+        [HDR]_EyeEmissionColor("Eye Emission Color", Color) = (0, 0, 0, 1)
+        _EyeEmissionIntensity("Eye Emission Intensity", Range(0, 1)) = 0
     }
 
     SubShader
@@ -43,28 +44,6 @@ Shader "ShadowRobot2/Character-Player"
             #include "PlayerForwardPass.hlsl"
             ENDHLSL
         }
-
-//        Pass
-//        {
-//            Name "Forward Lit(Outline)"
-//            Tags
-//            {
-//                "LightMode" = "SRPDefaultUnlit"
-//            }
-//
-//            Cull Front
-//            ZWrite On
-//            ZTest LEqual
-//
-//            HLSLPROGRAM
-//
-//            #pragma vertex Vert
-//            #pragma fragment Frag
-//
-//            #include "PlayerForwardOutlinePass.hlsl"
-//
-//            ENDHLSL
-//        }
 
         Pass
         {

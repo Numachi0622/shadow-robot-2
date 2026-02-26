@@ -10,7 +10,9 @@ namespace Rendering
         public class Context
         {
             public Material Material;
-            [FormerlySerializedAs("RotateValue")] public float Rotation = 0f;
+            public float Rotation = 0f;
+            public float ChangeThreshold = 0f;
+            public float LineSpeed = 0f;
         }
 
         [SerializeField] private Context _context;
@@ -42,6 +44,18 @@ namespace Rendering
                 return;
             }
             _context.Rotation = Mathf.Clamp(value, 0f, Mathf.PI * MaxRotateRate);
+        }
+
+        public void SetThresholdAndSpeed(float threshold, float speed)
+        {
+            if (_context == null)
+            {
+                Debug.LogError("[FocusLinesBackgroundRendererFeature] Context is null");
+                return;
+            }
+
+            _context.ChangeThreshold = Mathf.Clamp01(threshold);
+            _context.LineSpeed = Mathf.Clamp01(speed);
         }
     }
 }

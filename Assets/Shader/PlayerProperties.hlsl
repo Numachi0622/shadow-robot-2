@@ -1,6 +1,6 @@
 CBUFFER_START(UnityPerMaterial)
-    float _OutlineWidth;
-    half4 _OutlineColor;
+half4 _EyeEmissionColor;
+float _EyeEmissionIntensity;
 CBUFFER_END
 
 #if defined(_MAIN_TEXTURE1_ON)
@@ -42,3 +42,6 @@ SAMPLER(sampler_FootTexture);
 TEXTURE2D(_FootMaskTexture);
 SAMPLER(sampler_FootMaskTexture);
 #endif
+
+TEXTURE2D(_EyeEmissionMaskTexture);
+SAMPLER(sampler_EyeEmissionMaskTexture);

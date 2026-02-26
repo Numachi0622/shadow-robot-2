@@ -386,22 +386,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: timeline_combine_double
       objectReference: {fileID: 0}
-    - target: {fileID: 1652099826358275578, guid: 738ad46db551a9a4b836065ae335e9b5, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3855428257204245234, guid: 738ad46db551a9a4b836065ae335e9b5, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3855428257204245234, guid: 738ad46db551a9a4b836065ae335e9b5, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3855428257204245234, guid: 738ad46db551a9a4b836065ae335e9b5, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4924452393305766121, guid: 738ad46db551a9a4b836065ae335e9b5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -494,6 +478,10 @@ PrefabInstance:
     - target: {fileID: 7457618025706915521, guid: 6b8241a3d31d6ce4d9e0e3a566f4a152, type: 3}
       propertyPath: m_Name
       value: timeline_boss_enter
+      objectReference: {fileID: 0}
+    - target: {fileID: 7457618025706915521, guid: 6b8241a3d31d6ce4d9e0e3a566f4a152, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8634224089507481980, guid: 6b8241a3d31d6ce4d9e0e3a566f4a152, type: 3}
       propertyPath: m_LocalPosition.x

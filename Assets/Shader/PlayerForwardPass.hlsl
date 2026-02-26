@@ -54,6 +54,9 @@ half4 Frag(Varyings input) : SV_Target
                 baseColor = lerp(baseColor, footColor, footMask);
     #endif
 
+    half3 emissionSample = SAMPLE_TEXTURE2D(_EyeEmissionMaskTexture, sampler_EyeEmissionMaskTexture, input.uv).rgb;
+    half3 emission = emissionSample * _EyeEmissionColor.rgb * _EyeEmissionIntensity;
+
     // InputData
     InputData inputData = (InputData)0;
     inputData.positionWS = input.positionWS;
@@ -68,7 +71,7 @@ half4 Frag(Varyings input) : SV_Target
     surfaceData.albedo = baseColor.rgb;
     surfaceData.metallic = 0;
     surfaceData.smoothness = 0;
-    surfaceData.emission = 0;
+    surfaceData.emission = emission;
     surfaceData.occlusion = 1;
     surfaceData.alpha = baseColor.a;
 
