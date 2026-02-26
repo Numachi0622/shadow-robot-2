@@ -109,6 +109,11 @@ namespace InGame.Character
             TotalPlayerCount = count;
         }
 
+        public bool HasSummonedEnemies()
+        {
+            return _characterRegistry.GetAllEnemies().Any(e => e is NormalEnemyCore);
+        }
+
         public override void Initialize()
         {
             base.Initialize();

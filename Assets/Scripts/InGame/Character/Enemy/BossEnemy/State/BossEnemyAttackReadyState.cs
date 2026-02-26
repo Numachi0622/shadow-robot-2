@@ -11,6 +11,7 @@ namespace InGame.Character
     public class BossEnemyAttackReadyState : StateMachine<BossEnemyCore>.State
     {
         private const int ShakeCount = 2;
+        private const int SummonIndex = 0;
         private const int DeathBallIndex = 2;
         private const int DeathBallTurnCount = 4;
         private int _attackCount;
@@ -30,12 +31,16 @@ namespace InGame.Character
                 {
                     attackIndex = DeathBallIndex;
                 }
+                else if (!Owner.HasSummonedEnemies())
+                {
+                    attackIndex = SummonIndex;
+                }
                 else
                 {
                     do
                     {
                         attackIndex = Owner.Params.SelectAttackPatternIndex();
-                    } while (attackIndex == DeathBallIndex || attackIndex == _prevAttackCount);
+                    } while (attackIndex == DeathBallIndex || attackIndex == SummonIndex || attackIndex == _prevAttackCount);
                 }
                 var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
                 Owner.Animator.SetTrigger(animationHash);

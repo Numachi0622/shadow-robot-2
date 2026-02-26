@@ -24,8 +24,11 @@ namespace InGame.Character
                 Owner.Damager.Damage(param.AttackPoint.RandomValue);
                 
                 // 正面とパンチした平均の方向に制御
-                var aveDir = ((param.AttackDirection + Vector3.forward) * 0.5f).normalized;
-                Owner.EnemyEffect.KnockBack(aveDir);
+                if (Owner.PlayType == PlayType.Solo)
+                {
+                    var aveDir = ((param.AttackDirection + Vector3.forward) * 0.5f).normalized;
+                    Owner.EnemyEffect.KnockBack(aveDir);
+                }
                 Owner.EnemyEffect.ShakeBody();
                 HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
                 DamageCoolTime();
