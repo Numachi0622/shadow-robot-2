@@ -574,12 +574,9 @@ MonoBehaviour:
   _hitPointViewList:
     _playerHitPointView: {fileID: 3192624827931695669}
     _bossHitPointView: {fileID: 392787250261452903}
-  _combinePlayerReference:
-    _doublePlayerCombinePrefab: {fileID: 6356611943295312602, guid: f9939d0d99a89684d994fa8f9b9faee4, type: 3}
-    _triplePlayerCombinePrefab: {fileID: 5891316897496107153, guid: b9bf603c9473732479bb7d6b59cc4b4c, type: 3}
   _playableDirectorReferences:
     _combineCutSceneDirector: {fileID: 2152617069690769805, guid: 738ad46db551a9a4b836065ae335e9b5, type: 3}
-    _bossBattleStartCutSceneDirector: {fileID: 0}
+    _bossBattleStartCutSceneDirector: {fileID: 2817443361610326627, guid: 6b8241a3d31d6ce4d9e0e3a566f4a152, type: 3}
   _titlePresenter: {fileID: 1595423028}
   _debugCommand: {fileID: 613532413}
 --- !u!114 &613532413

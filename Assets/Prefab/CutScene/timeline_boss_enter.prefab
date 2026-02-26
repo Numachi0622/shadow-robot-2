@@ -252,7 +252,7 @@ MonoBehaviour:
   _leaveDuration: 0.5
   _shakeVibrato: 15
   _dustEffect: {fileID: 3328661926677591786}
-  _buildingCount: 5
+  _buildingCount: 10
   _scale: 0.05
   _absorptionDuration: 0.3
   _prefabs: {fileID: 11400000, guid: 0ab756e6fa3e7bb4b94047850693fb32, type: 2}

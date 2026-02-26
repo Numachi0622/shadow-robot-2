@@ -74,7 +74,13 @@ namespace InGame.System
                 TargetType.Player
             ));
             
-            // await todo: 敵出現タイムライン
+            // 敵出現カットシーン
+            var bossEnterSceneContext = new BossEnterCutSceneContext()
+            {
+                Director = Owner.PlayableDirectorReferences.BossBattleStartCutSceneDirector,
+                BuildingCount = buildings.Count
+            };
+            await CutSceneManager.LoadAndPlayAsync<BossEnterCutScene>(bossEnterSceneContext, ct);
             
             if (playerCount > 1)
             {

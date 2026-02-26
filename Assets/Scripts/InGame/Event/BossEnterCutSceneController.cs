@@ -34,6 +34,12 @@ namespace InGame.Event
         private Sequence _fadeSequence;
         
         private const int MaxBuildingCount = 10;
+        private const int BossEnterCutSceneLayer = 13;
+
+        public void Initialize(int buildingCount)
+        {
+            _buildingCount = buildingCount;
+        }
 
         [Button]
         public void PlayLeaveBuildingSequence()
@@ -56,7 +62,7 @@ namespace InGame.Event
             // 入力分のビルを生成
             var count = Mathf.Clamp(_buildingCount, 1, MaxBuildingCount);
             var buildingList = new List<Transform>(count);
-            for (int i = 0; i < _buildingCount; i++)
+            for (int i = 0; i < count; i++)
             {
                 var pos = new Vector3(
                     Random.Range(-5f, 5f), 
@@ -68,6 +74,9 @@ namespace InGame.Event
                 var rot = Quaternion.LookRotation(transform.forward, dir);
                 var building = Instantiate(_prefabs.BuildingPrefabs[Random.Range(0, _prefabs.BuildingPrefabs.Count)], pos, rot, transform);
                 building.transform.localScale = Vector3.one * _scale;
+                building.gameObject.layer = BossEnterCutSceneLayer;
+                building.transform.GetChild(0).gameObject.layer = BossEnterCutSceneLayer;
+                
                 buildingList.Add(building.transform);
             }
 
