@@ -22,7 +22,7 @@ namespace Utility
         public const int RequiredNormalEnemyKillCount = 5;
         public static readonly CharacterId BossPlayerId = new CharacterId(4);
         public const int MaxPlayerCount = 3;
-        public const bool NoAnimationMode = false;
+        public const bool NoAnimationMode = true;
         public const int DisplayWidth = 1920;
         public const int DisplayHeight = 1080;
         public const int MaxTextureCount = 6;
