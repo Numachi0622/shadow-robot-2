@@ -72,5 +72,11 @@ namespace InGame.Event
             _footPartsRenderer.material.SetTexture(GameConst.ShaderMainTexture2, context.Texture2);
             _footPartsRenderer.material.EnableKeyword(GameConst.ShaderKeywordMainTexture2On);
         }
+
+        private void OnDestroy()
+        {
+            FocusLinesBackgroundRendererFeature.Instance?.SetRotation(0f);
+            FocusLinesBackgroundRendererFeature.Instance?.SetThresholdAndSpeed(0f, 1f);
+        }
     }
 }
