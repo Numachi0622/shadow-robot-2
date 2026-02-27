@@ -3,8 +3,10 @@ using Cysharp.Threading.Tasks;
 using InGame.Character;
 using InGame.System;
 using UniRx;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace ShadowRobotDebug
 {
@@ -42,8 +44,10 @@ namespace ShadowRobotDebug
             _view.ResetButtonView();
 
             if (_prevPoseData == null) return;
+#if UNITY_EDITOR
             var poseDataPath = AssetDatabase.GetAssetPath(_prevPoseData);
             _view.SetPoseDataView(poseDataPath);
+#endif
         }
 
         private void Update()

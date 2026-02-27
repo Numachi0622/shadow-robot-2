@@ -6,7 +6,9 @@ using Cysharp.Threading.Tasks;
 using InGame.Character;
 using SynMotion;
 using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using Utility.Extensions;
 
 namespace ShadowRobotDebug
@@ -189,9 +191,11 @@ namespace ShadowRobotDebug
 
             // アセットとして保存
             var assetPath = Path.Combine(FilePath, fileName + ".asset");
+#if UNITY_EDITOR
             AssetDatabase.CreateAsset(poseData, assetPath);
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
+#endif
 
             Debug.Log($"PoseData ScriptableObject created: {assetPath}");
 
