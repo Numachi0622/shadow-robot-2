@@ -179,7 +179,8 @@ namespace InGame.System
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Return))
+            if (Input.GetKeyDown(KeyCode.Return) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
+                                                     Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand)))
             {
                 ChangeStateCommand();
             }
