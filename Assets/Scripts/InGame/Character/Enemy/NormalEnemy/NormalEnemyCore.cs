@@ -19,6 +19,7 @@ namespace InGame.Character
             public ParticleSystem AttackEffect;
         }
 
+        [SerializeField] private EnemyParams _laserOnlyParams;
         [SerializeField] private Transform _bodyTransform;
         [SerializeField] private Animator _animator;
         [SerializeField] private NormalEnemyEffectComponents _effectComponents;
@@ -114,6 +115,12 @@ namespace InGame.Character
         public void SetPlayType(PlayType playType)
         {
             _playType = playType;
+            if (_playType == PlayType.Multi)
+            {
+                _params = _laserOnlyParams;
+                _attackObserver.SetParam(_params.AttackRange, _params.AttackReadyTime);
+                _moveObserver.SetParam(_params.SearchRange, _params.AttackRange);
+            }
         }
 
         private void Bind()
@@ -161,23 +168,17 @@ namespace InGame.Character
             if (_targetTransform == null) return;
             
             var dest = _targetTransform.position;
-            if ((IsIdle || IsMoving) && _playType == PlayType.Solo)
+            _stateMachine.OnUpdate(new EnemyMoveParams(){ Destination = dest });
+            
+            if (IsIdle || IsMoving)
             {
                 _moveObserver.Observe(dest);
             }
             
             if (IsIdle)
             {
-                _attackObserver.Observe(dest, _playType);
+                _attackObserver.Observe(dest);
             }
-
-            if (_playType == PlayType.Multi)
-            {
-                var dir = (dest - transform.position).normalized;
-                Mover.Rotate(dir);
-            }
-            
-            _stateMachine.OnUpdate(new EnemyMoveParams(){ Destination = dest });
         }
 
         #region State Event

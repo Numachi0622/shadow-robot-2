@@ -9,5 +9,13 @@ namespace InGame.Character
         {
             Debug.Log("[NormalEnemyIdleState] OnEnter");
         }
+
+        public override void OnUpdate(IStateParameter parameter = null)
+        {
+            if (parameter is not EnemyMoveParams param) return;
+
+            var dir = (param.Destination - Owner.transform.position).normalized;
+            Owner.Mover.Rotate(dir);
+        }
     }
 }

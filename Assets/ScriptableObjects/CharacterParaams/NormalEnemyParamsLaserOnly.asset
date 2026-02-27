@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 956b414f4ca71164f82429888fd306a9, type: 3}
+  m_Name: NormalEnemyParamsLaserOnly
+  m_EditorClassIdentifier: 
+  MaxHp: 50
+  AttackPoint:
+    _minAttackPoint: 30
+    _maxAttackPoint: 50
+  DamagedColor: {r: 0, g: 0, b: 0, a: 0}
+  MoveSpeed: 0
+  SearchRange: 200
+  AttackRange: 200
+  AttackReadyTime: 0.8
+  AttackCoolTime: 3
+  DamageCoolTime: 1
+  AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
+  EffectParams:
+    KnockBackDuration: 0.5
+    KnockBackDistance: 5
+    DeadKnockBackDistance: 8
+  AttackPatternParams:
+  - Type: 1
+    _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
+    OccurrenceRate: 0
+    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}
+  - Type: 1
+    _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
+    OccurrenceRate: 0
+    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}
+  - Type: 1
+    _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
+    OccurrenceRate: 1
+    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}

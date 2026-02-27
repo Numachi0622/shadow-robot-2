@@ -9,7 +9,6 @@ namespace InGame.Character
     public class NormalEnemyAttackReadyState : StateMachine<NormalEnemyCore>.State
     {
         private readonly int _shakeCount = 2;
-        private const int LaserIndex = 2;
         
         public override void OnEnter(IStateParameter parameter = null)
         {
@@ -18,9 +17,7 @@ namespace InGame.Character
                 Debug.Log("[NormalEnemyAttackReadyState] OnEnter");
 
                 // OccurrenceRateを使った重み付けランダム選択
-                var attackIndex = Owner.PlayType == PlayType.Solo
-                    ? Owner.Params.SelectAttackPatternIndex()
-                    : LaserIndex;
+                var attackIndex = Owner.Params.SelectAttackPatternIndex();
                 var selectedPattern = Owner.Params.AttackPatternParams[attackIndex];
 
                 // アニメーション再生

@@ -10,8 +10,8 @@ namespace InGame.Character
         private readonly Subject<Unit> _onMoveStart = new();
         private readonly Subject<Unit> _onMoveEnd = new();
         private readonly Transform _transform;
-        private readonly float _searchRange;
-        private readonly float _attackRange;
+        private float _searchRange;
+        private float _attackRange;
         
         public IObservable<Unit> OnMoveStart => _onMoveStart;
         public IObservable<Unit> OnMoveEnd => _onMoveEnd;
@@ -19,6 +19,11 @@ namespace InGame.Character
         public NormalEnemyMoveObserver(Transform transform, float searchRange, float attackRange)
         {
             _transform = transform;
+            SetParam(searchRange, attackRange);
+        }
+        
+        public void SetParam(float searchRange, float attackRange)
+        {
             _searchRange = searchRange;
             _attackRange = attackRange;
         }
