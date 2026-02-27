@@ -7,6 +7,7 @@ using InGame.System;
 using MessagePipe;
 using UniRx;
 using UnityEngine;
+using UnityEngine.Serialization;
 using VContainer;
 
 namespace InGame.Character
@@ -16,7 +17,8 @@ namespace InGame.Character
         [Serializable]
         public class NormalEnemyEffectComponents
         {
-            public ParticleSystem AttackEffect;
+            public ParticleSystem LaserEffect;
+            public ParticleSystem LongLaserEffect;
         }
 
         [SerializeField] private EnemyParams _laserOnlyParams;

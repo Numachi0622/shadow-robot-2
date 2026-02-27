@@ -14,7 +14,7 @@ namespace InGame.Character
 
         private static readonly Vector3[] MultiPlaySummonPositions = new[]
         {
-            new Vector3(-5, 0, 9), new Vector3(5, 0, 9),
+            new Vector3(-5, 0, 7), new Vector3(5, 0, 7),
         };
 
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)

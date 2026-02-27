@@ -8,8 +8,6 @@ namespace InGame.Character
 {
     public class NormalEnemyAttackReadyState : StateMachine<NormalEnemyCore>.State
     {
-        private readonly int _shakeCount = 2;
-        
         public override void OnEnter(IStateParameter parameter = null)
         {
             if (parameter is AttackReadyParam param)
@@ -34,7 +32,9 @@ namespace InGame.Character
         private async void AttackReady(AttackReadyParam param)
         {
             var token = Owner.CancellationTokenSource.Token;
-            Owner.EnemyEffect.ShakeBody(_shakeCount);
+
+            var shakeCount = Mathf.CeilToInt(param.AttackReadyTime) * 2;
+            Owner.EnemyEffect.ShakeBody(shakeCount);
             try
             {
                 await Owner.Attacker.AttackReady(token, param.Direction, 0f, param.AttackReadyTime);

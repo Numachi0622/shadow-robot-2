@@ -20,9 +20,9 @@ MonoBehaviour:
   MoveSpeed: 0
   SearchRange: 200
   AttackRange: 200
-  AttackReadyTime: 0.8
+  AttackReadyTime: 2
   AttackCoolTime: 3
-  DamageCoolTime: 1
+  DamageCoolTime: 2
   AttackReadyColor: {r: 0, g: 0, b: 0, a: 0}
   EffectParams:
     KnockBackDuration: 0.5
@@ -32,12 +32,12 @@ MonoBehaviour:
   - Type: 1
     _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
     OccurrenceRate: 0
-    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}
+    AttackPattern: {fileID: 11400000, guid: 976588c39f759c247b7f150dbdfcf3f5, type: 2}
   - Type: 1
     _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
     OccurrenceRate: 0
-    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}
+    AttackPattern: {fileID: 11400000, guid: 976588c39f759c247b7f150dbdfcf3f5, type: 2}
   - Type: 1
     _animationClip: {fileID: 7400000, guid: 203526f0a5cb09d4786a3a911b814494, type: 2}
     OccurrenceRate: 1
-    AttackPattern: {fileID: 11400000, guid: 396252ea095035544816ff2ce89390e7, type: 2}
+    AttackPattern: {fileID: 11400000, guid: 976588c39f759c247b7f150dbdfcf3f5, type: 2}
