@@ -1,4 +1,5 @@
 using InGame.Character;
+using UnityEngine;
 
 namespace Utility
 {
@@ -25,5 +26,19 @@ namespace Utility
         public const int DisplayWidth = 1920;
         public const int DisplayHeight = 1080;
         public const int MaxTextureCount = 6;
+
+        // Shader properties
+        public static readonly int ShaderMainTexture1 = Shader.PropertyToID("_MainTexture1");
+        public static readonly int ShaderMainTexture2 = Shader.PropertyToID("_MainTexture2");
+        public static readonly int ShaderLeftHandTexture = Shader.PropertyToID("_LeftHandTexture");
+        public static readonly int ShaderRightHandTexture = Shader.PropertyToID("_RightHandTexture");
+        public static readonly int ShaderFootTexture = Shader.PropertyToID("_FootTexture");
+
+        // Shader keywords
+        public const string ShaderKeywordMainTexture1On = "_MAIN_TEXTURE1_ON";
+        public const string ShaderKeywordMainTexture2On = "_MAIN_TEXTURE2_ON";
+        public const string ShaderKeywordLeftHandTextureOn = "_LEFT_HAND_TEXTURE_ON";
+        public const string ShaderKeywordRightHandTextureOn = "_RIGHT_HAND_TEXTURE_ON";
+        public const string ShaderKeywordFootTextureOn = "_FOOT_TEXTURE_ON";
     }
 }

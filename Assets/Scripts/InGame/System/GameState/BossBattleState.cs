@@ -86,8 +86,7 @@ namespace InGame.System
             ));
             
             // 敵出現カットシーン
-            //if (!GameConst.NoAnimationMode)
-            if (false)
+            if (!GameConst.NoAnimationMode)
             {
                 var bossEnterSceneContext = new BossEnterCutSceneContext()
                 {

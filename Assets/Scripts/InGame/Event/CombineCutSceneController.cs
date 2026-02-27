@@ -1,6 +1,7 @@
 using InGame.System;
 using Rendering;
 using UnityEngine;
+using Utility;
 
 namespace InGame.Event
 {
@@ -37,49 +38,39 @@ namespace InGame.Event
         public void SetTexture(ITextureContext context)
         {
             // 合体前
-            var _material1 = _beforeCombineBodyRenderer.materials[1];
-            var _material2 = _beforeCombineBodyRenderer.materials[0];
-            _material1.SetTexture("_MainTexture1", context.Texture1);
-            _material1.EnableKeyword("_MAIN_TEXTURE1_ON");
-            _material2.SetTexture("_MainTexture2", context.Texture2);
-            _material2.EnableKeyword("_MAIN_TEXTURE2_ON");
-            _beforeCombineLeftPartRenderer.material.SetTexture("_MainTexture1", context.Texture1);
-            _beforeCombineRightPartRenderer.material.SetTexture("_MainTexture1", context.Texture1);
-                
-            _material1.SetTexture("_LeftHandTexture", context.LeftArmTexture);
-            _material1.EnableKeyword("_LEFT_HAND_TEXTURE_ON");
-            _material1.SetTexture("_RightHandTexture", context.RightArmTexture);
-            _material1.EnableKeyword("_RIGHT_HAND_TEXTURE_ON");
-            
-            _beforeCombineFootRenderer.material.SetTexture("_MainTexture2", context.FootPartsTexture);
-            
-            _material1 = _bodyRenderer.materials[1];
-            _material2 = _bodyRenderer.materials[0];
+            var material1 = _beforeCombineBodyRenderer.materials[1];
+            var material2 = _beforeCombineBodyRenderer.materials[0];
+            material1.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            material1.EnableKeyword(GameConst.ShaderKeywordMainTexture1On);
+            material2.SetTexture(GameConst.ShaderMainTexture2, context.Texture2);
+            material2.EnableKeyword(GameConst.ShaderKeywordMainTexture2On);
+            material1.SetTexture(GameConst.ShaderLeftHandTexture, context.LeftArmTexture);
+            material1.EnableKeyword(GameConst.ShaderKeywordLeftHandTextureOn);
+            material1.SetTexture(GameConst.ShaderRightHandTexture, context.RightArmTexture);
+            material1.EnableKeyword(GameConst.ShaderKeywordRightHandTextureOn);
+            _beforeCombineLeftPartRenderer.material.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            _beforeCombineRightPartRenderer.material.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            _beforeCombineFootRenderer.material.SetTexture(GameConst.ShaderMainTexture2, context.FootPartsTexture);
+
             // 合体後
-            _material1.SetTexture("_MainTexture1", context.Texture1);
-            _material1.EnableKeyword("_MAIN_TEXTURE1_ON");
-            _material2.SetTexture("_MainTexture2", context.Texture2);
-            _material2.EnableKeyword("_MAIN_TEXTURE2_ON");
-            
-            _material1.SetTexture("_LeftHandTexture", context.LeftArmTexture);
-            _material1.EnableKeyword("_LEFT_HAND_TEXTURE_ON");
-            //_material1.SetTexture("_LeftHandMaskTexture", _maskTextures.LeftHandMaskTexture);
-            _material1.EnableKeyword("_LEFT_HAND_MASK_TEXTURE_ON");
-            _material1.SetTexture("_RightHandTexture", context.RightArmTexture);
-            _material1.EnableKeyword("_RIGHT_HAND_TEXTURE_ON");
-            //_material1.SetTexture("_RightHandMaskTexture", _maskTextures.RightHandMaskTexture);
-            _material1.EnableKeyword("_RIGHT_HAND_MASK_TEXTURE_ON");
-            _material2.SetTexture("_FootTexture", context.FootPartsTexture);
-            _material2.EnableKeyword("_FOOT_TEXTURE_ON");
-            //_material2.SetTexture("_FootMaskTexture", _maskTextures.FootMaskTexture);
-            _material2.EnableKeyword("_FOOT_MASK_TEXTURE_ON");
-            
-            _leftArmRenderer.material.SetTexture("_MainTexture1", context.Texture1);
-            _leftArmRenderer.material.EnableKeyword("_MAIN_TEXTURE1_ON");
-            _rightArmRenderer.material.SetTexture("_MainTexture1", context.Texture1);
-            _rightArmRenderer.material.EnableKeyword("_MAIN_TEXTURE1_ON");
-            _footPartsRenderer.material.SetTexture("_MainTexture2", context.Texture2);
-            _footPartsRenderer.material.EnableKeyword("_MAIN_TEXTURE2_ON");
+            material1 = _bodyRenderer.materials[1];
+            material2 = _bodyRenderer.materials[0];
+            material1.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            material1.EnableKeyword(GameConst.ShaderKeywordMainTexture1On);
+            material2.SetTexture(GameConst.ShaderMainTexture2, context.Texture2);
+            material2.EnableKeyword(GameConst.ShaderKeywordMainTexture2On);
+            material1.SetTexture(GameConst.ShaderLeftHandTexture, context.LeftArmTexture);
+            material1.EnableKeyword(GameConst.ShaderKeywordLeftHandTextureOn);
+            material1.SetTexture(GameConst.ShaderRightHandTexture, context.RightArmTexture);
+            material1.EnableKeyword(GameConst.ShaderKeywordRightHandTextureOn);
+            material2.SetTexture(GameConst.ShaderFootTexture, context.FootPartsTexture);
+            material2.EnableKeyword(GameConst.ShaderKeywordFootTextureOn);
+            _leftArmRenderer.material.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            _leftArmRenderer.material.EnableKeyword(GameConst.ShaderKeywordMainTexture1On);
+            _rightArmRenderer.material.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            _rightArmRenderer.material.EnableKeyword(GameConst.ShaderKeywordMainTexture1On);
+            _footPartsRenderer.material.SetTexture(GameConst.ShaderMainTexture2, context.Texture2);
+            _footPartsRenderer.material.EnableKeyword(GameConst.ShaderKeywordMainTexture2On);
         }
     }
 }
