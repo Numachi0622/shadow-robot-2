@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks.Triggers;
 using MessagePipe;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ namespace InGame.System
         public override void OnExit()
         {
             Owner.StageReferences.TitleStage.SetActive(false);
+            Owner.TitlePresenter.gameObject.SetActive(false);
             _subscription?.Dispose();
         }
 

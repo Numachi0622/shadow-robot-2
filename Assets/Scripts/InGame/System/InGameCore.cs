@@ -53,9 +53,10 @@ namespace InGame.System
         public CharacterRegistry CharacterRegistry { get; private set; }
         public MainStageManager MainStageManager => _mainStageManager;
         public List<BuildingCore> BuildingPrefabs { get; private set; }
-        public InGameUIController InGameUIController { get; set; }
-        public PlayableDirectorReferences PlayableDirectorReferences { get; set; }
+        public InGameUIController InGameUIController { get; private set; }
+        public PlayableDirectorReferences PlayableDirectorReferences { get; private set; }
         public TextureRegistry TextureRegistry { get; private set; }
+        public TitlePresenter TitlePresenter { get; private set; }
 
         [Inject]
         public InGameCore(
@@ -85,7 +86,8 @@ namespace InGame.System
             ISubscriber<PoseMatchEventResultMessage> poseMatchEventResultSubscriber,
             IPublisher<PoseMatchEventEndMessage> poseMatchEventEndPublisher,
             IPublisher<OpenShieldMessage> openShieldPublisher,
-            TextureRegistry textureRegistry)
+            TextureRegistry textureRegistry,
+            TitlePresenter titlePresenter)
         {
             Container = container;
             StageReferences = stageReferences;
@@ -114,6 +116,7 @@ namespace InGame.System
             PoseMatchEventEndPublisher = poseMatchEventEndPublisher;
             OpenShieldPublisher = openShieldPublisher;
             TextureRegistry = textureRegistry;
+            TitlePresenter = titlePresenter;
         }
 
         private void Bind()
