@@ -18,7 +18,7 @@ namespace InGame.System.UI
 
         public IObservable<string> OnClickRegisterButton => _registerButton
             .OnClickAsObservable()
-            .Select(_ => _fileInputField.text);
+            .Select(_ => _fileInputField.text.Replace(".", ""));
 
         public IObservable<int> OnClickSelectTextureButton => _selectTextureButtons
                 .Select((button, index) => button.OnClickAsObservable().Select(_ => index))
