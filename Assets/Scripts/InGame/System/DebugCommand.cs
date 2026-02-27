@@ -191,6 +191,9 @@ namespace InGame.System
             {
                 SceneManager.LoadScene("EntryPoint");
             }
+
+            // Debug用のKinectが軌道していたらデバコマは使えないようにする
+            if (BodySourceManager.Instance != null) return;
             
             for (var i = 0; i < _isTestConnected.Length; i++)
             {
