@@ -1,5 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using InGame.System;
 using UnityEngine;
 using UnityEngine.Playables;
 
@@ -8,6 +9,7 @@ namespace InGame.Event
     public class CombineCutSceneContext : ICutSceneContext
     {
         public PlayableDirector Director { get; set; }
+        public ITextureContext TextureContext { get; set; }
     }
     
     public class CombineCutScene : ICutScene
@@ -19,6 +21,12 @@ namespace InGame.Event
         {
             if (cutSceneContext is not CombineCutSceneContext context) return;
             _director = Object.Instantiate(context.Director);
+
+            if (context.TextureContext != null)
+            {
+                var controller = _director.GetComponent<CombineCutSceneController>();
+                controller?.SetTexture(context.TextureContext);
+            }
         }
 
         public async UniTask PlayAsync(CancellationToken ct)

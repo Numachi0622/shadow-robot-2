@@ -55,6 +55,7 @@ namespace InGame.System
         public List<BuildingCore> BuildingPrefabs { get; private set; }
         public InGameUIController InGameUIController { get; set; }
         public PlayableDirectorReferences PlayableDirectorReferences { get; set; }
+        public TextureRegistry TextureRegistry { get; private set; }
 
         [Inject]
         public InGameCore(
@@ -83,7 +84,8 @@ namespace InGame.System
             ISubscriber<PoseMatchEventStartMessage> poseMatchEventStartSubscriber,
             ISubscriber<PoseMatchEventResultMessage> poseMatchEventResultSubscriber,
             IPublisher<PoseMatchEventEndMessage> poseMatchEventEndPublisher,
-            IPublisher<OpenShieldMessage> openShieldPublisher)
+            IPublisher<OpenShieldMessage> openShieldPublisher,
+            TextureRegistry textureRegistry)
         {
             Container = container;
             StageReferences = stageReferences;
@@ -111,6 +113,7 @@ namespace InGame.System
             PoseMatchEventResultSubscriber = poseMatchEventResultSubscriber;
             PoseMatchEventEndPublisher = poseMatchEventEndPublisher;
             OpenShieldPublisher = openShieldPublisher;
+            TextureRegistry = textureRegistry;
         }
 
         private void Bind()

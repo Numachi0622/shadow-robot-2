@@ -86,7 +86,8 @@ namespace InGame.System
             ));
             
             // 敵出現カットシーン
-            if (!GameConst.NoAnimationMode)
+            //if (!GameConst.NoAnimationMode)
+            if (false)
             {
                 var bossEnterSceneContext = new BossEnterCutSceneContext()
                 {
@@ -124,7 +125,8 @@ namespace InGame.System
                     // 合体カットシーン
                     var combineSceneContext = new CombineCutSceneContext()
                     {
-                        Director = Owner.PlayableDirectorReferences.CombineCutSceneDirector
+                        Director = Owner.PlayableDirectorReferences.CombineCutSceneDirector,
+                        TextureContext = Owner.TextureRegistry.GetCombineTextureContext(new CharacterId(0), playerCount)
                     };
                     await CutSceneManager.LoadAndPlayAsync<CombineCutScene>(combineSceneContext, ct);
 
