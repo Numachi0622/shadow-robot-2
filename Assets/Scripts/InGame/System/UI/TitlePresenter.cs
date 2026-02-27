@@ -13,7 +13,7 @@ namespace InGame.System.UI
         private TextureRegistry _textureRegistry;
         private readonly IntReactiveProperty _selectTextureIndex = new();
 
-        private readonly string[] InitLoadTextures = 
+        private readonly string[] InitLoadTextures =
         {
             "tex_sample_red_01",
             "tex_sample_red_02",
@@ -22,8 +22,6 @@ namespace InGame.System.UI
             "tex_sample_green_01",
             "tex_sample_green_02",
         };
-        
-        private const string Path = "Assets/Texture/Player";
 
         [Inject]
         public void Construct(TextureRegistry textureRegistry)
@@ -61,9 +59,10 @@ namespace InGame.System.UI
         {
             try
             {
+                var texturePath = TexturePathSettings.GetTexturePath();
                 for (var i = 0; i < InitLoadTextures.Length; i++)
                 {
-                    var texture = await TextureFileLoader.LoadAsync(Path, InitLoadTextures[i], CancellationToken.None);
+                    var texture = await TextureFileLoader.LoadAsync(texturePath, InitLoadTextures[i], CancellationToken.None);
                     if (texture == null) continue;
                     _textureRegistry.Register(i, texture);
                 }
@@ -78,7 +77,8 @@ namespace InGame.System.UI
         {
             try
             {
-                var texture = await TextureFileLoader.LoadAsync(Path, fileName, CancellationToken.None);
+                var texturePath = TexturePathSettings.GetTexturePath();
+                var texture = await TextureFileLoader.LoadAsync(texturePath, fileName, CancellationToken.None);
                 if (texture == null) return;
 
                 _textureRegistry.Register(_selectTextureIndex.Value, texture);

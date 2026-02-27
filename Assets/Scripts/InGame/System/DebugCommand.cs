@@ -164,7 +164,8 @@ namespace InGame.System
         {
             try
             {
-                var texture = await TextureFileLoader.LoadAsync("Assets/Texture/Player", _textureFileName, CancellationToken.None);
+                var texturePath = TexturePathSettings.GetTexturePath();
+                var texture = await TextureFileLoader.LoadAsync(texturePath, _textureFileName, CancellationToken.None);
                 if (texture == null) return;
 
                 _textureRegistry.Register(_textureIndex, texture);
@@ -182,9 +183,12 @@ namespace InGame.System
             {
                 ChangeStateCommand();
             }
-            else if (Input.GetKeyDown(KeyCode.R))
+            // Ctrl+R (Windows/Mac) または Command+R (Mac) でシーンリセット
+            else if (Input.GetKeyDown(KeyCode.R) &&
+                     (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
+                      Input.GetKey(KeyCode.LeftCommand) || Input.GetKey(KeyCode.RightCommand)))
             {
-                //SceneManager.LoadScene("EntryPoint");
+                SceneManager.LoadScene("EntryPoint");
             }
             
             for (var i = 0; i < _isTestConnected.Length; i++)
