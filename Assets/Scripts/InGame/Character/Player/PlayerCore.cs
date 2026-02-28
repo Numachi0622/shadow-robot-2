@@ -46,7 +46,9 @@ namespace InGame.Character
         [SerializeField] private Renderer _leftArmRenderer;
         [SerializeField] private Renderer _rightArmRenderer;
         [SerializeField] private Renderer _footPartsRenderer;
+        [SerializeField] private RocketPunchAttackPattern _rocketPunchPattern;
 
+        private CharacterRegistry _characterRegistry;
         private HitPointView _hpView;
         private StateMachine<PlayerCore> _stateMachine;
         private IAttackable _leftHandAttacker, _rightHandAttacker;
@@ -90,6 +92,7 @@ namespace InGame.Character
         public Camera PlayerCamera => _playerCamera;
         public HitPointPresenter HpPresenter => _hpPresenter;
         public Transform Center => _center;
+        public Transform GetNearestEnemy(Vector3 pos) => _characterRegistry.GetNearestEnemy(pos)?.transform;
 
         public override void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {
@@ -105,8 +108,12 @@ namespace InGame.Character
             _leftHandObserver = new HandAttackObserver(_movementTransforms.LeftHand, _params.AttackableVelocity);
             _rightHandObserver = new HandAttackObserver(_movementTransforms.RightHand, _params.AttackableVelocity);
             _damageObserver = new DamageObserver();
-            _leftHandAttacker = new PlayerAttacker(_params, _leftHandCollider);
-            _rightHandAttacker = new PlayerAttacker(_params, _rightHandCollider);
+            _leftHandAttacker = !_isCombine
+                ? new PlayerAttacker(_params, _leftHandCollider)
+                : new PlayerAttacker(_params, _leftHandCollider, this, _rocketPunchPattern);
+            _rightHandAttacker = !_isCombine
+                ? new PlayerAttacker(_params, _leftHandCollider)
+                : new PlayerAttacker(_params, _leftHandCollider, this, _rocketPunchPattern);
             _mover = new PlayerMover(_movementTransforms.Reference);
             _motionMover = new PlayerMotionMover(_movementTransforms);
             
@@ -174,6 +181,7 @@ namespace InGame.Character
         [Inject]
         public void Construct(
             HitPointViewList hpViewList,
+            CharacterRegistry characterRegistry,
             ISubscriber<CharacterId, GameStartPlayerInitMessage> gameStartPlayerInitSubscriber,
             ISubscriber<AllPlayerDespawnMessage> allPlayerDespawnSubscriber,
             IPublisher<DespawnCharacterMessage> despawnPublisher,
@@ -183,6 +191,7 @@ namespace InGame.Character
             IPublisher<StateChangeMessage> stateChangePublisher)
         {
             _hpView = hpViewList.PlayerHitPointView;
+            _characterRegistry = characterRegistry;
             _gameStartPlayerInitSubscriber = gameStartPlayerInitSubscriber;
             _allPlayerDespawnSubscriber = allPlayerDespawnSubscriber;
             _despawnPublisher = despawnPublisher;

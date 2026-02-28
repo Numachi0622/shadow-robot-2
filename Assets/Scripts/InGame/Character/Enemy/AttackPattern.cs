@@ -16,5 +16,9 @@ namespace InGame.Character
         public virtual void Execute(CharacterCore owner, AttackReadyParam attackParam)
         {
         }
+
+        public virtual void Execute(CharacterCore owner, AttackParam attackParam)
+        {
+        }
     }
 }

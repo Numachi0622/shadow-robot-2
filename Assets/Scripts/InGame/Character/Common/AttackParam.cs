@@ -8,6 +8,7 @@ namespace InGame.Character
         public AttackPoint AttackPoint;
         public Vector3 AttackDirection;
         public Vector3 HitPosition;
+        public Vector3 Origin;
         public float AttackVelocity;
         public AttackType AttackType;
     }

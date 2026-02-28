@@ -105,6 +105,15 @@ namespace InGame.System
                 .FirstOrDefault();
         }
 
+        public CharacterCore GetNearestEnemy(Vector3 position)
+        {
+            return _enemyCores.Values
+                .SelectMany(list => list)
+                .Where(e => e != null)
+                .OrderBy(e => (e.transform.position - position).sqrMagnitude)
+                .FirstOrDefault();
+        }
+
         public IReadOnlyList<CharacterCore> GetBuildings(AreaId areaId) => _buildingCores.GetValueOrDefault(areaId);
         
         public CharacterCore GetNearestBuilding(AreaId areaId, Vector3 position)

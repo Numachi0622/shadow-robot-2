@@ -688,10 +688,7 @@ MonoBehaviour:
   _leftArmRenderer: {fileID: 6504490673419761427}
   _rightArmRenderer: {fileID: 6283002281502336603}
   _footPartsRenderer: {fileID: 791818200815947839}
-  _maskTextures:
-    LeftHandMaskTexture: {fileID: 2800000, guid: 4e7f88ed208d93e4d9e27370c6a9f08c, type: 3}
-    RightHandMaskTexture: {fileID: 2800000, guid: 91305f00edf567847882508ae144c4cb, type: 3}
-    FootMaskTexture: {fileID: 2800000, guid: 3e987301218b20a43adaf072b2ca86b4, type: 3}
+  _rocketPunchPattern: {fileID: 11400000, guid: fe41126b7fbd44d8aad299c8ed70fdb1, type: 2}
 --- !u!114 &8621033864147153799
 MonoBehaviour:
   m_ObjectHideFlags: 0
