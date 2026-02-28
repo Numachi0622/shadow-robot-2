@@ -17,11 +17,11 @@ namespace InGame.Character
                 Debug.Log($"<color=red>[BossEnemyDamageState] OnEnter : {param.AttackPoint.RandomValue}</color>");
                 
                 var damageValue = param.AttackPoint.RandomValue;
-                Owner.Damager.Damage(damageValue);
                 
                 // 既にトリガーされていたアニメーションをキャンセルしてからダメージアニメーションを再生する
                 Owner.Animator.ResetAllTriggers();
                 Owner.Animator.SetTrigger(AnimationUtility.DamageHash);
+                Owner.Damager.Damage(damageValue);
                 Owner.AttackCancel();
                 Owner.EnemyEffect.ShakeBody();
                 HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
