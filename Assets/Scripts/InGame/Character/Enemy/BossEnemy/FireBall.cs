@@ -18,6 +18,9 @@ namespace InGame.Character
             _attacker.SetAttackParam(_attackParam);
             _attacker.Attack(_attackParam.AttackDirection);
             _isFired = true;
+            
+            // 5秒後に自動で消えるようにする
+            Destroy(gameObject, 5f);
         }
 
         private void Update()
