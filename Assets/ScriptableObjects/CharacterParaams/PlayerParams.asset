@@ -18,6 +18,7 @@ MonoBehaviour:
     _maxAttackPoint: 60
   DamagedColor: {r: 1, g: 0.42352942, b: 0.42352942, a: 1}
   AttackableVelocity: 5
+  RocketPunchVelocityThreshold: 13
   RocketPunchDirThreshold: 0.5
   RocketPunchDistThreshold: 0.45
   MaxRocketPunchReadyTime: 0.3

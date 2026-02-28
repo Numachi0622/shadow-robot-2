@@ -7,18 +7,20 @@ namespace InGame.Character
         private readonly CharacterCore _owner;
         private readonly RocketPunchAttackPattern _rocketPunchAttackPattern;
         private readonly float _rocketPunchCooldown;
+        private readonly PlayerParams _playerParams;
         private float _lastRocketPunchTime = -1f;
 
         public PlayerAttacker(
-            CharacterParams characterParams,
+            PlayerParams playerParams,
             AttackCollider attackCollider,
             CharacterCore characterCore = null,
             RocketPunchAttackPattern rocketPunchAttackPattern = null,
-            float rocketPunchCooldown = 0.5f) : base(characterParams, attackCollider)
+            float rocketPunchCooldown = 0.5f) : base(playerParams, attackCollider)
         {
             _owner = characterCore;
             _rocketPunchAttackPattern = rocketPunchAttackPattern;
             _rocketPunchCooldown = rocketPunchCooldown;
+            _playerParams = playerParams;
         }
 
         private void SetAttackParam(Vector3 dir, float velocity, AttackType attackType)
@@ -28,7 +30,8 @@ namespace InGame.Character
                 AttackPoint = _attackPoint,
                 AttackDirection = dir,
                 AttackVelocity = velocity,
-                AttackType = attackType
+                AttackType = attackType,
+                Origin = _attackCollider.transform.position
             };
         }
 
@@ -39,20 +42,22 @@ namespace InGame.Character
             _attackCollider.AttackImpact(_attackParam);
 
             // RocketPunchの発射条件チェック
-            if (_rocketPunchAttackPattern != null && CanFireRocketPunch(dir))
+            if (_rocketPunchAttackPattern != null && CanFireRocketPunch(dir, velocity))
             {
                 _rocketPunchAttackPattern.Execute(_owner, _attackParam);
                 _lastRocketPunchTime = Time.time;
             }
         }
 
-        private bool CanFireRocketPunch(Vector3 dir)
+        private bool CanFireRocketPunch(Vector3 dir, float velocity)
         {
-            // 入力方向のz成分が0以上かチェック
-            if (dir.z < 0f) return false;
+            if (dir.z < 0f || dir.y < -0.3f) return false;
 
             // クールダウン時間が経過しているかチェック
             if (Time.time - _lastRocketPunchTime < _rocketPunchCooldown) return false;
+
+            if (velocity < _playerParams.RocketPunchVelocityThreshold) return false;
+            Debug.Log(velocity);
 
             return true;
         }

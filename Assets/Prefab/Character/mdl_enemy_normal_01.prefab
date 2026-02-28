@@ -518,8 +518,8 @@ MonoBehaviour:
   _params: {fileID: 11400000, guid: 1095805caf86d1344a400413ae9b97ce, type: 2}
   _attackCollider: {fileID: 4265866527949906668}
   _damageCollider: {fileID: 6003918476651192636}
+  _center: {fileID: 4978685617031736}
   _laserOnlyParams: {fileID: 11400000, guid: 49b9f46db050a9b4a8ca2a62b857eb25, type: 2}
-  _bodyTransform: {fileID: 4978685617031736}
   _animator: {fileID: 95244030995506766}
   _effectComponents:
     LaserEffect: {fileID: 4184163587805259152}

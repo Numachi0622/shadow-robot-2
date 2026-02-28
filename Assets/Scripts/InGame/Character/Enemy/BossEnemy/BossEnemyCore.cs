@@ -23,7 +23,6 @@ namespace InGame.Character
         [SerializeField] private Animator _animator;
         [SerializeField] private HitPointPresenter _hpPresenter;
         [SerializeField] private BossEnemyEffectComponents _effectComponents;
-        [SerializeField] private Transform _center;
         [SerializeField] private Transform _fireBallFirePoint;
         [SerializeField] private Transform _fireHomingFirePoint;
         [SerializeField] private Transform _deathBallFirePoint;
@@ -50,7 +49,6 @@ namespace InGame.Character
         public Transform DeathBallFirePoint => _deathBallFirePoint;
         public Transform TargetTransform => (_characterRegistry.GetAllPlayers().FirstOrDefault() as PlayerCore)?.Center;
         public HitPointPresenter HpPresenter => _hpPresenter;
-        public Transform Center => _center;
 
         public CancellationTokenSource CancellationTokenSource
         {

@@ -92,7 +92,7 @@ namespace InGame.Character
         public Camera PlayerCamera => _playerCamera;
         public HitPointPresenter HpPresenter => _hpPresenter;
         public Transform Center => _center;
-        public Transform GetNearestEnemy(Vector3 pos) => _characterRegistry.GetNearestEnemy(pos)?.transform;
+        public Transform GetNearestEnemy(Vector3 pos) => _characterRegistry.GetNearestEnemy(pos)?.Center;
 
         public override void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {

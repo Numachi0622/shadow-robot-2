@@ -22,7 +22,6 @@ namespace InGame.Character
         }
 
         [SerializeField] private EnemyParams _laserOnlyParams;
-        [SerializeField] private Transform _bodyTransform;
         [SerializeField] private Animator _animator;
         [SerializeField] private NormalEnemyEffectComponents _effectComponents;
         [SerializeField] private HitPointPresenter _hpPresenter;
@@ -85,7 +84,7 @@ namespace InGame.Character
             _attacker = new NormalEnemyAttacker(_params, _attackCollider);
             _damager = new Damager(_hpPresenter);
             _mover = new NormalEnemyMover(transform);
-            _enemyEffect = new EnemyEffect(_params, transform, _bodyTransform);
+            _enemyEffect = new EnemyEffect(_params, transform, _center);
 
             _stateMachine = new StateMachine<NormalEnemyCore>(this);
             _attackObserver = new NormalEnemyAttackObserver(

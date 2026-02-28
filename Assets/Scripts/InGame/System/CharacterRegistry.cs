@@ -105,9 +105,9 @@ namespace InGame.System
                 .FirstOrDefault();
         }
 
-        public CharacterCore GetNearestEnemy(Vector3 position)
+        public EnemyCore GetNearestEnemy(Vector3 position)
         {
-            return _enemyCores.Values
+            return (EnemyCore)_enemyCores.Values
                 .SelectMany(list => list)
                 .Where(e => e != null)
                 .OrderBy(e => (e.transform.position - position).sqrMagnitude)

@@ -18,16 +18,14 @@ namespace InGame.Character
         private bool _isHoming;
         private LongRangeAttacker _attacker;
         private bool _isFired;
-
-        private readonly Vector3 TargetOffset = Vector3.up * 1.5f;
-
+        
         private void Update()
         {
             if (!_isFired) return;
             
             if (_target != null)
             {
-                var targetDir = ((_target.position + TargetOffset) - transform.position).normalized;
+                var targetDir = (_target.position - transform.position).normalized;
                 var currentDir = Vector3.Slerp(_attackParam.AttackDirection, targetDir, _turnSpeed * Time.deltaTime);
                 _attackParam.AttackDirection = currentDir.normalized;
             }
