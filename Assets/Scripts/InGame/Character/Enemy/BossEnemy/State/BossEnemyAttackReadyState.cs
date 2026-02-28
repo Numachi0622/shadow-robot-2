@@ -26,22 +26,10 @@ namespace InGame.Character
                 Debug.Log("[BossEnemyAttackReady] OnEnter");
                 _attackCount++;
 
-                int attackIndex;
-                if (_attackCount % DeathBallTurnCount == 0)
-                {
-                    attackIndex = DeathBallIndex;
-                }
-                else if (!Owner.HasSummonedEnemies())
-                {
-                    attackIndex = SummonIndex;
-                }
-                else
-                {
-                    do
-                    {
-                        attackIndex = Owner.Params.SelectAttackPatternIndex();
-                    } while (attackIndex == DeathBallIndex || attackIndex == SummonIndex || attackIndex == _prevAttackCount);
-                }
+                var attackIndex = _attackCount % DeathBallTurnCount == 0
+                    ? DeathBallIndex
+                    : Owner.TotalPlayerCount == 1 ? SelectAttackIndexSolo() : SelectAttackIndexMulti();
+
                 var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
                 Owner.Animator.SetTrigger(animationHash);
                 param.AttackIndex = attackIndex;
@@ -49,6 +37,33 @@ namespace InGame.Character
 
                 AttackReadyAsync(param).Forget();
             }
+        }
+
+        // Summon優先なし。DeathBallと直前と同じインデックスを除いてランダム選択
+        private int SelectAttackIndexSolo()
+        {
+            int index;
+            do
+            {
+                index = Owner.Params.SelectAttackPatternIndex();
+            } while (index == DeathBallIndex || index == _prevAttackCount);
+            return index;
+        }
+
+        // Summon優先あり。ただし直前がSummonだった場合はSummonを選ばない
+        private int SelectAttackIndexMulti()
+        {
+            if (!Owner.HasSummonedEnemies() && _prevAttackCount != SummonIndex)
+            {
+                return SummonIndex;
+            }
+
+            int index;
+            do
+            {
+                index = Owner.Params.SelectAttackPatternIndex();
+            } while (index == DeathBallIndex || index == SummonIndex || index == _prevAttackCount);
+            return index;
         }
         
         private async UniTask AttackReadyAsync(AttackReadyParam param)
