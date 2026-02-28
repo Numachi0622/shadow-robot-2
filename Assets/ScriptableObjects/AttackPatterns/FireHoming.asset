@@ -17,4 +17,4 @@ MonoBehaviour:
     _minAttackPoint: 30
     _maxAttackPoint: 50
   _speed: 5
-  _instanceCount: 5
+  _instanceCount: 10

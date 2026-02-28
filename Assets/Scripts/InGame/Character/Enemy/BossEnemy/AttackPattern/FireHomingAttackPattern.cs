@@ -12,6 +12,7 @@ namespace InGame.Character
         [SerializeField] private AttackPoint _attackPoint;
         [SerializeField] private float _speed = 5f;
         [SerializeField] private int _instanceCount = 5;
+        [SerializeField] private int _oneShotFireCount = 2;
         
         private Vector3 RandomDirection => new Vector3(
             Random.Range(-1f, 1f),
@@ -50,7 +51,7 @@ namespace InGame.Character
                 var fireHoming = Instantiate(_fireHomingPrefab, bossEnemy.FireHomingFirePoint.position, Quaternion.identity);
                 fireHoming.Fire(attackParam, bossEnemy.Center, target);
                 
-                await UniTask.Delay(450);
+                if (i % _oneShotFireCount == 1) await UniTask.Delay(450);
             }
         }
     }
