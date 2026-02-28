@@ -5,6 +5,7 @@
 struct Attributes
 {
     float4 positionOS : POSITION;
+    float3 normalOS   : NORMAL;
     float2 uv : TEXCOORD0;
 };
 
@@ -21,7 +22,7 @@ Varyings Vert(Attributes input)
     Varyings output;
     output.positionHCS = TransformObjectToHClip(input.positionOS.xyz);
     output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
-    output.normalWS = TransformObjectToWorldNormal(input.positionOS.xyz);
+    output.normalWS = TransformObjectToWorldNormal(input.normalOS);
     output.uv = input.uv;
     return output;
 }
@@ -60,7 +61,7 @@ half4 Frag(Varyings input) : SV_Target
     // InputData
     InputData inputData = (InputData)0;
     inputData.positionWS = input.positionWS;
-    inputData.normalWS = input.normalWS;
+    inputData.normalWS = NormalizeNormalPerPixel(input.normalWS);
     inputData.viewDirectionWS = GetWorldSpaceNormalizeViewDir(input.positionWS);
     inputData.shadowCoord = TransformWorldToShadowCoord(input.positionWS);
     inputData.bakedGI = SampleSH(inputData.normalWS);

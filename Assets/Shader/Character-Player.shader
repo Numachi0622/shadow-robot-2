@@ -32,6 +32,12 @@ Shader "ShadowRobot2/Character-Player"
             #pragma vertex Vert
             #pragma fragment Frag
 
+            #pragma multi_compile _ _MAIN_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE _MAIN_LIGHT_SHADOWS_SCREEN
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHTS_VERTEX _ADDITIONAL_LIGHTS
+            #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
+            #pragma multi_compile_fragment _ _SHADOWS_SOFT
+            #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
+
             #pragma shader_feature_local _MAIN_TEXTURE1_ON
             #pragma shader_feature_local _MAIN_TEXTURE2_ON
             #pragma shader_feature_local _LEFT_HAND_TEXTURE_ON
