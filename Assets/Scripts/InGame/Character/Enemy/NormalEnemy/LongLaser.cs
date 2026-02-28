@@ -12,6 +12,7 @@ namespace InGame.Character
         [SerializeField] private float _minWarningFadeValue;
         [SerializeField] private float _initialFadeInterval = 0.5f;
         [SerializeField] private float _finalFadeInterval = 0.1f;
+        [SerializeField] private ParticleSystem _chargeEffect;
         private Sequence _warningEffectSequence;
         private Material _warningEffectMaterial;
         private CancellationTokenSource _cts;
@@ -25,7 +26,8 @@ namespace InGame.Character
 
             _cts = new CancellationTokenSource();
             _warningEffectRenderer.gameObject.SetActive(true);
-
+            _chargeEffect.gameObject.SetActive(true);
+            
             _warningEffectSequence?.Kill();
             _warningEffectSequence = DOTween.Sequence();
 
@@ -55,6 +57,7 @@ namespace InGame.Character
             finally
             {
                 _warningEffectRenderer.gameObject.SetActive(false);
+                _chargeEffect.gameObject.SetActive(false);
             }
         }
 
