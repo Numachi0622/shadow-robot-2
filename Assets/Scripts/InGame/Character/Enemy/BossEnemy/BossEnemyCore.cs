@@ -19,6 +19,7 @@ namespace InGame.Character
             public ParticleSystem DeathBallAura;
         }
         
+        [SerializeField] private EnemyParams _multiPhaseParams;
         [SerializeField] private Transform _bodyTransform;
         [SerializeField] private Animator _animator;
         [SerializeField] private HitPointPresenter _hpPresenter;
@@ -109,6 +110,10 @@ namespace InGame.Character
         public void SetTotalPlayerCount(int count)
         {
             TotalPlayerCount = count;
+            if (TotalPlayerCount > 1)
+            {
+                _params = _multiPhaseParams;
+            }
         }
 
         public bool HasSummonedEnemies()

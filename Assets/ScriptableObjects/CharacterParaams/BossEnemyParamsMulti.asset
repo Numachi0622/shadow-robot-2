@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 956b414f4ca71164f82429888fd306a9, type: 3}
-  m_Name: BossEnemyParams
+  m_Name: BossEnemyParamsMulti
   m_EditorClassIdentifier: 
-  MaxHp: 1000
+  MaxHp: 3000
   AttackPoint:
     _minAttackPoint: 100
     _maxAttackPoint: 150

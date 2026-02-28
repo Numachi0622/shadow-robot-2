@@ -13,7 +13,8 @@ namespace InGame.Character
         private const int ShakeCount = 2;
         private const int SummonIndex = 0;
         private const int DeathBallIndex = 2;
-        private const int DeathBallTurnCount = 7;
+        private const int DeathBallTurnCountMulti = 7;
+        private const int DeathBallTurnCountSolo = 5;
         private int _attackCount;
         private int _prevAttackCount = -1;
         private UniTaskCompletionSource _poseMatchEventEndSource;
@@ -26,7 +27,8 @@ namespace InGame.Character
                 Debug.Log("[BossEnemyAttackReady] OnEnter");
                 _attackCount++;
 
-                var attackIndex = _attackCount % DeathBallTurnCount == 0
+                var deathBallTurnCount = Owner.TotalPlayerCount == 1 ? DeathBallTurnCountSolo : DeathBallTurnCountMulti;
+                var attackIndex = _attackCount % deathBallTurnCount == 0
                     ? DeathBallIndex
                     : Owner.TotalPlayerCount == 1 ? SelectAttackIndexSolo() : SelectAttackIndexMulti();
 

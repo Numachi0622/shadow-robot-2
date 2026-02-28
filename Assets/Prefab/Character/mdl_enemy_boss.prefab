@@ -400,12 +400,13 @@ MonoBehaviour:
   _params: {fileID: 11400000, guid: da3a45715e67a934fbaf7b98347abc32, type: 2}
   _attackCollider: {fileID: 4840855209724734867}
   _damageCollider: {fileID: 6266709960230246759}
+  _center: {fileID: 99244179787704578}
+  _multiPhaseParams: {fileID: 11400000, guid: 4c5ecfe41e7eba446ae7f76a0e69805b, type: 2}
   _bodyTransform: {fileID: 456520}
   _animator: {fileID: 9584802}
   _hpPresenter: {fileID: 8098226509904507825}
   _effectComponents:
     DeathBallAura: {fileID: 7834977786459161793}
-  _center: {fileID: 99244179787704578}
   _fireBallFirePoint: {fileID: 1500365707866752765}
   _fireHomingFirePoint: {fileID: 231363430310073358}
   _deathBallFirePoint: {fileID: 7363386337681377860}
@@ -630,6 +631,8 @@ SkinnedMeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
@@ -651,9 +654,11 @@ SkinnedMeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   serializedVersion: 2
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
@@ -3161,10 +3166,10 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8409442391732651258}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}

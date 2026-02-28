@@ -141,11 +141,11 @@ namespace InGame.System
             else if (message.CharacterType == CharacterType.BossEnemy)
             {
                 var character = _factory.Create<BossEnemyCore>(message.Position, message.Rotation);
-                character.Initialize();
                 if (character is BossEnemyCore bossEnemy)
                 {
                     bossEnemy.SetTotalPlayerCount(message.TotalPlayerCount);
                 }
+                character.Initialize();
                 _registry.Register(character, message.AreaId);
             }
         }
