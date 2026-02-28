@@ -157,16 +157,16 @@ namespace InGame.Character
             if (!_leftArmMaterial || !_rightArmMaterial || !_footPartsMaterial) return;
             if (context.LeftArmTexture == null) return;
 
-            _material1.SetTexture(GameConst.ShaderLeftHandTexture, context.LeftArmTexture);
+            _material1.SetTexture(GameConst.ShaderLeftHandTexture, context.FootPartsTexture1);
             _material1.EnableKeyword(GameConst.ShaderKeywordLeftHandTextureOn);
-            _material1.SetTexture(GameConst.ShaderRightHandTexture, context.RightArmTexture);
+            _material1.SetTexture(GameConst.ShaderRightHandTexture, context.FootPartsTexture1);
             _material1.EnableKeyword(GameConst.ShaderKeywordRightHandTextureOn);
-            _material2.SetTexture(GameConst.ShaderFootTexture, context.FootPartsTexture);
+            _material2.SetTexture(GameConst.ShaderFootTexture, context.FootPartsTexture2);
             _material2.EnableKeyword(GameConst.ShaderKeywordFootTextureOn);
 
-            _leftArmMaterial.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            _leftArmMaterial.SetTexture(GameConst.ShaderMainTexture1, context.LeftArmTexture);
             _leftArmMaterial.EnableKeyword(GameConst.ShaderKeywordMainTexture1On);
-            _rightArmMaterial.SetTexture(GameConst.ShaderMainTexture1, context.Texture1);
+            _rightArmMaterial.SetTexture(GameConst.ShaderMainTexture1, context.RightArmTexture);
             _rightArmMaterial.EnableKeyword(GameConst.ShaderKeywordMainTexture1On);
             _footPartsMaterial.SetTexture(GameConst.ShaderMainTexture2, context.Texture2);
             _footPartsMaterial.EnableKeyword(GameConst.ShaderKeywordMainTexture2On);

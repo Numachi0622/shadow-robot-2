@@ -14,7 +14,8 @@ namespace InGame.System
         public Texture2D Texture2 { get; set; }
         public Texture2D LeftArmTexture => null;
         public Texture2D RightArmTexture => null;
-        public Texture2D FootPartsTexture => null;
+        public Texture2D FootPartsTexture1 => null;
+        public Texture2D FootPartsTexture2 => null;
     }
 
     public struct CombineTextureContext : ITextureContext
@@ -23,7 +24,8 @@ namespace InGame.System
         public Texture2D Texture2 { get; set; }
         public Texture2D LeftArmTexture { get; set; }
         public Texture2D RightArmTexture { get; set; }
-        public Texture2D FootPartsTexture { get; set; }
+        public Texture2D FootPartsTexture1 { get; set; }
+        public Texture2D FootPartsTexture2 { get; set; }
     }
 
     public class TextureRegistry
@@ -60,7 +62,12 @@ namespace InGame.System
             var rightArmTexture = totalPlayerCount == GameConst.MaxPlayerCount 
                 ? GetTextureContext(new CharacterId(1)).Texture1 
                 : GetTextureContext(new CharacterId(0)).Texture1;
-            var footPartsTexture = totalPlayerCount == GameConst.MaxPlayerCount
+            
+            var footPartsTexture1 = totalPlayerCount == GameConst.MaxPlayerCount
+                ? GetTextureContext(new CharacterId(2)).Texture1
+                : GetTextureContext(new CharacterId(1)).Texture1; 
+                
+            var footPartsTexture2 = totalPlayerCount == GameConst.MaxPlayerCount
                 ? GetTextureContext(new CharacterId(2)).Texture2
                 : GetTextureContext(new CharacterId(1)).Texture2;
 
@@ -70,7 +77,8 @@ namespace InGame.System
                 Texture2 = baseTextureContext.Texture2,
                 LeftArmTexture = leftArmTexture,
                 RightArmTexture = rightArmTexture,
-                FootPartsTexture = footPartsTexture
+                FootPartsTexture1 = footPartsTexture1,
+                FootPartsTexture2 = footPartsTexture2
             };
         }
         
