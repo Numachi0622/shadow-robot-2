@@ -195,6 +195,7 @@ namespace InGame.Character
             // ポーズマッチイベント中はダメージ状態に遷移させない
             if (_isProgressingEvent) return;
 
+            // todo: DamageState内できれいにやりたい
             _hitCount++;
             var damageValue = param.AttackPoint.RandomValue;
             if (_hitCount < StateChangeableHitCount && damageValue < IgnoreBlockDamage)
