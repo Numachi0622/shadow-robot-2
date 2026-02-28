@@ -49,7 +49,7 @@ namespace InGame.Character
                 owner.SummonEnemyPublisher.Publish(new SpawnCharacterMessage(
                     CharacterType.NormalEnemy,
                     owner.transform.position + UnityEngine.Random.insideUnitSphere * _summonAreaRadius,
-                    Quaternion.identity,
+                    Quaternion.Euler(0, 180, 0),
                     new AreaId(-1),
                     TargetType.Player,
                     owner.TotalPlayerCount

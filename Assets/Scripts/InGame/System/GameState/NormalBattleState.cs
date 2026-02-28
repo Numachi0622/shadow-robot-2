@@ -141,7 +141,7 @@ namespace InGame.System
                     Owner.SpawnCharacterPublisher.Publish(new SpawnCharacterMessage(
                         CharacterType.NormalEnemy,
                         pos,
-                        Quaternion.identity, 
+                        Quaternion.Euler(0, 180, 0), 
                         areaId,
                         TargetType.Building,
                         1
