@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using UnityEngine;
 
 namespace InGame.Character
@@ -20,6 +22,12 @@ namespace InGame.Character
 
             var rotation = Quaternion.LookRotation(direction);
             _targetTransform.rotation = rotation;
+        }
+
+        public async UniTask RotateAsync(Vector3 dir)
+        {
+            var rot = Quaternion.LookRotation(dir);
+            await _targetTransform.DORotateQuaternion(rot, 0.5f);
         }
     }
 }

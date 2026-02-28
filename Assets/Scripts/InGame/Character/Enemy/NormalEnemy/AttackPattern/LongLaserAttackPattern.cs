@@ -1,3 +1,4 @@
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -14,6 +15,13 @@ namespace InGame.Character
             
             var effect = normalEnemy.Effect.LongLaserEffect.GetComponent<LongLaser>();
             effect.PlayWarningEffectAsync(normalEnemy.Params.AttackReadyTime).Forget();
+            
+            var rotator = owner.Mover as NormalEnemyMover;
+            var target = normalEnemy.CharacterRegistry.GetAllPlayers().FirstOrDefault()?.transform;
+            if (rotator == null || target == null) return;
+
+            var dir = (target.position - owner.transform.position).normalized;
+            rotator.RotateAsync(dir).Forget();
         }
         
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)

@@ -48,6 +48,7 @@ namespace InGame.Character
         public EnemyEffect EnemyEffect => _enemyEffect;
         public Animator Animator => _animator;
         public PlayType PlayType => _playType;
+        public CharacterRegistry CharacterRegistry => _characterRegistry;
 
         private bool IsIdle => _stateMachine.CurrentState is NormalEnemyIdleState;
         private bool IsMoving => _stateMachine.CurrentState is NormalEnemyMoveState;

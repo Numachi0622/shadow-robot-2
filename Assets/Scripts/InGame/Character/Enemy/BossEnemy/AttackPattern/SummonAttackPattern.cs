@@ -34,7 +34,7 @@ namespace InGame.Character
                     owner.SummonEnemyPublisher.Publish(new SpawnCharacterMessage(
                         CharacterType.NormalEnemy,
                         pos,
-                        Quaternion.identity,
+                        Quaternion.Euler(0, 180, 0),
                         new AreaId(-1),
                         TargetType.Player,
                         owner.TotalPlayerCount
