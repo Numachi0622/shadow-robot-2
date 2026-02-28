@@ -141,7 +141,7 @@ MonoBehaviour:
   _attackCollider: {fileID: 3938258675158218880}
   _homingStartDelay: 0.5
   _turnSpeed: 6
-  _speed: 13
+  _speed: 15
 --- !u!136 &600953677899608383
 CapsuleCollider:
   m_ObjectHideFlags: 0

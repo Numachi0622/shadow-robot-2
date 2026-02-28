@@ -13,6 +13,7 @@ namespace InGame.Character
         private readonly Transform _handTransform;
         private Vector3 _prevPos;
         private bool _isAttacking;
+        private bool _initialized;
 
         public IObservable<HandAttackParam> OnAttackStart => _onAttackStart;
         public IObservable<Unit> OnAttackEnd => _onAttackEnd;
@@ -26,6 +27,12 @@ namespace InGame.Character
         public void Observe()
         {
             var currentPos = _handTransform.position;
+            if (!_initialized)
+            {
+                _prevPos = currentPos;
+                _initialized = true;
+                return;
+            }
             var diff = currentPos - _prevPos;
             var direction = diff.normalized;
             var velocity = diff.magnitude / Time.deltaTime;
