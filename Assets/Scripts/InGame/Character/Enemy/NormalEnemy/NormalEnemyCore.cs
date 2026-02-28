@@ -40,6 +40,7 @@ namespace InGame.Character
         private TargetType _targetType;
         private bool _isForceStopped;
         private PlayType _playType;
+        private CharacterId _lastAttackerId;
 
         public EnemyParams Params => _params;
         public IMovable Mover => _mover;
@@ -209,13 +210,14 @@ namespace InGame.Character
         
         private void OnDamageStart(AttackParam param)
         {
+            _lastAttackerId = param.AttackerId;
             _stateMachine.SetState<NormalEnemyDamageState>(param);
         }
-        
+
         private void OnDeadStart(Unit unit)
         {
             _stateMachine.SetState<NormalEnemyDeadState>();
-            _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(_areaId, this));
+            _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(_areaId, this, _lastAttackerId));
             Destroy(gameObject, 3f);
         }
         #endregion

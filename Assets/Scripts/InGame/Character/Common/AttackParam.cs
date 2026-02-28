@@ -11,5 +11,6 @@ namespace InGame.Character
         public Vector3 Origin;
         public float AttackVelocity;
         public AttackType AttackType;
+        public CharacterId AttackerId;
     }
 }

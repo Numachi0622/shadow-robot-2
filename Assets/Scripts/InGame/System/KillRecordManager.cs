@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using InGame.Character;
 using InGame.Message;
 using MessagePipe;
 using Utility;
@@ -18,6 +21,16 @@ namespace InGame.System
         private int _requiredKillCount;
         private bool _isRecordComplete;
         private IDisposable _subscription;
+        private readonly Dictionary<int, int> _killCountByPlayer = new();
+
+        public IReadOnlyDictionary<int, int> KillCountByPlayer => _killCountByPlayer;
+
+        public CharacterId GetTopKillerCharacterId()
+        {
+            if (_killCountByPlayer.Count == 0) return new CharacterId(0);
+            var topId = _killCountByPlayer.Aggregate((a, b) => a.Value >= b.Value ? a : b).Key;
+            return new CharacterId(topId);
+        }
         
         [Inject]
         public KillRecordManager(
@@ -49,6 +62,10 @@ namespace InGame.System
         private void RecordKillData(EnemyDestroyedMessage message)
         {
             if (_playerCount == -1 || _isRecordComplete) return;
+
+            var killerId = message.KillerId.Value;
+            _killCountByPlayer.TryGetValue(killerId, out var count);
+            _killCountByPlayer[killerId] = count + 1;
 
             _currentKillCount++;
             _updateKillCountPublisher.Publish(new UpdateKillCountMessage(_currentKillCount, _requiredKillCount));

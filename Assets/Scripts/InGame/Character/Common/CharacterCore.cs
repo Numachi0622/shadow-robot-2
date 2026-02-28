@@ -13,8 +13,11 @@ namespace InGame.Character
         public IDamageable Damager => _damager;
         public IMovable Mover => _mover;
 
+        public CharacterId Id { get; protected set; }
+
         public virtual void Initialize(CharacterId id, SynMotionSystem synMotion, int totalPlayerCount = -1)
         {
+            Id = id;
         }
 
         public virtual void Initialize()

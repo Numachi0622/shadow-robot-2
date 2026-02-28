@@ -31,7 +31,8 @@ namespace InGame.Character
                 AttackDirection = dir,
                 AttackVelocity = velocity,
                 AttackType = attackType,
-                Origin = _attackCollider.transform.position
+                Origin = _attackCollider.transform.position,
+                AttackerId = _owner != null ? _owner.Id : default
             };
         }
 

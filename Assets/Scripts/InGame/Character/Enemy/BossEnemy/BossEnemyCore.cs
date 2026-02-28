@@ -38,6 +38,7 @@ namespace InGame.Character
         private IPublisher<StateChangeMessage> _stateChangePublisher;
         private ISubscriber<AllEnemyStopMessage> _allEnemyStopSubscriber;
         private ISubscriber<BossBattleStartMessage> _bossBattleStartSubscriber;
+        private CharacterId _lastAttackerId;
         
         public EnemyParams Params => _params;
         public int CurrentHp => _hpPresenter.CurrentHp;
@@ -194,6 +195,7 @@ namespace InGame.Character
         {
             // ポーズマッチイベント中はダメージ状態に遷移させない
             if (_isProgressingEvent) return;
+            _lastAttackerId = param.AttackerId;
 
             // todo: DamageState内できれいにやりたい
             _hitCount++;
@@ -211,7 +213,7 @@ namespace InGame.Character
         private void OnDeadStart(Unit unit)
         {
             _stateMachine.SetState<BossEnemyDeadState>();
-            _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(new AreaId(-1), this));
+            _enemyDestroyedPublisher.Publish(new EnemyDestroyedMessage(new AreaId(-1), this, _lastAttackerId));
 
             var resultContext = new ResultContextMessage(_characterRegistry.TotalBuildingCount);
             _stateChangePublisher.Publish(new StateChangeMessage(GameStateType.Result, resultContext));

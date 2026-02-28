@@ -52,11 +52,13 @@ namespace InGame.Message
     {
         public readonly AreaId AreaId;
         public readonly EnemyCore Enemy;
+        public readonly CharacterId KillerId;
 
-        public EnemyDestroyedMessage(AreaId areaId, EnemyCore enemy)
+        public EnemyDestroyedMessage(AreaId areaId, EnemyCore enemy, CharacterId killerId = default)
         {
             AreaId = areaId;
             Enemy = enemy;
+            KillerId = killerId;
         }
     }
 

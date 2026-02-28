@@ -30,6 +30,7 @@ namespace InGame.System
         private readonly ISubscriber<EnemyDestroyedMessage> _enemyDestroyedSubscriber;
         private readonly IPublisher<AreaId, BuildingCountChangeMessage> _buildingCountChangePublisher;
         private readonly IPublisher<StateChangeMessage> _stateChangePublisher;
+        private readonly KillRecordManager _killRecordManager;
         private readonly HashSet<AreaId> _allBuildingDestroyedAreas = new();
         private IDisposable _subscription;
 
@@ -46,7 +47,8 @@ namespace InGame.System
             ISubscriber<BuildingDestroyedMessage> buildingDestroyedSubscriber,
             ISubscriber<EnemyDestroyedMessage> enemyDestroyedSubscriber,
             IPublisher<AreaId, BuildingCountChangeMessage> buildingCountChangePublisher,
-            IPublisher<StateChangeMessage> stateChangePublisher)
+            IPublisher<StateChangeMessage> stateChangePublisher,
+            KillRecordManager killRecordManager)
         {
             _factory = factory;
             _registry = registry;
@@ -60,6 +62,7 @@ namespace InGame.System
             _enemyDestroyedSubscriber = enemyDestroyedSubscriber;
             _buildingCountChangePublisher = buildingCountChangePublisher;
             _stateChangePublisher = stateChangePublisher;
+            _killRecordManager = killRecordManager;
         }
 
         public void Initialize()
@@ -113,9 +116,8 @@ namespace InGame.System
             player.Initialize(message.CharacterId, _synMotion, message.TotalPlayerCount);
 
             // テクスチャ反映
-            // todo: NormalBattleで倒した敵の数が多いプレイヤーIDを取得する
             var context = message.CharacterType == CharacterType.CombinePlayer
-                ? _textureRegistry.GetCombineTextureContext(new CharacterId(0), message.TotalPlayerCount)
+                ? _textureRegistry.GetCombineTextureContext(_killRecordManager.GetTopKillerCharacterId(), message.TotalPlayerCount)
                 : _textureRegistry.GetTextureContext(message.CharacterId);
             player.SetTexture(context);
             
