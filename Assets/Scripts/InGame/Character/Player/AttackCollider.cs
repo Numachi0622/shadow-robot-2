@@ -39,10 +39,12 @@ namespace InGame.Character
         {
             _attackParam = attackParam;
 
-            await UniTask.Delay(TimeSpan.FromSeconds(waitTime));
-            
+            var token = this.GetCancellationTokenOnDestroy();
+
+            await UniTask.Delay(TimeSpan.FromSeconds(waitTime), cancellationToken: token);
+
             _attackCollider.enabled = true;
-            await UniTask.Delay(TimeSpan.FromSeconds(GameConst.COLLIDER_ACTIVE_TIME));
+            await UniTask.Delay(TimeSpan.FromSeconds(GameConst.COLLIDER_ACTIVE_TIME), cancellationToken: token);
             _attackCollider.enabled = false;
         }
 
