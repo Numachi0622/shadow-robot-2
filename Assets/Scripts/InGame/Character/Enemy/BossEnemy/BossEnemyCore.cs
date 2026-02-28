@@ -71,6 +71,9 @@ namespace InGame.Character
         private bool _isForceStopped;
         private bool _isInitialized;
         private bool _isProgressingEvent;
+        private int _hitCount;
+        private const int StateChangeableHitCount = 5;
+        private const int IgnoreBlockDamage = 300;
 
         private bool IsIdle => _stateMachine.CurrentState is BossEnemyIdleState;
         private bool IsDead => _stateMachine.CurrentState is BossEnemyDeadState;
@@ -191,7 +194,18 @@ namespace InGame.Character
         {
             // ポーズマッチイベント中はダメージ状態に遷移させない
             if (_isProgressingEvent) return;
+
+            _hitCount++;
+            var damageValue = param.AttackPoint.RandomValue;
+            if (_hitCount < StateChangeableHitCount && damageValue < IgnoreBlockDamage)
+            {
+                _damager.Damage(param.AttackPoint.RandomValue);
+                HitEffectManager.Instance.Play(param.AttackType, param.HitPosition);
+                return;
+            }
+            
             _stateMachine.SetState<BossEnemyDamageState>(param);
+            _hitCount = 0;
         }
         private void OnDeadStart(Unit unit)
         {
