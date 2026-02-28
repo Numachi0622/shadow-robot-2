@@ -8,6 +8,8 @@ namespace InGame.Character
 {
     public class NormalEnemyAttackReadyState : StateMachine<NormalEnemyCore>.State
     {
+        private int _prevAttackIndex = -1;
+        
         public override void OnEnter(IStateParameter parameter = null)
         {
             if (parameter is AttackReadyParam param)
@@ -17,6 +19,7 @@ namespace InGame.Character
                 // OccurrenceRateを使った重み付けランダム選択
                 var attackIndex = Owner.Params.SelectAttackPatternIndex();
                 var selectedPattern = Owner.Params.AttackPatternParams[attackIndex];
+                selectedPattern.AttackPattern.ExecuteReady(Owner);
 
                 // アニメーション再生
                 var animationHash = AnimationUtility.AttackReadyHash(attackIndex);
@@ -26,6 +29,8 @@ namespace InGame.Character
                 param.AttackImpactWaitTime = selectedPattern.AttackImpactWaitTime();
 
                 AttackReady(param);
+
+                _prevAttackIndex = attackIndex;
             }
         }
 
@@ -44,6 +49,13 @@ namespace InGame.Character
                 return;
             }
             Owner.OnAttackStart(param);
+        }
+        
+        public override void OnExit()
+        {
+            if (_prevAttackIndex == -1) return;
+            var selectedPattern = Owner.Params.AttackPatternParams[_prevAttackIndex];
+            selectedPattern.AttackPattern.ExecuteReadyCancel(Owner);
         }
     }
 }

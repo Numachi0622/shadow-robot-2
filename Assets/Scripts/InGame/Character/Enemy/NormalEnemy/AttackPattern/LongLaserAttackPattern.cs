@@ -8,6 +8,14 @@ namespace InGame.Character
     {
         [SerializeField] private float _attackPointWeight = 2f;
         
+        public override void ExecuteReady(CharacterCore owner)
+        {
+            if (owner is not NormalEnemyCore normalEnemy) return;
+            
+            var effect = normalEnemy.Effect.LongLaserEffect.GetComponent<LongLaser>();
+            effect.PlayWarningEffectAsync(normalEnemy.Params.AttackReadyTime).Forget();
+        }
+        
         public override void Execute(CharacterCore owner, AttackReadyParam attackReadyParam)
         {
             if (!(owner is NormalEnemyCore normalEnemy)) return;
@@ -25,6 +33,14 @@ namespace InGame.Character
                 AttackType = AttackType.EnemyToPlayerNormal,
             };
             attackCollider?.AttackImpactAsync(attackParam, attackReadyParam.AttackImpactWaitTime).Forget();
+        }
+        
+        public override void ExecuteReadyCancel(CharacterCore owner)
+        {
+            if (owner is not NormalEnemyCore normalEnemy) return;
+            
+            var effect = normalEnemy.Effect.LongLaserEffect.GetComponent<LongLaser>();
+            effect.StopWarningEffect();
         }
     }
 }

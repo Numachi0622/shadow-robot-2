@@ -8,6 +8,11 @@ namespace InGame.Character
         public virtual void ExecuteReady(CharacterCore owner)
         {
         }
+        
+        public virtual void ExecuteReadyCancel(CharacterCore owner)
+        {
+        }
+        
         public virtual void Execute(CharacterCore owner, AttackReadyParam attackParam)
         {
         }
